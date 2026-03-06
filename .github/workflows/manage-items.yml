@@ -1,0 +1,132 @@
+name: Manage Items via Issues
+
+on:
+  issues:
+    types: [opened, reopened]
+
+permissions:
+  contents: write
+  issues: write
+
+jobs:
+  add-item:
+    if: contains(github.event.issue.labels.*.name, 'add-item')
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Parse issue and create item
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const script = require('./.github/scripts/add-item.js');
+            await script({github, context, core});
+
+      - name: Commit and push
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add items/
+          git commit -m "feat: add item '${ITEM_TITLE}'"
+          git push
+
+      - name: Close issue with confirmation
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const slug = process.env.ITEM_SLUG;
+            const count = process.env.DOWNLOAD_COUNT;
+            await github.rest.issues.createComment({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              issue_number: context.issue.number,
+              body: `✅ **Item added successfully!**\n\n- Folder: \`items/${slug}/\`\n- Photos downloaded: ${count}\n\nThe site will be updated in a few minutes.`
+            });
+            await github.rest.issues.update({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              issue_number: context.issue.number,
+              state: 'closed'
+            });
+
+  mark-sold:
+    if: contains(github.event.issue.labels.*.name, 'mark-sold')
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Mark item as sold
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const script = require('./.github/scripts/mark-sold.js');
+            await script({github, context, core});
+
+      - name: Commit and push
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add items/
+          git commit -m "feat: mark '${ITEM_TITLE}' as sold"
+          git push
+
+      - name: Close issue with confirmation
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const folder = process.env.ITEM_FOLDER;
+            const title = process.env.ITEM_TITLE;
+            await github.rest.issues.createComment({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              issue_number: context.issue.number,
+              body: `✅ **"${title}" marked as sold!**\n\nThe site will be updated in a few minutes.`
+            });
+            await github.rest.issues.update({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              issue_number: context.issue.number,
+              state: 'closed'
+            });
+
+  remove-item:
+    if: contains(github.event.issue.labels.*.name, 'remove-item')
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Remove item
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const script = require('./.github/scripts/remove-item.js');
+            await script({github, context, core});
+
+      - name: Commit and push
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add -A
+          git commit -m "feat: remove item '${ITEM_TITLE}'"
+          git push
+
+      - name: Close issue with confirmation
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const title = process.env.ITEM_TITLE;
+            await github.rest.issues.createComment({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              issue_number: context.issue.number,
+              body: `✅ **"${title}" has been removed.**\n\nThe site will be updated in a few minutes.`
+            });
+            await github.rest.issues.update({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              issue_number: context.issue.number,
+              state: 'closed'
+            });

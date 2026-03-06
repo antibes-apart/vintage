@@ -1,0 +1,22 @@
+name: "Remove Item"
+description: "Remove an item from the collection entirely"
+title: "[Remove] "
+labels: ["remove-item"]
+body:
+  - type: input
+    id: folder
+    attributes:
+      label: Item Folder Name
+      description: "The folder name of the item to remove (check the items/ directory in the repo)."
+      placeholder: "e.g. art-deco-lamp"
+    validations:
+      required: true
+
+  - type: checkboxes
+    id: confirm
+    attributes:
+      label: Confirmation
+      description: "This action cannot be undone."
+      options:
+        - label: "I confirm I want to permanently remove this item and all its photos"
+          required: true

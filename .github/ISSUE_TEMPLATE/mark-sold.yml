@@ -1,0 +1,13 @@
+name: "Mark as Sold"
+description: "Mark an existing item as sold"
+title: "[Sold] "
+labels: ["mark-sold"]
+body:
+  - type: input
+    id: folder
+    attributes:
+      label: Item Folder Name
+      description: "The folder name of the item (check the items/ directory in the repo). It's the part in the URL after ?id= when viewing the item."
+      placeholder: "e.g. art-deco-lamp"
+    validations:
+      required: true

@@ -1,0 +1,49 @@
+name: "Add Item"
+description: "Add a new vintage item to the collection"
+title: "[Add Item] "
+labels: ["add-item"]
+body:
+  - type: input
+    id: title
+    attributes:
+      label: Item Title
+      description: "Name of the vintage item"
+      placeholder: "e.g. Art Deco Table Lamp"
+    validations:
+      required: true
+
+  - type: input
+    id: price
+    attributes:
+      label: Price
+      description: "Price with currency symbol"
+      placeholder: "e.g. €120"
+    validations:
+      required: true
+
+  - type: textarea
+    id: description
+    attributes:
+      label: Description
+      description: "Describe the item (condition, era, materials, etc.)"
+      placeholder: "Beautiful 1920s art deco table lamp with brass base..."
+    validations:
+      required: false
+
+  - type: textarea
+    id: cover
+    attributes:
+      label: Cover Photo (main photo for the grid)
+      description: "Drag & drop or paste ONE photo here. This will be the thumbnail."
+      placeholder: "Drag your cover photo here..."
+    validations:
+      required: true
+
+  - type: textarea
+    id: gallery
+    attributes:
+      label: Gallery Photos (additional photos)
+      description: "Drag & drop or paste additional photos here. They will appear in the item detail page."
+      placeholder: "Drag additional photos here..."
+    validations:
+      required: false
