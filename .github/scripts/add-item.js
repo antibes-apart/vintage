@@ -86,36 +86,64 @@ module.exports = async ({github, context, core}) => {
   const coverUrls = extractImageUrls(coverSection);
   const galleryUrls = extractImageUrls(gallerySection);
 
-  // Download images
-  async function downloadImage(url, filePath) {
-    const response = await fetch(url);
+  // Download image, detect extension from content-type, save with correct extension
+  async function downloadImage(url, baseFilePath) {
+    const headers = {};
+    // GitHub attachment URLs need authentication
+    if (url.includes('github.com') || url.includes('githubusercontent.com')) {
+      const token = process.env.GITHUB_TOKEN;
+      if (token) {
+        headers['Authorization'] = `token ${token}`;
+      }
+    }
+    const response = await fetch(url, {headers, redirect: 'follow'});
     if (!response.ok) throw new Error(`Failed to download ${url}: ${response.status}`);
+    const contentType = response.headers.get('content-type') || '';
+    if (contentType.includes('text/html')) {
+      throw new Error(`Got HTML instead of image for ${url} — URL may require auth or is invalid`);
+    }
+    const ext = getExtFromContentType(contentType) || getExtFromUrl(url);
+    const finalPath = baseFilePath + ext;
     const buffer = Buffer.from(await response.arrayBuffer());
-    fs.writeFileSync(filePath, buffer);
-    console.log(`Downloaded: ${filePath} (${buffer.length} bytes)`);
+    fs.writeFileSync(finalPath, buffer);
+    console.log(`Downloaded: ${finalPath} (${buffer.length} bytes, ${contentType})`);
   }
 
-  // Determine file extension from URL or content-type
-  function getExtension(url) {
+  const MIME_TO_EXT = {
+    'image/jpeg': '.jpg',
+    'image/png': '.png',
+    'image/webp': '.webp',
+    'image/gif': '.gif',
+    'image/avif': '.avif',
+    'image/svg+xml': '.svg',
+    'image/bmp': '.bmp',
+  };
+
+  function getExtFromContentType(contentType) {
+    for (const [mime, ext] of Object.entries(MIME_TO_EXT)) {
+      if (contentType.includes(mime)) return ext;
+    }
+    return null;
+  }
+
+  function getExtFromUrl(url) {
     const urlPath = new URL(url).pathname;
     const ext = path.extname(urlPath).toLowerCase();
     if (['.jpg', '.jpeg', '.png', '.webp', '.gif', '.avif'].includes(ext)) return ext;
-    return '.jpg'; // default
+    return '.jpg';
   }
 
   let downloadCount = 0;
 
   // Download cover photo
   if (coverUrls.length > 0) {
-    const ext = getExtension(coverUrls[0]);
-    await downloadImage(coverUrls[0], path.join(itemDir, `cover${ext}`));
+    await downloadImage(coverUrls[0], path.join(itemDir, 'cover'));
     downloadCount++;
   }
 
   // Download gallery photos
   for (let i = 0; i < galleryUrls.length; i++) {
-    const ext = getExtension(galleryUrls[i]);
-    await downloadImage(galleryUrls[i], path.join(itemDir, `${i + 2}${ext}`));
+    await downloadImage(galleryUrls[i], path.join(itemDir, `${i + 2}`));
     downloadCount++;
   }
 
