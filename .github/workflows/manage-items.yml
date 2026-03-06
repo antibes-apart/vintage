@@ -7,11 +7,15 @@ on:
 permissions:
   contents: write
   issues: write
+  pages: write
+  id-token: write
 
 jobs:
   add-item:
     if: contains(github.event.issue.labels.*.name, 'add-item')
     runs-on: ubuntu-latest
+    environment:
+      name: github-pages
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -30,6 +34,25 @@ jobs:
           git add items/
           git commit -m "feat: add item '${ITEM_TITLE}'"
           git push
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+
+      - name: Build manifest
+        run: node build.js
+
+      - name: Setup Pages
+        uses: actions/configure-pages@v5
+
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: "."
+
+      - name: Deploy to GitHub Pages
+        uses: actions/deploy-pages@v4
 
       - name: Close issue with confirmation
         uses: actions/github-script@v7
@@ -53,6 +76,8 @@ jobs:
   mark-sold:
     if: contains(github.event.issue.labels.*.name, 'mark-sold')
     runs-on: ubuntu-latest
+    environment:
+      name: github-pages
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -71,6 +96,25 @@ jobs:
           git add items/
           git commit -m "feat: mark '${ITEM_TITLE}' as sold"
           git push
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+
+      - name: Build manifest
+        run: node build.js
+
+      - name: Setup Pages
+        uses: actions/configure-pages@v5
+
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: "."
+
+      - name: Deploy to GitHub Pages
+        uses: actions/deploy-pages@v4
 
       - name: Close issue with confirmation
         uses: actions/github-script@v7
@@ -94,6 +138,8 @@ jobs:
   remove-item:
     if: contains(github.event.issue.labels.*.name, 'remove-item')
     runs-on: ubuntu-latest
+    environment:
+      name: github-pages
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -112,6 +158,25 @@ jobs:
           git add -A
           git commit -m "feat: remove item '${ITEM_TITLE}'"
           git push
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+
+      - name: Build manifest
+        run: node build.js
+
+      - name: Setup Pages
+        uses: actions/configure-pages@v5
+
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: "."
+
+      - name: Deploy to GitHub Pages
+        uses: actions/deploy-pages@v4
 
       - name: Close issue with confirmation
         uses: actions/github-script@v7
