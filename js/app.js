@@ -85,7 +85,7 @@ function renderItemDetail(allItems) {
     <div class="item-layout">
       <div class="gallery">
         ${mainImage
-          ? `<img src="${mainImage}" alt="${escapeHtml(item.title)}" class="main-image" id="mainImage" onclick="openLightbox(0)">`
+          ? `<img src="${mainImage}" alt="${escapeHtml(item.title)}" class="main-image" id="mainImage" onclick="openLightbox(window._currentImageIndex || 0)">`
           : '<div class="main-image no-cover">No photos available</div>'}
         ${item.images.length > 1 ? `
           <div class="thumbnails">
