@@ -102,6 +102,7 @@ function renderItemDetail(allItems) {
         <h1 class="item-title">${escapeHtml(item.title)}</h1>
         <p class="item-price">${escapeHtml(item.price)}</p>
         ${item.description ? `<p class="item-description">${escapeHtml(item.description)}</p>` : ''}
+        ${!item.sold ? '<div class="shipping-note"><span class="shipping-icon">&#9992;</span> International shipping available — costs at buyer\'s expense. <a href="https://wa.me/33627335434" target="_blank" rel="noopener noreferrer">Contact us</a> for a quote!</div>' : ''}
       </div>
     </div>
   `;
