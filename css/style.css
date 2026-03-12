@@ -327,6 +327,19 @@ nav {
   max-height: 90vh;
   object-fit: contain;
   border-radius: var(--radius);
+  cursor: zoom-in;
+  transition: transform 0.3s ease;
+}
+
+.lightbox img.zoomed {
+  cursor: grab;
+  max-width: none;
+  max-height: none;
+  transform-origin: center center;
+}
+
+.lightbox img.zoomed.dragging {
+  cursor: grabbing;
 }
 
 .lightbox-close {

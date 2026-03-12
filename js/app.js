@@ -144,6 +144,7 @@ function closeLightbox() {
   const lightbox = document.getElementById('lightbox');
   if (!lightbox) return;
 
+  resetZoom();
   lightbox.classList.remove('open');
   document.body.style.overflow = '';
 }
@@ -151,6 +152,7 @@ function closeLightbox() {
 function navigateLightbox(direction) {
   if (!window._galleryImages) return;
 
+  resetZoom();
   const len = window._galleryImages.length;
   window._currentImageIndex = (window._currentImageIndex + direction + len) % len;
 
@@ -159,6 +161,91 @@ function navigateLightbox(direction) {
     lightboxImg.src = window._galleryImages[window._currentImageIndex];
   }
 }
+
+/* ─── Lightbox Zoom & Pan ─── */
+
+function resetZoom() {
+  const img = document.getElementById('lightboxImg');
+  if (!img) return;
+  img.classList.remove('zoomed', 'dragging');
+  img.style.transform = '';
+  window._zoom = null;
+}
+
+function toggleZoom(e) {
+  const img = document.getElementById('lightboxImg');
+  if (!img) return;
+
+  if (img.classList.contains('zoomed')) {
+    resetZoom();
+    return;
+  }
+
+  // Zoom to 2x centered on click position
+  const rect = img.getBoundingClientRect();
+  const xPct = (e.clientX - rect.left) / rect.width;
+  const yPct = (e.clientY - rect.top) / rect.height;
+  const scale = 2.5;
+
+  const offsetX = (0.5 - xPct) * rect.width * (scale - 1);
+  const offsetY = (0.5 - yPct) * rect.height * (scale - 1);
+
+  img.classList.add('zoomed');
+  img.style.transform = `translate(${offsetX}px, ${offsetY}px) scale(${scale})`;
+  window._zoom = {scale, offsetX, offsetY, imgWidth: rect.width, imgHeight: rect.height};
+}
+
+// Pan when zoomed (mouse drag) + click-to-zoom
+(function () {
+  let dragging = false, didDrag = false, startX, startY, startOX, startOY;
+
+  document.addEventListener('mousedown', function (e) {
+    const img = document.getElementById('lightboxImg');
+    if (!img || e.target !== img) return;
+    e.preventDefault();
+    startX = e.clientX;
+    startY = e.clientY;
+    didDrag = false;
+
+    if (img.classList.contains('zoomed')) {
+      dragging = true;
+      img.classList.add('dragging');
+      startOX = window._zoom.offsetX;
+      startOY = window._zoom.offsetY;
+    }
+  });
+
+  document.addEventListener('mousemove', function (e) {
+    if (!dragging || !window._zoom) return;
+    const dx = e.clientX - startX;
+    const dy = e.clientY - startY;
+    if (Math.abs(dx) > 3 || Math.abs(dy) > 3) didDrag = true;
+    window._zoom.offsetX = startOX + dx;
+    window._zoom.offsetY = startOY + dy;
+    const img = document.getElementById('lightboxImg');
+    if (img) {
+      img.style.transform = `translate(${window._zoom.offsetX}px, ${window._zoom.offsetY}px) scale(${window._zoom.scale})`;
+    }
+  });
+
+  document.addEventListener('mouseup', function (e) {
+    const img = document.getElementById('lightboxImg');
+    if (dragging) {
+      dragging = false;
+      if (img) img.classList.remove('dragging');
+      if (didDrag) return; // was a drag, not a click
+    }
+
+    // Only toggle zoom on a genuine click (no drag)
+    if (img && e.target === img) {
+      const dx = e.clientX - startX;
+      const dy = e.clientY - startY;
+      if (Math.abs(dx) < 4 && Math.abs(dy) < 4) {
+        toggleZoom(e);
+      }
+    }
+  });
+})();
 
 // Keyboard navigation for lightbox
 document.addEventListener('keydown', function (e) {
