@@ -20,6 +20,14 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+
+      - name: Install dependencies
+        run: npm install
+
       - name: Parse issue and create item
         uses: actions/github-script@v7
         env:
@@ -36,11 +44,6 @@ jobs:
           git add items/
           git commit -m "feat: add item '${ITEM_TITLE}'"
           git push
-
-      - name: Setup Node
-        uses: actions/setup-node@v4
-        with:
-          node-version: "20"
 
       - name: Build manifest
         run: node build.js

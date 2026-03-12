@@ -147,6 +147,24 @@ module.exports = async ({github, context, core}) => {
     downloadCount++;
   }
 
+  // Compress images (resize to max 1600px, JPEG quality 85)
+  try {
+    const sharp = require('sharp');
+    const imgFiles = fs.readdirSync(itemDir).filter(f => /\.(jpg|jpeg|png|webp)$/i.test(f));
+    for (const f of imgFiles) {
+      const filePath = path.join(itemDir, f);
+      const before = fs.statSync(filePath).size;
+      const buf = await sharp(fs.readFileSync(filePath))
+        .resize(1600, 1600, {fit: 'inside', withoutEnlargement: true})
+        .jpeg({quality: 85})
+        .toBuffer();
+      fs.writeFileSync(filePath, buf);
+      console.log(`Compressed ${f}: ${Math.round(before / 1024)}KB → ${Math.round(buf.length / 1024)}KB (${Math.round((1 - buf.length / before) * 100)}% saved)`);
+    }
+  } catch (e) {
+    console.warn('Image compression skipped:', e.message);
+  }
+
   // Export for later steps
   core.exportVariable('ITEM_SLUG', slug);
   core.exportVariable('ITEM_TITLE', title);
