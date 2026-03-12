@@ -247,6 +247,45 @@ function toggleZoom(e) {
   });
 })();
 
+// Scroll wheel zoom
+document.addEventListener('wheel', function (e) {
+  const img = document.getElementById('lightboxImg');
+  const lightbox = document.getElementById('lightbox');
+  if (!img || !lightbox || !lightbox.classList.contains('open') || e.target !== img) return;
+  e.preventDefault();
+
+  const rect = img.getBoundingClientRect();
+  const mouseX = e.clientX;
+  const mouseY = e.clientY;
+
+  if (!window._zoom) {
+    // Start zooming from 1x
+    window._zoom = {scale: 1, offsetX: 0, offsetY: 0, imgWidth: rect.width, imgHeight: rect.height};
+  }
+
+  const oldScale = window._zoom.scale;
+  const delta = e.deltaY > 0 ? 0.8 : 1.25;
+  const newScale = Math.min(Math.max(oldScale * delta, 1), 6);
+
+  if (newScale <= 1) {
+    resetZoom();
+    return;
+  }
+
+  // Zoom toward cursor position
+  const imgCenterX = rect.left + rect.width / 2;
+  const imgCenterY = rect.top + rect.height / 2;
+  const dx = mouseX - imgCenterX;
+  const dy = mouseY - imgCenterY;
+
+  window._zoom.offsetX = dx - (dx - window._zoom.offsetX) * (newScale / oldScale);
+  window._zoom.offsetY = dy - (dy - window._zoom.offsetY) * (newScale / oldScale);
+  window._zoom.scale = newScale;
+
+  img.classList.add('zoomed');
+  img.style.transform = `translate(${window._zoom.offsetX}px, ${window._zoom.offsetY}px) scale(${newScale})`;
+}, {passive: false});
+
 // Keyboard navigation for lightbox
 document.addEventListener('keydown', function (e) {
   const lightbox = document.getElementById('lightbox');
