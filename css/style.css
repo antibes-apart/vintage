@@ -94,6 +94,12 @@ nav {
 
 .page-subtitle {
   color: var(--text-light);
+  margin-bottom: 0.5rem;
+}
+
+.item-count {
+  color: var(--text-light);
+  font-size: 0.95rem;
   margin-bottom: 2rem;
 }
 

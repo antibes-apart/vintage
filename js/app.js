@@ -13,7 +13,10 @@
     const page = document.body.dataset.page;
 
     if (page === 'home') {
-      renderGrid(data.items.filter(item => !item.sold), false);
+      const available = data.items.filter(item => !item.sold);
+      const countEl = document.getElementById('item-count');
+      if (countEl) countEl.textContent = `${available.length} item${available.length !== 1 ? 's' : ''} available`;
+      renderGrid(available, false);
     } else if (page === 'sold') {
       renderGrid(data.items.filter(item => item.sold), true);
     } else if (page === 'item') {
