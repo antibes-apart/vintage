@@ -68,23 +68,60 @@ module.exports = async ({github, context, core}) => {
   function extractImageUrls(text) {
     if (!text || text === '_No response_') return [];
     const urls = [];
+    
+    // Match markdown images: ![...](https://...)
     const mdRegex = /!\[.*?\]\((https:\/\/[^\s)]+)\)/g;
     let match;
     while ((match = mdRegex.exec(text)) !== null) {
       urls.push(match[1]);
     }
-    // Also match plain URLs that look like images
-    const plainUrls = /(?:^|\s)(https:\/\/github\.com\/user-attachments\/assets\/[^\s)]+)/g;
-    while ((match = plainUrls.exec(text)) !== null) {
-      if (!urls.includes(match[1])) {
-        urls.push(match[1]);
+    
+    // Match GitHub user-attachments URLs (various formats)
+    const githubAttachments = /https:\/\/github\.com\/user-attachments\/assets\/[^\s)"'<>]+/g;
+    while ((match = githubAttachments.exec(text)) !== null) {
+      if (!urls.includes(match[0])) {
+        urls.push(match[0]);
       }
     }
+    
+    // Match private-user-images.githubusercontent.com URLs
+    const privateImages = /https:\/\/private-user-images\.githubusercontent\.com\/[^\s)"'<>]+/g;
+    while ((match = privateImages.exec(text)) !== null) {
+      if (!urls.includes(match[0])) {
+        urls.push(match[0]);
+      }
+    }
+    
+    // Match githubusercontent.com URLs (general)
+    const userContent = /https:\/\/[a-z-]*\.?githubusercontent\.com\/[^\s)"'<>]+/g;
+    while ((match = userContent.exec(text)) !== null) {
+      if (!urls.includes(match[0])) {
+        urls.push(match[0]);
+      }
+    }
+    
     return urls;
   }
 
+  // Debug: log raw field content
+  console.log('=== Debug: Cover Section ===' );
+  console.log(coverSection || '(empty)');
+  console.log('=== Debug: Gallery Section ===');
+  console.log(gallerySection || '(empty)');
+  
   const coverUrls = extractImageUrls(coverSection);
   const galleryUrls = extractImageUrls(gallerySection);
+  
+  console.log('Cover URLs found:', coverUrls);
+  console.log('Gallery URLs found:', galleryUrls);
+
+  // Fail if no cover photo was found
+  if (coverUrls.length === 0) {
+    // Clean up the folder we created
+    fs.rmSync(itemDir, {recursive: true, force: true});
+    core.setFailed(`No cover photo URL found. Please ensure you've attached an image in the "Cover Photo" field. Raw content was: "${coverSection}"`);
+    return;
+  }
 
   // Download image, detect extension from content-type, save with correct extension
   async function downloadImage(url, baseFilePath) {
