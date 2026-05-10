@@ -15,15 +15,19 @@
     if (page === 'home') {
       const available = data.items.filter(item => !item.sold);
       window._allItems = available;
+      window._totalItems = available.length;
+      window._originalCountText = `${available.length} item${available.length !== 1 ? 's' : ''} available`;
       const countEl = document.getElementById('item-count');
-      if (countEl) countEl.textContent = `${available.length} item${available.length !== 1 ? 's' : ''} available`;
+      if (countEl) countEl.textContent = window._originalCountText;
       renderGrid(available, false);
       setupSearch(available);
     } else if (page === 'sold') {
       const sold = data.items.filter(item => item.sold);
       window._allItems = sold;
+      window._totalItems = sold.length;
+      window._originalCountText = `${sold.length} item${sold.length !== 1 ? 's' : ''} sold`;
       const countEl = document.getElementById('item-count');
-      if (countEl) countEl.textContent = `${sold.length} item${sold.length !== 1 ? 's' : ''} sold`;
+      if (countEl) countEl.textContent = window._originalCountText;
       renderGrid(sold, true);
       setupSearch(sold);
     } else if (page === 'item') {
@@ -53,20 +57,15 @@ function setupSearch(allItems) {
     const filteredItems = filterItems(allItems, query);
     
     const countEl = document.getElementById('item-count');
-    const page = document.body.dataset.page;
     if (countEl) {
       if (query) {
-        countEl.textContent = `${filteredItems.length} result${filteredItems.length !== 1 ? 's' : ''} found`;
+        countEl.textContent = `${filteredItems.length} of ${window._totalItems}`;
       } else {
-        if (page === 'sold') {
-          countEl.textContent = `${allItems.length} item${allItems.length !== 1 ? 's' : ''} sold`;
-        } else {
-          countEl.textContent = `${allItems.length} item${allItems.length !== 1 ? 's' : ''} available`;
-        }
+        countEl.textContent = window._originalCountText;
       }
     }
     
-    const showSoldBadge = page === 'sold';
+    const showSoldBadge = document.body.dataset.page === 'sold';
     renderGrid(filteredItems, showSoldBadge);
   });
 }
