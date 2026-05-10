@@ -23,6 +23,11 @@
   <main>
     <h1 class="page-title">Sold Items</h1>
     <p class="page-subtitle">These treasures have found a new home</p>
+    <div class="search-container">
+      <input type="text" id="search-input" class="search-input" placeholder="Search by brand, type, color, or description...">
+      <svg class="search-icon" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg>
+    </div>
+    <p id="item-count" class="item-count"></p>
     <div id="grid" class="items-grid">
       <div class="empty-state"><p>Loading...</p></div>
     </div>

@@ -14,11 +14,18 @@
 
     if (page === 'home') {
       const available = data.items.filter(item => !item.sold);
+      window._allItems = available;
       const countEl = document.getElementById('item-count');
       if (countEl) countEl.textContent = `${available.length} item${available.length !== 1 ? 's' : ''} available`;
       renderGrid(available, false);
+      setupSearch(available);
     } else if (page === 'sold') {
-      renderGrid(data.items.filter(item => item.sold), true);
+      const sold = data.items.filter(item => item.sold);
+      window._allItems = sold;
+      const countEl = document.getElementById('item-count');
+      if (countEl) countEl.textContent = `${sold.length} item${sold.length !== 1 ? 's' : ''} sold`;
+      renderGrid(sold, true);
+      setupSearch(sold);
     } else if (page === 'item') {
       renderItemDetail(data.items);
     }
@@ -35,16 +42,61 @@
   }
 })();
 
+/* ─── Search Functionality ─── */
+
+function setupSearch(allItems) {
+  const searchInput = document.getElementById('search-input');
+  if (!searchInput) return;
+
+  searchInput.addEventListener('input', (e) => {
+    const query = e.target.value.trim().toLowerCase();
+    const filteredItems = filterItems(allItems, query);
+    
+    const countEl = document.getElementById('item-count');
+    const page = document.body.dataset.page;
+    if (countEl) {
+      if (query) {
+        countEl.textContent = `${filteredItems.length} result${filteredItems.length !== 1 ? 's' : ''} found`;
+      } else {
+        if (page === 'sold') {
+          countEl.textContent = `${allItems.length} item${allItems.length !== 1 ? 's' : ''} sold`;
+        } else {
+          countEl.textContent = `${allItems.length} item${allItems.length !== 1 ? 's' : ''} available`;
+        }
+      }
+    }
+    
+    const showSoldBadge = page === 'sold';
+    renderGrid(filteredItems, showSoldBadge);
+  });
+}
+
+function filterItems(items, query) {
+  if (!query) return items;
+  
+  return items.filter(item => {
+    const searchableText = `${item.title} ${item.description} ${item.price}`.toLowerCase();
+    return searchableText.includes(query);
+  });
+}
+
 /* ─── Grid Rendering ─── */
 
 function renderGrid(items, showSoldBadge) {
   const grid = document.getElementById('grid');
   if (!grid) return;
 
+  const searchInput = document.getElementById('search-input');
+  const hasSearch = searchInput && searchInput.value.trim() !== '';
+
   if (items.length === 0) {
-    grid.innerHTML = showSoldBadge
-      ? '<div class="empty-state"><h2>No sold items yet</h2><p>Check back later!</p></div>'
-      : '<div class="empty-state"><h2>No items available</h2><p>New vintage treasures coming soon!</p></div>';
+    if (hasSearch) {
+      grid.innerHTML = '<div class="empty-state"><h2>No items match your search</h2><p>Try different keywords.</p></div>';
+    } else if (showSoldBadge) {
+      grid.innerHTML = '<div class="empty-state"><h2>No sold items yet</h2><p>Check back later!</p></div>';
+    } else {
+      grid.innerHTML = '<div class="empty-state"><h2>No items available</h2><p>New vintage treasures coming soon!</p></div>';
+    }
     return;
   }
 
