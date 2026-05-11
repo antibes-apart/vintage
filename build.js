@@ -4,6 +4,64 @@ const path = require('path');
 const ITEMS_DIR = path.join(__dirname, 'items');
 const OUTPUT = path.join(__dirname, 'manifest.json');
 const IMAGE_EXT = new Set(['.jpg', '.jpeg', '.png', '.webp', '.gif', '.avif', '.bmp', '.svg']);
+const FEATURED_ITEM_ORDER = [
+  'rare-vintage-le-creuset-white-enamel-cast-iron-coc',
+  'vintage-le-creuset-cast-iron-cocotte-rare-floral-d'
+];
+const NO_FEATURED_INDEX = 999999;
+const NO_COCOTTE_RANK = 999999;
+
+const FEATURED_ITEM_INDEX = new Map(
+  FEATURED_ITEM_ORDER.map((id, index) => [id, index])
+);
+
+function parseSortPriority(value) {
+  if (typeof value === 'number' && Number.isFinite(value)) return value;
+  if (typeof value === 'string') {
+    const parsed = Number(value);
+    if (Number.isFinite(parsed)) return parsed;
+  }
+  return NO_FEATURED_INDEX;
+}
+
+function compareNumbers(a, b) {
+  if (a < b) return -1;
+  if (a > b) return 1;
+  return 0;
+}
+
+function isLeCreuset(item) {
+  const haystack = `${item.id} ${item.title}`.toLowerCase();
+  return haystack.includes('le-creuset') || /\ble\s*creuset\b/.test(haystack);
+}
+
+function isCocotte(item) {
+  const haystack = `${item.id} ${item.title}`.toLowerCase();
+  return haystack.includes('cocotte');
+}
+
+function isMiniCocotte(item) {
+  const slug = String(item.id || '').toLowerCase();
+  const hasMini = /(^|[-_])mini($|[-_])/.test(slug);
+  const hasCocotte = slug.includes('cocotte');
+  return hasMini && hasCocotte;
+}
+
+function getBucket(item) {
+  const featuredIndex = FEATURED_ITEM_INDEX.get(item.id);
+  if (featuredIndex !== undefined) {
+    return {group: 0, featuredIndex, cocotteRank: NO_COCOTTE_RANK};
+  }
+
+  const leCreuset = isLeCreuset(item);
+  const cocotte = isCocotte(item);
+  const cocotteRank = cocotte ? (isMiniCocotte(item) ? 1 : 0) : NO_COCOTTE_RANK;
+
+  if (leCreuset && cocotte) return {group: 1, featuredIndex: NO_FEATURED_INDEX, cocotteRank};
+  if (cocotte) return {group: 2, featuredIndex: NO_FEATURED_INDEX, cocotteRank};
+  if (leCreuset) return {group: 3, featuredIndex: NO_FEATURED_INDEX, cocotteRank};
+  return {group: 4, featuredIndex: NO_FEATURED_INDEX, cocotteRank};
+}
 
 function scanItems() {
   if (!fs.existsSync(ITEMS_DIR)) {
@@ -46,11 +104,28 @@ function scanItems() {
       price: info.price || '',
       description: info.description || '',
       sold: info.sold === true,
+      sortPriority: parseSortPriority(info.sortPriority),
+      sortBucket: getBucket({id: folder.name, title: info.title || folder.name}),
       cover: cover ? `items/${folder.name}/${cover}` : (allImages[0] || null),
       images: allImages
     };
   })
-  .sort((a, b) => a.title.localeCompare(b.title));
+  .sort((a, b) => {
+    const groupDiff = compareNumbers(a.sortBucket.group, b.sortBucket.group);
+    if (groupDiff !== 0) return groupDiff;
+
+    const featuredDiff = compareNumbers(a.sortBucket.featuredIndex, b.sortBucket.featuredIndex);
+    if (featuredDiff !== 0) return featuredDiff;
+
+    const cocotteRankDiff = compareNumbers(a.sortBucket.cocotteRank, b.sortBucket.cocotteRank);
+    if (cocotteRankDiff !== 0) return cocotteRankDiff;
+
+    const priorityDiff = compareNumbers(a.sortPriority, b.sortPriority);
+    if (priorityDiff !== 0) return priorityDiff;
+
+    return a.title.localeCompare(b.title);
+  })
+  .map(({sortPriority, sortBucket, ...item}) => item);
 }
 
 const items = scanItems();
