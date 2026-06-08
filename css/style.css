@@ -143,6 +143,64 @@ nav {
   pointer-events: none;
 }
 
+/* ─── Category Navigation ─── */
+.category-nav {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-bottom: 1.5rem;
+  background: transparent;
+  border: 0;
+  position: static;
+  padding: 0;
+}
+
+.category-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.5rem 0.95rem;
+  border: 1px solid var(--border);
+  background: var(--card-bg);
+  border-radius: 999px;
+  font-family: 'Inter', sans-serif;
+  font-size: 0.9rem;
+  font-weight: 500;
+  color: var(--text-light);
+  cursor: pointer;
+  transition: background 0.2s, border-color 0.2s, color 0.2s;
+}
+
+.category-chip:hover {
+  border-color: var(--accent);
+  color: var(--heading);
+}
+
+.category-chip.active {
+  background: var(--heading);
+  border-color: var(--heading);
+  color: #fff;
+}
+
+.category-count {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 1.5rem;
+  height: 1.25rem;
+  padding: 0 0.4rem;
+  border-radius: 999px;
+  background: var(--bg);
+  color: var(--text-light);
+  font-size: 0.75rem;
+  font-weight: 600;
+}
+
+.category-chip.active .category-count {
+  background: rgba(255, 255, 255, 0.2);
+  color: #fff;
+}
+
 /* ─── Shipping Banner ─── */
 .shipping-banner {
   display: flex;

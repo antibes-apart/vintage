@@ -21,6 +21,27 @@ body:
     validations:
       required: true
 
+  - type: dropdown
+    id: category
+    attributes:
+      label: Category
+      description: "Which section of the collection does this item belong to?"
+      options:
+        - Cocottes
+        - Skillets & Pans
+        - Saucepans & Casseroles
+        - Baking & Serving Dishes
+        - Terrines
+        - Grill Pans
+        - Fondues
+        - Tea Light Holders
+        - Copper
+        - Spare Parts
+        - Ice Buckets
+        - Other
+    validations:
+      required: true
+
   - type: textarea
     id: description
     attributes:

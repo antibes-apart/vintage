@@ -15,6 +15,41 @@ const FEATURED_ITEM_INDEX = new Map(
   FEATURED_ITEM_ORDER.map((id, index) => [id, index])
 );
 
+const CATEGORIES = [
+  'Cocottes',
+  'Skillets & Pans',
+  'Saucepans & Casseroles',
+  'Baking & Serving Dishes',
+  'Terrines',
+  'Grill Pans',
+  'Fondues',
+  'Tea Light Holders',
+  'Copper',
+  'Spare Parts',
+  'Ice Buckets',
+  'Other'
+];
+
+const CATEGORY_SET = new Set(CATEGORIES);
+
+function detectCategory(item) {
+  const haystack = `${item.id} ${item.title}`.toLowerCase();
+
+  if (/fondue/.test(haystack)) return 'Fondues';
+  if (/ice\s*bucket|champagne\s*cooler/.test(haystack)) return 'Ice Buckets';
+  if (/copper|cuivre/.test(haystack)) return 'Copper';
+  if (/grill\s*pan/.test(haystack)) return 'Grill Pans';
+  if (/tea\s*light|tealight|food\s*warmer|plate\s*warmer/.test(haystack)) return 'Tea Light Holders';
+  if (/cocotte|dutch\s*oven|casserole|doufeu|coquelle/.test(haystack)) return 'Cocottes';
+  if (/saucepan|poêlon|poelon/.test(haystack)) return 'Saucepans & Casseroles';
+  if (/skillet|frying\s*pan|crêpière|crepiere|crepe\s*pan|sauté\s*pan|saute\s*pan|crêpe\s*pan/.test(haystack)) return 'Skillets & Pans';
+  if (/terrine/.test(haystack)) return 'Terrines';
+  if (/baking\s*dish|gratin|baker|oven\s*dish|rectangular\s*dish|fish\s*baking|plates|plate\b|dish\b/.test(haystack)) return 'Baking & Serving Dishes';
+  if (/\bpan\b/.test(haystack)) return 'Skillets & Pans';
+
+  return 'Other';
+}
+
 function parseSortPriority(value) {
   if (typeof value === 'number' && Number.isFinite(value)) return value;
   if (typeof value === 'string') {
@@ -98,12 +133,21 @@ function scanItems() {
       ...otherImages.map(f => `items/${folder.name}/${f}`)
     ];
 
-    return {
+    const baseItem = {
       id: folder.name,
       title: info.title || folder.name,
       price: info.price || '',
       description: info.description || '',
-      sold: info.sold === true,
+      sold: info.sold === true
+    };
+
+    const manualCategory = typeof info.category === 'string' && CATEGORY_SET.has(info.category)
+      ? info.category
+      : null;
+
+    return {
+      ...baseItem,
+      category: manualCategory || detectCategory(baseItem),
       sortPriority: parseSortPriority(info.sortPriority),
       sortBucket: getBucket({id: folder.name, title: info.title || folder.name}),
       cover: cover ? `items/${folder.name}/${cover}` : (allImages[0] || null),
@@ -129,10 +173,11 @@ function scanItems() {
 }
 
 const items = scanItems();
-fs.writeFileSync(OUTPUT, JSON.stringify({items}, null, 2));
+const manifest = {items, categories: CATEGORIES};
+fs.writeFileSync(OUTPUT, JSON.stringify(manifest, null, 2));
 
 // Inject manifest into HTML files so they work without a server (file:// protocol)
-const manifestScript = `<script>window.__MANIFEST__=${JSON.stringify({items})};</script>`;
+const manifestScript = `<script>window.__MANIFEST__=${JSON.stringify(manifest)};</script>`;
 const htmlFiles = ['index.html', 'sold.html', 'item.html'];
 
 htmlFiles.forEach(file => {

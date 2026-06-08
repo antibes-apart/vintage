@@ -13,6 +13,7 @@ module.exports = async ({github, context, core}) => {
 
   const title = getField('Item Title');
   const price = getField('Price');
+  const category = getField('Category');
   const description = getField('Description');
   const coverSection = getField('Cover Photo \\(main photo for the grid\\)');
   const gallerySection = getField('Gallery Photos \\(additional photos\\)');
@@ -59,6 +60,9 @@ module.exports = async ({github, context, core}) => {
 
   // Save info.json
   const info = {title, price, issueNumber};
+  if (category && category !== '_No response_') {
+    info.category = category;
+  }
   if (description && description !== '_No response_') {
     info.description = description;
   }

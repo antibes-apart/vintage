@@ -1,3 +1,5 @@
+const ALL_CATEGORY = 'All Items';
+
 (async function () {
   try {
     let data;
@@ -11,25 +13,14 @@
     }
 
     const page = document.body.dataset.page;
+    window._categories = data.categories || [];
 
     if (page === 'home') {
       const available = data.items.filter(item => !item.sold);
-      window._allItems = available;
-      window._totalItems = available.length;
-      window._originalCountText = `${available.length} item${available.length !== 1 ? 's' : ''} available`;
-      const countEl = document.getElementById('item-count');
-      if (countEl) countEl.textContent = window._originalCountText;
-      renderGrid(available, false);
-      setupSearch(available);
+      initListing(available, false, 'available');
     } else if (page === 'sold') {
       const sold = data.items.filter(item => item.sold);
-      window._allItems = sold;
-      window._totalItems = sold.length;
-      window._originalCountText = `${sold.length} item${sold.length !== 1 ? 's' : ''} sold`;
-      const countEl = document.getElementById('item-count');
-      if (countEl) countEl.textContent = window._originalCountText;
-      renderGrid(sold, true);
-      setupSearch(sold);
+      initListing(sold, true, 'sold');
     } else if (page === 'item') {
       renderItemDetail(data.items);
     }
@@ -46,37 +37,104 @@
   }
 })();
 
-/* ─── Search Functionality ─── */
+/* ─── Listing (search + category filter) ─── */
 
-function setupSearch(allItems) {
+function initListing(items, showSoldBadge, noun) {
+  window._allItems = items;
+  window._totalItems = items.length;
+  window._showSoldBadge = showSoldBadge;
+  window._listingNoun = noun;
+  window._activeCategory = ALL_CATEGORY;
+  window._searchQuery = '';
+
+  renderCategoryNav(items);
+  applyFilters();
+  setupSearch();
+}
+
+function setupSearch() {
   const searchInput = document.getElementById('search-input');
   if (!searchInput) return;
 
   searchInput.addEventListener('input', (e) => {
-    const query = e.target.value.trim().toLowerCase();
-    const filteredItems = filterItems(allItems, query);
-    
-    const countEl = document.getElementById('item-count');
-    if (countEl) {
-      if (query) {
-        countEl.textContent = `${filteredItems.length} of ${window._totalItems}`;
-      } else {
-        countEl.textContent = window._originalCountText;
-      }
-    }
-    
-    const showSoldBadge = document.body.dataset.page === 'sold';
-    renderGrid(filteredItems, showSoldBadge);
+    window._searchQuery = e.target.value.trim().toLowerCase();
+    applyFilters();
   });
 }
 
-function filterItems(items, query) {
-  if (!query) return items;
-  
-  return items.filter(item => {
-    const searchableText = `${item.title} ${item.description} ${item.price}`.toLowerCase();
-    return searchableText.includes(query);
+function getVisibleCategories(items) {
+  const all = window._categories || [];
+  const present = new Set(items.map(item => item.category).filter(Boolean));
+  return all.filter(cat => present.has(cat));
+}
+
+function countByCategory(items, category) {
+  if (category === ALL_CATEGORY) return items.length;
+  return items.filter(item => item.category === category).length;
+}
+
+function renderCategoryNav(items) {
+  const nav = document.getElementById('category-nav');
+  if (!nav) return;
+
+  const visible = getVisibleCategories(items);
+  const cats = [ALL_CATEGORY, ...visible];
+
+  nav.innerHTML = cats.map(cat => {
+    const count = countByCategory(items, cat);
+    const isActive = cat === window._activeCategory;
+    return `
+      <button type="button"
+              class="category-chip${isActive ? ' active' : ''}"
+              data-category="${escapeHtml(cat)}">
+        <span class="category-label">${escapeHtml(cat)}</span>
+        <span class="category-count">${count}</span>
+      </button>
+    `;
+  }).join('');
+
+  nav.querySelectorAll('.category-chip').forEach(btn => {
+    btn.addEventListener('click', () => {
+      window._activeCategory = btn.dataset.category;
+      nav.querySelectorAll('.category-chip').forEach(b => b.classList.toggle('active', b === btn));
+      applyFilters();
+    });
   });
+}
+
+function applyFilters() {
+  const items = window._allItems || [];
+  const query = window._searchQuery || '';
+  const category = window._activeCategory || ALL_CATEGORY;
+
+  let filtered = items;
+  if (category !== ALL_CATEGORY) {
+    filtered = filtered.filter(item => item.category === category);
+  }
+  if (query) {
+    filtered = filtered.filter(item => {
+      const searchableText = `${item.title} ${item.description} ${item.price}`.toLowerCase();
+      return searchableText.includes(query);
+    });
+  }
+
+  updateCount(filtered.length, query, category);
+  renderGrid(filtered, !!window._showSoldBadge);
+}
+
+function updateCount(filteredCount, query, category) {
+  const countEl = document.getElementById('item-count');
+  if (!countEl) return;
+
+  const total = window._totalItems || 0;
+  const noun = window._listingNoun || 'available';
+  const isFiltered = query || category !== ALL_CATEGORY;
+
+  if (isFiltered) {
+    countEl.textContent = `${filteredCount} of ${total}`;
+  } else {
+    countEl.textContent = `${total} item${total !== 1 ? 's' : ''} ${noun}`;
+  }
 }
 
 /* ─── Grid Rendering ─── */
@@ -85,12 +143,12 @@ function renderGrid(items, showSoldBadge) {
   const grid = document.getElementById('grid');
   if (!grid) return;
 
-  const searchInput = document.getElementById('search-input');
-  const hasSearch = searchInput && searchInput.value.trim() !== '';
+  const hasSearch = (window._searchQuery || '').length > 0;
+  const hasCategoryFilter = window._activeCategory && window._activeCategory !== ALL_CATEGORY;
 
   if (items.length === 0) {
-    if (hasSearch) {
-      grid.innerHTML = '<div class="empty-state"><h2>No items match your search</h2><p>Try different keywords.</p></div>';
+    if (hasSearch || hasCategoryFilter) {
+      grid.innerHTML = '<div class="empty-state"><h2>No items match your filter</h2><p>Try a different category or search term.</p></div>';
     } else if (showSoldBadge) {
       grid.innerHTML = '<div class="empty-state"><h2>No sold items yet</h2><p>Check back later!</p></div>';
     } else {
