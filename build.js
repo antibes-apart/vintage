@@ -8,6 +8,25 @@ const FEATURED_ITEM_ORDER = [
   'rare-vintage-le-creuset-white-enamel-cast-iron-coc',
   'vintage-le-creuset-cast-iron-cocotte-rare-floral-d'
 ];
+
+// Temporary allowlist for the Préfecture (reseller registration): when non-empty, only
+// these item ids are published. Set back to [] to show the full collection again.
+const VISIBLE_ONLY = [
+  'le-creuset-enameled-cast-iron-baking-dish-no-18-vi',
+  'emile-henry-gastron-ceramic-plate-made-in-france-y',
+  'le-creuset-cast-iron-mini-cocotte-terrine-size-14-',
+  'le-creuset-stoneware-mini-oval-cocotte-red-with-li',
+  'le-creuset-enameled-cast-iron-baking-dish-no-28',
+  'le-creuset-mini-cast-iron-cocotte-blue-with-lid',
+  'le-creuset-mini-cast-iron-cocotte-red-with-lid',
+  'le-creuset-cast-iron-casserole-with-lid-model-no-1',
+  'le-creuset-cast-iron-skillet-16-cm-vintage-model',
+  'vintage-le-creuset-enameled-cast-iron-terrine-no-3',
+  'vintage-french-cast-iron-kitchen-set-rooster-paper',
+  'laurent-perrier-champagne-cooler-stainless-steel-i'
+];
+
+const VISIBLE_ONLY_SET = new Set(VISIBLE_ONLY);
 const NO_FEATURED_INDEX = 999999;
 const NO_COCOTTE_RANK = 999999;
 
@@ -172,13 +191,16 @@ function scanItems() {
   .map(({sortPriority, sortBucket, ...item}) => item);
 }
 
-const items = scanItems();
+const allItems = scanItems();
+const items = VISIBLE_ONLY_SET.size > 0
+  ? allItems.filter(item => VISIBLE_ONLY_SET.has(item.id))
+  : allItems;
 const manifest = {items, categories: CATEGORIES};
 fs.writeFileSync(OUTPUT, JSON.stringify(manifest, null, 2));
 
 // Inject manifest into HTML files so they work without a server (file:// protocol)
 const manifestScript = `<script>window.__MANIFEST__=${JSON.stringify(manifest)};</script>`;
-const htmlFiles = ['index.html', 'sold.html', 'item.html'];
+const htmlFiles = ['index.html', 'item.html'];
 
 htmlFiles.forEach(file => {
   const filePath = path.join(__dirname, file);
