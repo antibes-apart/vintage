@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="{{LANG}}">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="{{shippingMetaDesc}}">
+  <title>{{shippingDocTitle}}</title>
+  <link rel="stylesheet" href="{{BASE}}css/style.css?v=5">
+</head>
+<body data-page="shipping">
+  {{nav}}
+  <main>
+    <h1 class="page-title">{{shippingTitle}}</h1>
+    <!-- SHIP_DETAILS_START : detailed cost tables — toggle with SHIPPING_DETAILS_VISIBLE in build.js -->
+    <p class="page-subtitle">{{shippingSubtitle}}</p>
+
+    <div class="shipping-info-section">
+      <div class="shipping-card">
+        <div class="shipping-card-header">
+          <h3>{{shipEuropeTitle}}</h3>
+        </div>
+        <div class="shipping-options">
+          <div class="shipping-option">
+            <span class="option-label">{{shipEurope1Label}}</span>
+            <span class="option-price">~25€</span>
+          </div>
+          <div class="shipping-option">
+            <span class="option-label">{{shipEurope2Label}}</span>
+            <span class="option-price">~30€</span>
+          </div>
+          <div class="shipping-option">
+            <span class="option-label">{{shipEurope3Label}}</span>
+            <span class="option-price">~35€</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="shipping-card">
+        <div class="shipping-card-header">
+          <span class="shipping-flag">🇺🇸</span>
+          <h3>{{shipUSTitle}}</h3>
+        </div>
+        <div class="shipping-options">
+          <div class="shipping-option">
+            <span class="option-label">{{shipUS1Label}}</span>
+            <span class="option-price">{{shipUS1Price}}</span>
+          </div>
+          <div class="shipping-option">
+            <span class="option-label">{{shipUS2Label}}</span>
+            <span class="option-price">{{shipUS2Price}}</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="shipping-card">
+        <div class="shipping-card-header">
+          <span class="shipping-flag">🇦🇺</span>
+          <h3>{{shipAUTitle}}</h3>
+        </div>
+        <div class="shipping-options">
+          <div class="shipping-option">
+            <span class="option-label">{{shipAU1Label}}</span>
+            <span class="option-price">{{shipAU1Price}}</span>
+          </div>
+          <div class="shipping-option">
+            <span class="option-label">{{shipAU2Label}}</span>
+            <span class="option-price">{{shipAU2Price}}</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="shipping-note">
+      <p><strong>{{shipNoteTitle}}</strong></p>
+      <p>{{shipNote1}}</p>
+      <p>{{shipNote2}}</p>
+      <p>{{shipNote3}}</p>
+      <p>{{shipNote4}}</p>
+    </div>
+    <!-- SHIP_DETAILS_END -->
+    <!-- SHIP_HIDDEN_START : shown while the detailed tables are hidden -->
+    <p class="page-subtitle">{{shippingSubtitleHidden}}</p>
+
+    <div class="shipping-note">
+      <p>{{shipContactMessage}}</p>
+    </div>
+    <!-- SHIP_HIDDEN_END -->
+
+    <div class="cta-section">
+      <h2>{{shipCtaHeading}}</h2>
+      <p>{{shipCtaText}}</p>
+      <div class="cta-buttons">
+        <a href="https://wa.me/33627335434" target="_blank" rel="noopener noreferrer" class="cta-btn whatsapp-btn">WhatsApp</a>
+        <a href="https://m.me/cookncollect" target="_blank" rel="noopener noreferrer" class="cta-btn messenger-btn">Messenger</a>
+      </div>
+    </div>
+  </main>
+  {{contactButtons}}
+  {{footer}}
+</body>
+</html>

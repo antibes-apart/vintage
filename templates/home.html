@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="{{LANG}}">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="{{homeMetaDesc}}">
+  <title>{{homeDocTitle}}</title>
+  <link rel="stylesheet" href="{{BASE}}css/style.css?v=5">
+</head>
+<body data-page="home">
+  {{nav}}
+  <main>
+    <h1 class="page-title">{{homeTitle}}</h1>
+    <p class="page-subtitle">{{homeSubtitle}}</p>
+    <div class="search-container">
+      <input type="text" id="search-input" class="search-input" placeholder="{{searchPlaceholder}}">
+      <svg class="search-icon" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg>
+    </div>
+    <nav class="category-nav" id="category-nav" aria-label="Filter by category"></nav>
+    <p id="item-count" class="item-count"></p>
+    <div class="shipping-banner">
+      <span class="shipping-icon">&#9992;</span>
+      <p><strong>{{shipBannerStrong}}</strong> {{shipBannerText}} <a href="shipping.html">{{shipBannerLink}}</a> {{shipBannerAfter}}</p>
+    </div>
+    <div id="grid" class="items-grid">
+      <div class="empty-state"><p>{{loading}}</p></div>
+    </div>
+    <div class="cta-section">
+      <h2>{{ctaHeading}}</h2>
+      <p>{{ctaText}}</p>
+      <div class="cta-buttons">
+        <a href="https://wa.me/33627335434" target="_blank" rel="noopener noreferrer" class="cta-btn whatsapp-btn">WhatsApp</a>
+        <a href="https://m.me/cookncollect" target="_blank" rel="noopener noreferrer" class="cta-btn messenger-btn">Messenger</a>
+      </div>
+    </div>
+  </main>
+  {{contactButtons}}
+  {{footer}}
+  <script src="{{BASE}}js/app.js"></script>
+</body>
+</html>

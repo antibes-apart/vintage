@@ -1,4 +1,82 @@
-const ALL_CATEGORY = 'All Items';
+const LANG = document.documentElement.lang === 'fr' ? 'fr' : 'en';
+
+const STRINGS = {
+  en: {
+    allCategory: 'All Items',
+    loadItemsError: '<h2>Unable to load items</h2><p>Please try again later.</p>',
+    loadItemError: '<h2>Unable to load item</h2><p>Could not load manifest.</p><p><a href="index.html" class="back-link">&larr; Back to collection</a></p>',
+    noMatch: '<h2>No items match your filter</h2><p>Try a different category or search term.</p>',
+    noSold: '<h2>No sold items yet</h2><p>Check back later!</p>',
+    noAvailable: '<h2>No items available</h2><p>New vintage treasures coming soon!</p>',
+    notFound: '<h2>Item not found</h2><p><a href="index.html" class="back-link">&larr; Back to collection</a></p>',
+    backCollection: '&larr; Back to collection',
+    backSold: '&larr; Back to sold items',
+    noPhotos: 'No photos available',
+    sold: 'Sold',
+    nounAvailable: 'available',
+    nounSold: 'sold',
+    itemWord: 'item',
+    itemsWord: 'items',
+    of: 'of',
+    shippingNote: 'International shipping available — costs at buyer\'s expense. <a href="https://wa.me/33627335434" target="_blank" rel="noopener noreferrer">Contact us</a> for a quote!',
+    titleSuffix: 'Vintage Collection'
+  },
+  fr: {
+    allCategory: 'Tous les articles',
+    loadItemsError: '<h2>Impossible de charger les articles</h2><p>Veuillez réessayer plus tard.</p>',
+    loadItemError: '<h2>Impossible de charger l\'article</h2><p>Le manifeste n\'a pas pu être chargé.</p><p><a href="index.html" class="back-link">&larr; Retour à la collection</a></p>',
+    noMatch: '<h2>Aucun article ne correspond à votre filtre</h2><p>Essayez une autre catégorie ou un autre terme de recherche.</p>',
+    noSold: '<h2>Aucun article vendu pour l\'instant</h2><p>Revenez plus tard !</p>',
+    noAvailable: '<h2>Aucun article disponible</h2><p>De nouveaux trésors vintage arrivent bientôt !</p>',
+    notFound: '<h2>Article introuvable</h2><p><a href="index.html" class="back-link">&larr; Retour à la collection</a></p>',
+    backCollection: '&larr; Retour à la collection',
+    backSold: '&larr; Retour aux articles vendus',
+    noPhotos: 'Aucune photo disponible',
+    sold: 'Vendu',
+    nounAvailable: 'disponible(s)',
+    nounSold: 'vendu(s)',
+    itemWord: 'article',
+    itemsWord: 'articles',
+    of: 'sur',
+    shippingNote: 'Livraison internationale disponible — frais à la charge de l\'acheteur. <a href="https://wa.me/33627335434" target="_blank" rel="noopener noreferrer">Contactez-nous</a> pour un devis !',
+    titleSuffix: 'Vintage Collection'
+  }
+};
+
+// Manifest categories are stored in English; these are the display labels per language.
+const CATEGORY_LABELS = {
+  en: {},
+  fr: {
+    'Cocottes': 'Cocottes',
+    'Skillets & Pans': 'Poêles & sauteuses',
+    'Saucepans & Casseroles': 'Casseroles & fait-tout',
+    'Baking & Serving Dishes': 'Plats de cuisson & de service',
+    'Terrines': 'Terrines',
+    'Grill Pans': 'Grils',
+    'Fondues': 'Fondues',
+    'Tea Light Holders': 'Photophores',
+    'Copper': 'Cuivre',
+    'Spare Parts': 'Pièces détachées',
+    'Ice Buckets': 'Seaux à glace',
+    'Other': 'Autres'
+  }
+};
+
+const T = STRINGS[LANG];
+const ALL_CATEGORY = T.allCategory;
+
+function categoryLabel(cat) {
+  if (cat === ALL_CATEGORY) return cat;
+  return (CATEGORY_LABELS[LANG] && CATEGORY_LABELS[LANG][cat]) || cat;
+}
+
+// Prefix a manifest-relative asset path ("items/…") with the page's base ("" at root,
+// "../" in /en/ and /fr/) so it resolves on file:// and when served.
+const BASE = window.__BASE__ || '';
+function assetUrl(p) {
+  if (!p) return p;
+  return p.startsWith('/') || /^https?:/.test(p) ? p : BASE + p;
+}
 
 (async function () {
   try {
@@ -7,7 +85,7 @@ const ALL_CATEGORY = 'All Items';
     if (window.__MANIFEST__) {
       data = window.__MANIFEST__;
     } else {
-      const response = await fetch('./manifest.json');
+      const response = await fetch((window.__BASE__ || '') + 'manifest.json');
       if (!response.ok) throw new Error('Failed to load manifest');
       data = await response.json();
     }
@@ -17,10 +95,10 @@ const ALL_CATEGORY = 'All Items';
 
     if (page === 'home') {
       const available = data.items.filter(item => !item.sold);
-      initListing(available, false, 'available');
+      initListing(available, false, T.nounAvailable);
     } else if (page === 'sold') {
       const sold = data.items.filter(item => item.sold);
-      initListing(sold, true, 'sold');
+      initListing(sold, true, T.nounSold);
     } else if (page === 'item') {
       renderItemDetail(data.items);
     }
@@ -29,10 +107,10 @@ const ALL_CATEGORY = 'All Items';
     const grid = document.getElementById('grid');
     const detail = document.getElementById('item-detail');
     if (grid) {
-      grid.innerHTML = '<div class="empty-state"><h2>Unable to load items</h2><p>Please try again later.</p></div>';
+      grid.innerHTML = `<div class="empty-state">${T.loadItemsError}</div>`;
     }
     if (detail) {
-      detail.innerHTML = '<div class="empty-state"><h2>Unable to load item</h2><p>Could not load manifest.</p><p><a href="index.html" class="back-link">&larr; Back to collection</a></p></div>';
+      detail.innerHTML = `<div class="empty-state">${T.loadItemError}</div>`;
     }
   }
 })();
@@ -87,7 +165,7 @@ function renderCategoryNav(items) {
       <button type="button"
               class="category-chip${isActive ? ' active' : ''}"
               data-category="${escapeHtml(cat)}">
-        <span class="category-label">${escapeHtml(cat)}</span>
+        <span class="category-label">${escapeHtml(categoryLabel(cat))}</span>
         <span class="category-count">${count}</span>
       </button>
     `;
@@ -127,13 +205,13 @@ function updateCount(filteredCount, query, category) {
   if (!countEl) return;
 
   const total = window._totalItems || 0;
-  const noun = window._listingNoun || 'available';
+  const noun = window._listingNoun || T.nounAvailable;
   const isFiltered = query || category !== ALL_CATEGORY;
 
   if (isFiltered) {
-    countEl.textContent = `${filteredCount} of ${total}`;
+    countEl.textContent = `${filteredCount} ${T.of} ${total}`;
   } else {
-    countEl.textContent = `${total} item${total !== 1 ? 's' : ''} ${noun}`;
+    countEl.textContent = `${total} ${total !== 1 ? T.itemsWord : T.itemWord} ${noun}`;
   }
 }
 
@@ -148,11 +226,11 @@ function renderGrid(items, showSoldBadge) {
 
   if (items.length === 0) {
     if (hasSearch || hasCategoryFilter) {
-      grid.innerHTML = '<div class="empty-state"><h2>No items match your filter</h2><p>Try a different category or search term.</p></div>';
+      grid.innerHTML = `<div class="empty-state">${T.noMatch}</div>`;
     } else if (showSoldBadge) {
-      grid.innerHTML = '<div class="empty-state"><h2>No sold items yet</h2><p>Check back later!</p></div>';
+      grid.innerHTML = `<div class="empty-state">${T.noSold}</div>`;
     } else {
-      grid.innerHTML = '<div class="empty-state"><h2>No items available</h2><p>New vintage treasures coming soon!</p></div>';
+      grid.innerHTML = `<div class="empty-state">${T.noAvailable}</div>`;
     }
     return;
   }
@@ -161,9 +239,9 @@ function renderGrid(items, showSoldBadge) {
     <a href="item.html?id=${encodeURIComponent(item.id)}" class="item-card">
       <div class="image-wrapper">
         ${item.cover
-          ? `<img src="${item.cover}" alt="${escapeHtml(item.title)}" loading="lazy">`
+          ? `<img src="${assetUrl(item.cover)}" alt="${escapeHtml(item.title)}" loading="lazy">`
           : '<div class="no-cover">No photo</div>'}
-        ${showSoldBadge ? '<span class="sold-badge">Sold</span>' : ''}
+        ${showSoldBadge ? `<span class="sold-badge">${T.sold}</span>` : ''}
       </div>
       <div class="card-body">
         <h3 class="card-title">${escapeHtml(item.title)}</h3>
@@ -184,24 +262,26 @@ function renderItemDetail(allItems) {
   const item = allItems.find(i => i.id === id);
 
   if (!item) {
-    container.innerHTML = '<div class="empty-state"><h2>Item not found</h2><p><a href="index.html" class="back-link">&larr; Back to collection</a></p></div>';
+    container.innerHTML = `<div class="empty-state">${T.notFound}</div>`;
     return;
   }
 
-  document.title = `${item.title} — Vintage Collection`;
+  document.title = `${item.title} — ${T.titleSuffix}`;
+  updateLangSwitchForItem(item.id);
 
-  const mainImage = item.images[0] || '';
+  const imgs = item.images.map(assetUrl);
+  const mainImage = imgs[0] || '';
 
   container.innerHTML = `
-    <a href="${item.sold ? 'sold.html' : 'index.html'}" class="back-link">&larr; Back to ${item.sold ? 'sold items' : 'collection'}</a>
+    <a href="${item.sold ? 'sold.html' : 'index.html'}" class="back-link">${item.sold ? T.backSold : T.backCollection}</a>
     <div class="item-layout">
       <div class="gallery">
         ${mainImage
           ? `<img src="${mainImage}" alt="${escapeHtml(item.title)}" class="main-image" id="mainImage" onclick="openLightbox(window._currentImageIndex || 0)">`
-          : '<div class="main-image no-cover">No photos available</div>'}
-        ${item.images.length > 1 ? `
+          : `<div class="main-image no-cover">${T.noPhotos}</div>`}
+        ${imgs.length > 1 ? `
           <div class="thumbnails">
-            ${item.images.map((img, i) => `
+            ${imgs.map((img, i) => `
               <img src="${img}" alt="${escapeHtml(item.title)} - photo ${i + 1}"
                    class="${i === 0 ? 'active' : ''}"
                    onclick="switchImage(${i})" loading="lazy">
@@ -210,17 +290,26 @@ function renderItemDetail(allItems) {
         ` : ''}
       </div>
       <div class="item-info">
-        ${item.sold ? '<span class="sold-badge">Sold</span>' : ''}
+        ${item.sold ? `<span class="sold-badge">${T.sold}</span>` : ''}
         <h1 class="item-title">${escapeHtml(item.title)}</h1>
         <p class="item-price">${escapeHtml(item.price)}</p>
         ${item.description ? `<p class="item-description">${escapeHtml(item.description)}</p>` : ''}
-        ${!item.sold ? '<div class="shipping-note"><span class="shipping-icon">&#9992;</span> International shipping available — costs at buyer\'s expense. <a href="https://wa.me/33627335434" target="_blank" rel="noopener noreferrer">Contact us</a> for a quote!</div>' : ''}
+        ${!item.sold ? `<div class="shipping-note"><span class="shipping-icon">&#9992;</span> ${T.shippingNote}</div>` : ''}
       </div>
     </div>
   `;
 
-  window._galleryImages = item.images;
+  window._galleryImages = imgs;
   window._currentImageIndex = 0;
+}
+
+// Keep the ?id when switching language from an item page.
+function updateLangSwitchForItem(id) {
+  const select = document.querySelector('.lang-switch select');
+  if (!select) return;
+  Array.from(select.options).forEach(opt => {
+    opt.value = `${opt.value.split('?')[0]}?id=${encodeURIComponent(id)}`;
+  });
 }
 
 /* ─── Image Gallery Controls ─── */

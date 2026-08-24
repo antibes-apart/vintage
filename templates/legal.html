@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="{{LANG}}">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="{{legalMetaDesc}}">
+  <title>{{legalDocTitle}}</title>
+  <link rel="stylesheet" href="{{BASE}}css/style.css?v=5">
+</head>
+<body data-page="legal">
+  {{nav}}
+  <main>
+    <h1 class="page-title">{{legalTitle}}</h1>
+    <p class="page-subtitle">{{legalSubtitle}}</p>
+
+    <div class="shipping-note">
+      <p><strong>{{legalOwnerHeading}}</strong></p>
+      <p>{{legalOwnerName}} — {{legalIndividual}}</p>
+      <p>{{legalTradeNameLabel}} : {{legalTradeName}}</p>
+      <p>{{legalSirenLabel}} : {{legalSiren}}</p>
+      <p>{{legalRcsLabel}} : {{legalRcs}}</p>
+      <p>{{legalAddressLabel}} : {{legalAddress}}</p>
+      <p>{{legalEmailLabel}} : {{legalEmail}}</p>
+      <p>{{legalPhoneLabel}} : {{legalPhone}}</p>
+    </div>
+
+    <div class="shipping-note">
+      <p><strong>{{legalHostHeading}}</strong></p>
+      <p>{{legalHostName}}</p>
+      <p>{{legalHostAddress}}</p>
+      <p>{{legalHostPhoneLabel}} : {{legalHostPhone}}</p>
+    </div>
+  </main>
+  {{contactButtons}}
+  {{footer}}
+</body>
+</html>

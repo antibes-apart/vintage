@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="{{LANG}}">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="{{soldMetaDesc}}">
+  <title>{{soldDocTitle}}</title>
+  <link rel="stylesheet" href="{{BASE}}css/style.css?v=5">
+</head>
+<body data-page="sold">
+  {{nav}}
+  <main>
+    <h1 class="page-title">{{soldTitle}}</h1>
+    <p class="page-subtitle">{{soldSubtitle}}</p>
+    <div class="search-container">
+      <input type="text" id="search-input" class="search-input" placeholder="{{searchPlaceholder}}">
+      <svg class="search-icon" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg>
+    </div>
+    <nav class="category-nav" id="category-nav" aria-label="Filter by category"></nav>
+    <p id="item-count" class="item-count"></p>
+    <div id="grid" class="items-grid">
+      <div class="empty-state"><p>{{loading}}</p></div>
+    </div>
+  </main>
+  {{contactButtons}}
+  {{footer}}
+  <script src="{{BASE}}js/app.js"></script>
+</body>
+</html>

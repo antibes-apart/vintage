@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="{{LANG}}">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{{itemDocTitle}}</title>
+  <link rel="stylesheet" href="{{BASE}}css/style.css?v=5">
+</head>
+<body data-page="item">
+  {{nav}}
+  <main>
+    <div id="item-detail">
+      <div class="empty-state"><p>{{loading}}</p></div>
+    </div>
+  </main>
+  <div class="lightbox" id="lightbox" onclick="closeLightbox()">
+    <button class="lightbox-close" onclick="closeLightbox()" aria-label="{{lightboxClose}}">&times;</button>
+    <button class="lightbox-nav lightbox-prev" onclick="event.stopPropagation(); navigateLightbox(-1)" aria-label="{{lightboxPrev}}">&#8249;</button>
+    <img id="lightboxImg" src="" alt="{{lightboxAlt}}" onclick="event.stopPropagation()">
+    <button class="lightbox-nav lightbox-next" onclick="event.stopPropagation(); navigateLightbox(1)" aria-label="{{lightboxNext}}">&#8250;</button>
+  </div>
+  {{contactButtons}}
+  {{footer}}
+  <script src="{{BASE}}js/app.js"></script>
+</body>
+</html>
