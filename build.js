@@ -250,7 +250,7 @@ function renderNav(activePage, langSwitch) {
   const cls = p => (p === activePage ? ' class="active"' : '');
   return `<nav>
     <div class="nav-inner">
-      <a href="index.html" class="logo">Vintage Collection</a>
+      <a href="index.html" class="logo">Cook &amp; Collect</a>
       <ul class="nav-links">
         <li><a href="index.html"${cls('home')}>{{navCollection}}</a></li>
         <li><a href="about.html"${cls('about')}>{{navAbout}}</a></li>
@@ -262,7 +262,7 @@ function renderNav(activePage, langSwitch) {
 }
 
 const FOOTER = `<footer>
-    <p>&copy; 2026 Vintage Collection</p>
+    <p>&copy; 2026 Cook &amp; Collect</p>
     <p><a href="{{legalHref}}">{{legal}}</a></p>
   </footer>`;
 

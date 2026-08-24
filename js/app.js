@@ -19,7 +19,7 @@ const STRINGS = {
     itemsWord: 'items',
     of: 'of',
     shippingNote: 'International shipping available — costs at buyer\'s expense. <a href="https://wa.me/33627335434" target="_blank" rel="noopener noreferrer">Contact us</a> for a quote!',
-    titleSuffix: 'Vintage Collection'
+    titleSuffix: 'Cook & Collect'
   },
   fr: {
     allCategory: 'Tous les articles',
@@ -39,7 +39,7 @@ const STRINGS = {
     itemsWord: 'articles',
     of: 'sur',
     shippingNote: 'Livraison internationale disponible — frais à la charge de l\'acheteur. <a href="https://wa.me/33627335434" target="_blank" rel="noopener noreferrer">Contactez-nous</a> pour un devis !',
-    titleSuffix: 'Vintage Collection'
+    titleSuffix: 'Cook & Collect'
   }
 };
 
