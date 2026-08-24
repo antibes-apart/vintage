@@ -217,6 +217,7 @@ const PAGES = [
   {tpl: 'home.html', out: 'index.html', page: 'home', inject: true},
   {tpl: 'item.html', out: 'item.html', page: 'item', inject: true},
   {tpl: 'shipping.html', out: 'shipping.html', page: 'shipping'},
+  {tpl: 'about.html', out: 'about.html', page: 'about'},
   {tpl: 'legal.html', out: null, page: 'legal'}, // out resolved per-locale (legal filename)
   {tpl: 'sold.html', out: 'sold.html', page: 'sold', inject: true} // hidden / unlinked
 ];
@@ -252,6 +253,7 @@ function renderNav(activePage, langSwitch) {
       <a href="index.html" class="logo">Vintage Collection</a>
       <ul class="nav-links">
         <li><a href="index.html"${cls('home')}>{{navCollection}}</a></li>
+        <li><a href="about.html"${cls('about')}>{{navAbout}}</a></li>
         <li><a href="shipping.html"${cls('shipping')}>{{navShipping}}</a></li>
         ${langSwitch}
       </ul>

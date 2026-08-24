@@ -19,6 +19,7 @@ const en = {
   // nav / shared
   navCollection: 'Collection',
   navShipping: 'Shipping',
+  navAbout: 'About',
   legal: 'Legal notice',
   loading: 'Loading...',
   ariaWhatsApp: 'Contact us on WhatsApp',
@@ -36,6 +37,15 @@ const en = {
   shipBannerAfter: 'or contact us for a quote!',
   ctaHeading: 'Looking for something specific?',
   ctaText: 'What you see here is only a selection of our collection. If you’re looking for a particular item or want to see everything we have, don’t hesitate to reach out!',
+  // about page
+  aboutDocTitle: 'About us — Vintage Collection',
+  aboutMetaDesc: 'Vintage French Collection — vintage French pieces with a story to tell.',
+  aboutTitle: 'About us',
+  aboutP1: 'Vintage French Collection was born from a passion for vintage French cookware and timeless objects that combine craftsmanship, design and history.',
+  aboutP2: 'We carefully select distinctive vintage pieces, with a particular interest in iconic French brands such as Le Creuset, Cousances, Staub, Fontignac and other makers that have shaped France’s culinary heritage.',
+  aboutP3: 'Each piece is individually selected and presented with detailed photographs and an honest description of its condition. As vintage objects, our items may show signs of their history and previous use — part of what makes each one unique.',
+  aboutP4: 'Our aim is simple: to give beautiful vintage objects a new life and help collectors and enthusiasts discover pieces worth preserving. Giving vintage pieces a new life also means preserving their history while embracing a more responsible approach to consumption.',
+  aboutTagline: 'Vintage French Collection — pieces with a story to tell.',
   // shipping page
   shippingDocTitle: 'Shipping Information — Vintage Collection',
   shippingMetaDesc: 'Approximate shipping costs for our vintage collection',
@@ -99,6 +109,7 @@ const fr = {
   // nav / shared
   navCollection: 'Collection',
   navShipping: 'Livraison',
+  navAbout: 'À propos',
   legal: 'Mentions légales',
   loading: 'Chargement…',
   ariaWhatsApp: 'Contactez-nous sur WhatsApp',
@@ -116,6 +127,15 @@ const fr = {
   shipBannerAfter: 'ou contactez-nous pour un devis !',
   ctaHeading: 'Vous cherchez quelque chose de précis ?',
   ctaText: 'Ce que vous voyez ici n’est qu’une sélection de notre collection. Si vous recherchez un article particulier ou souhaitez tout voir, n’hésitez pas à nous contacter !',
+  // about page
+  aboutDocTitle: 'À propos — Vintage Collection',
+  aboutMetaDesc: 'Vintage French Collection — des pièces vintage françaises qui ont une histoire à raconter.',
+  aboutTitle: 'À propos',
+  aboutP1: 'Vintage French Collection est né d’une passion pour les ustensiles de cuisine français vintage et les objets intemporels qui allient savoir-faire, design et histoire.',
+  aboutP2: 'Nous sélectionnons avec soin des pièces vintage de caractère, avec un intérêt particulier pour les grandes maisons françaises telles que Le Creuset, Cousances, Staub, Fontignac, ainsi que d’autres fabricants qui ont marqué le patrimoine culinaire français.',
+  aboutP3: 'Chaque pièce est sélectionnée individuellement et présentée avec des photographies détaillées ainsi qu’une description fidèle de son état. En tant qu’objets vintage, nos articles peuvent porter les traces de leur histoire et de leurs utilisations passées — c’est aussi ce qui rend chaque pièce unique.',
+  aboutP4: 'Notre objectif est simple : donner une nouvelle vie à de beaux objets vintage et permettre aux collectionneurs et aux passionnés de découvrir des pièces qui méritent d’être préservées. Donner une nouvelle vie aux objets vintage, c’est aussi préserver leur histoire tout en favorisant une approche plus responsable de la consommation.',
+  aboutTagline: 'Vintage French Collection — Des pièces vintage françaises qui ont une histoire à raconter.',
   // shipping page
   shippingDocTitle: 'Informations de livraison — Vintage Collection',
   shippingMetaDesc: 'Coûts de livraison approximatifs pour notre collection vintage',

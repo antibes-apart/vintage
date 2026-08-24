@@ -126,6 +126,25 @@ nav {
   margin-bottom: 2rem;
 }
 
+/* ─── About page ─── */
+.about-content {
+  max-width: 720px;
+  margin-top: 1.5rem;
+}
+
+.about-content p {
+  color: var(--text);
+  line-height: 1.7;
+  margin-bottom: 1.25rem;
+}
+
+.about-content .about-tagline {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.2rem;
+  color: var(--heading);
+  margin-top: 2rem;
+}
+
 /* ─── Search Bar ─── */
 .search-container {
   position: relative;
