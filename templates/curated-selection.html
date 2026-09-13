@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="{{LANG}}">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="{{curatedMetaDesc}}">
+  <title>{{curatedDocTitle}}</title>
+  <link rel="stylesheet" href="{{BASE}}css/style.css?v=5">
+</head>
+<body data-page="curated" class="curated-page">
+  {{nav}}
+  <main>
+    <!-- Hero -->
+    <header class="curated-hero">
+      <h1 class="curated-hero-title">{{curatedTitle}}</h1>
+      <p class="curated-hero-subtitle">{{curatedHeroSubtitle}}</p>
+      <p class="curated-hero-intro">{{curatedHeroIntro}}</p>
+    </header>
+
+    <!-- Areas of focus -->
+    <section class="curated-section" aria-labelledby="curated-cat-heading">
+      <h2 id="curated-cat-heading" class="curated-section-heading">{{curatedCatHeading}}</h2>
+      <div class="curated-categories">
+        <article class="curated-category">
+          <h3>{{curatedCat1Title}}</h3>
+          <p>{{curatedCat1Text}}</p>
+        </article>
+        <article class="curated-category">
+          <h3>{{curatedCat2Title}}</h3>
+          <p>{{curatedCat2Text}}</p>
+        </article>
+        <article class="curated-category">
+          <h3>{{curatedCat3Title}}</h3>
+          <p>{{curatedCat3Text}}</p>
+        </article>
+        <article class="curated-category">
+          <h3>{{curatedCat4Title}}</h3>
+          <p>{{curatedCat4Text}}</p>
+        </article>
+      </div>
+    </section>
+
+    <!-- Gallery -->
+    <section class="curated-section" aria-labelledby="curated-gallery-heading">
+      <h2 id="curated-gallery-heading" class="curated-section-heading">{{curatedGalleryHeading}}</h2>
+      <div id="curated-grid" class="curated-grid">
+        <div class="empty-state"><p>{{loading}}</p></div>
+      </div>
+    </section>
+
+    <!-- Selection philosophy -->
+    <section class="curated-band" aria-labelledby="curated-philosophy-heading">
+      <h2 id="curated-philosophy-heading" class="curated-section-heading">{{curatedPhilosophyHeading}}</h2>
+      <p class="curated-band-text">{{curatedPhilosophyText}}</p>
+    </section>
+
+    <!-- Experience / track record (figures easy to edit in i18n.js) -->
+    <section class="curated-section curated-track" aria-labelledby="curated-track-heading">
+      <h2 id="curated-track-heading" class="curated-section-heading">{{curatedTrackHeading}}</h2>
+      <p class="curated-track-text">{{curatedTrackText}}</p>
+      <ul class="curated-stats" id="curated-stats">
+        <li data-value="{{curatedTrackStat1Value}}"><span class="stat-value">{{curatedTrackStat1Value}}</span><span class="stat-label">{{curatedTrackStat1Label}}</span></li>
+        <li data-value="{{curatedTrackStat2Value}}"><span class="stat-value">{{curatedTrackStat2Value}}</span><span class="stat-label">{{curatedTrackStat2Label}}</span></li>
+        <li data-value="{{curatedTrackStat3Value}}"><span class="stat-value">{{curatedTrackStat3Value}}</span><span class="stat-label">{{curatedTrackStat3Label}}</span></li>
+      </ul>
+    </section>
+
+    <!-- Enquiries -->
+    <section class="curated-enquiry" aria-labelledby="curated-enquiry-heading">
+      <h2 id="curated-enquiry-heading" class="curated-section-heading">{{curatedEnquiryHeading}}</h2>
+      <p class="curated-enquiry-text">{{curatedEnquiryText}}</p>
+      <p class="curated-enquiry-contact">
+        <a href="mailto:{{legalEmail}}">{{legalEmail}}</a>
+      </p>
+    </section>
+  </main>
+
+  <!-- Object detail modal (reuses lightbox styling) -->
+  <div class="sel-modal" id="sel-modal" onclick="closeSelModal(event)" aria-hidden="true" role="dialog" aria-modal="true" aria-label="{{curatedTitle}}">
+    <div class="sel-modal-panel" role="document">
+      <button class="sel-modal-close" onclick="closeSelModal()" aria-label="{{selClose}}">&times;</button>
+      <div class="sel-modal-body" id="sel-modal-body"></div>
+    </div>
+  </div>
+
+  <!-- Image lightbox (shared visual language with the shop) -->
+  <div class="lightbox" id="lightbox" onclick="closeLightbox()">
+    <button class="lightbox-close" onclick="closeLightbox()" aria-label="{{selClose}}">&times;</button>
+    <button class="lightbox-nav lightbox-prev" onclick="event.stopPropagation(); navigateLightbox(-1)" aria-label="{{selPrev}}">&#8249;</button>
+    <img id="lightboxImg" src="" alt="{{curatedTitle}}" onclick="event.stopPropagation()">
+    <button class="lightbox-nav lightbox-next" onclick="event.stopPropagation(); navigateLightbox(1)" aria-label="{{selNext}}">&#8250;</button>
+  </div>
+
+  {{contactButtons}}
+  {{footer}}
+  <script src="{{BASE}}js/selection.js"></script>
+</body>
+</html>

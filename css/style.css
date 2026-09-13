@@ -791,3 +791,492 @@ footer {
     height: 24px;
   }
 }
+
+/* ─────────────────────────────────────────────────────────────
+   Curated Selection — premium dealer portfolio.
+   Scoped under .curated-page so the shop pages are untouched.
+   More spacious / editorial than the shop, same visual identity.
+   ───────────────────────────────────────────────────────────── */
+
+.curated-page main {
+  max-width: 1080px;
+}
+
+/* Hero */
+.curated-hero {
+  text-align: center;
+  max-width: 760px;
+  margin: 2rem auto 3.5rem;
+  padding: 0 0.5rem;
+}
+
+.curated-hero-title {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(2.2rem, 5vw, 3.2rem);
+  font-weight: 700;
+  color: var(--heading);
+  letter-spacing: 0.01em;
+  margin-bottom: 0.75rem;
+}
+
+.curated-hero-subtitle {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(1.05rem, 2.4vw, 1.35rem);
+  font-weight: 400;
+  font-style: italic;
+  color: var(--accent);
+  margin-bottom: 1.5rem;
+}
+
+.curated-hero-subtitle::before,
+.curated-hero-subtitle::after {
+  content: '';
+  display: inline-block;
+  width: 32px;
+  height: 1px;
+  background: var(--accent);
+  vertical-align: middle;
+  margin: 0 0.9rem;
+  opacity: 0.7;
+}
+
+.curated-hero-intro {
+  color: var(--text-light);
+  font-size: 1.05rem;
+  line-height: 1.85;
+}
+
+/* Generic section rhythm */
+.curated-section {
+  margin: 3.5rem 0;
+}
+
+.curated-section-heading {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.5rem;
+  color: var(--heading);
+  margin-bottom: 1.5rem;
+  text-align: center;
+}
+
+/* Areas of focus */
+.curated-categories {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 1.75rem 2.5rem;
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+.curated-category h3 {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.15rem;
+  color: var(--heading);
+  margin-bottom: 0.5rem;
+  padding-bottom: 0.5rem;
+  border-bottom: 1px solid var(--border);
+}
+
+.curated-category p {
+  color: var(--text-light);
+  font-size: 0.95rem;
+  line-height: 1.7;
+}
+
+/* Gallery grid */
+.curated-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 2.5rem 2rem;
+}
+
+.curated-card {
+  display: block;
+  width: 100%;
+  text-align: left;
+  background: transparent;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  font-family: inherit;
+  color: inherit;
+}
+
+.curated-card-image {
+  position: relative;
+  display: block;
+  aspect-ratio: 4 / 5;
+  overflow: hidden;
+  border-radius: var(--radius);
+  background: linear-gradient(135deg, #efe7db, #ddd0bd);
+  box-shadow: var(--shadow);
+  transition: box-shadow 0.3s, transform 0.3s;
+}
+
+.curated-card-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  background: #fff;
+  transition: transform 0.4s ease;
+}
+
+.curated-card:hover .curated-card-image {
+  box-shadow: var(--shadow-hover);
+  transform: translateY(-3px);
+}
+
+.curated-card:hover .curated-card-image img {
+  transform: scale(1.03);
+}
+
+.curated-card:focus-visible .curated-card-image {
+  outline: 2px solid var(--accent);
+  outline-offset: 3px;
+}
+
+.curated-card-image .no-cover {
+  position: absolute;
+  inset: 0;
+}
+
+.curated-status {
+  position: absolute;
+  top: 12px;
+  left: 12px;
+  background: rgba(255, 255, 255, 0.92);
+  color: var(--heading);
+  padding: 0.25rem 0.7rem;
+  border-radius: 999px;
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  box-shadow: var(--shadow);
+}
+
+.curated-card-body {
+  display: block;
+  padding: 0.9rem 0.25rem 0;
+}
+
+.curated-card-title {
+  display: block;
+  font-family: 'Playfair Display', serif;
+  font-size: 1.05rem;
+  font-weight: 600;
+  color: var(--heading);
+  line-height: 1.4;
+}
+
+.curated-card-meta {
+  display: block;
+  margin-top: 0.3rem;
+  font-size: 0.85rem;
+  color: var(--text-light);
+  letter-spacing: 0.01em;
+}
+
+/* Philosophy band */
+.curated-band {
+  background: var(--card-bg);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 2.75rem 2rem;
+  margin: 3.5rem 0;
+  text-align: center;
+}
+
+.curated-band-text {
+  max-width: 680px;
+  margin: 0 auto;
+  color: var(--text-light);
+  line-height: 1.85;
+}
+
+/* Experience / track record */
+.curated-track {
+  text-align: center;
+}
+
+.curated-track-text {
+  max-width: 680px;
+  margin: 0 auto 2rem;
+  color: var(--text-light);
+  line-height: 1.8;
+}
+
+.curated-stats {
+  list-style: none;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 2.5rem 3.5rem;
+  padding: 0;
+}
+
+.curated-stats li {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+}
+
+.curated-stats .stat-value {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.9rem;
+  font-weight: 700;
+  color: var(--accent);
+  line-height: 1;
+}
+
+.curated-stats .stat-label {
+  font-size: 0.85rem;
+  color: var(--text-light);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+/* Enquiries */
+.curated-enquiry {
+  text-align: center;
+  margin: 3.5rem auto 1rem;
+  max-width: 620px;
+}
+
+.curated-enquiry-text {
+  color: var(--text-light);
+  line-height: 1.8;
+  margin-bottom: 1.25rem;
+}
+
+.curated-enquiry-contact a {
+  color: var(--accent);
+  font-weight: 600;
+  text-decoration: none;
+  font-size: 1.05rem;
+}
+
+.curated-enquiry-contact a:hover {
+  text-decoration: underline;
+}
+
+/* ─── Object detail modal ─── */
+.sel-modal {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(61, 44, 30, 0.55);
+  backdrop-filter: blur(3px);
+  z-index: 1000;
+  padding: 2rem 1.25rem;
+  overflow-y: auto;
+}
+
+.sel-modal.open {
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+}
+
+.sel-modal-panel {
+  position: relative;
+  background: var(--card-bg);
+  border-radius: var(--radius);
+  max-width: 940px;
+  width: 100%;
+  margin: auto;
+  box-shadow: var(--shadow-hover);
+  padding: 2.5rem;
+}
+
+.sel-modal-close {
+  position: absolute;
+  top: 0.75rem;
+  right: 1rem;
+  background: none;
+  border: none;
+  font-size: 2rem;
+  line-height: 1;
+  color: var(--text-light);
+  cursor: pointer;
+  transition: color 0.2s;
+}
+
+.sel-modal-close:hover {
+  color: var(--accent);
+}
+
+.sel-detail {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2.5rem;
+  align-items: start;
+}
+
+.sel-main-frame {
+  position: relative;
+}
+
+.sel-main-image {
+  display: block;
+  width: 100%;
+  aspect-ratio: 4 / 5;
+  object-fit: contain;
+  background: #fff;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  cursor: zoom-in;
+}
+
+.sel-arrow {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid var(--border);
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.9);
+  color: var(--heading);
+  font-size: 1.5rem;
+  line-height: 1;
+  cursor: pointer;
+  box-shadow: var(--shadow);
+  transition: background 0.2s, color 0.2s, border-color 0.2s;
+}
+
+.sel-arrow:hover {
+  background: #fff;
+  color: var(--accent);
+  border-color: var(--accent);
+}
+
+.sel-arrow:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
+.sel-arrow-prev { left: 0.6rem; }
+.sel-arrow-next { right: 0.6rem; }
+
+.sel-main-image.no-cover {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: default;
+  background: linear-gradient(135deg, #efe7db, #ddd0bd);
+}
+
+.sel-thumbnails {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-top: 0.75rem;
+}
+
+.sel-thumbnails img {
+  width: 64px;
+  height: 64px;
+  object-fit: cover;
+  border-radius: 4px;
+  cursor: pointer;
+  border: 2px solid transparent;
+  opacity: 0.65;
+  transition: opacity 0.2s, border-color 0.2s;
+}
+
+.sel-thumbnails img:hover,
+.sel-thumbnails img.active {
+  opacity: 1;
+  border-color: var(--accent);
+}
+
+.sel-detail-category {
+  font-size: 0.8rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--accent);
+  margin-bottom: 0.5rem;
+}
+
+.sel-detail-title {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.6rem;
+  line-height: 1.35;
+  color: var(--heading);
+  margin-bottom: 1rem;
+}
+
+.sel-detail-description {
+  color: var(--text-light);
+  line-height: 1.8;
+  margin-bottom: 1.5rem;
+  white-space: pre-line;
+}
+
+.sel-detail-fields {
+  display: grid;
+  gap: 0.75rem;
+}
+
+.sel-field {
+  display: grid;
+  grid-template-columns: 40% 1fr;
+  gap: 0.5rem;
+  padding-bottom: 0.75rem;
+  border-bottom: 1px solid var(--border);
+}
+
+.sel-field dt {
+  font-size: 0.8rem;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: var(--text-light);
+  font-weight: 600;
+}
+
+.sel-field dd {
+  color: var(--text);
+  font-size: 0.95rem;
+}
+
+/* ─── Curated Selection responsive ─── */
+@media (max-width: 768px) {
+  .curated-section-heading {
+    font-size: 1.3rem;
+  }
+
+  .sel-detail {
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+  }
+
+  .sel-modal-panel {
+    padding: 2.25rem 1.25rem 1.75rem;
+  }
+
+  .sel-main-image {
+    aspect-ratio: 4 / 3;
+  }
+}
+
+@media (max-width: 480px) {
+  .curated-grid {
+    grid-template-columns: 1fr;
+    gap: 2rem;
+  }
+
+  .curated-hero-subtitle::before,
+  .curated-hero-subtitle::after {
+    width: 20px;
+    margin: 0 0.5rem;
+  }
+
+  .sel-field {
+    grid-template-columns: 1fr;
+    gap: 0.15rem;
+  }
+}

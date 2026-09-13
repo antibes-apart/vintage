@@ -3,6 +3,7 @@ const path = require('path');
 const i18n = require('./i18n.js');
 
 const ITEMS_DIR = path.join(__dirname, 'items');
+const SELECTION_DIR = path.join(__dirname, 'selection');
 const TEMPLATES_DIR = path.join(__dirname, 'templates');
 const OUTPUT = path.join(__dirname, 'manifest.json');
 const IMAGE_EXT = new Set(['.jpg', '.jpeg', '.png', '.webp', '.gif', '.avif', '.bmp', '.svg']);
@@ -180,11 +181,88 @@ function scanItems() {
   .map(({sortPriority, sortBucket, ...item}) => item);
 }
 
+/* ─── Curated Selection (premium dealer portfolio) ───
+   Read from selection/<slug>/ and kept in a SEPARATE manifest array.
+   These objects never carry a price and never mix with the shop `items`. */
+
+const SELECTION_CATEGORIES = [
+  'French Copperware',
+  'Champagne & Wine Objects',
+  'French Design & Decorative Objects',
+  'Rare Cast Iron'
+];
+const SELECTION_CATEGORY_SET = new Set(SELECTION_CATEGORIES);
+
+// Fields copied verbatim from info.json into the selection manifest (no price).
+const SELECTION_STRING_FIELDS = [
+  'maker', 'designer', 'origin', 'period', 'materials',
+  'dimensions', 'marks', 'description', 'condition', 'status'
+];
+
+function scanSelection() {
+  if (!fs.existsSync(SELECTION_DIR)) return [];
+
+  const folders = fs.readdirSync(SELECTION_DIR, {withFileTypes: true})
+    .filter(entry => entry.isDirectory() && !entry.name.startsWith('.'));
+
+  return folders.map(folder => {
+    const folderPath = path.join(SELECTION_DIR, folder.name);
+    const infoPath = path.join(folderPath, 'info.json');
+
+    let info = {};
+    if (fs.existsSync(infoPath)) {
+      try {
+        info = JSON.parse(fs.readFileSync(infoPath, 'utf-8'));
+      } catch (e) {
+        console.warn(`Warning: Invalid info.json in selection/${folder.name}, using defaults.`);
+      }
+    }
+
+    const files = fs.readdirSync(folderPath);
+    const images = files.filter(f => IMAGE_EXT.has(path.extname(f).toLowerCase()));
+    const cover = images.find(f => path.parse(f).name.toLowerCase() === 'cover');
+    const otherImages = images.filter(f => f !== cover).sort();
+    const allImages = [
+      ...(cover ? [`selection/${folder.name}/${cover}`] : []),
+      ...otherImages.map(f => `selection/${folder.name}/${f}`)
+    ];
+
+    const entry = {
+      id: folder.name,
+      title: info.title || folder.name,
+      cover: cover ? `selection/${folder.name}/${cover}` : (allImages[0] || null),
+      images: allImages
+    };
+
+    if (typeof info.category === 'string' && SELECTION_CATEGORY_SET.has(info.category)) {
+      entry.category = info.category;
+    }
+
+    // Copy only known, non-empty string fields (unknown info is simply not shown).
+    SELECTION_STRING_FIELDS.forEach(field => {
+      const value = info[field];
+      if (typeof value === 'string' && value.trim() !== '') {
+        entry[field] = value;
+      }
+    });
+
+    entry._sortPriority = parseSortPriority(info.sortPriority);
+    return entry;
+  })
+  .sort((a, b) => {
+    const priorityDiff = compareNumbers(a._sortPriority, b._sortPriority);
+    if (priorityDiff !== 0) return priorityDiff;
+    return a.title.localeCompare(b.title);
+  })
+  .map(({_sortPriority, ...entry}) => entry);
+}
+
 const allItems = scanItems();
 const items = VISIBLE_ONLY_SET.size > 0
   ? allItems.filter(item => VISIBLE_ONLY_SET.has(item.id))
   : allItems;
-const manifest = {items, categories: CATEGORIES};
+const selection = scanSelection();
+const manifest = {items, categories: CATEGORIES, selection};
 fs.writeFileSync(OUTPUT, JSON.stringify(manifest, null, 2));
 
 /* ─── Bilingual page generation ─── */
@@ -200,6 +278,7 @@ const LOCALES = [
 const PAGES = [
   {tpl: 'home.html', out: 'index.html', page: 'home', inject: true},
   {tpl: 'item.html', out: 'item.html', page: 'item', inject: true},
+  {tpl: 'curated-selection.html', out: 'curated-selection.html', page: 'curated', inject: true},
   {tpl: 'shipping.html', out: 'shipping.html', page: 'shipping'},
   {tpl: 'about.html', out: 'about.html', page: 'about'},
   {tpl: 'legal.html', out: null, page: 'legal'}, // out resolved per-locale (legal filename)
