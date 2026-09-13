@@ -13,23 +13,7 @@ const FEATURED_ITEM_ORDER = [
 
 // Temporary allowlist for the Préfecture (reseller registration): when non-empty, only
 // these item ids are published. Set back to [] to show the full collection again.
-const VISIBLE_ONLY = [
-  'le-creuset-cocotte-ovale-vintage-fonte-maille-oran',
-  'le-creuset-26-cast-iron-dutch-oven-cream-ivory-mad',
-  'vintage-cousances-cast-iron-dutch-oven-size-g-yell',
-  'le-creuset-enameled-cast-iron-baking-dish-no-18-vi',
-  'emile-henry-gastron-ceramic-plate-made-in-france-y',
-  'le-creuset-cast-iron-mini-cocotte-terrine-size-14-',
-  'le-creuset-stoneware-mini-oval-cocotte-red-with-li',
-  'le-creuset-enameled-cast-iron-baking-dish-no-28',
-  'le-creuset-mini-cast-iron-cocotte-blue-with-lid',
-  'le-creuset-mini-cast-iron-cocotte-red-with-lid',
-  'le-creuset-cast-iron-casserole-with-lid-model-no-1',
-  'le-creuset-cast-iron-skillet-16-cm-vintage-model',
-  'vintage-le-creuset-enameled-cast-iron-terrine-no-3',
-  'vintage-french-cast-iron-kitchen-set-rooster-paper',
-  'laurent-perrier-champagne-cooler-stainless-steel-i'
-];
+const VISIBLE_ONLY = [];
 
 const VISIBLE_ONLY_SET = new Set(VISIBLE_ONLY);
 const NO_FEATURED_INDEX = 999999;
@@ -224,7 +208,7 @@ const PAGES = [
 
 // Set to true to restore the detailed shipping cost tables on the Shipping page.
 // While false, that page shows only a "contact us for a quote" message.
-const SHIPPING_DETAILS_VISIBLE = false;
+const SHIPPING_DETAILS_VISIBLE = true;
 
 const manifestScript = `<script>window.__MANIFEST__=${JSON.stringify(manifest)};</script>`;
 const tpl = name => fs.readFileSync(path.join(TEMPLATES_DIR, name), 'utf-8');
@@ -255,6 +239,7 @@ function renderNav(activePage, langSwitch) {
         <li><a href="index.html"${cls('home')}>{{navCollection}}</a></li>
         <li><a href="about.html"${cls('about')}>{{navAbout}}</a></li>
         <li><a href="shipping.html"${cls('shipping')}>{{navShipping}}</a></li>
+        <li><a href="sold.html"${cls('sold')}>{{navSold}}</a></li>
         ${langSwitch}
       </ul>
     </div>

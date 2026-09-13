@@ -15,6 +15,7 @@
         <li><a href="index.html">Collection</a></li>
         <li><a href="about.html">About</a></li>
         <li><a href="shipping.html" class="active">Shipping</a></li>
+        <li><a href="sold.html">Sold</a></li>
         <li class="lang-switch">
           <select onchange="location.href=this.value" aria-label="Language">
             <option value="en/shipping.html" selected>EN</option>
@@ -26,13 +27,73 @@
   </nav>
   <main>
     <h1 class="page-title">Shipping Information</h1>
-    <!-- SHIP_HIDDEN_START : shown while the detailed tables are hidden -->
-    <p class="page-subtitle">We ship worldwide!</p>
+    <!-- SHIP_DETAILS_START : detailed cost tables — toggle with SHIPPING_DETAILS_VISIBLE in build.js -->
+    <p class="page-subtitle">We ship worldwide! Here are approximate costs for a 7kg parcel (typical for a cocotte)</p>
+
+    <div class="shipping-info-section">
+      <div class="shipping-card">
+        <div class="shipping-card-header">
+          <h3>Europe</h3>
+        </div>
+        <div class="shipping-options">
+          <div class="shipping-option">
+            <span class="option-label">France, Netherlands, Belgium</span>
+            <span class="option-price">~25€</span>
+          </div>
+          <div class="shipping-option">
+            <span class="option-label">Rest of EU</span>
+            <span class="option-price">~30€</span>
+          </div>
+          <div class="shipping-option">
+            <span class="option-label">Rest of Europe</span>
+            <span class="option-price">~35€</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="shipping-card">
+        <div class="shipping-card-header">
+          <span class="shipping-flag">🇺🇸</span>
+          <h3>United States</h3>
+        </div>
+        <div class="shipping-options">
+          <div class="shipping-option">
+            <span class="option-label">Standard (2-3 weeks)</span>
+            <span class="option-price">from 65€</span>
+          </div>
+          <div class="shipping-option">
+            <span class="option-label">Express (1-2 weeks)</span>
+            <span class="option-price">from 80€</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="shipping-card">
+        <div class="shipping-card-header">
+          <span class="shipping-flag">🇦🇺</span>
+          <h3>Australia</h3>
+        </div>
+        <div class="shipping-options">
+          <div class="shipping-option">
+            <span class="option-label">Standard (3-4 weeks)</span>
+            <span class="option-price">from 75€</span>
+          </div>
+          <div class="shipping-option">
+            <span class="option-label">Express (1-2 weeks)</span>
+            <span class="option-price">from 95€</span>
+          </div>
+        </div>
+      </div>
+    </div>
 
     <div class="shipping-note">
-      <p>Shipping costs depend on the destination and the item, and are at the buyer’s expense. Please contact us with your delivery address and the item(s) you’re interested in, and we’ll send you an exact shipping quote.</p>
+      <p><strong>Note:</strong></p>
+      <p>These prices are approximate estimates for a typical 7kg parcel.</p>
+      <p>Actual costs may be lower for lighter items or delivery to a pickup point.</p>
+      <p>Multiple shipping options will be presented to you, and you also have the possibility to provide your own shipping label.</p>
+      <p>For an exact shipping quote, please contact us with your delivery address.</p>
     </div>
-    <!-- SHIP_HIDDEN_END -->
+    <!-- SHIP_DETAILS_END -->
 
     <div class="cta-section">
       <h2>Need an exact quote?</h2>
