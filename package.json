@@ -3,7 +3,9 @@
   "version": "1.0.0",
   "private": true,
   "scripts": {
-    "build": "node build.js"
+    "build": "node build.js && node build-guides.js",
+    "build:app": "node build.js",
+    "build:guides": "node build-guides.js"
   },
   "devDependencies": {
     "sharp": "^0.34.5"

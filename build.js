@@ -377,7 +377,13 @@ LOCALES.forEach(locale => {
       ...strings,
       LANG: locale.code,
       BASE: base,
-      legalHref: locale.legal
+      legalHref: locale.legal,
+      // Guides live in en/guides/ and fr/guides/ (see build-guides.js). From the
+      // root English page they need the "en/" prefix; inside en/ or fr/ they are
+      // a sibling folder.
+      guideChampagneHref: locale.dir === ''
+        ? 'en/guides/vintage-french-champagne-buckets.html'
+        : 'guides/vintage-french-champagne-buckets.html'
     };
     html = substitute(html, ctx);
 

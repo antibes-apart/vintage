@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="{{LANG}}">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="{{guideChampagneMetaDesc}}">
+  <title>{{guideChampagneDocTitle}}</title>
+{{guideHead}}
+  <link rel="stylesheet" href="{{BASE}}css/style.css?v=10">
+</head>
+<body data-page="guide" class="guide-page">
+  {{nav}}
+
+  <!-- ─────────────────────────────────────────────────────────────
+       PHOTOGRAPHY
+       All images live in  img/guides/champagne-buckets/<object>/
+       Four images per object, same four roles for each:
+         1-full.jpeg    whole object, main view
+         2-detail.jpeg  close-up of material / construction
+         3-mark.jpeg    maker's mark, base marking or branding close-up
+         4-second.jpeg  a second full view
+       Just overwrite those files with your photos — no HTML changes needed.
+       CSS fixes the aspect ratio and letterboxes on white, so portrait or
+       landscape originals both sit correctly in the layout.
+       ───────────────────────────────────────────────────────────── -->
+
+  <main>
+    <article class="guide">
+
+      <!-- ── Header + hero (Veuve Clicquot as the visual introduction) ── -->
+      <header class="guide-header">
+        <nav class="guide-breadcrumb" aria-label="Breadcrumb">
+          <ol>
+            <li><a href="../index.html">{{navCollection}}</a></li>
+            <!-- TODO: point to the guides index once /en/guides/index.html exists -->
+            <li><span>{{guideChampagneBreadcrumbGuides}}</span></li>
+            <li aria-current="page">{{guideChampagneBreadcrumbCurrent}}</li>
+          </ol>
+        </nav>
+        <p class="guide-eyebrow">{{guideChampagneEyebrow}}</p>
+        <h1 class="guide-title">{{guideChampagneH1}}</h1>
+      </header>
+
+      <p class="guide-intro">{{guideChampagneIntro}}</p>
+
+      <!-- ── From Champagne Service to Collectible Design ── -->
+      <section class="guide-section" aria-labelledby="guide-s1">
+        <h2 id="guide-s1">{{guideChampagneS1Heading}}</h2>
+        <p>{{guideChampagneS1P1}}</p>
+        <p>{{guideChampagneS1P2}}</p>
+      </section>
+
+      <!-- ── Champagne Houses and Their Branded Buckets ──
+           Veuve Clicquot (branding / colour / synthetic) + Moët (Made in France). -->
+      <section class="guide-section" aria-labelledby="guide-s2">
+        <h2 id="guide-s2">{{guideChampagneS2Heading}}</h2>
+        <p>{{guideChampagneS2P1}}</p>
+        <p>{{guideChampagneS2P2}}</p>
+
+        <!-- Veuve Clicquot: full object + branding close-up. -->
+        <div class="guide-figure-pair">
+          <figure class="guide-figure">
+            <img src="{{BASE}}img/guides/champagne-buckets/veuve-clicquot/1-full.jpeg"
+                 alt="{{guideChampagneObj2Alt}}"
+                 loading="lazy" decoding="async">
+            <figcaption>{{guideChampagneObj2Title}}</figcaption>
+          </figure>
+          <figure class="guide-figure">
+            <img src="{{BASE}}img/guides/champagne-buckets/veuve-clicquot/3-mark.jpeg"
+                 alt="{{guideChampagneObj2DetailAlt}}"
+                 loading="lazy" decoding="async">
+            <figcaption>{{guideChampagneObj2DetailAlt}}</figcaption>
+          </figure>
+        </div>
+
+        <!-- Veuve Clicquot: second view beside its dating discussion. -->
+        <div class="guide-split">
+          <figure class="guide-split-figure">
+            <img src="{{BASE}}img/guides/champagne-buckets/veuve-clicquot/4-second.jpeg"
+                 alt="{{guideChampagneObj2Alt}}"
+                 loading="lazy" decoding="async">
+            <figcaption>{{guideChampagneObj2Title}}</figcaption>
+          </figure>
+          <div class="guide-split-body">
+            <h3>{{guideChampagneObj2DatingHeading}}</h3>
+            <p>{{guideChampagneObj2DatingText}}</p>
+          </div>
+        </div>
+
+        <p>{{guideChampagneS2P3}}</p>
+
+        <div class="guide-figure-pair">
+          <figure class="guide-figure">
+            <img src="{{BASE}}img/guides/champagne-buckets/moet-chandon/1-full.jpeg"
+                 alt="{{guideChampagneObj3Alt}}"
+                 loading="lazy" decoding="async">
+            <figcaption>{{guideChampagneObj3Title}}</figcaption>
+          </figure>
+          <figure class="guide-figure">
+            <img src="{{BASE}}img/guides/champagne-buckets/moet-chandon/3-mark.jpeg"
+                 alt="{{guideChampagneObj3MarkAlt}}"
+                 loading="lazy" decoding="async">
+            <figcaption>{{guideChampagneObj3MarkAlt}}</figcaption>
+          </figure>
+        </div>
+
+        <!-- Moët & Chandon: base marking beside its dating discussion.
+             Image sits right so it alternates with the Veuve block above. -->
+        <div class="guide-split guide-split-reverse">
+          <figure class="guide-split-figure">
+            <img src="{{BASE}}img/guides/champagne-buckets/moet-chandon/4-second.jpeg"
+                 alt="{{guideChampagneObj3Alt}}"
+                 loading="lazy" decoding="async">
+            <figcaption>{{guideChampagneObj3Title}}</figcaption>
+          </figure>
+          <div class="guide-split-body">
+            <h3>{{guideChampagneObj3DatingHeading}}</h3>
+            <p>{{guideChampagneObj3DatingText}}</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- ── French Makers and Tableware Design ── Jean Couzon. -->
+      <section class="guide-section" aria-labelledby="guide-s3">
+        <h2 id="guide-s3">{{guideChampagneS3Heading}}</h2>
+        <p>{{guideChampagneS3P1}}</p>
+        <p>{{guideChampagneS3P2}}</p>
+
+        <div class="guide-figure-pair">
+          <figure class="guide-figure">
+            <img src="{{BASE}}img/guides/champagne-buckets/jean-couzon/1-full.jpeg"
+                 alt="{{guideChampagneObj1Alt}}"
+                 loading="lazy" decoding="async">
+            <figcaption>{{guideChampagneObj1Title}}</figcaption>
+          </figure>
+          <figure class="guide-figure">
+            <img src="{{BASE}}img/guides/champagne-buckets/jean-couzon/3-mark.jpeg"
+                 alt="{{guideChampagneObj1MarkAlt}}"
+                 loading="lazy" decoding="async">
+            <figcaption>{{guideChampagneObj1MarkAlt}}</figcaption>
+          </figure>
+        </div>
+
+        <!-- Jean Couzon: second view beside its dating discussion. -->
+        <div class="guide-split">
+          <figure class="guide-split-figure">
+            <img src="{{BASE}}img/guides/champagne-buckets/jean-couzon/4-second.jpeg"
+                 alt="{{guideChampagneObj1Alt}}"
+                 loading="lazy" decoding="async">
+            <figcaption>{{guideChampagneObj1Title}}</figcaption>
+          </figure>
+          <div class="guide-split-body">
+            <h3>{{guideChampagneObj1DatingHeading}}</h3>
+            <p>{{guideChampagneObj1DatingText}}</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- ── Materials and Construction ── close-up details of all three. -->
+      <section class="guide-section" aria-labelledby="guide-s4">
+        <h2 id="guide-s4">{{guideChampagneS4Heading}}</h2>
+        <p>{{guideChampagneS4P1}}</p>
+        <p>{{guideChampagneS4P2}}</p>
+
+        <div class="guide-figure-trio">
+          <figure class="guide-figure">
+            <img src="{{BASE}}img/guides/champagne-buckets/veuve-clicquot/2-detail.jpeg"
+                 alt="{{guideChampagneObj2DetailAlt}}"
+                 loading="lazy" decoding="async">
+            <figcaption>{{guideChampagneObj2DetailAlt}}</figcaption>
+          </figure>
+          <figure class="guide-figure">
+            <img src="{{BASE}}img/guides/champagne-buckets/moet-chandon/2-detail.jpeg"
+                 alt="{{guideChampagneObj3Alt}}"
+                 loading="lazy" decoding="async">
+            <figcaption>{{guideChampagneObj3Alt}}</figcaption>
+          </figure>
+          <figure class="guide-figure">
+            <img src="{{BASE}}img/guides/champagne-buckets/jean-couzon/2-detail.jpeg"
+                 alt="{{guideChampagneObj1Alt}}"
+                 loading="lazy" decoding="async">
+            <figcaption>{{guideChampagneObj1Alt}}</figcaption>
+          </figure>
+        </div>
+
+        <p>{{guideChampagneS4P3}}</p>
+      </section>
+
+      <!-- ── How to Identify ── -->
+      <section class="guide-section" aria-labelledby="guide-s5">
+        <h2 id="guide-s5">{{guideChampagneS5Heading}}</h2>
+        <p>{{guideChampagneS5P1}}</p>
+        <p class="guide-note">{{guideChampagneS5P2}}</p>
+      </section>
+
+      <!-- ── Dating ── -->
+      <section class="guide-section" aria-labelledby="guide-s6">
+        <h2 id="guide-s6">{{guideChampagneS6Heading}}</h2>
+        <p>{{guideChampagneS6P1}}</p>
+        <p>{{guideChampagneS6P2}}</p>
+      </section>
+
+      <!-- ── Condition, Patina and Restoration ── -->
+      <section class="guide-section" aria-labelledby="guide-s7">
+        <h2 id="guide-s7">{{guideChampagneS7Heading}}</h2>
+        <p>{{guideChampagneS7P1}}</p>
+        <p>{{guideChampagneS7P2}}</p>
+      </section>
+
+      <!-- ── Collecting today + closing link ── -->
+      <section class="guide-section" aria-labelledby="guide-s9">
+        <h2 id="guide-s9">{{guideChampagneS9Heading}}</h2>
+        <p>{{guideChampagneS9P1}}</p>
+        <!-- TODO: add contextual links to the French Copper Cookware and
+             Vintage Le Creuset guides once those pages exist. -->
+        <p class="guide-cta">
+          <a href="{{curatedHref}}">{{guideChampagneS9CtaText}}</a>
+        </p>
+      </section>
+
+    </article>
+  </main>
+
+  {{contactButtons}}
+  {{footer}}
+</body>
+</html>

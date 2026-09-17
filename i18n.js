@@ -48,6 +48,7 @@ const en = {
   curatedCat1Text: 'Professional and domestic French copper cookware, including pieces associated with makers and retailers such as Mauviel and E. Dehillerin.',
   curatedCat2Title: 'Champagne & Wine Objects',
   curatedCat2Text: 'Vintage champagne coolers, ice buckets and related objects from French houses such as Moët & Chandon, Veuve Clicquot and Pommery.',
+  curatedCat2GuideLink: 'Read our collector’s guide to vintage French champagne buckets',
   curatedCat3Title: 'French Design & Decorative Objects',
   curatedCat3Text: 'Interesting French tableware, serving objects, decorative pieces and 20th-century design.',
   curatedCat4Title: 'Rare Cast Iron',
@@ -82,6 +83,75 @@ const en = {
   selPrev: 'Previous image',
   selNext: 'Next image',
   selNoPhotos: 'No photos available',
+  // ── Guide #1: Vintage French Champagne Buckets ──
+  // (Editorial collector guide. Conservative wording; no invented dates or makers.)
+  guideChampagneDocTitle: 'Vintage French Champagne Buckets: A Collector\u2019s Guide | Cook & Collect',
+  guideChampagneMetaDesc: 'A dealer\u2019s guide to vintage French champagne buckets and wine coolers \u2014 materials, maker marks, house branding, dating and condition, with examples from the Cook & Collect collection.',
+  guideChampagneOgTitle: 'Vintage French Champagne Buckets: A Collector\u2019s Guide',
+  guideChampagneOgDesc: 'How to read the materials, maker marks and branding of vintage French champagne buckets \u2014 an editorial guide from Cook & Collect.',
+  guideChampagneBreadcrumbGuides: 'Guides',
+  guideChampagneBreadcrumbCurrent: 'Vintage French Champagne Buckets',
+  guideChampagneEyebrow: 'Champagne & Barware \u00b7 Collector\u2019s Guide',
+  guideChampagneH1: 'Vintage French Champagne Buckets: A Collector\u2019s Guide',
+  guideChampagneIntro: 'Few objects capture French table culture as directly as the champagne bucket. Practical by design and often decorative by intention, these coolers accompanied celebrations in restaurants, bars and private homes across the twentieth century. This guide looks at how they were made, how French Champagne houses and tableware makers shaped their appearance, and how a collector can approach identification, dating and condition with care.',
+
+  guideChampagneS1Heading: 'From Champagne Service to Collectible Design',
+  guideChampagneS1P1: 'A champagne bucket has one job: to keep a bottle cold at the table. Yet the way that job was met in France reflects far more than function. The form sits at the meeting point of hospitality, industrial design and branding \u2014 a small object asked to look correct on a well-set table while surviving daily use in a busy dining room.',
+  guideChampagneS1P2: 'That double life is why vintage examples are collected today. Some were made as refined tableware; others were produced for or on behalf of Champagne houses and carry their names and emblems. Between those poles lies a wide range of materials, shapes and finishes, which is exactly what makes the category rewarding to study rather than simply to buy.',
+
+  guideChampagneS2Heading: 'Champagne Houses and Their Branded Buckets',
+  guideChampagneS2P1: 'The best-known vintage buckets are those associated with French Champagne houses. Branded coolers were used in hospitality settings and have become recognisable objects in their own right, carrying house names, emblems and colours. It is worth being precise about what such branding tells us: a house name identifies the brand the object was made for or used by, not necessarily the workshop that produced it.',
+  guideChampagneS2P2: 'The <strong>Veuve Clicquot</strong> Ponsardin example in the Cook & Collect collection illustrates how colour and material can serve a brand. Its thick orange translucent body \u2014 a synthetic, acrylic-type material \u2014 is instantly associated with the house, set off by large black lettering and the repeated historic anchor emblem. It is a strongly sculptural object, and a useful reminder that branded barware was not limited to metal.',
+  guideChampagneS2P3: 'The <strong>Mo\u00ebt & Chandon</strong> aluminium bucket makes a related point about markings. Its base is marked \u201cMade in France\u201d, and it carries the house\u2019s black plaque and red central seal. That \u201cMade in France\u201d stamp confirms where the object was made but does not, on its own, name a manufacturer. We have not attributed this piece to any particular maker, precisely because the base carries no confirmed manufacturer mark.',
+
+  guideChampagneS3Heading: 'French Makers and Tableware Design',
+  guideChampagneS3P1: 'French champagne service was never limited to promotional buckets produced for Champagne houses. Tableware manufacturers and orf\u00e8vrerie-inspired makers also produced sophisticated wine and champagne coolers intended for the table rather than for a brand. These pieces are identified by a maker\u2019s mark rather than a house emblem, and they reward attention to proportion, finish and detailing.',
+  guideChampagneS3P2: 'The <strong>Jean Couzon</strong> cooler in the collection is a documented example of this tradition. The underside is marked \u201cJean Couzon Orf\u00e8vre\u201d and \u201cINOX \u2013 18/10\u201d, indicating polished 18/10 stainless steel. Its flared upper rim, pedestal base with beaded and ribbed detailing, and two articulated ring handles reflect a considered French table-service design rather than a promotional object. We have not assigned it a specific model or an exact decade, as neither is documented.',
+
+  guideChampagneS4Heading: 'Materials and Construction',
+  guideChampagneS4P1: 'Material is one of the first things a collector reads. Vintage French champagne buckets appear in aluminium, stainless steel, acrylic and other synthetic materials, and \u2014 where historically appropriate \u2014 silver plate and other metals. Each behaves differently over time, which affects both appearance and how a piece should be assessed.',
+  guideChampagneS4P2: 'Aluminium, as in the <strong>Mo\u00ebt & Chandon</strong> example, is light and takes engraved or ribbed decoration well; it tends to show oxidation and use marks, particularly inside. Stainless steel, such as the 18/10 used by <strong>Jean Couzon</strong>, is more resistant and holds a polished surface, though it still carries light scratches from use. Acrylic and synthetic bodies, like the <strong>Veuve Clicquot</strong> bucket, allow strong colour and bold branding but are more prone to wear around rims and where metal handles meet the body.',
+  guideChampagneS4P3: 'Construction details repay close looking: how handles are attached, whether a base is a separate pedestal or formed with the body, and how decorative elements such as ribbing or beading are executed. These details are often more informative than a single mark.',
+
+  guideChampagneS5Heading: 'How to Identify a Vintage French Champagne Bucket',
+  guideChampagneS5P1: 'Identification is best approached as a combination of clues rather than a single answer. Useful evidence includes maker marks, house logos, typography, applied labels or plaques, handle construction, base construction, the material itself, manufacturing marks, and \u2014 where available \u2014 period catalogues and advertisements.',
+  guideChampagneS5P2: 'Two distinctions are worth stating plainly. First, a Champagne-house logo identifies the branded client or house; it does not by itself identify the manufacturer. Second, a \u201cMade in France\u201d mark confirms the country of origin but does not, on its own, name the maker. Treating these as separate pieces of information keeps an identification honest.',
+
+  guideChampagneS6Heading: 'Dating Vintage Champagne Buckets',
+  guideChampagneS6P1: 'Dating should combine several pieces of evidence rather than rely on any single one: markings, construction methods, the evolution of a house logo, typography, materials, documented catalogues and advertisements, and comparison with reliably dated examples. A material or a logo can suggest a broad period, but simple rules are easy to misapply.',
+  guideChampagneS6P2: 'Where the evidence is not conclusive, we prefer cautious wording \u2014 for example \u201c20th century\u201d or \u201cmid-20th century\u201d \u2014 or we note that dating is still being researched. For a marketplace listing this may seem overly careful; for a dealer building a considered collection, it is the point.',
+
+  guideChampagneS7Heading: 'Condition, Patina and Restoration',
+  guideChampagneS7P1: 'These objects were used. Scratches, oxidation and general wear are to be expected on pieces that spent their working lives in restaurants, bars and homes, and such traces are part of an object\u2019s history rather than simply flaws. The <strong>Mo\u00ebt & Chandon</strong> bucket, for instance, shows visible wear and interior oxidation consistent with genuine use, which we describe openly.',
+  guideChampagneS7P2: 'We would caution against aggressive polishing that removes original surface character or erases marks. Sympathetic cleaning is reasonable; stripping a piece back to an artificial shine is not, and it can destroy the very evidence a collector relies on.',
+
+  // Object titles — used as figcaptions beside each object's photographs.
+  guideChampagneObj1Title: 'Jean Couzon Orf\u00e8vre \u2013 Stainless Steel 18/10',
+  guideChampagneObj2Title: 'Veuve Clicquot Ponsardin \u2013 Orange Champagne Bucket',
+  guideChampagneObj3Title: 'Mo\u00ebt & Chandon \u2013 Aluminium, Made in France',
+
+  // Per-object dating blocks, shown alongside that object's photograph.
+  // EDIT THESE as research progresses: record what is actually observed on the
+  // piece (marks, construction, typography, comparable documented examples) and
+  // only narrow the date when the evidence supports it.
+  guideChampagneObj1DatingHeading: 'What we can say about its date',
+  guideChampagneObj1DatingText: 'The underside is marked \u201cJean Couzon Orf\u00e8vre\u201d together with \u201cINOX \u2013 18/10\u201d, which identifies the maker and the steel specification but not a production date. French stainless-steel table service of this kind is often placed broadly in the second half of the 20th century, though such ranges are seldom tied to catalogue evidence. We have not yet matched this cooler to a documented model reference, and the pedestal base and beaded detailing are the features currently being compared against documented <strong>Jean Couzon</strong> tableware. For now Cook & Collect describes it simply as 20th-century French stainless-steel barware.',
+  guideChampagneObj2DatingHeading: 'What we can say about its date',
+  guideChampagneObj2DatingText: 'Dating vintage Champagne barware requires caution. Comparable orange <strong>Veuve Clicquot</strong> buckets are variously attributed on the vintage market to periods ranging from the 1950s\u20131960s through to the late 20th century, but these dates are rarely supported by period catalogues or manufacturer documentation. The V.C.P. anchor emblem identifies the historic Veuve Clicquot Ponsardin house, but does not by itself establish when the serving object was produced or who manufactured it. As no manufacturer\u2019s mark or documentary reference for this exact model has yet been identified, Cook & Collect conservatively describes this example as French <strong>Veuve Clicquot</strong> barware from the 20th century, rather than assigning it an unsupported precise date.',
+  guideChampagneObj3DatingHeading: 'What we can say about its date',
+  guideChampagneObj3DatingText: 'Aluminium Champagne buckets of this type are frequently dated on the vintage market to the mid-20th century, but such attributions are seldom supported by manufacturer documentation. The base of this example carries only \u201cMADE IN FRANCE\u201d, which confirms French origin without identifying a maker, and the <strong>Mo\u00ebt & Chandon</strong> plaque and central seal identify the house rather than the workshop that produced the object. Narrowing the period will depend on comparing the plaque, the seal and the engraved banding against documented examples and period advertising. Until then Cook & Collect describes it as a French aluminium Champagne bucket of the 20th century.',
+
+  guideChampagneS9Heading: 'Collecting French Champagne Barware Today',
+  guideChampagneS9P1: 'French champagne buckets remain approachable to collect and easy to live with. They suit a considered interior, work as serving objects, and reward the collector who reads materials and marks carefully rather than trusting a name alone. As a category they sit naturally alongside French copperware and other objects of the table.',
+  guideChampagneS9CtaText: 'Explore our curated Champagne & Barware selection.',
+
+  // Image alt text
+  guideChampagneObj1Alt: 'Vintage Jean Couzon French stainless steel champagne cooler with ring handles',
+  guideChampagneObj1MarkAlt: 'Jean Couzon Orf\u00e8vre INOX 18/10 maker\u2019s mark on the underside',
+  guideChampagneObj2Alt: 'Vintage orange Veuve Clicquot Ponsardin champagne bucket',
+  guideChampagneObj2DetailAlt: 'Detail of the translucent acrylic body and anchor emblem on the Veuve Clicquot champagne bucket',
+  guideChampagneObj3Alt: 'Vintage Mo\u00ebt & Chandon aluminium champagne bucket Made in France',
+  guideChampagneObj3MarkAlt: 'Mo\u00ebt & Chandon black plaque and red seal on the aluminium champagne bucket',
   // about page
   aboutDocTitle: 'About us — Cook & Collect',
   aboutMetaDesc: 'Cook & Collect — vintage French pieces with a story to tell.',
@@ -183,6 +253,7 @@ const fr = {
   curatedCat1Text: 'Cuivres de cuisine français professionnels et domestiques, dont des pièces associées à des fabricants et maisons tels que Mauviel et E. Dehillerin.',
   curatedCat2Title: 'Objets de champagne & de vin',
   curatedCat2Text: 'Seaux à champagne, seaux à glace et objets vintage des maisons françaises telles que Moët & Chandon, Veuve Clicquot et Pommery.',
+  curatedCat2GuideLink: 'Lire notre guide du collectionneur sur les seaux à champagne vintage français',
   curatedCat3Title: 'Design & objets décoratifs français',
   curatedCat3Text: 'Arts de la table français, objets de service, pièces décoratives et design du XXᵉ siècle.',
   curatedCat4Title: 'Fonte rare',
@@ -216,6 +287,75 @@ const fr = {
   selPrev: 'Image précédente',
   selNext: 'Image suivante',
   selNoPhotos: 'Aucune photo disponible',
+  // ── Guide n°1 : Seaux à champagne vintage français ──
+  // (Guide éditorial de collectionneur. Formulations prudentes ; aucune date ni fabricant inventés.)
+  guideChampagneDocTitle: 'Seaux à champagne vintage français : guide du collectionneur | Cook & Collect',
+  guideChampagneMetaDesc: 'Le guide d’un professionnel sur les seaux à champagne et rafraîchissoirs vintage français : matériaux, marques de fabricant, marquage des maisons, datation et état, avec des exemples de la collection Cook & Collect.',
+  guideChampagneOgTitle: 'Seaux à champagne vintage français : guide du collectionneur',
+  guideChampagneOgDesc: 'Comment lire les matériaux, les marques et le marquage des seaux à champagne vintage français — un guide éditorial signé Cook & Collect.',
+  guideChampagneBreadcrumbGuides: 'Guides',
+  guideChampagneBreadcrumbCurrent: 'Seaux à champagne vintage français',
+  guideChampagneEyebrow: 'Champagne & objets de bar · Guide du collectionneur',
+  guideChampagneH1: 'Seaux à champagne vintage français : guide du collectionneur',
+  guideChampagneIntro: 'Peu d’objets incarnent aussi directement l’art de la table à la française que le seau à champagne. Utilitaire par conception et souvent décoratif par intention, ces rafraîchissoirs ont accompagné les célébrations dans les restaurants, les bars et les maisons privées tout au long du XXᵉ siècle. Ce guide examine leur fabrication, la manière dont les maisons de champagne et les fabricants d’arts de la table français en ont façonné l’apparence, et comment un collectionneur peut aborder l’identification, la datation et l’état avec rigueur.',
+
+  guideChampagneS1Heading: 'Du service du champagne à l’objet de design',
+  guideChampagneS1P1: 'Un seau à champagne n’a qu’une fonction : maintenir une bouteille au frais à table. Pourtant, la manière dont cette fonction a été traitée en France révèle bien davantage. La forme se situe au croisement de l’hospitalité, du design industriel et de l’image de marque — un petit objet auquel on demande de paraître juste sur une table bien dressée tout en résistant à un usage quotidien en salle.',
+  guideChampagneS1P2: 'Cette double vie explique l’intérêt des exemplaires vintage aujourd’hui. Certains ont été conçus comme des arts de la table raffinés ; d’autres ont été produits pour le compte de maisons de champagne et portent leurs noms et emblèmes. Entre ces deux pôles s’étend une grande variété de matériaux, de formes et de finitions, et c’est précisément ce qui rend cette catégorie intéressante à étudier plutôt qu’à simplement acheter.',
+
+  guideChampagneS2Heading: 'Les maisons de champagne et leurs seaux marqués',
+  guideChampagneS2P1: 'Les seaux vintage les plus connus sont ceux associés aux maisons de champagne françaises. Ces rafraîchissoirs marqués étaient utilisés dans le cadre de la restauration et sont devenus des objets identifiables à part entière, portant noms de maisons, emblèmes et couleurs. Il convient d’être précis sur ce que ce marquage nous apprend : un nom de maison identifie la marque pour laquelle ou par laquelle l’objet a été utilisé, et non nécessairement l’atelier qui l’a fabriqué.',
+  guideChampagneS2P2: 'L’exemplaire <strong>Veuve Clicquot</strong> Ponsardin de la collection Cook & Collect illustre la façon dont la couleur et le matériau peuvent servir une marque. Son corps épais, orange et translucide — un matériau synthétique de type acrylique — est immédiatement associé à la maison, rehaussé par un large lettrage noir et la répétition de l’emblème historique de l’ancre. C’est un objet très sculptural, et un rappel utile que les objets de bar marqués ne se limitaient pas au métal.',
+  guideChampagneS2P3: 'Le seau en aluminium <strong>Moët & Chandon</strong> soulève une question voisine à propos des marquages. Sa base porte la mention « MADE IN FRANCE », et il présente la plaque noire de la maison ainsi qu’un sceau central rouge. Cette mention « Made in France » confirme le lieu de fabrication mais ne désigne pas, à elle seule, un fabricant. Nous n’attribuons donc cette pièce à aucun fabricant particulier, précisément parce que la base ne porte aucune marque de fabricant confirmée.',
+
+  guideChampagneS3Heading: 'Fabricants français et arts de la table',
+  guideChampagneS3P1: 'Le service du champagne en France ne s’est jamais limité aux seaux promotionnels produits pour les maisons de champagne. Des fabricants d’arts de la table et des maisons d’inspiration orfèvrerie ont également produit des rafraîchissoirs à vin et à champagne sophistiqués, destinés à la table plutôt qu’à une marque. Ces pièces s’identifient par une marque de fabricant plutôt que par un emblème de maison, et récompensent l’attention portée aux proportions, à la finition et aux détails.',
+  guideChampagneS3P2: 'Le rafraîchissoir <strong>Jean Couzon</strong> de la collection est un exemple documenté de cette tradition. Le dessous porte les mentions « Jean Couzon Orfèvre » et « INOX – 18/10 », indiquant un acier inoxydable 18/10 poli. Son bord supérieur évasé, sa base sur piédouche à décor de perles et de cannelures, ainsi que ses deux anses annulaires articulées relèvent d’un véritable design de service de table français plutôt que d’un objet promotionnel. Nous ne lui attribuons ni modèle précis ni décennie exacte, faute de documentation.',
+
+  guideChampagneS4Heading: 'Matériaux et construction',
+  guideChampagneS4P1: 'Le matériau est l’un des premiers éléments que lit un collectionneur. Les seaux à champagne vintage français se rencontrent en aluminium, en acier inoxydable, en acrylique et autres matériaux synthétiques, et — lorsque cela est historiquement pertinent — en métal argenté et autres métaux. Chacun évolue différemment dans le temps, ce qui influe à la fois sur l’apparence et sur la manière d’évaluer une pièce.',
+  guideChampagneS4P2: 'L’aluminium, comme sur l’exemplaire <strong>Moët & Chandon</strong>, est léger et se prête bien au décor gravé ou cannelé ; il tend à présenter une oxydation et des traces d’usage, particulièrement à l’intérieur. L’acier inoxydable, tel que le 18/10 employé par <strong>Jean Couzon</strong>, est plus résistant et conserve une surface polie, tout en portant de légères rayures d’usage. Les corps en acrylique et en matériaux synthétiques, comme le seau <strong>Veuve Clicquot</strong>, permettent des couleurs franches et un marquage affirmé, mais s’usent plus volontiers autour du bord et aux points de fixation des anses métalliques.',
+  guideChampagneS4P3: 'Les détails de construction méritent un examen attentif : la façon dont les anses sont fixées, si la base constitue un piédouche distinct ou est formée avec le corps, et la manière dont les éléments décoratifs comme les cannelures ou les perles sont exécutés. Ces détails sont souvent plus instructifs qu’une marque isolée.',
+
+  guideChampagneS5Heading: 'Comment identifier un seau à champagne vintage français',
+  guideChampagneS5P1: 'L’identification s’aborde au mieux comme un faisceau d’indices plutôt que comme une réponse unique. Les éléments utiles comprennent les marques de fabricant, les logos de maisons, la typographie, les étiquettes ou plaques appliquées, la construction des anses, celle de la base, le matériau lui-même, les marques de fabrication et — lorsqu’ils sont disponibles — les catalogues et publicités d’époque.',
+  guideChampagneS5P2: 'Deux distinctions méritent d’être énoncées clairement. Premièrement, un logo de maison de champagne identifie le client ou la maison commanditaire ; il n’identifie pas en soi le fabricant. Deuxièmement, une mention « Made in France » confirme le pays d’origine mais ne désigne pas, à elle seule, le fabricant. Traiter ces informations séparément est ce qui garantit l’honnêteté d’une identification.',
+
+  guideChampagneS6Heading: 'Datation des seaux à champagne vintage',
+  guideChampagneS6P1: 'La datation doit combiner plusieurs éléments de preuve plutôt que reposer sur un seul : marquages, méthodes de construction, évolution du logo d’une maison, typographie, matériaux, catalogues et publicités documentés, et comparaison avec des exemplaires datés de manière fiable. Un matériau ou un logo peut suggérer une période large, mais les règles simplistes sont faciles à mal appliquer.',
+  guideChampagneS6P2: 'Lorsque les éléments ne sont pas concluants, nous préférons des formulations prudentes — par exemple « XXᵉ siècle » ou « milieu du XXᵉ siècle » — ou nous indiquons que la datation fait encore l’objet de recherches. Pour une annonce sur une place de marché, cela peut sembler excessivement prudent ; pour un professionnel qui construit une collection réfléchie, c’est précisément l’essentiel.',
+
+  guideChampagneS7Heading: 'État, patine et restauration',
+  guideChampagneS7P1: 'Ces objets ont servi. Rayures, oxydation et usure générale sont à prévoir sur des pièces qui ont passé leur vie utile dans des restaurants, des bars et des maisons, et ces traces relèvent de l’histoire de l’objet plutôt que du simple défaut. Le seau <strong>Moët & Chandon</strong>, par exemple, présente une usure visible et une oxydation intérieure cohérentes avec un usage réel, que nous décrivons ouvertement.',
+  guideChampagneS7P2: 'Nous mettons en garde contre un polissage agressif qui effacerait le caractère d’origine de la surface ou les marques. Un nettoyage respectueux est raisonnable ; ramener une pièce à un éclat artificiel ne l’est pas, et peut détruire les indices mêmes sur lesquels s’appuie un collectionneur.',
+
+  // Titres d’objets — utilisés comme légendes à côté des photographies.
+  guideChampagneObj1Title: 'Jean Couzon Orfèvre – Acier inoxydable 18/10',
+  guideChampagneObj2Title: 'Veuve Clicquot Ponsardin – Seau à champagne orange',
+  guideChampagneObj3Title: 'Moët & Chandon – Aluminium, Made in France',
+
+  // Blocs de datation par objet, affichés à côté de la photographie de l’objet.
+  // À MODIFIER au fil des recherches : consigner ce qui est réellement observé
+  // sur la pièce (marques, construction, typographie, exemplaires documentés
+  // comparables) et ne resserrer la date que lorsque les éléments le permettent.
+  guideChampagneObj1DatingHeading: 'Ce que l’on peut dire de sa datation',
+  guideChampagneObj1DatingText: 'Le dessous porte les mentions « Jean Couzon Orfèvre » et « INOX – 18/10 », qui identifient le fabricant et la nuance d’acier, mais non une date de production. Les services de table français en acier inoxydable de ce type sont souvent situés largement dans la seconde moitié du XXᵉ siècle, bien que ces fourchettes soient rarement étayées par des sources de catalogue. Nous n’avons pas encore rattaché ce rafraîchissoir à une référence de modèle documentée, et la base sur piédouche ainsi que le décor de perles sont les éléments actuellement comparés à des arts de la table <strong>Jean Couzon</strong> documentés. Pour l’instant, Cook & Collect le décrit simplement comme un objet de bar français en acier inoxydable du XXᵉ siècle.',
+  guideChampagneObj2DatingHeading: 'Ce que l’on peut dire de sa datation',
+  guideChampagneObj2DatingText: 'La datation des objets de bar champenois vintage exige de la prudence. Des seaux <strong>Veuve Clicquot</strong> orange comparables sont diversement attribués sur le marché du vintage à des périodes allant des années 1950–1960 jusqu’à la fin du XXᵉ siècle, mais ces dates sont rarement étayées par des catalogues d’époque ou une documentation de fabricant. L’emblème de l’ancre V.C.P. identifie la maison historique Veuve Clicquot Ponsardin, mais n’établit pas à lui seul quand l’objet de service a été produit ni par qui il a été fabriqué. Aucune marque de fabricant ni référence documentaire n’ayant encore été identifiée pour ce modèle précis, Cook & Collect décrit prudemment cet exemplaire comme un objet de bar français <strong>Veuve Clicquot</strong> du XXᵉ siècle, plutôt que de lui attribuer une date précise non étayée.',
+  guideChampagneObj3DatingHeading: 'Ce que l’on peut dire de sa datation',
+  guideChampagneObj3DatingText: 'Les seaux à champagne en aluminium de ce type sont fréquemment datés du milieu du XXᵉ siècle sur le marché du vintage, mais ces attributions sont rarement étayées par une documentation de fabricant. La base de cet exemplaire ne porte que la mention « MADE IN FRANCE », qui confirme l’origine française sans identifier de fabricant, et la plaque <strong>Moët & Chandon</strong> ainsi que le sceau central identifient la maison plutôt que l’atelier qui a produit l’objet. Resserrer la période supposera de comparer la plaque, le sceau et les bandes gravées à des exemplaires documentés et à la publicité d’époque. En attendant, Cook & Collect le décrit comme un seau à champagne français en aluminium du XXᵉ siècle.',
+
+  guideChampagneS9Heading: 'Collectionner les objets de bar champenois français aujourd’hui',
+  guideChampagneS9P1: 'Les seaux à champagne français restent accessibles à collectionner et faciles à vivre. Ils s’accordent à un intérieur réfléchi, servent d’objets de présentation, et récompensent le collectionneur qui lit attentivement les matériaux et les marques plutôt que de se fier au seul nom. En tant que catégorie, ils s’inscrivent naturellement aux côtés des cuivres français et d’autres objets de la table.',
+  guideChampagneS9CtaText: 'Découvrez notre sélection Champagne & objets de bar.',
+
+  // Textes alternatifs des images
+  guideChampagneObj1Alt: 'Rafraîchissoir à champagne vintage Jean Couzon en acier inoxydable français avec anses annulaires',
+  guideChampagneObj1MarkAlt: 'Marque de fabricant Jean Couzon Orfèvre INOX 18/10 sous la base',
+  guideChampagneObj2Alt: 'Seau à champagne vintage Veuve Clicquot Ponsardin orange',
+  guideChampagneObj2DetailAlt: 'Détail du corps en acrylique translucide et de l’emblème de l’ancre du seau à champagne Veuve Clicquot',
+  guideChampagneObj3Alt: 'Seau à champagne vintage Moët & Chandon en aluminium Made in France',
+  guideChampagneObj3MarkAlt: 'Plaque noire et sceau rouge Moët & Chandon sur le seau à champagne en aluminium',
   // about page
   aboutDocTitle: 'À propos — Cook & Collect',
   aboutMetaDesc: 'Cook & Collect — des pièces vintage françaises qui ont une histoire à raconter.',

@@ -45,8 +45,10 @@ jobs:
           git commit -m "feat: add item '${ITEM_TITLE}'"
           git push
 
-      - name: Build manifest
-        run: node build.js
+      - name: Build site (app pages + manifest, then editorial guides)
+        run: |
+          node build.js
+          node build-guides.js
 
       - name: Setup Pages
         uses: actions/configure-pages@v5
@@ -107,8 +109,10 @@ jobs:
         with:
           node-version: "20"
 
-      - name: Build manifest
-        run: node build.js
+      - name: Build site (app pages + manifest, then editorial guides)
+        run: |
+          node build.js
+          node build-guides.js
 
       - name: Setup Pages
         uses: actions/configure-pages@v5
@@ -169,8 +173,10 @@ jobs:
         with:
           node-version: "20"
 
-      - name: Build manifest
-        run: node build.js
+      - name: Build site (app pages + manifest, then editorial guides)
+        run: |
+          node build.js
+          node build-guides.js
 
       - name: Setup Pages
         uses: actions/configure-pages@v5
