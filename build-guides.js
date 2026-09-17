@@ -40,7 +40,11 @@ const GUIDES = [
     file: 'vintage-french-champagne-buckets.html',
     // Hero / Open Graph image (site-root-relative). This is the same file used
     // as the page hero, so replacing the photo updates the social preview too.
-    ogImage: 'img/guides/champagne-buckets/veuve-clicquot/1-full.jpeg'
+    ogImage: 'img/guides/champagne-buckets/veuve-clicquot/1-full.jpeg',
+    // Manually managed publication dates (ISO 8601) for Article schema.
+    // Bump `dateModified` whenever the guide's content is meaningfully revised.
+    datePublished: '2026-09-17',
+    dateModified: '2026-09-17'
   }
 ];
 
@@ -127,6 +131,8 @@ function renderGuideHead(guide, code, s, k) {
     author: {'@type': 'Organization', name: 'Cook & Collect'},
     publisher: {'@type': 'Organization', name: 'Cook & Collect'},
     mainEntityOfPage: {'@type': 'WebPage', '@id': canonical},
+    ...(guide.datePublished ? {datePublished: guide.datePublished} : {}),
+    ...(guide.dateModified ? {dateModified: guide.dateModified} : {}),
     isAccessibleForFree: true
   };
   const breadcrumb = {

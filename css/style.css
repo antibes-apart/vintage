@@ -1420,6 +1420,119 @@ footer {
   color: var(--text-light);
 }
 
+/* Prose subsection (H3 + paragraphs) within a section, kept to the reading
+   measure. Used for the methodology and the Moët "Made in France"/dating text. */
+.guide-subsection {
+  max-width: var(--guide-measure);
+  margin: 2.25rem auto 0;
+}
+
+.guide-subsection h3 {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(1.15rem, 2vw, 1.35rem);
+  font-weight: 600;
+  line-height: 1.35;
+  color: var(--heading);
+  margin-bottom: 1rem;
+}
+
+.guide-subsection p {
+  color: var(--text);
+  line-height: 1.85;
+  margin-bottom: 1.1rem;
+}
+
+.guide-subsection p:last-child {
+  margin-bottom: 0;
+}
+
+/* Collector's note — a restrained, tinted block distinct from body prose. */
+.guide-note-box {
+  margin-top: 1.4rem;
+  padding: 1.1rem 1.4rem;
+  background: var(--card-bg);
+  border: 1px solid var(--border);
+  border-left: 2px solid var(--accent);
+  border-radius: var(--radius);
+}
+
+.guide-note-box p {
+  margin-bottom: 0;
+  font-size: 0.92rem;
+  line-height: 1.75;
+  color: var(--text-light);
+}
+
+.guide-note-label {
+  font-family: 'Inter', sans-serif;
+  font-size: 0.72rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--accent);
+  margin-bottom: 0.4rem !important;
+}
+
+/* Material caveat line under the V.C.P. reading. */
+.guide-material-note {
+  font-size: 0.88rem;
+  color: var(--text-light);
+  font-style: italic;
+}
+
+/* ─── Research & References (discreet) ─── */
+.guide-references {
+  max-width: var(--guide-measure);
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.guide-references > p {
+  color: var(--text-light);
+  line-height: 1.85;
+}
+
+.guide-refs-list {
+  margin-top: 1.75rem;
+}
+
+.guide-refs-list dt {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.05rem;
+  color: var(--heading);
+  margin-top: 1.5rem;
+  padding-bottom: 0.4rem;
+  border-bottom: 1px solid var(--border);
+}
+
+.guide-refs-list dd {
+  margin: 0.75rem 0 0;
+  font-size: 0.92rem;
+  line-height: 1.75;
+  color: var(--text-light);
+}
+
+.guide-refs-list ul {
+  margin: 0.5rem 0 0;
+  padding-left: 1.1rem;
+}
+
+.guide-refs-list li {
+  margin-bottom: 0.35rem;
+}
+
+.guide-refs-list a {
+  color: var(--heading);
+  text-decoration: none;
+  border-bottom: 1px solid var(--accent);
+  padding-bottom: 1px;
+  transition: color 0.2s;
+}
+
+.guide-refs-list a:hover {
+  color: var(--accent);
+}
+
 /* ─── Figures ─── */
 .guide-figure {
   margin: 0;

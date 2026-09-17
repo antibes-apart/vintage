@@ -6,7 +6,7 @@
   <meta name="description" content="{{guideChampagneMetaDesc}}">
   <title>{{guideChampagneDocTitle}}</title>
 {{guideHead}}
-  <link rel="stylesheet" href="{{BASE}}css/style.css?v=10">
+  <link rel="stylesheet" href="{{BASE}}css/style.css?v=11">
 </head>
 <body data-page="guide" class="guide-page">
   {{nav}}
@@ -73,8 +73,23 @@
           </figure>
         </div>
 
-        <!-- Veuve Clicquot: second view beside its dating discussion. -->
+        <!-- Veuve Clicquot: V.C.P. + anchor reading, beside the branding close-up. -->
         <div class="guide-split">
+          <figure class="guide-split-figure">
+            <img src="{{BASE}}img/guides/champagne-buckets/veuve-clicquot/3-mark.jpeg"
+                 alt="{{guideChampagneObj2DetailAlt}}"
+                 loading="lazy" decoding="async">
+            <figcaption>{{guideChampagneObj2DetailAlt}}</figcaption>
+          </figure>
+          <div class="guide-split-body">
+            <h3>{{guideChampagneVcpHeading}}</h3>
+            <p>{{guideChampagneVcpText}}</p>
+            <p class="guide-material-note">{{guideChampagneObj2MaterialNote}}</p>
+          </div>
+        </div>
+
+        <!-- Veuve Clicquot: second view beside its dating discussion. -->
+        <div class="guide-split guide-split-reverse">
           <figure class="guide-split-figure">
             <img src="{{BASE}}img/guides/champagne-buckets/veuve-clicquot/4-second.jpeg"
                  alt="{{guideChampagneObj2Alt}}"
@@ -104,8 +119,7 @@
           </figure>
         </div>
 
-        <!-- Moët & Chandon: base marking beside its dating discussion.
-             Image sits right so it alternates with the Veuve block above. -->
+        <!-- Moët & Chandon: reading the object, beside a second view. -->
         <div class="guide-split guide-split-reverse">
           <figure class="guide-split-figure">
             <img src="{{BASE}}img/guides/champagne-buckets/moet-chandon/4-second.jpeg"
@@ -114,9 +128,25 @@
             <figcaption>{{guideChampagneObj3Title}}</figcaption>
           </figure>
           <div class="guide-split-body">
-            <h3>{{guideChampagneObj3DatingHeading}}</h3>
-            <p>{{guideChampagneObj3DatingText}}</p>
+            <h3>{{guideChampagneMoetReadingHeading}}</h3>
+            <p>{{guideChampagneMoetReadingText}}</p>
           </div>
+        </div>
+
+        <!-- Moët & Chandon: "Made in France" + collector's note + dating.
+             Prose blocks (no extra photography) so the section stays balanced. -->
+        <div class="guide-subsection">
+          <h3>{{guideChampagneMoetMadeInHeading}}</h3>
+          <p>{{guideChampagneMoetMadeInText}}</p>
+          <div class="guide-note-box">
+            <p class="guide-note-label">{{guideChampagneMoetNoteLabel}}</p>
+            <p>{{guideChampagneMoetNoteText}}</p>
+          </div>
+        </div>
+
+        <div class="guide-subsection">
+          <h3>{{guideChampagneObj3DatingHeading}}</h3>
+          <p>{{guideChampagneObj3DatingText}}</p>
         </div>
       </section>
 
@@ -152,6 +182,10 @@
           <div class="guide-split-body">
             <h3>{{guideChampagneObj1DatingHeading}}</h3>
             <p>{{guideChampagneObj1DatingText}}</p>
+            <div class="guide-note-box">
+              <p class="guide-note-label">{{guideChampagneObj1NoteLabel}}</p>
+              <p>{{guideChampagneObj1NoteText}}</p>
+            </div>
           </div>
         </div>
       </section>
@@ -186,18 +220,24 @@
         <p>{{guideChampagneS4P3}}</p>
       </section>
 
-      <!-- ── How to Identify ── -->
+      <!-- ── How to Identify (+ Cook & Collect methodology) ── -->
       <section class="guide-section" aria-labelledby="guide-s5">
         <h2 id="guide-s5">{{guideChampagneS5Heading}}</h2>
         <p>{{guideChampagneS5P1}}</p>
         <p class="guide-note">{{guideChampagneS5P2}}</p>
+
+        <div class="guide-subsection">
+          <h3>{{guideChampagneMethodHeading}}</h3>
+          <p>{{guideChampagneMethodP1}}</p>
+          <p>{{guideChampagneMethodP2}}</p>
+          <p>{{guideChampagneMethodP3}}</p>
+        </div>
       </section>
 
       <!-- ── Dating ── -->
       <section class="guide-section" aria-labelledby="guide-s6">
         <h2 id="guide-s6">{{guideChampagneS6Heading}}</h2>
         <p>{{guideChampagneS6P1}}</p>
-        <p>{{guideChampagneS6P2}}</p>
       </section>
 
       <!-- ── Condition, Patina and Restoration ── -->
@@ -205,6 +245,31 @@
         <h2 id="guide-s7">{{guideChampagneS7Heading}}</h2>
         <p>{{guideChampagneS7P1}}</p>
         <p>{{guideChampagneS7P2}}</p>
+      </section>
+
+      <!-- ── Research & References (discreet; authoritative sources only) ── -->
+      <section class="guide-section guide-references" aria-labelledby="guide-refs">
+        <h2 id="guide-refs">{{guideChampagneRefHeading}}</h2>
+        <p>{{guideChampagneRefIntro}}</p>
+        <dl class="guide-refs-list">
+          <dt>{{guideChampagneRefVcpLabel}}</dt>
+          <dd>
+            {{guideChampagneRefVcpText}}
+            <ul>
+              <li><a href="{{guideChampagneRefVcpLink1Url}}" target="_blank" rel="noopener noreferrer">{{guideChampagneRefVcpLink1Text}}</a></li>
+              <li><a href="{{guideChampagneRefVcpLink2Url}}" target="_blank" rel="noopener noreferrer">{{guideChampagneRefVcpLink2Text}}</a></li>
+            </ul>
+          </dd>
+          <dt>{{guideChampagneRefMoetLabel}}</dt>
+          <dd>
+            {{guideChampagneRefMoetText}}
+            <ul>
+              <li><a href="{{guideChampagneRefMoetLink1Url}}" target="_blank" rel="noopener noreferrer">{{guideChampagneRefMoetLink1Text}}</a></li>
+            </ul>
+          </dd>
+          <dt>{{guideChampagneRefCouzonLabel}}</dt>
+          <dd>{{guideChampagneRefCouzonText}}</dd>
+        </dl>
       </section>
 
       <!-- ── Collecting today + closing link ── -->
