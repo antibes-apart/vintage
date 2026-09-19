@@ -1,0 +1,390 @@
+<!DOCTYPE html>
+<html lang="{{LANG}}">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="{{guideCopperMetaDesc}}">
+  <title>{{guideCopperDocTitle}}</title>
+{{guideHead}}
+  <link rel="stylesheet" href="{{BASE}}css/style.css?v=12">
+</head>
+<body data-page="guide" class="guide-page">
+  {{nav}}
+
+  <!-- ─────────────────────────────────────────────────────────────
+       PHOTOGRAPHY — original Cook & Collect object photography only.
+       All images live in  img/guides/copper-cookware/<object>/
+
+         dehillerin-saute/            1-full · 2-mark · 3-wall ·
+                                      4-handle · 5-rivets · 6-interior
+         mauviel-saucepan/            1-full · 2-mark
+         mauviel-dehillerin-confiturier/  1-full · 2-mark
+         lecellier-cuivralec/         1-set · 2-mark · 3-label · 4-detail
+
+       Every illustration uses the shared <g-figure> component (see
+       build-guides.js). While a file is missing, the build renders a
+       same-sized placeholder carrying the caption — so dropping the final
+       .jpeg in at that exact path is the ONLY step needed later. No HTML,
+       CSS or layout change. Missing files are listed by `npm run build`.
+       ───────────────────────────────────────────────────────────── -->
+
+  <main>
+    <article class="guide">
+
+      <!-- ── Header ── -->
+      <header class="guide-header">
+        <nav class="guide-breadcrumb" aria-label="Breadcrumb">
+          <ol>
+            <li><a href="../index.html">{{navCollection}}</a></li>
+            <li><a href="{{guidesHref}}">{{guideCopperBreadcrumbGuides}}</a></li>
+            <li aria-current="page">{{guideCopperBreadcrumbCurrent}}</li>
+          </ol>
+        </nav>
+        <p class="guide-eyebrow">{{guideCopperEyebrow}}</p>
+        <h1 class="guide-title">{{guideCopperH1}}</h1>
+      </header>
+
+      <p class="guide-intro">{{guideCopperIntro}}</p>
+
+      <!-- ── The French copper tradition ── -->
+      <section class="guide-section" aria-labelledby="guide-s1">
+        <h2 id="guide-s1">{{guideCopperS1Heading}}</h2>
+        <p>{{guideCopperS1P1}}</p>
+        <p>{{guideCopperS1P2}}</p>
+        <p>{{guideCopperS1P3}}</p>
+      </section>
+
+      <!-- ── E. Dehillerin and professional French cookware ──
+           Principal case study: 29 cm / 4.655 kg / approx. 3 mm sauté pan.
+           TODO: when /en/guides/e-dehillerin-copper-cookware.html exists, add a
+           contextual link from this section to that dedicated guide. -->
+      <section class="guide-section" aria-labelledby="guide-s2">
+        <h2 id="guide-s2">{{guideCopperS2Heading}}</h2>
+        <p>{{guideCopperS2P1}}</p>
+        <p>{{guideCopperS2P2}}</p>
+
+        <div class="guide-figure-pair">
+          <g-figure src="img/guides/copper-cookware/dehillerin-saute/1-full.jpeg"
+                    hero="true"
+                    caption="{{guideCopperObj1Title}}"></g-figure>
+          <g-figure src="img/guides/copper-cookware/dehillerin-saute/2-mark.jpeg"
+                    caption="{{guideCopperObj1MarkCaption}}"></g-figure>
+        </div>
+
+        <!-- Compact specification block: measured data only. -->
+        <div class="guide-spec">
+          <p class="guide-spec-title">{{guideCopperSpecTitle}}</p>
+          <dl>
+            <dt>{{guideCopperSpecDiameterLabel}}</dt>
+            <dd>{{guideCopperSpecDiameterValue}}</dd>
+            <dt>{{guideCopperSpecWeightLabel}}</dt>
+            <dd>{{guideCopperSpecWeightValue}}</dd>
+            <dt>{{guideCopperSpecWallLabel}}</dt>
+            <dd>{{guideCopperSpecWallValue}}</dd>
+            <dt>{{guideCopperSpecConstructionLabel}}</dt>
+            <dd>{{guideCopperSpecConstructionValue}}</dd>
+            <dt>{{guideCopperSpecHandleLabel}}</dt>
+            <dd>{{guideCopperSpecHandleValue}}</dd>
+            <dt>{{guideCopperSpecAttachmentLabel}}</dt>
+            <dd>{{guideCopperSpecAttachmentValue}}</dd>
+            <dt>{{guideCopperSpecMarkLabel}}</dt>
+            <dd>{{guideCopperSpecMarkValue}}</dd>
+            <dt>{{guideCopperSpecRivetLabel}}</dt>
+            <dd>{{guideCopperSpecRivetValue}}</dd>
+          </dl>
+          <p class="guide-spec-note">{{guideCopperSpecNote}}</p>
+        </div>
+
+        <!-- The copper wall beside what the measurements do and do not show. -->
+        <div class="guide-split">
+          <g-figure variant="split"
+                    src="img/guides/copper-cookware/dehillerin-saute/3-wall.jpeg"
+                    caption="{{guideCopperObj1WallCaption}}"></g-figure>
+          <div class="guide-split-body">
+            <h3>{{guideCopperObj1WallHeading}}</h3>
+            <p>{{guideCopperObj1WallText}}</p>
+          </div>
+        </div>
+
+        <!-- Handle and rivets beside the reading of the mark. -->
+        <div class="guide-split guide-split-reverse">
+          <g-figure variant="split"
+                    src="img/guides/copper-cookware/dehillerin-saute/5-rivets.jpeg"
+                    caption="{{guideCopperObj1RivetsCaption}}"></g-figure>
+          <div class="guide-split-body">
+            <h3>{{guideCopperObj1MarkHeading}}</h3>
+            <p>{{guideCopperObj1MarkText}}</p>
+            <div class="guide-note-box">
+              <p class="guide-note-label">{{guideCopperNoteLabel}}</p>
+              <p>{{guideCopperObj1NoteText}}</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="guide-figure-pair">
+          <g-figure src="img/guides/copper-cookware/dehillerin-saute/4-handle.jpeg"
+                    caption="{{guideCopperObj1HandleCaption}}"></g-figure>
+          <g-figure src="img/guides/copper-cookware/dehillerin-saute/6-interior.jpeg"
+                    caption="{{guideCopperObj1InteriorCaption}}"></g-figure>
+        </div>
+
+        <div class="guide-subsection">
+          <h3>{{guideCopperObj1DatingHeading}}</h3>
+          <p>{{guideCopperObj1DatingText}}</p>
+        </div>
+      </section>
+
+      <!-- ── Reading a French copper pan ──
+           TODO: when /en/guides/identifying-vintage-french-copper.html exists,
+           link to it from this section as the detailed companion guide. -->
+      <section class="guide-section" aria-labelledby="guide-s3">
+        <h2 id="guide-s3">{{guideCopperS3Heading}}</h2>
+        <p>{{guideCopperS3P1}}</p>
+
+        <div class="guide-subsection">
+          <h3>{{guideCopperS3aHeading}}</h3>
+          <p>{{guideCopperS3aText}}</p>
+        </div>
+
+        <div class="guide-subsection">
+          <h3>{{guideCopperS3bHeading}}</h3>
+          <p>{{guideCopperS3bText}}</p>
+        </div>
+
+        <div class="guide-subsection">
+          <h3>{{guideCopperS3cHeading}}</h3>
+          <p>{{guideCopperS3cText}}</p>
+        </div>
+
+        <div class="guide-subsection">
+          <h3>{{guideCopperS3dHeading}}</h3>
+          <p>{{guideCopperS3dText}}</p>
+        </div>
+
+        <p class="guide-note">{{guideCopperS3Note}}</p>
+      </section>
+
+      <!-- ── Thickness and weight ── -->
+      <section class="guide-section" aria-labelledby="guide-s4">
+        <h2 id="guide-s4">{{guideCopperS4Heading}}</h2>
+        <p>{{guideCopperS4P1}}</p>
+        <p>{{guideCopperS4P2}}</p>
+        <p class="guide-note">{{guideCopperS4Note}}</p>
+      </section>
+
+      <!-- ── Handles, rivets and construction ── -->
+      <section class="guide-section" aria-labelledby="guide-s5">
+        <h2 id="guide-s5">{{guideCopperS5Heading}}</h2>
+        <p>{{guideCopperS5P1}}</p>
+        <p>{{guideCopperS5P2}}</p>
+        <p>{{guideCopperS5P3}}</p>
+      </section>
+
+      <!-- ── Tin lining, wear and restoration ── -->
+      <section class="guide-section" aria-labelledby="guide-s6">
+        <h2 id="guide-s6">{{guideCopperS6Heading}}</h2>
+        <p>{{guideCopperS6P1}}</p>
+        <p>{{guideCopperS6P2}}</p>
+        <p>{{guideCopperS6P3}}</p>
+      </section>
+
+      <!-- ── Mauviel and Villedieu-les-Poêles ──
+           TODO: when /en/guides/mauviel-vintage-copper.html exists, link to it
+           from this section. -->
+      <section class="guide-section" aria-labelledby="guide-s7">
+        <h2 id="guide-s7">{{guideCopperS7Heading}}</h2>
+        <p>{{guideCopperS7P1}}</p>
+        <p>{{guideCopperS7P2}}</p>
+
+        <div class="guide-split">
+          <g-figure variant="split"
+                    src="img/guides/copper-cookware/mauviel-saucepan/2-mark.jpeg"
+                    caption="{{guideCopperObj2MarkCaption}}"></g-figure>
+          <div class="guide-split-body">
+            <h3>{{guideCopperObj2Heading}}</h3>
+            <p>{{guideCopperObj2Text}}</p>
+            <div class="guide-note-box">
+              <p class="guide-note-label">{{guideCopperNoteLabel}}</p>
+              <p>{{guideCopperObj2NoteText}}</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="guide-figure-pair">
+          <g-figure src="img/guides/copper-cookware/mauviel-saucepan/1-full.jpeg"
+                    caption="{{guideCopperObj2Title}}"></g-figure>
+          <g-figure src="img/guides/copper-cookware/mauviel-saucepan/2-mark.jpeg"
+                    caption="{{guideCopperObj2MarkCaption}}"></g-figure>
+        </div>
+      </section>
+
+      <!-- ── Maker, retailer and attribution ──
+           Illustrated case-study position reserved for the Mauviel /
+           E. Dehillerin confiturier.
+           RESEARCH PLACEHOLDER: no conclusion may be drawn about this object
+           until its markings and the supporting documentation are examined.
+           Do not add any manufacturing relationship here before then. -->
+      <section class="guide-section" aria-labelledby="guide-s8">
+        <h2 id="guide-s8">{{guideCopperS8Heading}}</h2>
+        <p>{{guideCopperS8P1}}</p>
+        <p>{{guideCopperS8P2}}</p>
+
+        <div class="guide-split guide-split-reverse">
+          <g-figure variant="split"
+                    src="img/guides/copper-cookware/mauviel-dehillerin-confiturier/1-full.jpeg"
+                    caption="{{guideCopperObj3Title}}"></g-figure>
+          <div class="guide-split-body">
+            <h3>{{guideCopperObj3Heading}}</h3>
+            <p>{{guideCopperObj3Text}}</p>
+            <div class="guide-note-box">
+              <p class="guide-note-label">{{guideCopperResearchLabel}}</p>
+              <p>{{guideCopperObj3ResearchText}}</p>
+            </div>
+          </div>
+        </div>
+
+        <g-figure src="img/guides/copper-cookware/mauviel-dehillerin-confiturier/2-mark.jpeg"
+                  caption="{{guideCopperObj3MarkCaption}}"></g-figure>
+      </section>
+
+      <!-- ── L. Lecellier and Cuivralec ──
+           TODO: when /en/guides/lecellier-cuivralec.html exists, link to it
+           from this section. -->
+      <section class="guide-section" aria-labelledby="guide-s9">
+        <h2 id="guide-s9">{{guideCopperS9Heading}}</h2>
+        <p>{{guideCopperS9P1}}</p>
+        <p>{{guideCopperS9P2}}</p>
+
+        <div class="guide-figure-pair">
+          <g-figure src="img/guides/copper-cookware/lecellier-cuivralec/1-set.jpeg"
+                    caption="{{guideCopperObj4SetCaption}}"></g-figure>
+          <g-figure src="img/guides/copper-cookware/lecellier-cuivralec/2-mark.jpeg"
+                    caption="{{guideCopperObj4MarkCaption}}"></g-figure>
+        </div>
+
+        <div class="guide-split">
+          <g-figure variant="split"
+                    src="img/guides/copper-cookware/lecellier-cuivralec/3-label.jpeg"
+                    caption="{{guideCopperObj4LabelCaption}}"></g-figure>
+          <div class="guide-split-body">
+            <h3>{{guideCopperObj4LabelHeading}}</h3>
+            <p>{{guideCopperObj4LabelText}}</p>
+            <div class="guide-note-box">
+              <p class="guide-note-label">{{guideCopperNoteLabel}}</p>
+              <p>{{guideCopperObj4NoteText}}</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="guide-split guide-split-reverse">
+          <g-figure variant="split"
+                    src="img/guides/copper-cookware/lecellier-cuivralec/4-detail.jpeg"
+                    caption="{{guideCopperObj4DetailCaption}}"></g-figure>
+          <div class="guide-split-body">
+            <h3>{{guideCopperObj4SetHeading}}</h3>
+            <p>{{guideCopperObj4SetText}}</p>
+          </div>
+        </div>
+
+        <!-- RESEARCH PLACEHOLDER: no production period has been established for
+             L. Lecellier / Cuivralec. Do not add dates until a period
+             catalogue, advertisement or trademark record has been consulted. -->
+        <div class="guide-subsection">
+          <h3>{{guideCopperObj4DatingHeading}}</h3>
+          <p>{{guideCopperObj4DatingText}}</p>
+        </div>
+      </section>
+
+      <!-- ── "Sans étamage" ── literal reading of the original label only. -->
+      <section class="guide-section" aria-labelledby="guide-s10">
+        <h2 id="guide-s10">{{guideCopperS10Heading}}</h2>
+        <p>{{guideCopperS10P1}}</p>
+
+        <div class="guide-spec">
+          <p class="guide-spec-title">{{guideCopperLabelTitle}}</p>
+          <p class="guide-label-transcription">{{guideCopperLabelText}}</p>
+          <p class="guide-spec-note">{{guideCopperLabelNote}}</p>
+        </div>
+
+        <p>{{guideCopperS10P2}}</p>
+        <p class="guide-note">{{guideCopperS10Note}}</p>
+      </section>
+
+      <!-- ── "Made in France" is not a maker ── -->
+      <section class="guide-section" aria-labelledby="guide-s11">
+        <h2 id="guide-s11">{{guideCopperS11Heading}}</h2>
+        <p>{{guideCopperS11P1}}</p>
+        <p>{{guideCopperS11P2}}</p>
+        <p class="guide-note">{{guideCopperS11Note}}</p>
+      </section>
+
+      <!-- ── Condition, patina and restoration ── -->
+      <section class="guide-section" aria-labelledby="guide-s12">
+        <h2 id="guide-s12">{{guideCopperS12Heading}}</h2>
+        <p>{{guideCopperS12P1}}</p>
+        <p>{{guideCopperS12P2}}</p>
+        <p>{{guideCopperS12P3}}</p>
+      </section>
+
+      <!-- ── How Cook & Collect researches French copper ── -->
+      <section class="guide-section" aria-labelledby="guide-s13">
+        <h2 id="guide-s13">{{guideCopperS13Heading}}</h2>
+        <p>{{guideCopperS13P1}}</p>
+        <p>{{guideCopperS13P2}}</p>
+        <p class="guide-note">{{guideCopperS13Principle}}</p>
+        <p>{{guideCopperS13P3}}</p>
+      </section>
+
+      <!-- ── Research & References ──
+           Same presentation as the Champagne guide. ONLY sources actually
+           consulted. Leave a research-pending entry rather than a guess. -->
+      <section class="guide-section guide-references" aria-labelledby="guide-refs">
+        <h2 id="guide-refs">{{guideCopperRefHeading}}</h2>
+        <p>{{guideCopperRefIntro}}</p>
+        <dl class="guide-refs-list">
+          <dt>{{guideCopperRefDehillerinLabel}}</dt>
+          <dd>
+            {{guideCopperRefDehillerinText}}
+            <ul>
+              <li><a href="{{guideCopperRefDehillerinLink1Url}}" target="_blank" rel="noopener noreferrer">{{guideCopperRefDehillerinLink1Text}}</a></li>
+            </ul>
+          </dd>
+          <dt>{{guideCopperRefMauvielLabel}}</dt>
+          <dd>
+            {{guideCopperRefMauvielText}}
+            <ul>
+              <li><a href="{{guideCopperRefMauvielLink1Url}}" target="_blank" rel="noopener noreferrer">{{guideCopperRefMauvielLink1Text}}</a></li>
+            </ul>
+          </dd>
+          <dt>{{guideCopperRefVilledieuLabel}}</dt>
+          <dd>
+            {{guideCopperRefVilledieuText}}
+            <ul>
+              <li><a href="{{guideCopperRefVilledieuLink1Url}}" target="_blank" rel="noopener noreferrer">{{guideCopperRefVilledieuLink1Text}}</a></li>
+              <li><a href="{{guideCopperRefVilledieuLink2Url}}" target="_blank" rel="noopener noreferrer">{{guideCopperRefVilledieuLink2Text}}</a></li>
+            </ul>
+          </dd>
+          <dt>{{guideCopperRefLecellierLabel}}</dt>
+          <dd>{{guideCopperRefLecellierText}}</dd>
+          <dt>{{guideCopperRefConfiturierLabel}}</dt>
+          <dd>{{guideCopperRefConfiturierText}}</dd>
+        </dl>
+      </section>
+
+      <!-- ── Collecting today + closing links ── -->
+      <section class="guide-section" aria-labelledby="guide-s14">
+        <h2 id="guide-s14">{{guideCopperS14Heading}}</h2>
+        <p>{{guideCopperS14P1}}</p>
+        <p>{{guideCopperS14P2}} <a href="{{guideChampagneHref}}">{{guideCopperS14ChampagneLinkText}}</a>. <a href="{{aboutHref}}">{{guideCopperS14AboutLinkText}}</a>.</p>
+        <p class="guide-cta">
+          <a href="{{curatedHref}}">{{guideCopperS14CtaText}}</a>
+        </p>
+      </section>
+
+    </article>
+  </main>
+
+  {{contactButtons}}
+  {{footer}}
+</body>
+</html>

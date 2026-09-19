@@ -380,10 +380,17 @@ LOCALES.forEach(locale => {
       legalHref: locale.legal,
       // Guides live in en/guides/ and fr/guides/ (see build-guides.js). From the
       // root English page they need the "en/" prefix; inside en/ or fr/ they are
-      // a sibling folder.
-      guideChampagneHref: locale.dir === ''
-        ? 'en/guides/vintage-french-champagne-buckets.html'
-        : 'guides/vintage-french-champagne-buckets.html'
+      // a sibling folder. One helper per guide file keeps this scalable: adding
+      // a guide means adding one line here, not a new linking scheme.
+      ...(() => {
+        const guideHref = file =>
+          locale.dir === '' ? `en/guides/${file}` : `guides/${file}`;
+        return {
+          guidesHref: guideHref('index.html'),
+          guideChampagneHref: guideHref('vintage-french-champagne-buckets.html'),
+          guideCopperHref: guideHref('vintage-french-copper-cookware.html')
+        };
+      })()
     };
     html = substitute(html, ctx);
 

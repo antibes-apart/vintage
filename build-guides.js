@@ -6,18 +6,35 @@
  * distinct, growing content area (target: ~10 guides), so they get their own
  * small, self-contained generator.
  *
- * How it scales — to add guide #2..#10:
- *   1. Append an entry to the GUIDES registry below.
+ * How it scales — to add guide #3..#10:
+ *   1. Append an entry to the GUIDES registry below (including its `card`
+ *      listing metadata so it appears on the Collector's Guides index).
  *   2. Create its template in templates/guides/<file>.html (use {{guideHead}},
- *      {{nav}}, {{contactButtons}}, {{footer}}, {{BASE}}, {{curatedHref}}).
+ *      {{nav}}, {{contactButtons}}, {{footer}}, {{BASE}}, {{curatedHref}},
+ *      {{guidesHref}}), and <g-figure> for every illustration.
  *   3. Add its strings to i18n.js under a unique `strKey` prefix.
  * The <head> (canonical, hreflang, Open Graph, Twitter, Article +
  * BreadcrumbList JSON-LD), navigation and bilingual wiring are generated here.
  *
+ * Shared guide components (used by every guide, no per-guide CSS or markup):
+ *   <g-figure>            image + caption, with an automatic same-size
+ *                         placeholder while a photograph is still missing
+ *   .guide-split          figure beside prose
+ *   .guide-figure-pair / .guide-figure-trio   figure groups
+ *   .guide-spec           compact specification block (dl)
+ *   .guide-note-box       collector's note
+ *   .guide-references     Research & References list
+ *
+ * The Collector's Guides index (en/guides/index.html + fr/guides/index.html)
+ * is generated from the same GUIDES registry — its card grid grows
+ * automatically as guides are added, with no per-count layout to maintain.
+ *
  * Output: one file per locale, same filename in each language folder
  * (language is implied by the folder), e.g.
- *   en/guides/vintage-french-champagne-buckets.html   (English, canonical)
- *   fr/guides/vintage-french-champagne-buckets.html   (French)
+ *   en/guides/index.html                               (English index)
+ *   fr/guides/index.html                               (French index)
+ *   en/guides/vintage-french-champagne-buckets.html    (English, canonical)
+ *   fr/guides/vintage-french-champagne-buckets.html    (French)
  *
  * Run:  node build-guides.js   (or: npm run build:guides)
  */
@@ -30,6 +47,7 @@ const TEMPLATES_DIR = path.join(__dirname, 'templates');
 const SITE_URL = 'https://cookandcollect.eu';
 
 /* ─── Guide registry ─── */
+// Order here is the display order on the Collector's Guides index.
 const GUIDES = [
   {
     // i18n key prefix. All of this guide's strings live in i18n.js as
@@ -41,10 +59,23 @@ const GUIDES = [
     // Hero / Open Graph image (site-root-relative). This is the same file used
     // as the page hero, so replacing the photo updates the social preview too.
     ogImage: 'img/guides/champagne-buckets/veuve-clicquot/1-full.jpeg',
+    // Listing metadata for the Collector's Guides index card. `image` is the
+    // card thumbnail (site-root-relative); the title/eyebrow/summary strings
+    // live in i18n.js under `${strKey}Card…`.
+    card: {image: 'img/guides/champagne-buckets/veuve-clicquot/1-full.jpeg'},
     // Manually managed publication dates (ISO 8601) for Article schema.
     // Bump `dateModified` whenever the guide's content is meaningfully revised.
     datePublished: '2026-09-17',
     dateModified: '2026-09-17'
+  },
+  {
+    strKey: 'guideCopper',
+    template: 'guides/vintage-french-copper-cookware.html',
+    file: 'vintage-french-copper-cookware.html',
+    ogImage: 'img/guides/copper-cookware/dehillerin-saute/1-full.jpeg',
+    card: {image: 'img/guides/copper-cookware/dehillerin-saute/1-full.jpeg'},
+    datePublished: '2026-09-19',
+    dateModified: '2026-09-19'
   }
 ];
 
@@ -107,6 +138,79 @@ function escapeAttr(str) {
     .replace(/>/g, '&gt;');
 }
 
+/* ─── <g-figure> — the shared guide figure component ───
+ * Every guide illustration goes through this one component, so all guides get
+ * the same image treatment, caption typography and — importantly — the same
+ * behaviour when a photograph has not been supplied yet.
+ *
+ * Usage in a guide template (attribute values may contain {{i18n}} tokens,
+ * which are substituted afterwards as usual):
+ *
+ *   <g-figure src="img/guides/<guide>/<object>/1-full.jpeg"
+ *             alt="{{guideXAlt}}"
+ *             caption="{{guideXCaption}}"></g-figure>
+ *
+ *   variant="split"  → renders as a .guide-split-figure (image beside prose)
+ *   hero="true"      → eager loading / high priority (above-the-fold image)
+ *
+ * If the file referenced by `src` exists, a normal <figure><img> is emitted.
+ * If it does not exist yet, an identically sized placeholder block is emitted
+ * instead (same frame, same height, same caption), describing the photograph
+ * that is still needed. Dropping the real file in at that exact path is the
+ * only step required later — no template or layout change.
+ */
+const pendingImages = new Set();
+
+function imageExists(src) {
+  return fs.existsSync(path.join(__dirname, src));
+}
+
+function parseAttrs(raw) {
+  const attrs = {};
+  const re = /([\w-]+)\s*=\s*"([^"]*)"/g;
+  let m;
+  while ((m = re.exec(raw)) !== null) attrs[m[1]] = m[2];
+  return attrs;
+}
+
+function renderFigure(attrs, base) {
+  const variant = attrs.variant || 'default';
+  const figureClass = variant === 'split' ? 'guide-split-figure' : 'guide-figure';
+  const caption = attrs.caption || '';
+  const alt = attrs.alt || caption;
+  const src = attrs.src || '';
+  const captionHtml = caption ? `\n            <figcaption>${caption}</figcaption>` : '';
+
+  if (src && imageExists(src)) {
+    const loading = attrs.hero === 'true'
+      ? ' loading="eager" fetchpriority="high"'
+      : ' loading="lazy"';
+    return `<figure class="${figureClass}">
+            <img src="${base}${src}" alt="${alt}"${loading} decoding="async">${captionHtml}
+          </figure>`;
+  }
+
+  // Photograph still to come: same frame, same height, no broken image.
+  // The description lives in the <figcaption> when there is one, so the frame
+  // itself only carries the "photograph to come" label and does not repeat it.
+  if (src) pendingImages.add(src);
+  const placeholderText = caption
+    ? ''
+    : `\n              <span class="guide-figure-placeholder-text">${alt}</span>`;
+  return `<figure class="${figureClass} guide-figure-pending">
+            <div class="guide-figure-placeholder" role="img" aria-label="${alt}">
+              <span class="guide-figure-placeholder-label">{{guidePhotoPending}}</span>${placeholderText}
+            </div>${captionHtml}
+          </figure>`;
+}
+
+// Replace every <g-figure …></g-figure> (or self-closing <g-figure … />).
+function renderFigures(html, base) {
+  return html.replace(/<g-figure\b([^>]*?)\/?>(?:\s*<\/g-figure>)?/g, (m, rawAttrs) =>
+    renderFigure(parseAttrs(rawAttrs), base)
+  );
+}
+
 // Canonical + hreflang + Open Graph + Twitter + Article/BreadcrumbList JSON-LD.
 // `s` is the locale's i18n strings; `k` is the guide's strKey prefix.
 function renderGuideHead(guide, code, s, k) {
@@ -114,7 +218,11 @@ function renderGuideHead(guide, code, s, k) {
   const enUrl = `${SITE_URL}/en/guides/${guide.file}`;
   const frUrl = `${SITE_URL}/fr/guides/${guide.file}`;
   const canonical = code === 'fr' ? frUrl : enUrl;
-  const ogImageUrl = `${SITE_URL}/${guide.ogImage}`;
+  // Only advertise a social image once the photograph actually exists: a guide
+  // may be published while its object photography is still being shot, and a
+  // 404 og:image is worse than none.
+  const hasOgImage = Boolean(guide.ogImage) && imageExists(guide.ogImage);
+  const ogImageUrl = hasOgImage ? `${SITE_URL}/${guide.ogImage}` : '';
   const desc = get('MetaDesc');
   const ogTitle = get('OgTitle') || get('DocTitle');
   const ogDesc = get('OgDesc') || desc;
@@ -126,7 +234,7 @@ function renderGuideHead(guide, code, s, k) {
     '@type': 'Article',
     headline: get('H1'),
     description: desc,
-    image: [ogImageUrl],
+    ...(hasOgImage ? {image: [ogImageUrl]} : {}),
     inLanguage: code,
     author: {'@type': 'Organization', name: 'Cook & Collect'},
     publisher: {'@type': 'Organization', name: 'Cook & Collect'},
@@ -145,6 +253,13 @@ function renderGuideHead(guide, code, s, k) {
     ]
   };
 
+  const imageMeta = hasOgImage
+    ? `\n  <meta property="og:image" content="${ogImageUrl}">`
+    : '';
+  const twitterImageMeta = hasOgImage
+    ? `\n  <meta name="twitter:image" content="${ogImageUrl}">`
+    : '';
+
   return `  <link rel="canonical" href="${canonical}">
   <link rel="alternate" hreflang="en" href="${enUrl}">
   <link rel="alternate" hreflang="fr" href="${frUrl}">
@@ -154,12 +269,10 @@ function renderGuideHead(guide, code, s, k) {
   <meta property="og:locale" content="${ogLocale}">
   <meta property="og:title" content="${escapeAttr(ogTitle)}">
   <meta property="og:description" content="${escapeAttr(ogDesc)}">
-  <meta property="og:url" content="${canonical}">
-  <meta property="og:image" content="${ogImageUrl}">
-  <meta name="twitter:card" content="summary_large_image">
+  <meta property="og:url" content="${canonical}">${imageMeta}
+  <meta name="twitter:card" content="${hasOgImage ? 'summary_large_image' : 'summary'}">
   <meta name="twitter:title" content="${escapeAttr(ogTitle)}">
-  <meta name="twitter:description" content="${escapeAttr(ogDesc)}">
-  <meta name="twitter:image" content="${ogImageUrl}">
+  <meta name="twitter:description" content="${escapeAttr(ogDesc)}">${twitterImageMeta}
   <script type="application/ld+json">${JSON.stringify(article)}</script>
   <script type="application/ld+json">${JSON.stringify(breadcrumb)}</script>`;
 }
@@ -169,6 +282,128 @@ function substitute(html, ctx) {
 }
 
 const tpl = name => fs.readFileSync(path.join(TEMPLATES_DIR, name), 'utf-8');
+
+/* ─── Collector's Guides index (landing page) ───
+ * Generated from the same GUIDES registry so the card grid grows on its own.
+ * The card layout is a responsive CSS grid (.guide-index-grid, auto-fill) so
+ * it degrades gracefully for 1, 2, 3, 4, 6+ guides with no per-count code. */
+function renderGuideIndexHead(code, s) {
+  const enUrl = `${SITE_URL}/en/guides/`;
+  const frUrl = `${SITE_URL}/fr/guides/`;
+  const canonical = code === 'fr' ? frUrl : enUrl;
+  const ogLocale = code === 'fr' ? 'fr_FR' : 'en_GB';
+  const homeUrl = code === 'fr' ? `${SITE_URL}/fr/` : `${SITE_URL}/en/`;
+  const title = s.guidesIndexOgTitle || s.guidesIndexTitle;
+  const desc = s.guidesIndexMetaDesc || '';
+
+  const breadcrumb = {
+    '@context': 'https://schema.org',
+    '@type': 'BreadcrumbList',
+    itemListElement: [
+      {'@type': 'ListItem', position: 1, name: s.navCollection, item: homeUrl},
+      {'@type': 'ListItem', position: 2, name: s.guidesIndexBreadcrumbCurrent}
+    ]
+  };
+  // ItemList of the guides, in registry order, for richer indexing.
+  const itemList = {
+    '@context': 'https://schema.org',
+    '@type': 'ItemList',
+    itemListElement: GUIDES.map((guide, i) => ({
+      '@type': 'ListItem',
+      position: i + 1,
+      url: `${homeUrl}guides/${guide.file}`,
+      name: i18n[code][`${guide.strKey}CardTitle`] || i18n[code][`${guide.strKey}H1`] || ''
+    }))
+  };
+
+  return `  <link rel="canonical" href="${canonical}">
+  <link rel="alternate" hreflang="en" href="${enUrl}">
+  <link rel="alternate" hreflang="fr" href="${frUrl}">
+  <link rel="alternate" hreflang="x-default" href="${enUrl}">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="Cook & Collect">
+  <meta property="og:locale" content="${ogLocale}">
+  <meta property="og:title" content="${escapeAttr(title)}">
+  <meta property="og:description" content="${escapeAttr(desc)}">
+  <meta property="og:url" content="${canonical}">
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="${escapeAttr(title)}">
+  <meta name="twitter:description" content="${escapeAttr(desc)}">
+  <script type="application/ld+json">${JSON.stringify(breadcrumb)}</script>
+  <script type="application/ld+json">${JSON.stringify(itemList)}</script>`;
+}
+
+function renderGuideIndexCards(code, base) {
+  const s = i18n[code];
+  return GUIDES.map(guide => {
+    const k = guide.strKey;
+    const get = suffix => s[`${k}${suffix}`] || '';
+    const eyebrow = get('CardEyebrow') || get('Eyebrow');
+    const title = get('CardTitle') || get('H1');
+    const summary = get('CardSummary') || get('MetaDesc');
+    const alt = get('CardImageAlt') || title;
+    const cta = s.guidesIndexCardCta || '';
+    const img = (guide.card && guide.card.image) || guide.ogImage;
+    // Same placeholder logic as <g-figure>: a guide can be listed before its
+    // photography arrives without showing a broken thumbnail.
+    let media;
+    if (img && imageExists(img)) {
+      media = `<figure class="guide-index-card-media">
+              <img src="${base}${img}" alt="${escapeAttr(alt)}" loading="lazy" decoding="async">
+            </figure>`;
+    } else {
+      if (img) pendingImages.add(img);
+      media = `<figure class="guide-index-card-media guide-figure-pending">
+              <div class="guide-figure-placeholder" role="img" aria-label="${escapeAttr(alt)}">
+                <span class="guide-figure-placeholder-label">${s.guidePhotoPending || ''}</span>
+                <span class="guide-figure-placeholder-text">${alt}</span>
+              </div>
+            </figure>`;
+    }
+    return `        <article class="guide-index-card">
+          <a class="guide-index-card-link" href="${guide.file}">
+            ${media}
+            <div class="guide-index-card-body">
+              <p class="guide-index-card-eyebrow">${eyebrow}</p>
+              <h2 class="guide-index-card-title">${title}</h2>
+              <p class="guide-index-card-summary">${summary}</p>
+              <span class="guide-index-card-cta">${cta}</span>
+            </div>
+          </a>
+        </article>`;
+  }).join('\n');
+}
+
+function buildGuideIndex(locale) {
+  const strings = i18n[locale.code];
+  const base = '../../';
+  const rootPrefix = '../';
+  const enHref = '../../en/guides/index.html';
+  const frHref = '../../fr/guides/index.html';
+  const langSwitch = renderLangSwitch(locale.code, enHref, frHref);
+  const template = tpl('guides/index.html');
+
+  let html = template
+    .replace('{{nav}}', renderNav(rootPrefix, langSwitch))
+    .replace('{{contactButtons}}', CONTACT_BUTTONS)
+    .replace('{{footer}}', FOOTER)
+    .replace('{{guideIndexHead}}', renderGuideIndexHead(locale.code, strings))
+    .replace('{{guideIndexCards}}', renderGuideIndexCards(locale.code, base));
+
+  const ctx = {
+    ...strings,
+    LANG: locale.code,
+    BASE: base,
+    legalHref: `${rootPrefix}${locale.legalFile}`,
+    curatedHref: `${rootPrefix}curated-selection.html`,
+    aboutHref: `${rootPrefix}about.html`
+  };
+  html = substitute(html, ctx);
+
+  const outDir = path.join(__dirname, locale.dir);
+  fs.mkdirSync(outDir, {recursive: true});
+  fs.writeFileSync(path.join(outDir, 'index.html'), html);
+}
 
 /* ─── Generate ─── */
 let generated = 0;
@@ -192,12 +427,22 @@ GUIDES.forEach(guide => {
       .replace('{{footer}}', FOOTER)
       .replace('{{guideHead}}', renderGuideHead(guide, locale.code, strings, guide.strKey));
 
+    // Shared figure component — see renderFigure() above.
+    html = renderFigures(html, base);
+
     const ctx = {
       ...strings,
       LANG: locale.code,
       BASE: base,
       legalHref: `${rootPrefix}${locale.legalFile}`,
-      curatedHref: `${rootPrefix}curated-selection.html`
+      curatedHref: `${rootPrefix}curated-selection.html`,
+      aboutHref: `${rootPrefix}about.html`,
+      // The Collector's Guides index is a sibling file in the same folder.
+      guidesHref: 'index.html',
+      // Every guide is a sibling file too, so any guide can cross-link to any
+      // other with {{<strKey>Href}} (e.g. {{guideChampagneHref}}). Generated
+      // from the registry, so new guides are linkable with no code change.
+      ...Object.fromEntries(GUIDES.map(g => [`${g.strKey}Href`, g.file]))
     };
     html = substitute(html, ctx);
 
@@ -208,4 +453,19 @@ GUIDES.forEach(guide => {
   });
 });
 
-console.log(`Generated ${generated} guide page(s) from ${GUIDES.length} guide(s) across ${LOCALES.length} locale(s).`);
+// Collector's Guides index, one per locale.
+let indexes = 0;
+LOCALES.forEach(locale => {
+  buildGuideIndex(locale);
+  indexes++;
+});
+
+console.log(`Generated ${generated} guide page(s) + ${indexes} index page(s) from ${GUIDES.length} guide(s) across ${LOCALES.length} locale(s).`);
+
+// Any <g-figure src> (or index card image) whose file does not exist yet is
+// rendered as a placeholder. Listing them here keeps the outstanding
+// photography visible instead of silently shipping empty frames.
+if (pendingImages.size) {
+  console.log(`\n${pendingImages.size} image placeholder(s) awaiting original photography:`);
+  [...pendingImages].sort().forEach(src => console.log(`  - ${src}`));
+}

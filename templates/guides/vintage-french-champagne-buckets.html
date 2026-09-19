@@ -6,7 +6,7 @@
   <meta name="description" content="{{guideChampagneMetaDesc}}">
   <title>{{guideChampagneDocTitle}}</title>
 {{guideHead}}
-  <link rel="stylesheet" href="{{BASE}}css/style.css?v=11">
+  <link rel="stylesheet" href="{{BASE}}css/style.css?v=12">
 </head>
 <body data-page="guide" class="guide-page">
   {{nav}}
@@ -32,8 +32,7 @@
         <nav class="guide-breadcrumb" aria-label="Breadcrumb">
           <ol>
             <li><a href="../index.html">{{navCollection}}</a></li>
-            <!-- TODO: point to the guides index once /en/guides/index.html exists -->
-            <li><span>{{guideChampagneBreadcrumbGuides}}</span></li>
+            <li><a href="{{guidesHref}}">{{guideChampagneBreadcrumbGuides}}</a></li>
             <li aria-current="page">{{guideChampagneBreadcrumbCurrent}}</li>
           </ol>
         </nav>
@@ -275,9 +274,9 @@
       <!-- ── Collecting today + closing link ── -->
       <section class="guide-section" aria-labelledby="guide-s9">
         <h2 id="guide-s9">{{guideChampagneS9Heading}}</h2>
-        <p>{{guideChampagneS9P1}}</p>
-        <!-- TODO: add contextual links to the French Copper Cookware and
-             Vintage Le Creuset guides once those pages exist. -->
+        <p>{{guideChampagneS9P1}} {{guideChampagneS9CopperLink}}</p>
+        <!-- TODO: add a contextual link to the Vintage Le Creuset guide once
+             that page exists. -->
         <p class="guide-cta">
           <a href="{{curatedHref}}">{{guideChampagneS9CtaText}}</a>
         </p>

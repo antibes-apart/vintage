@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="{{LANG}}">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="{{guidesIndexMetaDesc}}">
+  <title>{{guidesIndexDocTitle}}</title>
+{{guideIndexHead}}
+  <link rel="stylesheet" href="{{BASE}}css/style.css?v=12">
+</head>
+<body data-page="guide" class="guide-page">
+  {{nav}}
+
+  <main>
+    <div class="guide guide-index">
+
+      <header class="guide-header">
+        <nav class="guide-breadcrumb" aria-label="Breadcrumb">
+          <ol>
+            <li><a href="../index.html">{{navCollection}}</a></li>
+            <li aria-current="page">{{guidesIndexBreadcrumbCurrent}}</li>
+          </ol>
+        </nav>
+        <p class="guide-eyebrow">{{guidesIndexEyebrow}}</p>
+        <h1 class="guide-title">{{guidesIndexTitle}}</h1>
+      </header>
+
+      <p class="guide-intro">{{guidesIndexIntro}}</p>
+
+      <!-- Card grid — generated from the GUIDES registry in build-guides.js.
+           Uses .guide-index-grid (responsive auto-fill), so 1, 2, 3, 4, 6+
+           guides all lay out gracefully with no per-count markup. -->
+      <section class="guide-index-grid" aria-label="{{guidesIndexTitle}}">
+{{guideIndexCards}}
+      </section>
+
+    </div>
+  </main>
+
+  {{contactButtons}}
+  {{footer}}
+</body>
+</html>
