@@ -238,10 +238,14 @@ function renderFigure(attrs, base) {
 }
 
 // Replace every <g-figure …></g-figure> (or self-closing <g-figure … />).
+// A bare "<g-figure>" with no attributes is left untouched: the templates
+// mention the component by name in their documentation comments, and those
+// mentions must not be rewritten into figures.
 function renderFigures(html, base) {
-  return html.replace(/<g-figure\b([^>]*?)\/?>(?:\s*<\/g-figure>)?/g, (m, rawAttrs) =>
-    renderFigure(parseAttrs(rawAttrs), base)
-  );
+  return html.replace(/<g-figure\b([^>]*?)\/?>(?:\s*<\/g-figure>)?/g, (m, rawAttrs) => {
+    const attrs = parseAttrs(rawAttrs);
+    return attrs.src ? renderFigure(attrs, base) : m;
+  });
 }
 
 // Canonical + hreflang + Open Graph + Twitter + Article/BreadcrumbList JSON-LD.
