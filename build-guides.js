@@ -75,7 +75,40 @@ const GUIDES = [
     ogImage: 'img/guides/copper-cookware/dehillerin-saute/1-full.jpeg',
     card: {image: 'img/guides/copper-cookware/dehillerin-saute/1-full.jpeg'},
     datePublished: '2026-09-19',
-    dateModified: '2026-09-19'
+    dateModified: '2026-09-20'
+  },
+  // ── Specialist guides under the copper pillar ──
+  // Each one owns the detailed case study for its maker/supplier; the pillar
+  // page introduces them and links out. Keep search intents distinct.
+  {
+    strKey: 'guideDehillerin',
+    parent: 'guideCopper',
+    template: 'guides/e-dehillerin-copper-cookware.html',
+    file: 'e-dehillerin-copper-cookware.html',
+    ogImage: 'img/guides/copper-cookware/dehillerin-saute/1-full.jpeg',
+    card: {image: 'img/guides/copper-cookware/dehillerin-saute/1-full.jpeg'},
+    datePublished: '2026-09-20',
+    dateModified: '2026-09-20'
+  },
+  {
+    strKey: 'guideMauviel',
+    parent: 'guideCopper',
+    template: 'guides/mauviel-vintage-copper-cookware.html',
+    file: 'mauviel-vintage-copper-cookware.html',
+    ogImage: 'img/guides/copper-cookware/mauviel-saute/1-full.jpeg',
+    card: {image: 'img/guides/copper-cookware/mauviel-saute/1-full.jpeg'},
+    datePublished: '2026-09-20',
+    dateModified: '2026-09-20'
+  },
+  {
+    strKey: 'guideLecellier',
+    parent: 'guideCopper',
+    template: 'guides/lecellier-cuivralec.html',
+    file: 'lecellier-cuivralec.html',
+    ogImage: 'img/guides/copper-cookware/lecellier-cuivralec/1-set.jpeg',
+    card: {image: 'img/guides/copper-cookware/lecellier-cuivralec/1-set.jpeg'},
+    datePublished: '2026-09-20',
+    dateModified: '2026-09-20'
   }
 ];
 
@@ -243,14 +276,28 @@ function renderGuideHead(guide, code, s, k) {
     ...(guide.dateModified ? {dateModified: guide.dateModified} : {}),
     isAccessibleForFree: true
   };
+  // Breadcrumb mirrors the visible trail: Collection › Guides › [pillar] ›
+  // this guide. A guide declares `parent: '<strKey>'` in the registry when it
+  // sits under a pillar guide, and the extra level appears in both places.
+  const parent = guide.parent ? GUIDES.find(g => g.strKey === guide.parent) : null;
+  const trail = [
+    {'@type': 'ListItem', position: 1, name: s.navCollection, item: homeUrl},
+    {'@type': 'ListItem', position: 2, name: get('BreadcrumbGuides'), item: `${homeUrl}guides/`}
+  ];
+  if (parent) {
+    trail.push({
+      '@type': 'ListItem',
+      position: 3,
+      name: s[`${parent.strKey}BreadcrumbCurrent`] || s[`${parent.strKey}H1`] || '',
+      item: `${homeUrl}guides/${parent.file}`
+    });
+  }
+  trail.push({'@type': 'ListItem', position: trail.length + 1, name: get('BreadcrumbCurrent')});
+
   const breadcrumb = {
     '@context': 'https://schema.org',
     '@type': 'BreadcrumbList',
-    itemListElement: [
-      {'@type': 'ListItem', position: 1, name: s.navCollection, item: homeUrl},
-      {'@type': 'ListItem', position: 2, name: get('BreadcrumbGuides'), item: `${homeUrl}guides/`},
-      {'@type': 'ListItem', position: 3, name: get('BreadcrumbCurrent')}
-    ]
+    itemListElement: trail
   };
 
   const imageMeta = hasOgImage

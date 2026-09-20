@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="{{LANG}}">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="{{guideDehillerinMetaDesc}}">
+  <title>{{guideDehillerinDocTitle}}</title>
+{{guideHead}}
+  <link rel="stylesheet" href="{{BASE}}css/style.css?v=12">
+</head>
+<body data-page="guide" class="guide-page">
+  {{nav}}
+
+  <!-- ─────────────────────────────────────────────────────────────
+       SPECIALIST GUIDE under the copper pillar
+         pillar:  guides/vintage-french-copper-cookware.html
+       This page owns the E. Dehillerin saut\u00e9 pan case study. Do not restate
+       the general French-copper material that lives on the pillar page.
+       The Mauviel / E. Dehillerin confiturier is mentioned here but examined
+       on the Mauviel guide — keep it that way (no duplicate case study).
+
+       PHOTOGRAPHY — original Cook & Collect photography only.
+         img/guides/copper-cookware/dehillerin-saute/
+           1-full · 2-mark · 3-wall · 4-handle · 5-rivets · 6-interior
+       Every illustration uses the shared <g-figure> component: while a file is
+       missing the build renders a same-sized placeholder with the caption, so
+       dropping the final photo in at that path needs no layout change.
+       ───────────────────────────────────────────────────────────── -->
+
+  <main>
+    <article class="guide">
+
+      <header class="guide-header">
+        <nav class="guide-breadcrumb" aria-label="Breadcrumb">
+          <ol>
+            <li><a href="../index.html">{{navCollection}}</a></li>
+            <li><a href="{{guidesHref}}">{{guideDehillerinBreadcrumbGuides}}</a></li>
+            <li><a href="{{guideCopperHref}}">{{guideCopperBreadcrumbCurrent}}</a></li>
+            <li aria-current="page">{{guideDehillerinBreadcrumbCurrent}}</li>
+          </ol>
+        </nav>
+        <p class="guide-eyebrow">{{guideDehillerinEyebrow}}</p>
+        <h1 class="guide-title">{{guideDehillerinH1}}</h1>
+      </header>
+
+      <p class="guide-intro">{{guideDehillerinIntro}}</p>
+
+      <!-- ── The house: history and what it means for a mark (moved from the
+           pillar guide) ── -->
+      <section class="guide-section" aria-labelledby="guide-s1">
+        <h2 id="guide-s1">{{guideDehillerinS2Heading}}</h2>
+        <p>{{guideDehillerinS2P1}}</p>
+        <p>{{guideDehillerinS2P2}}</p>
+
+        <div class="guide-figure-pair">
+          <g-figure src="img/guides/copper-cookware/dehillerin-saute/1-full.jpeg"
+                    hero="true"
+                    caption="{{guideDehillerinObj1Title}}"></g-figure>
+          <g-figure src="img/guides/copper-cookware/dehillerin-saute/2-mark.jpeg"
+                    caption="{{guideDehillerinObj1MarkCaption}}"></g-figure>
+        </div>
+      </section>
+
+      <!-- ── Retailed by / made by ── -->
+      <section class="guide-section" aria-labelledby="guide-s2">
+        <h2 id="guide-s2">{{guideDehillerinRetailerHeading}}</h2>
+        <p>{{guideDehillerinRetailerP1}}</p>
+        <p>{{guideDehillerinRetailerP2}}</p>
+        <div class="guide-subsection">
+          <div class="guide-note-box">
+            <p class="guide-note-label">{{guideDehillerinNoteLabel}}</p>
+            <p>{{guideDehillerinRetailerNote}}</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- ── Case study: the 29 cm saut\u00e9 pan (spec block + details moved
+           from the pillar guide) ── -->
+      <section class="guide-section" aria-labelledby="guide-s3">
+        <h2 id="guide-s3">{{guideDehillerinObjectHeading}}</h2>
+        <p>{{guideDehillerinObjectP1}}</p>
+
+        <div class="guide-spec">
+          <p class="guide-spec-title">{{guideDehillerinSpecTitle}}</p>
+          <dl>
+            <dt>{{guideDehillerinSpecDiameterLabel}}</dt>
+            <dd>{{guideDehillerinSpecDiameterValue}}</dd>
+            <dt>{{guideDehillerinSpecWeightLabel}}</dt>
+            <dd>{{guideDehillerinSpecWeightValue}}</dd>
+            <dt>{{guideDehillerinSpecWallLabel}}</dt>
+            <dd>{{guideDehillerinSpecWallValue}}</dd>
+            <dt>{{guideDehillerinSpecConstructionLabel}}</dt>
+            <dd>{{guideDehillerinSpecConstructionValue}}</dd>
+            <dt>{{guideDehillerinSpecHandleLabel}}</dt>
+            <dd>{{guideDehillerinSpecHandleValue}}</dd>
+            <dt>{{guideDehillerinSpecAttachmentLabel}}</dt>
+            <dd>{{guideDehillerinSpecAttachmentValue}}</dd>
+            <dt>{{guideDehillerinSpecMarkLabel}}</dt>
+            <dd>{{guideDehillerinSpecMarkValue}}</dd>
+            <dt>{{guideDehillerinSpecRivetLabel}}</dt>
+            <dd>{{guideDehillerinSpecRivetValue}}</dd>
+          </dl>
+          <p class="guide-spec-note">{{guideDehillerinSpecNote}}</p>
+        </div>
+
+        <div class="guide-split">
+          <g-figure variant="split"
+                    src="img/guides/copper-cookware/dehillerin-saute/3-wall.jpeg"
+                    caption="{{guideDehillerinObj1WallCaption}}"></g-figure>
+          <div class="guide-split-body">
+            <h3>{{guideDehillerinObj1WallHeading}}</h3>
+            <p>{{guideDehillerinObj1WallText}}</p>
+          </div>
+        </div>
+
+        <div class="guide-split guide-split-reverse">
+          <g-figure variant="split"
+                    src="img/guides/copper-cookware/dehillerin-saute/5-rivets.jpeg"
+                    caption="{{guideDehillerinObj1RivetsCaption}}"></g-figure>
+          <div class="guide-split-body">
+            <h3>{{guideDehillerinObj1MarkHeading}}</h3>
+            <p>{{guideDehillerinObj1MarkText}}</p>
+            <div class="guide-note-box">
+              <p class="guide-note-label">{{guideDehillerinNoteLabel}}</p>
+              <p>{{guideDehillerinObj1NoteText}}</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="guide-figure-pair">
+          <g-figure src="img/guides/copper-cookware/dehillerin-saute/4-handle.jpeg"
+                    caption="{{guideDehillerinObj1HandleCaption}}"></g-figure>
+          <g-figure src="img/guides/copper-cookware/dehillerin-saute/6-interior.jpeg"
+                    caption="{{guideDehillerinObj1InteriorCaption}}"></g-figure>
+        </div>
+      </section>
+
+      <!-- ── Condition, lining and restoration on professional copper ── -->
+      <section class="guide-section" aria-labelledby="guide-s4">
+        <h2 id="guide-s4">{{guideDehillerinConditionHeading}}</h2>
+        <p>{{guideDehillerinConditionP1}}</p>
+        <p>{{guideDehillerinConditionP2}}</p>
+      </section>
+
+      <!-- ── Dating: object conclusion (moved) + general limits ── -->
+      <section class="guide-section" aria-labelledby="guide-s5">
+        <h2 id="guide-s5">{{guideDehillerinDatingLimitsHeading}}</h2>
+        <p>{{guideDehillerinDatingLimitsP1}}</p>
+        <p>{{guideDehillerinDatingLimitsP2}}</p>
+
+        <div class="guide-subsection">
+          <h3>{{guideDehillerinObj1DatingHeading}}</h3>
+          <p>{{guideDehillerinObj1DatingText}}</p>
+          <div class="guide-note-box">
+            <p class="guide-note-label">{{guideDehillerinResearchLabel}}</p>
+            <p>{{guideDehillerinDatingStatus}}</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- ── Research & References: Dehillerin-specific sources only ── -->
+      <section class="guide-section guide-references" aria-labelledby="guide-refs">
+        <h2 id="guide-refs">{{guideDehillerinRefHeading}}</h2>
+        <p>{{guideDehillerinRefIntro}}</p>
+        <dl class="guide-refs-list">
+          <dt>{{guideDehillerinRefDehillerinLabel}}</dt>
+          <dd>
+            {{guideDehillerinRefDehillerinText}}
+            <ul>
+              <li><a href="{{guideDehillerinRefDehillerinLink1Url}}" target="_blank" rel="noopener noreferrer">{{guideDehillerinRefDehillerinLink1Text}}</a></li>
+            </ul>
+          </dd>
+        </dl>
+      </section>
+
+      <!-- ── Back to the pillar + CTA ── -->
+      <section class="guide-section" aria-labelledby="guide-s6">
+        <h2 id="guide-s6">{{guideDehillerinBackHeading}}</h2>
+        <p>{{guideDehillerinBackP1}} <a href="{{guideCopperHref}}">{{guideDehillerinBackCta}}</a>.</p>
+        <p class="guide-cta">
+          <a href="{{curatedHref}}">{{guideDehillerinCtaText}}</a>
+        </p>
+      </section>
+
+    </article>
+  </main>
+
+  {{contactButtons}}
+  {{footer}}
+</body>
+</html>

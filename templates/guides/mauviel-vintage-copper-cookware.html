@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="{{LANG}}">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="{{guideMauvielMetaDesc}}">
+  <title>{{guideMauvielDocTitle}}</title>
+{{guideHead}}
+  <link rel="stylesheet" href="{{BASE}}css/style.css?v=12">
+</head>
+<body data-page="guide" class="guide-page">
+  {{nav}}
+
+  <!-- ─────────────────────────────────────────────────────────────
+       SPECIALIST GUIDE under the copper pillar
+         pillar:  guides/vintage-french-copper-cookware.html
+       This page is the PRIMARY location for the Mauviel / E. Dehillerin
+       confiturier case study. The Dehillerin guide only mentions it and links
+       here — do not duplicate the case study there.
+
+       PHOTOGRAPHY — original Cook & Collect archive photography only.
+         img/guides/copper-cookware/mauviel-saute/                1-full · 2-mark · 3-detail
+         img/guides/copper-cookware/mauviel-dehillerin-confiturier/  1-full · 2-mark
+       Both objects have been sold: captions say "from the Cook & Collect
+       archive" and must not imply current availability.
+       Illustrations use the shared <g-figure> component, so a missing file
+       renders as a same-sized placeholder and the final photo can be dropped
+       in at the same path with no layout change.
+       ───────────────────────────────────────────────────────────── -->
+
+  <main>
+    <article class="guide">
+
+      <header class="guide-header">
+        <nav class="guide-breadcrumb" aria-label="Breadcrumb">
+          <ol>
+            <li><a href="../index.html">{{navCollection}}</a></li>
+            <li><a href="{{guidesHref}}">{{guideMauvielBreadcrumbGuides}}</a></li>
+            <li><a href="{{guideCopperHref}}">{{guideCopperBreadcrumbCurrent}}</a></li>
+            <li aria-current="page">{{guideMauvielBreadcrumbCurrent}}</li>
+          </ol>
+        </nav>
+        <p class="guide-eyebrow">{{guideMauvielEyebrow}}</p>
+        <h1 class="guide-title">{{guideMauvielH1}}</h1>
+      </header>
+
+      <p class="guide-intro">{{guideMauvielIntro}}</p>
+
+      <!-- ── Mauviel and Villedieu-les-Poêles (moved from the pillar guide) ── -->
+      <section class="guide-section" aria-labelledby="guide-s1">
+        <h2 id="guide-s1">{{guideMauvielS7Heading}}</h2>
+        <p>{{guideMauvielS7P1}}</p>
+        <p>{{guideMauvielS7P2}}</p>
+      </section>
+
+      <!-- ── Case study 1: the sauté pan / sauteuse, and reading its mark ── -->
+      <section class="guide-section" aria-labelledby="guide-s2">
+        <h2 id="guide-s2">{{guideMauvielMarkHeading}}</h2>
+        <p>{{guideMauvielMarkP1}}</p>
+        <p>{{guideMauvielMarkP2}}</p>
+
+        <div class="guide-split">
+          <g-figure variant="split"
+                    src="img/guides/copper-cookware/mauviel-saute/2-mark.jpeg"
+                    caption="{{guideMauvielObj2MarkCaption}}"></g-figure>
+          <div class="guide-split-body">
+            <h3>{{guideMauvielObj2Heading}}</h3>
+            <p>{{guideMauvielObj2Text}}</p>
+            <div class="guide-note-box">
+              <p class="guide-note-label">{{guideMauvielNoteLabel}}</p>
+              <p>{{guideMauvielObj2NoteText}}</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="guide-figure-pair">
+          <g-figure src="img/guides/copper-cookware/mauviel-saute/1-full.jpeg"
+                    hero="true"
+                    caption="{{guideMauvielObj2Title}}"></g-figure>
+          <g-figure src="img/guides/copper-cookware/mauviel-saute/3-detail.jpeg"
+                    caption="{{guideMauvielObj2DetailCaption}}"></g-figure>
+        </div>
+
+        <p class="guide-note">{{guideMauvielArchiveNote}}</p>
+      </section>
+
+      <!-- ── "Made in France" on a Mauviel piece ── -->
+      <section class="guide-section" aria-labelledby="guide-s3">
+        <h2 id="guide-s3">{{guideMauvielMifHeading}}</h2>
+        <p>{{guideMauvielMifP1}}</p>
+        <div class="guide-subsection">
+          <div class="guide-note-box">
+            <p class="guide-note-label">{{guideMauvielNoteLabel}}</p>
+            <p>{{guideMauvielMifNote}}</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- ── Construction ── -->
+      <section class="guide-section" aria-labelledby="guide-s4">
+        <h2 id="guide-s4">{{guideMauvielConstructionHeading}}</h2>
+        <p>{{guideMauvielConstructionP1}}</p>
+        <p>{{guideMauvielConstructionP2}}</p>
+      </section>
+
+      <!-- ── Maker, retailer and attribution (moved from the pillar guide) ── -->
+      <section class="guide-section" aria-labelledby="guide-s5">
+        <h2 id="guide-s5">{{guideMauvielS8Heading}}</h2>
+        <p>{{guideMauvielS8P1}}</p>
+        <p>{{guideMauvielS8P2}}</p>
+      </section>
+
+      <!-- ── Case study 2: the confiturier ──
+           RESEARCH PLACEHOLDER: no manufacturing, supply, licensing or
+           exclusivity relationship may be asserted here, and the two marks do
+           not establish a date or a provenance. Revise only with documentation. -->
+      <section class="guide-section" aria-labelledby="guide-s6">
+        <h2 id="guide-s6">{{guideMauvielConfituHeading}}</h2>
+        <p>{{guideMauvielConfituP1}}</p>
+        <p>{{guideMauvielConfituP2}}</p>
+
+        <div class="guide-split guide-split-reverse">
+          <g-figure variant="split"
+                    src="img/guides/copper-cookware/mauviel-dehillerin-confiturier/1-full.jpeg"
+                    caption="{{guideMauvielObj3Title}}"></g-figure>
+          <div class="guide-split-body">
+            <h3>{{guideMauvielObj3Heading}}</h3>
+            <p>{{guideMauvielObj3Text}}</p>
+            <div class="guide-note-box">
+              <p class="guide-note-label">{{guideMauvielResearchLabel}}</p>
+              <p>{{guideMauvielConfituResearchText}}</p>
+            </div>
+          </div>
+        </div>
+
+        <g-figure src="img/guides/copper-cookware/mauviel-dehillerin-confiturier/2-mark.jpeg"
+                  caption="{{guideMauvielObj3MarkCaption}}"></g-figure>
+
+        <p>{{guideMauvielConfituP3}}</p>
+      </section>
+
+      <!-- ── Dating vintage Mauviel ── -->
+      <section class="guide-section" aria-labelledby="guide-s7">
+        <h2 id="guide-s7">{{guideMauvielDatingHeading}}</h2>
+        <p>{{guideMauvielDatingP1}}</p>
+        <p>{{guideMauvielDatingP2}}</p>
+      </section>
+
+      <!-- ── Research & References: Mauviel- and confiturier-specific ── -->
+      <section class="guide-section guide-references" aria-labelledby="guide-refs">
+        <h2 id="guide-refs">{{guideMauvielRefHeading}}</h2>
+        <p>{{guideMauvielRefIntro}}</p>
+        <dl class="guide-refs-list">
+          <dt>{{guideMauvielRefMauvielLabel}}</dt>
+          <dd>
+            {{guideMauvielRefMauvielText}}
+            <ul>
+              <li><a href="{{guideMauvielRefMauvielLink1Url}}" target="_blank" rel="noopener noreferrer">{{guideMauvielRefMauvielLink1Text}}</a></li>
+            </ul>
+          </dd>
+          <dt>{{guideMauvielRefConfiturierLabel}}</dt>
+          <dd>{{guideMauvielRefConfiturierText}}</dd>
+        </dl>
+      </section>
+
+      <!-- ── Back to the pillar + CTA ── -->
+      <section class="guide-section" aria-labelledby="guide-s8">
+        <h2 id="guide-s8">{{guideMauvielBackHeading}}</h2>
+        <p>{{guideMauvielBackP1}} <a href="{{guideCopperHref}}">{{guideMauvielBackCta}}</a>.</p>
+        <p class="guide-cta">
+          <a href="{{curatedHref}}">{{guideMauvielCtaText}}</a>
+        </p>
+      </section>
+
+    </article>
+  </main>
+
+  {{contactButtons}}
+  {{footer}}
+</body>
+</html>
