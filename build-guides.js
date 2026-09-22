@@ -77,6 +77,32 @@ const GUIDES = [
     datePublished: '2026-09-19',
     dateModified: '2026-09-20'
   },
+  {
+    // Pillar / hub for a planned multi-page Le Creuset research cluster.
+    // Future child guides should declare parent: 'guideLeCreuset'; do not add
+    // them to the registry until their real pages exist.
+    strKey: 'guideLeCreuset',
+    template: 'guides/vintage-le-creuset.html',
+    file: 'vintage-le-creuset.html',
+    // Original Cook & Collect archive photograph still to be supplied. The
+    // shared figure/index renderer emits a placeholder and omits og:image.
+    ogImage: 'img/guides/le-creuset/archive-overview/1-full.jpeg',
+    card: {image: 'img/guides/le-creuset/archive-overview/1-full.jpeg'},
+    datePublished: '2026-09-22',
+    dateModified: '2026-09-22'
+  },
+  {
+    // First specialist child under the Le Creuset pillar. The parent field
+    // drives the fourth visible/schema breadcrumb level.
+    strKey: 'guideLeCreusetDating',
+    parent: 'guideLeCreuset',
+    template: 'guides/le-creuset-dating-guide.html',
+    file: 'le-creuset-dating-guide.html',
+    ogImage: 'img/guides/le-creuset/dating/complete-profile.jpeg',
+    card: {image: 'img/guides/le-creuset/dating/complete-profile.jpeg'},
+    datePublished: '2026-09-22',
+    dateModified: '2026-09-22'
+  },
   // ── Specialist guides under the copper pillar ──
   // Each one owns the detailed case study for its maker/supplier; the pillar
   // page introduces them and links out. Keep search intents distinct.

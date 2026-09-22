@@ -388,7 +388,8 @@ LOCALES.forEach(locale => {
         return {
           guidesHref: guideHref('index.html'),
           guideChampagneHref: guideHref('vintage-french-champagne-buckets.html'),
-          guideCopperHref: guideHref('vintage-french-copper-cookware.html')
+          guideCopperHref: guideHref('vintage-french-copper-cookware.html'),
+          guideLeCreusetHref: guideHref('vintage-le-creuset.html')
         };
       })()
     };
