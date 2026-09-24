@@ -6,7 +6,7 @@
   <meta name="description" content="{{guideLeCreusetDatingMetaDesc}}">
   <title>{{guideLeCreusetDatingDocTitle}}</title>
 {{guideHead}}
-  <link rel="stylesheet" href="{{BASE}}css/style.css?v=14">
+  <link rel="stylesheet" href="{{BASE}}css/style.css?v=15">
 </head>
 <body data-page="guide" class="guide-page">
   {{nav}}
@@ -17,17 +17,38 @@
 
        PURPOSE
        A repeatable object-examination sequence, not a universal chronology.
-       Do not add decade claims for marks, handles, knobs, lids, colours or
-       numbers without a dated manufacturer catalogue, advertisement, archive
-       or institutional record that actually supports the claim.
+       Do not add decade claims for marks, handles, lid handles, lids, colours
+       or numbers without a dated manufacturer catalogue, advertisement,
+       archive or institutional record that actually supports the claim.
 
        FACTUAL GUARDS
          · no universal Le Creuset date-code system is claimed
          · a size/model number is not described as a year or serial number
          · Made in France identifies origin, not an exact period by itself
-         · knobs and lids may be replacements
+         · lid handles, knobs and lids may be replacements or later pairings
          · no object receives a date until its evidence fields are completed
          · marketplace dates are comparison leads, never documentary proof
+
+       THE 1925 DISTINCTION — read before editing any text on this page.
+       Le Creuset's Archive Series documents the original Cocotte in Volcanique
+       in 1925, including its circular lid handle and red-to-orange gradient.
+       That dates the DESIGN, not the surviving objects that share it. Nothing
+       on this page may state or imply that the Cook & Collect cocotte was
+       manufactured in 1925 or in the 1920s. The Archive Series page also
+       carries an "1925-1945" heading whose following paragraph discusses the
+       1950s, so that heading is not used here as evidence of a production range.
+
+       THE WORKING RANGE — 1925 to about 1950, case study No. 01 only.
+       The case study now states a range, and it is graded, not asserted:
+         · lower bound 1925  = the manufacturer-documented design, cited;
+         · upper bound c.1950 = an INFERENCE from the base carrying the name
+           alone, with no origin wording, no capacity and no modern reference
+           number. No source consulted establishes when Le Creuset began
+           marking FRANCE / MADE IN FRANCE, so the bound is written as "about"
+           and its softness is stated in guideLeCreusetDatingRangeLimit*.
+       Do not harden that bound, drop the caveat box, or copy the range onto any
+       other object or page. A dated catalogue, advertisement or archive record
+       is the only thing that may replace the inference.
 
        STRUCTURED DATA
        build-guides.js supplies Article + four-level BreadcrumbList, matching
@@ -36,31 +57,12 @@
 
        PHOTOGRAPHY — ORIGINAL COOK & COLLECT PHOTOGRAPHY ONLY.
        Missing files become shared same-size placeholders through <g-figure>.
-       Never substitute manufacturer, museum, auction or marketplace images.
+       Never substitute manufacturer, museum, auction or marketplace images —
+       in particular, Le Creuset's Archive Series photographs are cited in the
+       text and must never be reproduced here.
 
-       Planned files / future alt text:
-         img/guides/le-creuset/dating/complete-profile.jpeg
-           "Complete profile of a vintage Le Creuset cocotte"
-         img/guides/le-creuset/dating/shape-earlier.jpeg
-           "Earlier Le Creuset cocotte form for documented comparison"
-         img/guides/le-creuset/dating/shape-other.jpeg
-           "Alternative Le Creuset cocotte form for documented comparison"
-         img/guides/le-creuset/dating/shape-later.jpeg
-           "Later Le Creuset cocotte form for documented comparison"
-         img/guides/le-creuset/dating/base-overview.jpeg
-           "Underside of a vintage Le Creuset cocotte"
-         img/guides/le-creuset/dating/base-mark.jpeg
-           "Le Creuset lettering and casting marks on a cocotte base"
-         img/guides/le-creuset/dating/handle-knob.jpeg
-           "Handle and knob construction on vintage Le Creuset cookware"
-         img/guides/le-creuset/dating/lid-profile.jpeg
-           "Profile of a vintage Le Creuset cocotte lid"
-         img/guides/le-creuset/dating/lid-underside.jpeg
-           "Underside and casting details of a vintage Le Creuset lid"
-         img/guides/le-creuset/dating/enamel-detail.jpeg
-           "Vintage Le Creuset enamel colour and surface detail"
-         img/guides/le-creuset/dating/example-01.jpeg
-           "Vintage Le Creuset cocotte documented for a dating case study"
+       Published files, subjects and source originals are documented in
+       img/guides/le-creuset/dating/README.md.
        ───────────────────────────────────────────────────────────── -->
 
   <main>
@@ -108,8 +110,12 @@
         <p>{{guideLeCreusetDatingMethodRange}}</p>
       </div>
 
-      <g-figure src="img/guides/le-creuset/dating/complete-profile.jpeg"
+      <!-- Hero: the object examined step by step below. frame="full" keeps the
+           complete cocotte in view; eager + fetchpriority because it is the LCP
+           element. -->
+      <g-figure src="img/guides/le-creuset/dating/early-le-creuset-round-cocotte-volcanique.jpeg"
                 hero="true"
+                frame="full"
                 alt="{{guideLeCreusetDatingHeroAlt}}"
                 caption="{{guideLeCreusetDatingHeroCaption}}"></g-figure>
 
@@ -126,10 +132,14 @@
           <li>{{guideLeCreusetDatingS1Item7}}</li>
         </ul>
         <p>{{guideLeCreusetDatingS1P2}}</p>
-        <div class="guide-figure-trio">
-          <g-figure src="img/guides/le-creuset/dating/shape-earlier.jpeg" alt="{{guideLeCreusetDatingShapeEarlierAlt}}" caption="{{guideLeCreusetDatingShapeEarlierCaption}}"></g-figure>
-          <g-figure src="img/guides/le-creuset/dating/shape-other.jpeg" alt="{{guideLeCreusetDatingShapeOtherAlt}}" caption="{{guideLeCreusetDatingShapeOtherCaption}}"></g-figure>
-          <g-figure src="img/guides/le-creuset/dating/shape-later.jpeg" alt="{{guideLeCreusetDatingShapeLaterAlt}}" caption="{{guideLeCreusetDatingShapeLaterCaption}}"></g-figure>
+        <div class="guide-split">
+          <g-figure variant="split" src="img/guides/le-creuset/dating/early-le-creuset-cocotte-overall-form.jpeg" alt="{{guideLeCreusetDatingShapeExampleAlt}}" caption="{{guideLeCreusetDatingShapeExampleCaption}}"></g-figure>
+          <div class="guide-split-body">
+            <h3>{{guideLeCreusetDatingS1DocHeading}}</h3>
+            <p>{{guideLeCreusetDatingS1RecordText}}</p>
+            <p>{{guideLeCreusetDatingS1DocP1}}</p>
+            <p>{{guideLeCreusetDatingS1DocP2}}</p>
+          </div>
         </div>
         <p class="guide-note">{{guideLeCreusetDatingS1Note}}</p>
       </section>
@@ -138,7 +148,7 @@
         <h2 id="dating-step-2-heading">{{guideLeCreusetDatingS2Heading}}</h2>
         <p>{{guideLeCreusetDatingS2P1}}</p>
         <div class="guide-split">
-          <g-figure variant="split" src="img/guides/le-creuset/dating/base-overview.jpeg" alt="{{guideLeCreusetDatingBaseAlt}}" caption="{{guideLeCreusetDatingBaseCaption}}"></g-figure>
+          <g-figure variant="split" src="img/guides/le-creuset/dating/early-le-creuset-cocotte-base.jpeg" alt="{{guideLeCreusetDatingBaseAlt}}" caption="{{guideLeCreusetDatingBaseCaption}}"></g-figure>
           <div class="guide-split-body">
             <h3>{{guideLeCreusetDatingS2LookHeading}}</h3>
             <ul class="guide-evidence-list guide-evidence-list-wide">
@@ -151,7 +161,24 @@
             </ul>
           </div>
         </div>
-        <g-figure src="img/guides/le-creuset/dating/base-mark.jpeg" alt="{{guideLeCreusetDatingBaseMarkAlt}}" caption="{{guideLeCreusetDatingBaseMarkCaption}}"></g-figure>
+        <p>{{guideLeCreusetDatingS2WholeText}}</p>
+        <p>{{guideLeCreusetDatingS2ObservedText}}</p>
+        <g-figure frame="full" src="img/guides/le-creuset/dating/early-le-creuset-cocotte-base-marking.jpeg" alt="{{guideLeCreusetDatingBaseMarkAlt}}" caption="{{guideLeCreusetDatingBaseMarkCaption}}"></g-figure>
+        <p>{{guideLeCreusetDatingBaseMarkText}}</p>
+        <!-- The legend sits in the outer base field, close to the foot ring, and
+             is easy to miss in a photograph framed on the centre of the base:
+             low relief, same colour as the enamel around it, and curved. It is
+             published as its own figure for that reason. -->
+        <div class="guide-subsection">
+          <h3>{{guideLeCreusetDatingS2LegendHeading}}</h3>
+          <p>{{guideLeCreusetDatingS2LegendP1}}</p>
+        </div>
+        <g-figure frame="full" src="img/guides/le-creuset/dating/early-le-creuset-cocotte-base-le-creuset-legend.jpeg" alt="{{guideLeCreusetDatingBaseLegendAlt}}" caption="{{guideLeCreusetDatingBaseLegendCaption}}"></g-figure>
+        <p>{{guideLeCreusetDatingS2LegendP2}}</p>
+        <div class="guide-note-box">
+          <p class="guide-note-label">{{guideLeCreusetDatingS2AbsentLabel}}</p>
+          <p>{{guideLeCreusetDatingS2AbsentText}}</p>
+        </div>
         <p class="guide-note">{{guideLeCreusetDatingS2Note}}</p>
       </section>
 
@@ -165,6 +192,20 @@
           <article class="guide-preview-card"><p class="guide-preview-eyebrow">{{guideLeCreusetDatingMarkTypeLabel}}</p><h3>{{guideLeCreusetDatingMarkTypeTitle}}</h3><p>{{guideLeCreusetDatingMarkTypeText}}</p></article>
         </div>
         <p>{{guideLeCreusetDatingS3P2}}</p>
+        <div class="guide-subsection">
+          <h3>{{guideLeCreusetDatingMarksExampleHeading}}</h3>
+          <p>{{guideLeCreusetDatingMarksExampleText}}</p>
+        </div>
+        <!-- The two marks side by side. frame="full" because these are wide
+             detail bands: the shared card height would crop them vertically. -->
+        <div class="guide-figure-pair">
+          <g-figure frame="full" src="img/guides/le-creuset/dating/early-le-creuset-cocotte-base-marking.jpeg" alt="{{guideLeCreusetDatingMarkVesselAlt}}" caption="{{guideLeCreusetDatingMarkVesselCaption}}"></g-figure>
+          <g-figure frame="full" src="img/guides/le-creuset/dating/early-le-creuset-cocotte-lid-marking.jpeg" alt="{{guideLeCreusetDatingMarkLidAlt}}" caption="{{guideLeCreusetDatingMarkLidCaption}}"></g-figure>
+        </div>
+        <!-- Brand legend, shown full width because it is the mark that decides
+             the brand attribution of the case study. -->
+        <g-figure frame="full" src="img/guides/le-creuset/dating/early-le-creuset-cocotte-base-le-creuset-legend.jpeg" alt="{{guideLeCreusetDatingMarkLegendAlt}}" caption="{{guideLeCreusetDatingMarkLegendCaption}}"></g-figure>
+        <p>{{guideLeCreusetDatingMarkLegendText}}</p>
         <div class="guide-note-box">
           <p class="guide-note-label">{{guideLeCreusetDatingMarksTimelineLabel}}</p>
           <p>{{guideLeCreusetDatingMarksTimelineText}}</p>
@@ -175,12 +216,17 @@
         <h2 id="dating-step-4-heading">{{guideLeCreusetDatingS4Heading}}</h2>
         <p>{{guideLeCreusetDatingS4P1}}</p>
         <div class="guide-split guide-split-reverse">
-          <g-figure variant="split" src="img/guides/le-creuset/dating/handle-knob.jpeg" alt="{{guideLeCreusetDatingHandleAlt}}" caption="{{guideLeCreusetDatingHandleCaption}}"></g-figure>
+          <g-figure variant="split" src="img/guides/le-creuset/dating/early-le-creuset-cocotte-handles.jpeg" alt="{{guideLeCreusetDatingHandleAlt}}" caption="{{guideLeCreusetDatingHandleCaption}}"></g-figure>
           <div class="guide-split-body">
             <h3>{{guideLeCreusetDatingS4LookHeading}}</h3>
             <p>{{guideLeCreusetDatingS4P2}}</p>
             <p>{{guideLeCreusetDatingS4P3}}</p>
           </div>
+        </div>
+        <div class="guide-subsection">
+          <h3>{{guideLeCreusetDatingS4IntegralHeading}}</h3>
+          <p>{{guideLeCreusetDatingS4IntegralP1}}</p>
+          <p>{{guideLeCreusetDatingS4IntegralP2}}</p>
         </div>
         <p class="guide-note">{{guideLeCreusetDatingS4Note}}</p>
       </section>
@@ -188,11 +234,18 @@
       <section class="guide-section" id="dating-step-5" aria-labelledby="dating-step-5-heading">
         <h2 id="dating-step-5-heading">{{guideLeCreusetDatingS5Heading}}</h2>
         <p>{{guideLeCreusetDatingS5P1}}</p>
+        <!-- Two sides of one lid: frame="full" so neither disc is cropped, and
+             both crops share an aspect ratio so the pair stays aligned. -->
         <div class="guide-figure-pair">
-          <g-figure src="img/guides/le-creuset/dating/lid-profile.jpeg" alt="{{guideLeCreusetDatingLidProfileAlt}}" caption="{{guideLeCreusetDatingLidProfileCaption}}"></g-figure>
-          <g-figure src="img/guides/le-creuset/dating/lid-underside.jpeg" alt="{{guideLeCreusetDatingLidUndersideAlt}}" caption="{{guideLeCreusetDatingLidUndersideCaption}}"></g-figure>
+          <g-figure frame="full" src="img/guides/le-creuset/dating/early-le-creuset-cocotte-lid-top.jpeg" alt="{{guideLeCreusetDatingLidProfileAlt}}" caption="{{guideLeCreusetDatingLidProfileCaption}}"></g-figure>
+          <g-figure frame="full" src="img/guides/le-creuset/dating/early-le-creuset-cocotte-lid-underside.jpeg" alt="{{guideLeCreusetDatingLidUndersideAlt}}" caption="{{guideLeCreusetDatingLidUndersideCaption}}"></g-figure>
+        </div>
+        <div class="guide-subsection">
+          <h3>{{guideLeCreusetDatingS5TwoSidesHeading}}</h3>
+          <p>{{guideLeCreusetDatingS5TwoSidesText}}</p>
         </div>
         <p>{{guideLeCreusetDatingS5P2}}</p>
+        <p>{{guideLeCreusetDatingS5CoherentText}}</p>
         <p class="guide-note">{{guideLeCreusetDatingS5Note}}</p>
       </section>
 
@@ -200,13 +253,18 @@
         <h2 id="dating-step-6-heading">{{guideLeCreusetDatingS6Heading}}</h2>
         <p>{{guideLeCreusetDatingS6P1}}</p>
         <div class="guide-split">
-          <g-figure variant="split" src="img/guides/le-creuset/dating/enamel-detail.jpeg" alt="{{guideLeCreusetDatingEnamelAlt}}" caption="{{guideLeCreusetDatingEnamelCaption}}"></g-figure>
+          <g-figure variant="split" src="img/guides/le-creuset/dating/early-le-creuset-cocotte-interior.jpeg" alt="{{guideLeCreusetDatingEnamelAlt}}" caption="{{guideLeCreusetDatingEnamelCaption}}"></g-figure>
           <div class="guide-split-body">
             <h3>{{guideLeCreusetDatingS6ReadingHeading}}</h3>
             <p>{{guideLeCreusetDatingS6P2}}</p>
             <p>{{guideLeCreusetDatingS6P3}}</p>
             <p class="guide-preview-status">{{guideLeCreusetDatingColoursComingSoon}}</p>
           </div>
+        </div>
+        <div class="guide-subsection">
+          <h3>{{guideLeCreusetDatingS6VolcaniqueHeading}}</h3>
+          <p>{{guideLeCreusetDatingS6VolcaniqueP1}}</p>
+          <p>{{guideLeCreusetDatingS6VolcaniqueP2}}</p>
         </div>
         <p class="guide-note">{{guideLeCreusetDatingS6Note}}</p>
       </section>
@@ -235,6 +293,15 @@
           <li>{{guideLeCreusetDatingEvidence7}}</li>
         </ol>
         <p>{{guideLeCreusetDatingS8P2}}</p>
+        <!-- Documentary reference box. Restrained on purpose: it records what
+             the manufacturer source establishes (a dated design) and what it
+             does not (the production year of a surviving object). -->
+        <div class="guide-note-box">
+          <p class="guide-note-label">{{guideLeCreusetDatingDocRefLabel}}</p>
+          <p>{{guideLeCreusetDatingDocRefP1}}</p>
+          <p>{{guideLeCreusetDatingDocRefP2}}</p>
+          <p class="guide-inline-cta"><a href="https://www.lecreuset.ca/en_CA/blog/archive-series-round-dutch-oven.html" target="_blank" rel="noopener noreferrer">{{guideLeCreusetDatingArchiveRoundLink}}</a></p>
+        </div>
         <p class="guide-note">{{guideLeCreusetDatingS8Example}}</p>
       </section>
 
@@ -245,32 +312,74 @@
         </div>
         <p>{{guideLeCreusetDatingTogetherP1}}</p>
         <p>{{guideLeCreusetDatingTogetherP2}}</p>
+        <p>{{guideLeCreusetDatingTogetherExample}}</p>
         <p class="guide-note">{{guideLeCreusetDatingTogetherNote}}</p>
       </section>
 
       <section class="guide-section" aria-labelledby="dating-examples-heading">
         <h2 id="dating-examples-heading">{{guideLeCreusetDatingExamplesHeading}}</h2>
         <p>{{guideLeCreusetDatingExamplesIntro}}</p>
-        <div class="guide-split">
-          <g-figure variant="split" src="img/guides/le-creuset/dating/example-01.jpeg" alt="{{guideLeCreusetDatingExampleAlt}}" caption="{{guideLeCreusetDatingExampleCaption}}"></g-figure>
-          <div class="guide-split-body">
-            <p class="guide-preview-eyebrow">{{guideLeCreusetDatingExampleLabel}}</p>
-            <h3>{{guideLeCreusetDatingExampleTitle}}</h3>
-            <div class="guide-spec guide-spec-embedded">
-              <dl>
-                <dt>{{guideLeCreusetDatingExampleObjectLabel}}</dt><dd>{{guideLeCreusetDatingExamplePending}}</dd>
-                <dt>{{guideLeCreusetDatingExampleShapeLabel}}</dt><dd>{{guideLeCreusetDatingExamplePending}}</dd>
-                <dt>{{guideLeCreusetDatingExampleBaseLabel}}</dt><dd>{{guideLeCreusetDatingExamplePending}}</dd>
-                <dt>{{guideLeCreusetDatingExampleMarksLabel}}</dt><dd>{{guideLeCreusetDatingExamplePending}}</dd>
-                <dt>{{guideLeCreusetDatingExampleHandlesLabel}}</dt><dd>{{guideLeCreusetDatingExamplePending}}</dd>
-                <dt>{{guideLeCreusetDatingExampleLidLabel}}</dt><dd>{{guideLeCreusetDatingExamplePending}}</dd>
-                <dt>{{guideLeCreusetDatingExampleEnamelLabel}}</dt><dd>{{guideLeCreusetDatingExamplePending}}</dd>
-                <dt>{{guideLeCreusetDatingExampleComparisonLabel}}</dt><dd>{{guideLeCreusetDatingExamplePending}}</dd>
-                <dt>{{guideLeCreusetDatingExampleConclusionLabel}}</dt><dd>{{guideLeCreusetDatingExamplePending}}</dd>
-              </dl>
-            </div>
-          </div>
+
+        <div class="guide-subsection">
+          <p class="guide-preview-eyebrow">{{guideLeCreusetDatingExampleLabel}}</p>
+          <h3>{{guideLeCreusetDatingExampleTitle}}</h3>
         </div>
+        <!-- Identity photograph of the case study: the same file as the hero,
+             used again here on purpose. -->
+        <g-figure frame="full" src="img/guides/le-creuset/dating/early-le-creuset-round-cocotte-volcanique.jpeg" alt="{{guideLeCreusetDatingExampleAlt}}" caption="{{guideLeCreusetDatingExampleCaption}}"></g-figure>
+
+        <div class="guide-spec">
+          <p class="guide-spec-title">{{guideLeCreusetDatingExampleRecordTitle}}</p>
+          <dl>
+            <dt>{{guideLeCreusetDatingExampleObjectLabel}}</dt><dd>{{guideLeCreusetDatingExampleObjectText}}</dd>
+            <dt>{{guideLeCreusetDatingExampleShapeLabel}}</dt><dd>{{guideLeCreusetDatingExampleShapeText}}</dd>
+            <dt>{{guideLeCreusetDatingExampleBaseLabel}}</dt><dd>{{guideLeCreusetDatingExampleBaseText}}</dd>
+            <dt>{{guideLeCreusetDatingExampleMarksLabel}}</dt><dd>{{guideLeCreusetDatingExampleMarksText}}</dd>
+            <dt>{{guideLeCreusetDatingExampleLegendLabel}}</dt><dd>{{guideLeCreusetDatingExampleLegendText}}</dd>
+            <dt>{{guideLeCreusetDatingExampleOriginLabel}}</dt><dd>{{guideLeCreusetDatingExampleOriginText}}</dd>
+            <dt>{{guideLeCreusetDatingExampleHandlesLabel}}</dt><dd>{{guideLeCreusetDatingExampleHandlesText}}</dd>
+            <dt>{{guideLeCreusetDatingExampleLidLabel}}</dt><dd>{{guideLeCreusetDatingExampleLidText}}</dd>
+            <dt>{{guideLeCreusetDatingExampleEnamelLabel}}</dt><dd>{{guideLeCreusetDatingExampleEnamelText}}</dd>
+            <dt>{{guideLeCreusetDatingExampleDimensionsLabel}}</dt><dd>{{guideLeCreusetDatingExampleDimensionsText}}</dd>
+          </dl>
+        </div>
+
+        <!-- Research records, not editorial photographs: published smaller,
+             only here, and never used as a hero. -->
+        <div class="guide-figure-pair guide-figure-pair-compact">
+          <g-figure frame="full" src="img/guides/le-creuset/dating/early-le-creuset-cocotte-diameter-measurement.jpeg" alt="{{guideLeCreusetDatingDiameterAlt}}" caption="{{guideLeCreusetDatingDiameterCaption}}"></g-figure>
+          <g-figure frame="full" src="img/guides/le-creuset/dating/early-le-creuset-cocotte-height-measurement.jpeg" alt="{{guideLeCreusetDatingHeightAlt}}" caption="{{guideLeCreusetDatingHeightCaption}}"></g-figure>
+        </div>
+
+        <div class="guide-note-box">
+          <p class="guide-note-label">{{guideLeCreusetDatingExampleComparisonLabel}}</p>
+          <p>{{guideLeCreusetDatingExampleComparisonP1}}</p>
+          <p>{{guideLeCreusetDatingExampleComparisonP2}}</p>
+          <p class="guide-inline-cta"><a href="https://www.lecreuset.ca/en_CA/blog/archive-series-round-dutch-oven.html" target="_blank" rel="noopener noreferrer">{{guideLeCreusetDatingArchiveRoundLink}}</a></p>
+        </div>
+
+        <div class="guide-spec">
+          <p class="guide-spec-title">{{guideLeCreusetDatingExampleConclusionLabel}}</p>
+          <dl>
+            <dt>{{guideLeCreusetDatingExampleDesignLabel}}</dt><dd>{{guideLeCreusetDatingExampleDesignText}}</dd>
+            <dt>{{guideLeCreusetDatingExampleRangeLabel}}</dt><dd><strong>{{guideLeCreusetDatingExampleRangeText}}</strong></dd>
+            <dt>{{guideLeCreusetDatingExampleConclusionDatingLabel}}</dt><dd><strong>{{guideLeCreusetDatingExampleConclusionText}}</strong></dd>
+            <dt>{{guideLeCreusetDatingExampleConclusionWhyLabel}}</dt><dd>{{guideLeCreusetDatingExampleConclusionWhy}}</dd>
+            <dt>{{guideLeCreusetDatingExampleEvidenceLevelLabel}}</dt><dd><strong>{{guideLeCreusetDatingExampleEvidenceLevelText}}</strong></dd>
+          </dl>
+          <p class="guide-spec-note">{{guideLeCreusetDatingExampleEvidenceLevelWhy}}</p>
+        </div>
+
+        <!-- The upper bound of the range is an inference from the legend and from
+             what the base does NOT carry, not a documented production cut-off.
+             This box states that in the open so the range can never be quoted
+             elsewhere as if a manufacturer source had established it. -->
+        <div class="guide-note-box">
+          <p class="guide-note-label">{{guideLeCreusetDatingRangeLimitLabel}}</p>
+          <p>{{guideLeCreusetDatingRangeLimitP1}}</p>
+          <p>{{guideLeCreusetDatingRangeLimitP2}}</p>
+        </div>
+
         <div class="guide-spec">
           <p class="guide-spec-title">{{guideLeCreusetDatingEvidenceKeyTitle}}</p>
           <dl>
@@ -312,6 +421,10 @@
         <h2 id="guide-refs">{{guideLeCreusetDatingRefHeading}}</h2>
         <p>{{guideLeCreusetDatingRefIntro}}</p>
         <dl class="guide-refs-list">
+          <dt>{{guideLeCreusetDatingRefCaseLabel}}</dt>
+          <dd><strong>{{guideLeCreusetDatingRefCaseTitle}}</strong><br>{{guideLeCreusetDatingRefCaseText}}
+            <ul><li><a href="https://www.lecreuset.ca/en_CA/blog/archive-series-round-dutch-oven.html" target="_blank" rel="noopener noreferrer">{{guideLeCreusetDatingArchiveRoundLink}}</a></li></ul>
+          </dd>
           <dt>{{guideLeCreusetDatingRefOfficialLabel}}</dt>
           <dd>{{guideLeCreusetDatingRefOfficialText}}
             <ul>
@@ -321,6 +434,13 @@
               <li><a href="https://www.lecreuset.ca/fr_CA/blogue/archive-series-colours.html" target="_blank" rel="noopener noreferrer">{{guideLeCreusetRefColours}}</a></li>
               <li><a href="https://www.lecreuset.ca/fr_CA/blogue/archive-series-skillet.html" target="_blank" rel="noopener noreferrer">{{guideLeCreusetRefSkillet}}</a></li>
               <li><a href="https://www.lecreuset.ca/fr_CA/blogue/archive-series-saucier.html" target="_blank" rel="noopener noreferrer">{{guideLeCreusetRefSaucier}}</a></li>
+            </ul>
+          </dd>
+          <dt>{{guideLeCreusetDatingRefPeriodLabel}}</dt>
+          <dd>{{guideLeCreusetDatingRefPeriodText}}
+            <ul>
+              <li><strong>{{guideLeCreusetRef1935Title}}</strong><br>{{guideLeCreusetRef1935Text}} <a href="https://www.alainbrieux.com/fonderies-emailleries-ako102026.html" target="_blank" rel="noopener noreferrer">{{guideLeCreusetRef1935Link}}</a></li>
+              <li><strong>{{guideLeCreusetRef1933Title}}</strong><br>{{guideLeCreusetRef1933Text}} <a href="https://familistere.com/uploads/media/684bd7db302e6/catalogue-godin-publicite-2025-06-10-compressed.pdf?token=%2Fuploads%2Fmedia%2F684bd7db302e6%2Fcatalogue-godin-publicite-2025-06-10-compressed.pdf" target="_blank" rel="noopener noreferrer">{{guideLeCreusetRef1933Link}}</a></li>
             </ul>
           </dd>
           <dt>{{guideLeCreusetDatingRefMuseumLabel}}</dt>

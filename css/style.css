@@ -1446,6 +1446,12 @@ footer {
   margin-bottom: 0;
 }
 
+/* A prose subsection ends flush (its last paragraph drops its bottom margin),
+   so a paragraph that follows one needs its own top spacing. */
+.guide-section > .guide-subsection + p {
+  margin-top: 1.4rem;
+}
+
 /* Collector's note — a restrained, tinted block distinct from body prose. */
 .guide-note-box {
   margin-top: 1.4rem;
@@ -1461,6 +1467,12 @@ footer {
   font-size: 0.92rem;
   line-height: 1.75;
   color: var(--text-light);
+}
+
+/* Most note boxes are a label plus one line. Documentary-reference boxes carry
+   two or three, so restore spacing between them without touching the last. */
+.guide-note-box p:not(:last-child) {
+  margin-bottom: 0.8rem;
 }
 
 .guide-note-label {
@@ -1639,6 +1651,21 @@ footer {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   gap: 1.5rem;
+}
+
+/* Opt-out of the shared fixed card height: the photograph keeps its own aspect
+   ratio (emitted by <g-figure frame="full">). Used where cropping the frame
+   would cut the object — a complete-object hero, an object comparison pair —
+   and for research records that should read as small documents. */
+.guide-figure-full img,
+.guide-split-figure.guide-figure-full img {
+  height: auto;
+}
+
+/* Research/measurement records: deliberately smaller than the editorial
+   figures, so a tape-measure photograph never competes with the object. */
+.guide-figure-pair-compact {
+  max-width: var(--guide-measure);
 }
 
 /* ─── Closing link ─── */

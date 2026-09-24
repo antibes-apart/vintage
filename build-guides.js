@@ -98,10 +98,11 @@ const GUIDES = [
     parent: 'guideLeCreuset',
     template: 'guides/le-creuset-dating-guide.html',
     file: 'le-creuset-dating-guide.html',
-    ogImage: 'img/guides/le-creuset/dating/complete-profile.jpeg',
-    card: {image: 'img/guides/le-creuset/dating/complete-profile.jpeg'},
+    // Hero of the guide and identity photograph of Dating example No. 01.
+    ogImage: 'img/guides/le-creuset/dating/early-le-creuset-round-cocotte-volcanique.jpeg',
+    card: {image: 'img/guides/le-creuset/dating/early-le-creuset-round-cocotte-volcanique.jpeg'},
     datePublished: '2026-09-22',
-    dateModified: '2026-09-22'
+    dateModified: '2026-09-24'
   },
   // ── Specialist guides under the copper pillar ──
   // Each one owns the detailed case study for its maker/supplier; the pillar
@@ -211,6 +212,10 @@ function escapeAttr(str) {
  *
  *   variant="split"  → renders as a .guide-split-figure (image beside prose)
  *   hero="true"      → eager loading / high priority (above-the-fold image)
+ *   frame="full"     → the photograph keeps its own aspect ratio instead of the
+ *                      shared fixed card height. Use it where the complete
+ *                      object must stay in frame (hero, object comparisons) or
+ *                      where a research record is shown deliberately small.
  *
  * If the file referenced by `src` exists, a normal <figure><img> is emitted.
  * If it does not exist yet, an identically sized placeholder block is emitted
@@ -224,6 +229,40 @@ function imageExists(src) {
   return fs.existsSync(path.join(__dirname, src));
 }
 
+/* Intrinsic pixel size of a JPEG, read from its SOFn marker.
+ * Only needed for frame="full" figures: those keep their own aspect ratio, so
+ * without width/height the browser cannot reserve the box and the page shifts
+ * while the photograph loads (the hero image is the LCP element). Figures using
+ * the shared fixed card height do not need it — CSS already fixes their box.
+ * Returns null for anything it cannot parse, and the attributes are simply
+ * omitted. Deliberately dependency-free: the deploy workflow runs the build
+ * scripts with plain node, without installing node_modules. */
+function jpegSize(src) {
+  let buf;
+  try {
+    buf = fs.readFileSync(path.join(__dirname, src));
+  } catch {
+    return null;
+  }
+  if (buf.length < 4 || buf[0] !== 0xff || buf[1] !== 0xd8) return null;
+  let i = 2;
+  while (i + 9 < buf.length) {
+    if (buf[i] !== 0xff) { i++; continue; }
+    const marker = buf[i + 1];
+    // Standalone markers carry no payload.
+    if (marker === 0xd8 || marker === 0x01 || (marker >= 0xd0 && marker <= 0xd9)) { i += 2; continue; }
+    const length = buf.readUInt16BE(i + 2);
+    // SOF0..SOF3, SOF5..SOF7, SOF9..SOF11, SOF13..SOF15 — all carry the size.
+    const isSof = marker >= 0xc0 && marker <= 0xcf
+      && marker !== 0xc4 && marker !== 0xc8 && marker !== 0xcc;
+    if (isSof) {
+      return {height: buf.readUInt16BE(i + 5), width: buf.readUInt16BE(i + 7)};
+    }
+    i += 2 + length;
+  }
+  return null;
+}
+
 function parseAttrs(raw) {
   const attrs = {};
   const re = /([\w-]+)\s*=\s*"([^"]*)"/g;
@@ -234,7 +273,8 @@ function parseAttrs(raw) {
 
 function renderFigure(attrs, base) {
   const variant = attrs.variant || 'default';
-  const figureClass = variant === 'split' ? 'guide-split-figure' : 'guide-figure';
+  const baseClass = variant === 'split' ? 'guide-split-figure' : 'guide-figure';
+  const figureClass = attrs.frame === 'full' ? `${baseClass} guide-figure-full` : baseClass;
   const caption = attrs.caption || '';
   const alt = attrs.alt || caption;
   const src = attrs.src || '';
@@ -244,8 +284,12 @@ function renderFigure(attrs, base) {
     const loading = attrs.hero === 'true'
       ? ' loading="eager" fetchpriority="high"'
       : ' loading="lazy"';
+    // See jpegSize(): only the aspect-ratio-preserving figures need the box
+    // reserved in markup.
+    const size = attrs.frame === 'full' ? jpegSize(src) : null;
+    const sizeAttrs = size ? ` width="${size.width}" height="${size.height}"` : '';
     return `<figure class="${figureClass}">
-            <img src="${base}${src}" alt="${alt}"${loading} decoding="async">${captionHtml}
+            <img src="${base}${src}" alt="${alt}"${sizeAttrs}${loading} decoding="async">${captionHtml}
           </figure>`;
   }
 
