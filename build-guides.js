@@ -89,7 +89,7 @@ const GUIDES = [
     ogImage: 'img/guides/le-creuset/archive-overview/1-full.jpeg',
     card: {image: 'img/guides/le-creuset/archive-overview/1-full.jpeg'},
     datePublished: '2026-09-22',
-    dateModified: '2026-09-22'
+    dateModified: '2026-09-24'
   },
   {
     // First specialist child under the Le Creuset pillar. The parent field
