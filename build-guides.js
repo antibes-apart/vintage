@@ -84,12 +84,13 @@ const GUIDES = [
     strKey: 'guideLeCreuset',
     template: 'guides/vintage-le-creuset.html',
     file: 'vintage-le-creuset.html',
-    // Original Cook & Collect archive photograph still to be supplied. The
-    // shared figure/index renderer emits a placeholder and omits og:image.
-    ogImage: 'img/guides/le-creuset/archive-overview/1-full.jpeg',
-    card: {image: 'img/guides/le-creuset/archive-overview/1-full.jpeg'},
+    // Original Cook & Collect archive photography. Sources, crops and the
+    // background cleanup applied to each file are documented in
+    // img/guides/le-creuset/archive/README.md.
+    ogImage: 'img/guides/le-creuset/archive/vintage-le-creuset-collection-cook-collect.jpeg',
+    card: {image: 'img/guides/le-creuset/archive/vintage-le-creuset-collection-cook-collect.jpeg'},
     datePublished: '2026-09-22',
-    dateModified: '2026-09-24'
+    dateModified: '2026-09-25'
   },
   {
     // First specialist child under the Le Creuset pillar. The parent field
@@ -216,6 +217,9 @@ function escapeAttr(str) {
  *                      shared fixed card height. Use it where the complete
  *                      object must stay in frame (hero, object comparisons) or
  *                      where a research record is shown deliberately small.
+ *   class="…"        → extra class(es) on the <figure>, for the rare shared
+ *                      modifier a guide needs (e.g. .guide-figure-portrait to
+ *                      cap the width of an upright frame="full" photograph).
  *
  * If the file referenced by `src` exists, a normal <figure><img> is emitted.
  * If it does not exist yet, an identically sized placeholder block is emitted
@@ -274,7 +278,10 @@ function parseAttrs(raw) {
 function renderFigure(attrs, base) {
   const variant = attrs.variant || 'default';
   const baseClass = variant === 'split' ? 'guide-split-figure' : 'guide-figure';
-  const figureClass = attrs.frame === 'full' ? `${baseClass} guide-figure-full` : baseClass;
+  const classes = [baseClass];
+  if (attrs.frame === 'full') classes.push('guide-figure-full');
+  if (attrs.class) classes.push(attrs.class);
+  const figureClass = classes.join(' ');
   const caption = attrs.caption || '';
   const alt = attrs.alt || caption;
   const src = attrs.src || '';

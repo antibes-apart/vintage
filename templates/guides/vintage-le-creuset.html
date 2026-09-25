@@ -30,19 +30,21 @@
        "Dessinée en 1960". The timeline preserves that distinction.
 
        PHOTOGRAPHY — ORIGINAL COOK & COLLECT PHOTOGRAPHY ONLY.
-       Missing files are intentionally rendered by the shared <g-figure>
-       component as same-size placeholders. Do not replace them with copied
-       manufacturer, museum, auction-house or marketplace images.
+       Do not substitute manufacturer, museum, auction-house or marketplace
+       images; in particular Le Creuset's own Archive Series photographs are
+       cited in the text and must never be reproduced here.
 
-       Planned files and suggested alt text:
-         img/guides/le-creuset/archive-overview/1-full.jpeg
-           "Vintage Le Creuset cast iron cookware from the Cook & Collect archive"
-         img/guides/le-creuset/la-mama/1-full.jpeg
-           "Vintage Le Creuset La Mama cocotte designed by Enzo Mari"
-         img/guides/le-creuset/skillet/1-full.jpeg
-           "Vintage Le Creuset cast iron skillet from the Cook & Collect archive"
-         img/guides/le-creuset/cocotte/1-full.jpeg
-           "Vintage Le Creuset cocotte from the Cook & Collect archive"
+       Published files, their source originals and the crop applied to each one
+       are documented in img/guides/le-creuset/archive/README.md. The published
+       files are FRAMING-ONLY derivatives: crop and recompression, with no
+       colour, tone, exposure, background or content change. Every chip,
+       scratch, rim wear mark and patina is exactly as photographed, and the
+       Futura is shown as it was photographed in use.
+
+       CAPTION RULE — a photograph documents the Cook & Collect object; the
+       catalogue, advertising, museum and manufacturer sources document the
+       design history. Captions must keep those two roles separate and must not
+       assign a production year to an individual photographed example.
        ───────────────────────────────────────────────────────────── -->
 
   <main>
@@ -72,8 +74,13 @@
         <a href="#lc-futura">Futura</a>
       </nav>
 
-      <g-figure src="img/guides/le-creuset/archive-overview/1-full.jpeg"
+      <!-- Hero / LCP image: eager, sized in markup, and width-capped because the
+           frame is upright — the complete silhouette of every piece has to stay
+           in the photograph, so it is not cropped to a landscape ratio. -->
+      <g-figure src="img/guides/le-creuset/archive/vintage-le-creuset-collection-cook-collect.jpeg"
                 hero="true"
+                frame="full"
+                class="guide-figure-portrait"
                 alt="{{guideLeCreusetHeroAlt}}"
                 caption="{{guideLeCreusetHeroCaption}}"></g-figure>
 
@@ -133,31 +140,70 @@
       <section class="guide-section" aria-labelledby="guide-s4">
         <h2 id="guide-s4">{{guideLeCreusetDesignerHeading}}</h2>
         <p>{{guideLeCreusetDesignerIntro}}</p>
-        <div class="guide-preview-grid guide-preview-grid-three">
-          <article class="guide-preview-card">
+        <p>{{guideLeCreusetDesignerArchiveNote}}</p>
+
+        <!-- One split block per collaboration, the object beside its design
+             history. The photograph is the Cook & Collect example; the dates in
+             the prose belong to the documented design, not to this object. -->
+        <div class="guide-split">
+          <g-figure variant="split" frame="full"
+                    src="img/guides/le-creuset/archive/le-creuset-raymond-loewy-coquelle-turquoise.jpeg"
+                    alt="{{guideLeCreusetLoewyFigureAlt}}"
+                    caption="{{guideLeCreusetLoewyFigureCaption}}"></g-figure>
+          <div class="guide-split-body">
             <p class="guide-preview-eyebrow">{{guideLeCreusetDesignerLoewyEyebrow}}</p>
             <h3>{{guideLeCreusetDesignerLoewyTitle}}</h3>
             <p>{{guideLeCreusetDesignerLoewyText}}</p>
-            <p class="guide-preview-status">{{guideLeCreusetComingSoon}}</p>
-          </article>
-          <article class="guide-preview-card">
+            <p>{{guideLeCreusetDesignerLoewyObject}}</p>
+          </div>
+        </div>
+
+        <div class="guide-split guide-split-reverse">
+          <g-figure variant="split" frame="full"
+                    src="img/guides/le-creuset/archive/le-creuset-enzo-mari-la-mama-brown.jpeg"
+                    alt="{{guideLeCreusetMariFigureAlt}}"
+                    caption="{{guideLeCreusetMariFigureCaption}}"></g-figure>
+          <div class="guide-split-body">
             <p class="guide-preview-eyebrow">{{guideLeCreusetDesignerMariEyebrow}}</p>
             <h3>{{guideLeCreusetDesignerMariTitle}}</h3>
             <p>{{guideLeCreusetDesignerMariText}}</p>
-            <p class="guide-preview-status">{{guideLeCreusetComingSoon}}</p>
-          </article>
-          <article class="guide-preview-card">
+            <p>{{guideLeCreusetDesignerMariObject}}</p>
+          </div>
+        </div>
+
+        <div class="guide-split">
+          <g-figure variant="split" frame="full"
+                    src="img/guides/le-creuset/archive/le-creuset-jean-louis-barrault-futura.jpeg"
+                    alt="{{guideLeCreusetBarraultFigureAlt}}"
+                    caption="{{guideLeCreusetBarraultFigureCaption}}"></g-figure>
+          <div class="guide-split-body">
             <p class="guide-preview-eyebrow">{{guideLeCreusetDesignerBarraultEyebrow}}</p>
             <h3>{{guideLeCreusetDesignerBarraultTitle}}</h3>
             <p>{{guideLeCreusetDesignerBarraultText}}</p>
-            <p class="guide-preview-status">{{guideLeCreusetComingSoon}}</p>
-          </article>
+            <p>{{guideLeCreusetDesignerBarraultObject}}</p>
+          </div>
         </div>
       </section>
 
       <section class="guide-section" aria-labelledby="guide-s5">
         <h2 id="guide-s5">{{guideLeCreusetRecognisingHeading}}</h2>
         <p>{{guideLeCreusetRecognisingIntro}}</p>
+
+        <!-- Construction comparison. Presented as two different constructions,
+             NOT as earlier vs later: no documentary evidence establishes that
+             relationship between these two objects, and colour is supporting
+             evidence rather than a date. Both keep their own aspect ratio so
+             neither lid handle is cropped out of frame. -->
+        <div class="guide-figure-pair">
+          <g-figure frame="full"
+                    src="img/guides/le-creuset/archive/vintage-le-creuset-lid-handle-comparison-01.jpeg"
+                    alt="{{guideLeCreusetCompare1Alt}}"></g-figure>
+          <g-figure frame="full"
+                    src="img/guides/le-creuset/archive/vintage-le-creuset-lid-handle-comparison-02.jpeg"
+                    alt="{{guideLeCreusetCompare2Alt}}"></g-figure>
+        </div>
+        <p class="guide-note">{{guideLeCreusetCompareCaption}}</p>
+
         <div class="guide-preview-grid">
           <article class="guide-preview-card">
             <h3>{{guideLeCreusetRecognisingMarksTitle}}</h3>
@@ -177,21 +223,51 @@
           </article>
         </div>
         <p class="guide-note">{{guideLeCreusetRecognisingNote}}</p>
+        <!-- Hand-off: this page covers history and design, the dating guide
+             covers examining an individual object. -->
+        <p>{{guideLeCreusetRecognisingHandoff}}</p>
+        <p class="guide-inline-cta"><a href="{{guideLeCreusetDatingHref}}">{{guideLeCreusetFeaturedDatingCta}} <span aria-hidden="true">→</span></a></p>
       </section>
 
       <section class="guide-section" aria-labelledby="guide-s6">
         <h2 id="guide-s6">{{guideLeCreusetArchiveHeading}}</h2>
         <p>{{guideLeCreusetArchiveIntro}}</p>
-        <div class="guide-figure-trio">
-          <g-figure src="img/guides/le-creuset/la-mama/1-full.jpeg"
-                    alt="{{guideLeCreusetArchiveMamaAlt}}"
-                    caption="{{guideLeCreusetArchiveMamaCaption}}"></g-figure>
-          <g-figure src="img/guides/le-creuset/skillet/1-full.jpeg"
-                    alt="{{guideLeCreusetArchiveSkilletAlt}}"
-                    caption="{{guideLeCreusetArchiveSkilletCaption}}"></g-figure>
-          <g-figure src="img/guides/le-creuset/cocotte/1-full.jpeg"
-                    alt="{{guideLeCreusetArchiveCocotteAlt}}"
-                    caption="{{guideLeCreusetArchiveCocotteCaption}}"></g-figure>
+        <!-- Compact records of the three objects shown large in the designer
+             section above: same photographs, deliberately reduced here so the
+             page does not repeat an image at full size. Hand-written markup
+             rather than <g-figure> because a record carries an eyebrow, heading
+             and provenance line, not a figcaption. -->
+        <div class="guide-archive-grid">
+          <article class="guide-preview-card guide-archive-card">
+            <figure class="guide-archive-card-media">
+              <img src="{{BASE}}img/guides/le-creuset/archive/le-creuset-raymond-loewy-coquelle-turquoise.jpeg"
+                   alt="{{guideLeCreusetLoewyFigureAlt}}" width="1080" height="810" loading="lazy" decoding="async">
+            </figure>
+            <p class="guide-preview-eyebrow">{{guideLeCreusetDesignerLoewyEyebrow}}</p>
+            <h3>{{guideLeCreusetRecordLoewyTitle}}</h3>
+            <p>{{guideLeCreusetRecordLoewyText}}</p>
+            <p class="guide-archive-card-meta">{{guideLeCreusetRecordLoewyMeta}}</p>
+          </article>
+          <article class="guide-preview-card guide-archive-card">
+            <figure class="guide-archive-card-media">
+              <img src="{{BASE}}img/guides/le-creuset/archive/le-creuset-enzo-mari-la-mama-brown.jpeg"
+                   alt="{{guideLeCreusetMariFigureAlt}}" width="1120" height="840" loading="lazy" decoding="async">
+            </figure>
+            <p class="guide-preview-eyebrow">{{guideLeCreusetDesignerMariEyebrow}}</p>
+            <h3>{{guideLeCreusetRecordMariTitle}}</h3>
+            <p>{{guideLeCreusetRecordMariText}}</p>
+            <p class="guide-archive-card-meta">{{guideLeCreusetRecordMariMeta}}</p>
+          </article>
+          <article class="guide-preview-card guide-archive-card">
+            <figure class="guide-archive-card-media">
+              <img src="{{BASE}}img/guides/le-creuset/archive/le-creuset-jean-louis-barrault-futura.jpeg"
+                   alt="{{guideLeCreusetBarraultFigureAlt}}" width="1080" height="810" loading="lazy" decoding="async">
+            </figure>
+            <p class="guide-preview-eyebrow">{{guideLeCreusetDesignerBarraultEyebrow}}</p>
+            <h3>{{guideLeCreusetRecordBarraultTitle}}</h3>
+            <p>{{guideLeCreusetRecordBarraultText}}</p>
+            <p class="guide-archive-card-meta">{{guideLeCreusetRecordBarraultMeta}}</p>
+          </article>
         </div>
         <p>{{guideLeCreusetArchiveClosing}}</p>
       </section>
@@ -214,26 +290,18 @@
           <p class="guide-inline-cta"><a href="{{guideLeCreusetDatingHref}}">{{guideLeCreusetFeaturedDatingCta}} <span aria-hidden="true">→</span></a></p>
         </aside>
 
-        <!-- Dating is the first live child page. Remaining previews stay
-             non-interactive until their template + GUIDES registry entry exist.
-             Register each future page with parent: 'guideLeCreuset' before
-             adding a link. -->
-        <div class="guide-preview-grid">
-          <article class="guide-preview-card guide-preview-card-live">
-            <a class="guide-preview-card-link" href="{{guideLeCreusetDatingHref}}">
-              <h3>{{guideLeCreusetGuideDatingTitle}}</h3>
-              <p>{{guideLeCreusetGuideDatingText}}</p>
-              <p class="guide-preview-status">{{guideLeCreusetGuideDatingCta}} <span aria-hidden="true">→</span></p>
-            </a>
-          </article>
-          <article class="guide-preview-card"><h3>{{guideLeCreusetGuideLoewyTitle}}</h3><p>{{guideLeCreusetGuideLoewyText}}</p><p class="guide-preview-status">{{guideLeCreusetComingSoon}}</p></article>
-          <article class="guide-preview-card"><h3>{{guideLeCreusetGuideMariTitle}}</h3><p>{{guideLeCreusetGuideMariText}}</p><p class="guide-preview-status">{{guideLeCreusetComingSoon}}</p></article>
-          <article class="guide-preview-card"><h3>{{guideLeCreusetGuideColoursTitle}}</h3><p>{{guideLeCreusetGuideColoursText}}</p><p class="guide-preview-status">{{guideLeCreusetComingSoon}}</p></article>
-          <article class="guide-preview-card"><h3>{{guideLeCreusetGuideSkilletsTitle}}</h3><p>{{guideLeCreusetGuideSkilletsText}}</p><p class="guide-preview-status">{{guideLeCreusetComingSoon}}</p></article>
-          <article class="guide-preview-card"><h3>{{guideLeCreusetGuideCocottesTitle}}</h3><p>{{guideLeCreusetGuideCocottesText}}</p><p class="guide-preview-status">{{guideLeCreusetComingSoon}}</p></article>
-          <article class="guide-preview-card"><h3>{{guideLeCreusetGuideRayureTitle}}</h3><p>{{guideLeCreusetGuideRayureText}}</p><p class="guide-preview-status">{{guideLeCreusetComingSoon}}</p></article>
-          <article class="guide-preview-card"><h3>{{guideLeCreusetGuideFuturaTitle}}</h3><p>{{guideLeCreusetGuideFuturaText}}</p><p class="guide-preview-status">{{guideLeCreusetComingSoon}}</p></article>
-        </div>
+        <!-- The "coming soon" preview grid that used to sit here is removed
+             while Dating is the only published child guide: seven
+             non-interactive cards made the hub read as unfinished, and the one
+             live card duplicated the featured aside directly above.
+             To reinstate it when a second child guide ships, restore a
+             .guide-preview-grid of .guide-preview-card articles here — the
+             strings are still in i18n.js under guideLeCreusetGuide*Title /
+             *Text, with guideLeCreusetComingSoon (no braces here so the build
+             does not substitute it inside this note) for the status line, and
+             guideLeCreusetGuideDatingTitle / *Text / *Cta for the live card.
+             Register each future page with parent: 'guideLeCreuset' in the
+             build-guides.js registry before adding a link. -->
         <p>{{guideLeCreusetRelatedP1}} <a href="{{guideCopperHref}}">{{guideLeCreusetCopperLinkText}}</a>. {{guideLeCreusetRelatedP2}} <a href="{{guideChampagneHref}}">{{guideLeCreusetChampagneLinkText}}</a>.</p>
         <p class="guide-cta"><a href="{{curatedHref}}">{{guideLeCreusetCuratedCta}}</a></p>
       </section>

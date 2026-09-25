@@ -1668,6 +1668,52 @@ footer {
   max-width: var(--guide-measure);
 }
 
+/* An upright frame="full" photograph would otherwise run the full 1080px of the
+   guide column and stand taller than the viewport. Capping its width keeps a
+   portrait hero readable without cropping any object out of the frame. */
+.guide-figure-portrait {
+  max-width: 780px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/* ─── Archive record cards ───
+   A compact second appearance of photography already shown large earlier on the
+   page: designer, model, maker and provenance as a record, with the photograph
+   reduced to a supporting thumbnail. Shares .guide-preview-card typography. */
+.guide-archive-grid {
+  margin: 2.5rem auto 0;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 2.25rem 2rem;
+}
+
+.guide-archive-card-media {
+  margin: 0 0 1.15rem;
+}
+
+/* Fixed ratio reserved in CSS, so the three cards line up and nothing shifts
+   while the thumbnails load. The source files are already 4:3, so object-fit
+   has nothing to crop and no photograph is distorted. */
+.guide-archive-card-media img {
+  display: block;
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  height: auto;
+  object-fit: cover;
+  object-position: center;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  background: #fff;
+}
+
+.guide-archive-card > p.guide-archive-card-meta {
+  margin: 0.9rem 0 0;
+  font-size: 0.8rem;
+  line-height: 1.6;
+  color: var(--text-light);
+}
+
 /* ─── Closing link ─── */
 .guide-cta {
   margin-top: 2.5rem;
@@ -2154,6 +2200,12 @@ footer {
 @media (max-width: 768px) {
   .guide-preview-grid-three {
     grid-template-columns: 1fr;
+  }
+
+  /* Archive records read as a single column beside the text measure. */
+  .guide-archive-grid {
+    grid-template-columns: 1fr;
+    max-width: var(--guide-measure);
   }
 
   .guide-featured-guide {
