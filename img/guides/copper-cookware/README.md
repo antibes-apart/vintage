@@ -28,7 +28,7 @@ literally in the templates.
 | `mauviel-dehillerin-confiturier/` | **Mauviel guide** (case study 2) |
 | `lecellier-cuivralec/` | **L. Lecellier guide** (full case study) · pillar guide uses `3-label` only |
 
-## E. Dehillerin sauté pan — 29 cm, 4.655 kg, approx. 3 mm
+## E. Dehillerin sauté pan — 29 cm, 4.685 kg, approx. 3 mm
 
 `dehillerin-saute/`
 
@@ -36,10 +36,29 @@ literally in the templates.
 | --- | --- |
 | `1-full.jpeg` | Complete pan, main view (also the hero / Open Graph image for the pillar and Dehillerin guides) |
 | `2-mark.jpeg` | `E. DEHILLERIN / PARIS` mark |
-| `3-wall.jpeg` | Approx. 3 mm copper wall (rim or edge showing the gauge) |
+| `3-dimensions.jpeg` | Measuring tape across the rim, documenting the approx. 29 cm diameter |
 | `4-handle.jpeg` | Massive iron handle |
 | `5-rivets.jpeg` | The three rivets — ideally showing the `18` stamped on the interior rivet heads |
 | `6-interior.jpeg` | Tinned interior |
+
+Published from the original documentary photography of the object. The only
+processing applied is a proportional downscale to a 1600 px long edge; no crop,
+no rotation, no colour, exposure or white-balance change, no sharpening and no
+retouching of the copper, the tin lining, the patina or the background — the
+surface condition and the markings are the evidence.
+
+Every figure on the Dehillerin guide uses `<g-figure frame="full">` for the same
+reason: the shared fixed card height crops with `object-fit: cover`, which would
+cut documentary detail out of frame (the handle's hanging hole, the ends of the
+tape, the outer rivets).
+
+Still unpublished, because the guides have no figure position for them and
+neither page should be redesigned to create one:
+
+| Source file | Subject |
+| --- | --- |
+| `1000096998.jpg` | The pan on a digital scale reading `4685 g` — the source for the 4.685 kg specification |
+| `1000096996.jpg` | Exterior copper base, base wear, handle attachment and riveted construction |
 
 ## Mauviel sauté pan (sauteuse) — Cook & Collect archive, sold
 

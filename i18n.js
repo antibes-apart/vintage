@@ -248,7 +248,7 @@ const en = {
   guideDehillerinSpecDiameterLabel: 'Diameter',
   guideDehillerinSpecDiameterValue: '29 cm',
   guideDehillerinSpecWeightLabel: 'Weight',
-  guideDehillerinSpecWeightValue: '4.655 kg',
+  guideDehillerinSpecWeightValue: '4.685 kg',
   guideDehillerinSpecWallLabel: 'Copper wall',
   guideDehillerinSpecWallValue: 'Approximately 3 mm',
   guideDehillerinSpecConstructionLabel: 'Construction',
@@ -263,15 +263,27 @@ const en = {
   guideDehillerinSpecRivetValue: 'Each of the three interior rivet heads bears the stamped number \u201c18\u201d',
   guideDehillerinSpecNote: 'Measured and weighed by Cook & Collect. These are observations, not a date: none of these figures assigns a year of manufacture.',
 
-  guideDehillerinObj1Title: 'E. Dehillerin, Paris \u2014 29 cm tinned copper saut\u00e9 pan, 4.655 kg',
+  guideDehillerinObj1Title: 'E. Dehillerin, Paris \u2014 29 cm tinned copper saut\u00e9 pan, 4.685 kg',
   guideDehillerinObj1MarkCaption: 'E. Dehillerin Paris maker\u2019s mark on a heavy-gauge tinned copper saut\u00e9 pan.',
-  guideDehillerinObj1WallCaption: 'Approximately 3 mm copper wall on a 29 cm E. Dehillerin saut\u00e9 pan weighing 4.655 kg.',
+  // The photograph behind this caption records the diameter measurement only.
+  // The approximately 3 mm wall is a separate measurement and must not be
+  // presented as something the tape in the picture shows.
+  guideDehillerinObj1DimensionsCaption: 'Measuring the diameter of the E. Dehillerin saut\u00e9 pan: approximately 29 cm across \u2014 Cook & Collect research record.',
   guideDehillerinObj1HandleCaption: 'Massive iron handle on the 29 cm E. Dehillerin saut\u00e9 pan.',
   guideDehillerinObj1RivetsCaption: 'Three large rivets securing the iron handle; each interior rivet head bears the stamped number \u201c18\u201d.',
   guideDehillerinObj1InteriorCaption: 'Tinned interior of the 29 cm E. Dehillerin saut\u00e9 pan.',
 
-  guideDehillerinObj1WallHeading: 'What 29 cm, 4.655 kg and 3 mm actually describe',
-  guideDehillerinObj1WallText: 'This is heavy-gauge professional copper. At 29 cm across, with a wall of approximately 3 mm and a weight of 4.655 kg, the pan is built for the thermal stability a working kitchen needs rather than for domestic convenience \u2014 it is genuinely difficult to handle one-handed when full. That tells us about the intended use and the class of cookware. It does not tell us when the pan was made. Heavy-gauge copper was produced over a long period and is still produced today, so thickness and weight describe specification, not age.',
+  // Alt text for the object photography. Describes what is visible in each
+  // frame; no dates or condition claims beyond what the page already states.
+  guideDehillerinObj1Alt: 'E. Dehillerin Paris 29 cm tinned copper saut\u00e9 pan with long iron handle',
+  guideDehillerinObj1MarkAlt: 'E. Dehillerin Paris oval maker\u2019s stamp on vintage French copper saut\u00e9 pan',
+  guideDehillerinObj1DimensionsAlt: 'Measuring the approximately 29 cm diameter of an E. Dehillerin copper saut\u00e9 pan',
+  guideDehillerinObj1HandleAlt: 'Long iron handle on a 29 cm E. Dehillerin copper saut\u00e9 pan',
+  guideDehillerinObj1RivetsAlt: 'Three stamped rivet heads inside an E. Dehillerin copper saut\u00e9 pan',
+  guideDehillerinObj1InteriorAlt: 'Worn tinned interior of a 29 cm E. Dehillerin copper saut\u00e9 pan',
+
+  guideDehillerinObj1WallHeading: 'What 29 cm, 4.685 kg and 3 mm actually describe',
+  guideDehillerinObj1WallText: 'This is heavy-gauge professional copper. At 29 cm across, with a wall of approximately 3 mm and a weight of 4.685 kg, the pan is built for the thermal stability a working kitchen needs rather than for domestic convenience \u2014 it is genuinely difficult to handle one-handed when full. That tells us about the intended use and the class of cookware. It does not tell us when the pan was made. Heavy-gauge copper was produced over a long period and is still produced today, so thickness and weight describe specification, not age.',
   guideDehillerinObj1MarkHeading: 'Reading the mark and the rivets',
   guideDehillerinObj1MarkText: 'The pan carries an \u201cE. DEHILLERIN / PARIS\u201d mark, which identifies the Parisian house associated with the object. Each of the three interior rivet heads bears the stamped number \u201c18\u201d; its workshop significance has not been established. We record it because it is physical evidence, and we resist the temptation to explain it: a plausible-sounding interpretation of a stamp is not the same as a documented one.',
   guideDehillerinObj1NoteText: 'A maker\u2019s or retailer\u2019s mark can identify a maker or a house; it does not automatically provide a manufacturing date. Thickness, weight, handle type and rivet construction help us understand how an object was built and used, but none of them should be used on its own to assign a date.',
@@ -284,8 +296,9 @@ const en = {
   guideCopperMakersHeading: 'Makers, Suppliers and Where to Read Further',
   guideCopperMakersP1: 'Three names recur in the French copper we handle, and each one teaches a different lesson about how these objects should be read. Below is a short introduction to each, with a link to the guide where the objects, marks and measurements are examined in full.',
   guideCopperDehillerinIntroHeading: 'E. Dehillerin \u2014 the Parisian professional supplier',
-  guideCopperDehillerinIntroText: 'E. Dehillerin grew out of the food trade around Les Halles and still trades on rue Coquilli\u00e8re. It matters to collectors because it occupied both sides of a distinction that is easy to blur: it supplied professional kitchens and, by its own account, also produced in its own boilermaking and tinning workshops. A piece marked \u201cE. DEHILLERIN / PARIS\u201d is therefore firmly associated with the house, without that mark alone settling who formed the metal or when. Our heavy 29 cm tinned copper saut\u00e9 pan, weighing 4.655 kg with a wall of approximately 3 mm, is the object we use to work through that reasoning.',
+  guideCopperDehillerinIntroText: 'E. Dehillerin grew out of the food trade around Les Halles and still trades on rue Coquilli\u00e8re. It matters to collectors because it occupied both sides of a distinction that is easy to blur: it supplied professional kitchens and, by its own account, also produced in its own boilermaking and tinning workshops. A piece marked \u201cE. DEHILLERIN / PARIS\u201d is therefore firmly associated with the house, without that mark alone settling who formed the metal or when. Our heavy 29 cm tinned copper saut\u00e9 pan, weighing 4.685 kg with a wall of approximately 3 mm, is the object we use to work through that reasoning.',
   guideCopperDehillerinIntroCta: 'Explore our guide to E. Dehillerin copper cookware',
+  guideCopperDehillerinFigureAlt: 'E. Dehillerin Paris 29 cm tinned copper saut\u00e9 pan with iron handle and three rivets',
   guideCopperMauvielIntroHeading: 'Mauviel \u2014 the Villedieu manufacturer',
   guideCopperMauvielIntroText: 'Mauviel is the best-documented of the Villedieu-les-Po\u00eales workshops, and a Mauviel mark is about as clear an identification as French copper offers: it names a manufacturer. What it does not name is a date, a gauge or a lining. The Mauviel pieces that have passed through our hands \u2014 including a confiturier that carries both Mauviel and E. Dehillerin references \u2014 are the ones we use to separate maker from supplier, and mark from conclusion.',
   guideCopperMauvielIntroCta: 'Explore our guide to vintage Mauviel copper cookware',
@@ -309,7 +322,7 @@ const en = {
 
   // ── Thickness and weight ──
   guideCopperS4Heading: 'Thickness and Weight: What They Tell Us',
-  guideCopperS4P1: 'Copper thickness is the single most useful specification on a French pan, because it is what the object was chosen for. Heavier gauges hold and spread heat more steadily and stay flat under hard use; lighter gauges heat faster, cost less and are easier to lift. The two sets of pieces we refer to throughout illustrate the range plainly: the <a href="e-dehillerin-copper-cookware.html">E. Dehillerin saut\u00e9 pan</a> has a wall of approximately 3 mm and weighs 4.655 kg, while the <a href="lecellier-cuivralec.html">L. Lecellier saucepans</a> are approximately 1.5 mm. Those are different tools for different kitchens.',
+  guideCopperS4P1: 'Copper thickness is the single most useful specification on a French pan, because it is what the object was chosen for. Heavier gauges hold and spread heat more steadily and stay flat under hard use; lighter gauges heat faster, cost less and are easier to lift. The two sets of pieces we refer to throughout illustrate the range plainly: the <a href="e-dehillerin-copper-cookware.html">E. Dehillerin saut\u00e9 pan</a> has a wall of approximately 3 mm and weighs 4.685 kg, while the <a href="lecellier-cuivralec.html">L. Lecellier saucepans</a> are approximately 1.5 mm. Those are different tools for different kitchens.',
   guideCopperS4P2: 'What thickness and weight cannot do is date a pan. Heavy professional gauges and lighter domestic gauges were made alongside each other, and both are still made now. The same applies to weight, which is simply thickness multiplied by size. Where a gauge is useful for dating is as one element among several \u2014 combined with marks, labels, construction and, ideally, a period catalogue or advertisement that shows which gauges a given maker or supplier offered and when.',
   guideCopperS4Note: 'We avoid rules of the form \u201c3 mm means nineteenth century\u201d or \u201ciron handles mean antique\u201d. Such shortcuts are common in the trade and they are not supported by the evidence; they conflate specification and period.',
 
@@ -1318,7 +1331,7 @@ const fr = {
   guideDehillerinSpecDiameterLabel: 'Diamètre',
   guideDehillerinSpecDiameterValue: '29 cm',
   guideDehillerinSpecWeightLabel: 'Poids',
-  guideDehillerinSpecWeightValue: '4,655 kg',
+  guideDehillerinSpecWeightValue: '4,685 kg',
   guideDehillerinSpecWallLabel: 'Paroi de cuivre',
   guideDehillerinSpecWallValue: 'Environ 3 mm',
   guideDehillerinSpecConstructionLabel: 'Fabrication',
@@ -1333,15 +1346,27 @@ const fr = {
   guideDehillerinSpecRivetValue: 'Chacune des trois têtes de rivet intérieures porte le nombre frappé « 18 »',
   guideDehillerinSpecNote: 'Mesures et pesée effectuées par Cook & Collect. Ce sont des observations, non une datation : aucun de ces chiffres n’attribue une année de fabrication.',
 
-  guideDehillerinObj1Title: 'E. Dehillerin, Paris — sauteuse en cuivre étamé de 29 cm, 4,655 kg',
+  guideDehillerinObj1Title: 'E. Dehillerin, Paris — sauteuse en cuivre étamé de 29 cm, 4,685 kg',
   guideDehillerinObj1MarkCaption: 'Marque de la maison E. Dehillerin Paris sur une sauteuse en cuivre étamé de forte épaisseur.',
-  guideDehillerinObj1WallCaption: 'Paroi de cuivre d’environ 3 mm sur une sauteuse E. Dehillerin de 29 cm pesant 4,655 kg.',
+  // La photographie associée à cette légende documente uniquement la mesure du
+  // diamètre. La paroi d’environ 3 mm est une mesure distincte et ne doit pas
+  // être présentée comme ce que montre le mètre ruban.
+  guideDehillerinObj1DimensionsCaption: 'Mesure du diamètre de la sauteuse E. Dehillerin : environ 29 cm — relevé de recherche Cook & Collect.',
   guideDehillerinObj1HandleCaption: 'Queue en fer massif de la sauteuse E. Dehillerin de 29 cm.',
   guideDehillerinObj1RivetsCaption: 'Trois gros rivets fixant la queue en fer ; chaque tête de rivet intérieure porte le nombre frappé « 18 ».',
   guideDehillerinObj1InteriorCaption: 'Intérieur étamé de la sauteuse E. Dehillerin de 29 cm.',
 
-  guideDehillerinObj1WallHeading: 'Ce que décrivent réellement 29 cm, 4,655 kg et 3 mm',
-  guideDehillerinObj1WallText: 'Il s’agit de cuivre professionnel de forte épaisseur. Avec 29 cm de diamètre, une paroi d’environ 3 mm et un poids de 4,655 kg, cette sauteuse est conçue pour la stabilité thermique qu’exige une cuisine en activité, non pour le confort domestique — pleine, elle est réellement difficile à manier d’une seule main. Cela renseigne sur l’usage prévu et sur la catégorie d’ustensile. Cela ne dit pas quand la pièce a été fabriquée. Le cuivre de forte épaisseur a été produit sur une très longue période et l’est encore : l’épaisseur et le poids décrivent une spécification, pas un âge.',
+  // Textes alternatifs de la photographie de l’objet. Ils décrivent ce qui est
+  // visible dans chaque cadre, sans date ni affirmation d’état supplémentaire.
+  guideDehillerinObj1Alt: 'Sauteuse en cuivre étamé E. Dehillerin Paris de 29 cm à longue queue en fer',
+  guideDehillerinObj1MarkAlt: 'Marque ovale de la maison E. Dehillerin Paris frappée sur une sauteuse en cuivre français ancienne',
+  guideDehillerinObj1DimensionsAlt: 'Mesure du diamètre d’environ 29 cm d’une sauteuse en cuivre E. Dehillerin',
+  guideDehillerinObj1HandleAlt: 'Longue queue en fer sur une sauteuse en cuivre E. Dehillerin de 29 cm',
+  guideDehillerinObj1RivetsAlt: 'Trois têtes de rivet frappées à l’intérieur d’une sauteuse en cuivre E. Dehillerin',
+  guideDehillerinObj1InteriorAlt: 'Intérieur étamé usé d’une sauteuse en cuivre E. Dehillerin de 29 cm',
+
+  guideDehillerinObj1WallHeading: 'Ce que décrivent réellement 29 cm, 4,685 kg et 3 mm',
+  guideDehillerinObj1WallText: 'Il s’agit de cuivre professionnel de forte épaisseur. Avec 29 cm de diamètre, une paroi d’environ 3 mm et un poids de 4,685 kg, cette sauteuse est conçue pour la stabilité thermique qu’exige une cuisine en activité, non pour le confort domestique — pleine, elle est réellement difficile à manier d’une seule main. Cela renseigne sur l’usage prévu et sur la catégorie d’ustensile. Cela ne dit pas quand la pièce a été fabriquée. Le cuivre de forte épaisseur a été produit sur une très longue période et l’est encore : l’épaisseur et le poids décrivent une spécification, pas un âge.',
   guideDehillerinObj1MarkHeading: 'Lire la marque et les rivets',
   guideDehillerinObj1MarkText: 'La sauteuse porte une marque « E. DEHILLERIN / PARIS », qui identifie la maison parisienne associée à l’objet. Chacune des trois têtes de rivet intérieures porte le nombre frappé « 18 » ; sa signification en atelier n’a pas été établie. Nous le consignons parce qu’il s’agit d’un indice matériel, et nous renonçons à l’expliquer : une interprétation vraisemblable d’une frappe n’équivaut pas à une interprétation documentée.',
   guideDehillerinObj1NoteText: 'La marque d’un fabricant ou d’un fournisseur peut identifier un fabricant ou une maison ; elle ne fournit pas automatiquement une date de fabrication. L’épaisseur, le poids, le type de queue et la construction des rivets aident à comprendre comment un objet a été fabriqué et utilisé, mais aucun d’eux ne doit servir seul à attribuer une date.',
@@ -1354,8 +1379,9 @@ const fr = {
   guideCopperMakersHeading: 'Fabricants, maisons et où poursuivre la lecture',
   guideCopperMakersP1: 'Trois noms reviennent dans le cuivre français que nous manipulons, et chacun enseigne une leçon différente sur la manière de lire ces objets. Voici une courte présentation de chacun, avec un lien vers le guide où les objets, les marques et les mesures sont examinés en détail.',
   guideCopperDehillerinIntroHeading: 'E. Dehillerin — la maison parisienne des professionnels',
-  guideCopperDehillerinIntroText: 'E. Dehillerin est née du commerce alimentaire des Halles et exerce toujours rue Coquillière. Elle intéresse le collectionneur parce qu’elle a occupé les deux versants d’une distinction facile à brouiller : elle approvisionnait les cuisines professionnelles et, selon son propre récit, produisait aussi dans ses ateliers de chaudronnerie et d’étamage. Une pièce marquée « E. DEHILLERIN / PARIS » est donc solidement associée à la maison, sans que cette marque seule établisse qui a formé le métal ni à quelle date. Notre lourde sauteuse en cuivre étamé de 29 cm, 4,655 kg pour une paroi d’environ 3 mm, est l’objet qui nous sert à dérouler ce raisonnement.',
+  guideCopperDehillerinIntroText: 'E. Dehillerin est née du commerce alimentaire des Halles et exerce toujours rue Coquillière. Elle intéresse le collectionneur parce qu’elle a occupé les deux versants d’une distinction facile à brouiller : elle approvisionnait les cuisines professionnelles et, selon son propre récit, produisait aussi dans ses ateliers de chaudronnerie et d’étamage. Une pièce marquée « E. DEHILLERIN / PARIS » est donc solidement associée à la maison, sans que cette marque seule établisse qui a formé le métal ni à quelle date. Notre lourde sauteuse en cuivre étamé de 29 cm, 4,685 kg pour une paroi d’environ 3 mm, est l’objet qui nous sert à dérouler ce raisonnement.',
   guideCopperDehillerinIntroCta: 'Découvrir notre guide du cuivre E. Dehillerin',
+  guideCopperDehillerinFigureAlt: 'Sauteuse en cuivre étamé E. Dehillerin Paris de 29 cm, queue en fer et trois rivets',
   guideCopperMauvielIntroHeading: 'Mauviel — le fabricant de Villedieu',
   guideCopperMauvielIntroText: 'Mauviel est le mieux documenté des ateliers de Villedieu-les-Poêles, et une marque Mauviel constitue à peu près l’identification la plus claire que le cuivre français puisse offrir : elle nomme un fabricant. Ce qu’elle ne nomme pas, c’est une date, une épaisseur ou un revêtement. Les pièces Mauviel passées entre nos mains — dont un confiturier portant à la fois des références Mauviel et E. Dehillerin — sont celles qui nous servent à distinguer le fabricant de la maison, et la marque de la conclusion.',
   guideCopperMauvielIntroCta: 'Découvrir notre guide du cuivre Mauviel vintage',
@@ -1379,7 +1405,7 @@ const fr = {
 
   // ── Épaisseur et poids ──
   guideCopperS4Heading: 'Épaisseur et poids : ce qu’ils nous apprennent',
-  guideCopperS4P1: 'L’épaisseur du cuivre est la spécification la plus utile sur une pièce française, parce que c’est pour elle que l’objet était choisi. Les fortes épaisseurs conservent et répartissent la chaleur plus régulièrement et restent planes sous un usage intensif ; les épaisseurs plus fines chauffent plus vite, coûtent moins cher et sont plus faciles à soulever. Les deux ensembles auxquels nous nous référons illustrent clairement cet écart : la <a href="e-dehillerin-copper-cookware.html">sauteuse E. Dehillerin</a> présente une paroi d’environ 3 mm pour 4,655 kg, tandis que les <a href="lecellier-cuivralec.html">casseroles L. Lecellier</a> sont d’environ 1,5 mm. Ce sont des outils différents pour des cuisines différentes.',
+  guideCopperS4P1: 'L’épaisseur du cuivre est la spécification la plus utile sur une pièce française, parce que c’est pour elle que l’objet était choisi. Les fortes épaisseurs conservent et répartissent la chaleur plus régulièrement et restent planes sous un usage intensif ; les épaisseurs plus fines chauffent plus vite, coûtent moins cher et sont plus faciles à soulever. Les deux ensembles auxquels nous nous référons illustrent clairement cet écart : la <a href="e-dehillerin-copper-cookware.html">sauteuse E. Dehillerin</a> présente une paroi d’environ 3 mm pour 4,685 kg, tandis que les <a href="lecellier-cuivralec.html">casseroles L. Lecellier</a> sont d’environ 1,5 mm. Ce sont des outils différents pour des cuisines différentes.',
   guideCopperS4P2: 'Ce que l’épaisseur et le poids ne permettent pas, c’est de dater une pièce. Les fortes épaisseurs professionnelles et les épaisseurs domestiques plus légères ont été fabriquées en parallèle, et le sont encore. Il en va de même du poids, qui n’est que l’épaisseur multipliée par la taille. L’épaisseur devient utile à la datation comme élément parmi d’autres — associée aux marques, aux étiquettes, à la fabrication et, idéalement, à un catalogue ou une publicité d’époque indiquant quelles épaisseurs un fabricant ou un fournisseur proposait, et à quel moment.',
   guideCopperS4Note: 'Nous évitons les règles du type « 3 mm signifie XIXe siècle » ou « une queue en fer signifie ancien ». Ces raccourcis sont courants dans le commerce et ne sont pas étayés par les indices ; ils confondent spécification et période.',
 

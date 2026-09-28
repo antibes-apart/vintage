@@ -21,10 +21,15 @@
 
        PHOTOGRAPHY — original Cook & Collect photography only.
          img/guides/copper-cookware/dehillerin-saute/
-           1-full · 2-mark · 3-wall · 4-handle · 5-rivets · 6-interior
+           1-full · 2-mark · 3-dimensions · 4-handle · 5-rivets · 6-interior
        Every illustration uses the shared <g-figure> component: while a file is
        missing the build renders a same-sized placeholder with the caption, so
        dropping the final photo in at that path needs no layout change.
+       These are documentary photographs of the object, so every figure uses
+       frame="full": the shared fixed card height crops with object-fit: cover,
+       which would cut evidence out of frame (the handle's hanging hole, the
+       ends of the tape, the outer rivets). frame="full" keeps each photograph's
+       own aspect ratio — see .guide-figure-full in css/style.css.
        ───────────────────────────────────────────────────────────── -->
 
   <main>
@@ -55,8 +60,12 @@
         <div class="guide-figure-pair">
           <g-figure src="img/guides/copper-cookware/dehillerin-saute/1-full.jpeg"
                     hero="true"
+                    frame="full"
+                    alt="{{guideDehillerinObj1Alt}}"
                     caption="{{guideDehillerinObj1Title}}"></g-figure>
           <g-figure src="img/guides/copper-cookware/dehillerin-saute/2-mark.jpeg"
+                    frame="full"
+                    alt="{{guideDehillerinObj1MarkAlt}}"
                     caption="{{guideDehillerinObj1MarkCaption}}"></g-figure>
         </div>
       </section>
@@ -103,10 +112,15 @@
           <p class="guide-spec-note">{{guideDehillerinSpecNote}}</p>
         </div>
 
+        <!-- Diameter record. The photograph documents the 29 cm measurement
+             only; the approx. 3 mm wall is a separate measurement and the
+             caption must not imply the tape shows it. -->
         <div class="guide-split">
           <g-figure variant="split"
-                    src="img/guides/copper-cookware/dehillerin-saute/3-wall.jpeg"
-                    caption="{{guideDehillerinObj1WallCaption}}"></g-figure>
+                    frame="full"
+                    src="img/guides/copper-cookware/dehillerin-saute/3-dimensions.jpeg"
+                    alt="{{guideDehillerinObj1DimensionsAlt}}"
+                    caption="{{guideDehillerinObj1DimensionsCaption}}"></g-figure>
           <div class="guide-split-body">
             <h3>{{guideDehillerinObj1WallHeading}}</h3>
             <p>{{guideDehillerinObj1WallText}}</p>
@@ -115,7 +129,9 @@
 
         <div class="guide-split guide-split-reverse">
           <g-figure variant="split"
+                    frame="full"
                     src="img/guides/copper-cookware/dehillerin-saute/5-rivets.jpeg"
+                    alt="{{guideDehillerinObj1RivetsAlt}}"
                     caption="{{guideDehillerinObj1RivetsCaption}}"></g-figure>
           <div class="guide-split-body">
             <h3>{{guideDehillerinObj1MarkHeading}}</h3>
@@ -129,8 +145,12 @@
 
         <div class="guide-figure-pair">
           <g-figure src="img/guides/copper-cookware/dehillerin-saute/4-handle.jpeg"
+                    frame="full"
+                    alt="{{guideDehillerinObj1HandleAlt}}"
                     caption="{{guideDehillerinObj1HandleCaption}}"></g-figure>
           <g-figure src="img/guides/copper-cookware/dehillerin-saute/6-interior.jpeg"
+                    frame="full"
+                    alt="{{guideDehillerinObj1InteriorAlt}}"
                     caption="{{guideDehillerinObj1InteriorCaption}}"></g-figure>
         </div>
       </section>
