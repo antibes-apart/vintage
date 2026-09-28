@@ -27,6 +27,12 @@
            1-set · 2-mark · 3-label · 4-detail
        Illustrations use the shared <g-figure> component, so the final photos
        drop in at the same paths with no layout change.
+       These are documentary photographs, so every figure uses frame="full":
+       the shared fixed card height crops with object-fit: cover, which would
+       cut evidence out of frame (the handle hanging holes, the "20" size stamp
+       beside the maker's mark, the outer saucepans, the printed edge of the
+       paper label). frame="full" keeps each photograph's own aspect ratio —
+       see .guide-figure-full in css/style.css.
        ───────────────────────────────────────────────────────────── -->
 
   <main>
@@ -56,8 +62,12 @@
         <div class="guide-figure-pair">
           <g-figure src="img/guides/copper-cookware/lecellier-cuivralec/1-set.jpeg"
                     hero="true"
+                    frame="full"
+                    alt="{{guideLecellierObj4SetAlt}}"
                     caption="{{guideLecellierObj4SetCaption}}"></g-figure>
           <g-figure src="img/guides/copper-cookware/lecellier-cuivralec/2-mark.jpeg"
+                    frame="full"
+                    alt="{{guideLecellierObj4MarkAlt}}"
                     caption="{{guideLecellierObj4MarkCaption}}"></g-figure>
         </div>
       </section>
@@ -79,9 +89,14 @@
         <h2 id="guide-s3">{{guideLecellierObj4SetHeading}}</h2>
         <p>{{guideLecellierObj4SetText}}</p>
 
+        <!-- Shared-construction record across the group. The photograph shows
+             the five saucepans together; it does not measure the copper gauge,
+             so the alt text stays clear of the thickness figure. -->
         <div class="guide-split guide-split-reverse">
           <g-figure variant="split"
+                    frame="full"
                     src="img/guides/copper-cookware/lecellier-cuivralec/4-detail.jpeg"
+                    alt="{{guideLecellierObj4DetailAlt}}"
                     caption="{{guideLecellierObj4DetailCaption}}"></g-figure>
           <div class="guide-split-body">
             <h3>{{guideLecellierEvidenceHeading}}</h3>
@@ -97,7 +112,9 @@
 
         <div class="guide-split">
           <g-figure variant="split"
+                    frame="full"
                     src="img/guides/copper-cookware/lecellier-cuivralec/3-label.jpeg"
+                    alt="{{guideLecellierObj4LabelAlt}}"
                     caption="{{guideLecellierObj4LabelCaption}}"></g-figure>
           <div class="guide-split-body">
             <p>{{guideLecellierObj4LabelText}}</p>

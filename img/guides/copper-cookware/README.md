@@ -86,9 +86,34 @@ neither page should be redesigned to create one:
 | File | Subject |
 | --- | --- |
 | `1-set.jpeg` | The five graduated saucepans together (hero / Open Graph image for the Lecellier guide) |
-| `2-mark.jpeg` | `L. Lecellier / Cuivralec / Villedieu` mark — on the **20 cm** saucepan, the only maker-stamped piece |
-| `3-label.jpeg` | Original Cuivralec paper label |
-| `4-detail.jpeg` | Construction detail (rivets / handle / gauge) |
+| `2-mark.jpeg` | `L. Lecellier / Cuivralec / Villedieu` mark — on the **20 cm** saucepan, the only maker-stamped piece; the `20` size stamp beside it is in the same frame |
+| `3-label.jpeg` | Original Cuivralec paper label — also the one Lecellier photograph used on the pillar guide |
+| `4-detail.jpeg` | The five saucepans from above: shared construction, handles, rivets, surviving labels |
+
+Published from the original documentary photography of the set. The only
+processing applied is the file's own EXIF orientation (`3-label` and `4-detail`
+are portrait photographs recorded sideways with an orientation flag, and the
+build strips EXIF) plus a proportional downscale to a 1600 px long edge. No
+crop, no colour, exposure or white-balance change, no sharpening, and no
+retouching of the copper, the patina, the wear or the paper labels.
+
+Every figure on the Lecellier guide uses `<g-figure frame="full">` so the shared
+fixed card height cannot crop the evidence out of frame (handle hanging holes,
+the `20` stamp, the outer saucepans, the printed edge of the label). The pillar
+guide keeps `3-label` in the standard card frame, where the crop leaves the
+complete label visible.
+
+**Do not caption or alt-text the silver-coloured interior surface as tinned,
+stainless, nickel or any other material.** The label reads "sans étamage" and the
+guide states explicitly that the interior material has not been identified.
+
+Still unpublished, because the guides have no figure position for them and
+neither page should be redesigned to create one:
+
+| Source file | Subject |
+| --- | --- |
+| `IMG_8970.jpeg` | Exterior copper bases of the five saucepans — patina, heat colouring, wear |
+| `IMG_8971.jpeg` | Second view of the same bases; substantially overlaps the above |
 
 ## Framing notes
 

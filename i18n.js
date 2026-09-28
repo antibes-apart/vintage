@@ -305,6 +305,7 @@ const en = {
   guideCopperLecellierIntroHeading: 'L. Lecellier and Cuivralec \u2014 when the label outlives the metal',
   guideCopperLecellierIntroText: 'L. Lecellier also worked at Villedieu-les-Po\u00eales and sold under the registered \u201cCuivralec\u201d name. The graduated set of five saucepans in our archive is unusual because several pieces still carry their original paper labels \u2014 and those labels state something the metal cannot, including the words \u201csans \u00e9tamage\u201d, without tinning. It is the clearest example we own of documentary evidence surviving on the object itself.',
   guideCopperLecellierIntroCta: 'Explore our guide to L. Lecellier & Cuivralec',
+  guideCopperLecellierFigureAlt: 'Original Cuivralec paper label preserved inside an L. Lecellier copper saucepan',
 
 
   // ── Reading a French copper pan ──
@@ -366,6 +367,16 @@ const en = {
   guideLecellierObj4MarkCaption: 'L. Lecellier / Cuivralec / Villedieu maker\u2019s mark on the largest saucepan of the set.',
   guideLecellierObj4LabelCaption: 'Original Cuivralec paper label preserved inside an L. Lecellier saucepan, Villedieu-les-Po\u00eales.',
   guideLecellierObj4DetailCaption: 'Construction detail on the L. Lecellier Cuivralec saucepans \u2014 approximately 1.5 mm copper.',
+
+  // Alt text for the set photography. Describes only what is visible in each
+  // frame: no production date, and no identification of the interior surface
+  // material, which has not been established (see guideLecellierS10*).
+  // The construction photograph is not a gauge measurement, so its alt text
+  // does not mention the 1.5 mm figure.
+  guideLecellierObj4SetAlt: 'Graduated set of five L. Lecellier Cuivralec copper saucepans, 12 to 20 cm',
+  guideLecellierObj4MarkAlt: 'L. Lecellier Cuivralec Villedieu maker\u2019s mark and 20 size stamp on copper saucepan',
+  guideLecellierObj4LabelAlt: 'Original Cuivralec paper label preserved inside an L. Lecellier copper saucepan',
+  guideLecellierObj4DetailAlt: 'Construction details of five graduated L. Lecellier Cuivralec copper saucepans',
   guideLecellierObj4LabelHeading: 'Why an original label matters',
   guideLecellierObj4LabelText: 'A surviving paper label can state things the metal cannot. A stamped mark gives a name; a label can give the product range, the trade the pieces were sold for, a trademark claim and, crucially, a statement about how the pieces were finished. Labels are also fragile \u2014 they are washed off, scrubbed away or simply worn out \u2014 so a set that retains several of them preserves evidence that is usually the first thing to disappear.',
   guideLecellierObj4NoteText: 'Because labels are printed rather than stamped, they describe how a product was sold. That is a different kind of evidence from the object\u2019s construction, and both are worth recording separately.',
@@ -1388,6 +1399,7 @@ const fr = {
   guideCopperLecellierIntroHeading: 'L. Lecellier et Cuivralec — quand l’étiquette survit au métal',
   guideCopperLecellierIntroText: 'L. Lecellier travaillait également à Villedieu-les-Poêles et vendait sous la marque déposée « Cuivralec ». La série graduée de cinq casseroles de nos archives est remarquable parce que plusieurs pièces conservent leurs étiquettes de papier d’origine — et ces étiquettes énoncent ce que le métal ne dit pas, notamment la mention « sans étamage ». C’est le plus clair exemple que nous possédions d’une preuve documentaire conservée sur l’objet lui-même.',
   guideCopperLecellierIntroCta: 'Découvrir notre guide L. Lecellier & Cuivralec',
+  guideCopperLecellierFigureAlt: 'Étiquette de papier Cuivralec d’origine conservée dans une casserole en cuivre L. Lecellier',
 
 
   // ── Lire une pièce de cuivre française ──
@@ -1449,6 +1461,16 @@ const fr = {
   guideLecellierObj4MarkCaption: 'Marque L. Lecellier / Cuivralec / Villedieu sur la plus grande casserole de la série.',
   guideLecellierObj4LabelCaption: 'Étiquette de papier Cuivralec d’origine conservée dans une casserole L. Lecellier, Villedieu-les-Poêles.',
   guideLecellierObj4DetailCaption: 'Détail de fabrication des casseroles L. Lecellier Cuivralec — cuivre d’environ 1,5 mm.',
+
+  // Textes alternatifs de la photographie de la série. Ils décrivent uniquement
+  // ce qui est visible : aucune date de production, et aucune identification du
+  // matériau de la surface intérieure, qui n’est pas établie (voir
+  // guideLecellierS10*). La photographie de fabrication n’est pas une mesure
+  // d’épaisseur : son texte alternatif ne mentionne donc pas les 1,5 mm.
+  guideLecellierObj4SetAlt: 'Série de cinq casseroles graduées en cuivre L. Lecellier Cuivralec, de 12 à 20 cm',
+  guideLecellierObj4MarkAlt: 'Marque L. Lecellier Cuivralec Villedieu et frappe de taille 20 sur une casserole en cuivre',
+  guideLecellierObj4LabelAlt: 'Étiquette de papier Cuivralec d’origine conservée dans une casserole en cuivre L. Lecellier',
+  guideLecellierObj4DetailAlt: 'Détails de fabrication de cinq casseroles graduées en cuivre L. Lecellier Cuivralec',
   guideLecellierObj4LabelHeading: 'Pourquoi une étiquette d’origine compte',
   guideLecellierObj4LabelText: 'Une étiquette de papier conservée peut énoncer ce que le métal ne dit pas. Une marque frappée donne un nom ; une étiquette peut donner la gamme, le métier auquel les pièces étaient destinées, une revendication de marque déposée et, surtout, une indication sur leur finition. Les étiquettes sont aussi fragiles — lavées, frottées, ou simplement usées — de sorte qu’une série qui en conserve plusieurs préserve des indices qui disparaissent d’ordinaire les premiers.',
   guideLecellierObj4NoteText: 'Parce qu’elles sont imprimées et non frappées, les étiquettes décrivent la manière dont un produit était vendu. C’est un indice de nature différente de la fabrication de l’objet, et les deux méritent d’être consignés séparément.',
