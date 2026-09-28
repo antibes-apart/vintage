@@ -52,6 +52,7 @@ const en = {
   curatedCat2GuideLink: 'Read our collector’s guide to vintage French champagne buckets',
   curatedCat3Title: 'French Design & Decorative Objects',
   curatedCat3Text: 'Interesting French tableware, serving objects, decorative pieces and 20th-century design.',
+  curatedCat3GuideLink: 'Read our guide to French design & decorative objects',
   curatedCat4Title: 'Rare Cast Iron',
   curatedCat4Text: 'Only historically interesting, unusual, designer or particularly collectible French cast-iron pieces.',
   curatedGalleryHeading: 'The selection',
@@ -582,6 +583,152 @@ const en = {
   guideLecellierCardImageAlt: 'Graduated set of five L. Lecellier Cuivralec copper saucepans from Villedieu-les-Po\u00eales',
   guideLecellierRefIntro: 'The evidence for this guide is primarily the object itself: its mark, its size markings and its surviving original labels. Documentary research is still open, and the entry below says so rather than citing a source we have not consulted.',
   guideLecellierRefHeading: 'Research & References',
+
+  // ── Guide: French Design & Decorative Objects ──
+  // Entry guide for the "French Design & Decorative Objects" area of focus on
+  // curated-selection.html. Four documented objects from the collection, used
+  // as case studies in reading decorative objects — not a history of French
+  // decorative arts, of Limoges porcelain or of Longwy.
+  //
+  // FACTUAL GUARDS — these are deliberate and must not be "tidied up":
+  //   · Limoges is a porcelain city, not a manufacturer. Limoges Castel is the
+  //     marked house. Never write "made by Limoges".
+  //   · NO production date is established for any of the four objects.
+  //   · "22 K GOLD" is a marking on the object, not a verified assay.
+  //   · The Limoges Castel certificate is the brand's own document. The medals
+  //     printed on it are award references and are never a date for the plate.
+  //   · The Longwy mark reads "PEINT MAIN" — there is no "A". The painted
+  //     reference number under it is not confidently legible: it is described
+  //     as "a painted reference number" and never reconstructed or used to date.
+  //   · The Dior vessel is marked MADE IN ITALY. Never French-made, never
+  //     Limoges, never "Dior Maison", never "soup tureen", and the painted
+  //     device between the two inscriptions is never interpreted.
+  guideDecorativeDocTitle: 'French Design & Decorative Objects | Collector’s Guide | Cook & Collect',
+  guideDecorativeMetaDesc: 'Explore French design and decorative objects through maker’s marks, original packaging and documented examples from Limoges Castel, Longwy and Christian Dior.',
+  guideDecorativeOgTitle: 'French Design & Decorative Objects: A Collector’s Guide',
+  guideDecorativeOgDesc: 'How we read French decorative objects: maker’s marks, original boxes, certificates and construction, through four documented pieces from the Cook & Collect collection.',
+  guideDecorativeBreadcrumbGuides: 'Guides',
+  guideDecorativeBreadcrumbCurrent: 'French Design & Decorative Objects',
+  guideDecorativeEyebrow: 'Collector’s Guide',
+  guideDecorativeH1: 'French Design & Decorative Objects',
+  guideDecorativeSubtitle: 'Collectible French tableware, porcelain, ceramics and decorative objects selected for design, craftsmanship, maker attribution and surviving documentary evidence.',
+  guideDecorativeIntro: 'Decorative objects are the part of the collection where attribution is hardest and where the evidence, when it survives, is most interesting. A cocotte can be read from its metal; a porcelain box or a painted dish often gives up very little beyond its decoration unless a mark, a box or a piece of manufacturer\u2019s paperwork has survived with it. This guide sets out what we look for, using four documented objects from our own collection. They are examples of a method, not a definition of French decorative arts.',
+  guideDecorativeNoteLabel: 'Collector’s note',
+  guideDecorativeResearchLabel: 'Research in progress',
+
+  guideDecorativeHeroAlt: 'Limoges Castel porcelain decorative plate with original box and certificate of authenticity',
+  guideDecorativeHeroCaption: 'Limoges Castel porcelain plate with its original presentation box and the printed certificate that survived with it \u2014 object, packaging and paperwork together.',
+
+  // ── What we look for ──
+  guideDecorativeLookHeading: 'What We Look For',
+  guideDecorativeLookP1: 'We do not select a decorative object because it is old, or because it photographs well. Age on its own is not information, and decoration on its own rarely identifies anything: the same printed scene, the same gilt border and the same cobalt ground were used by many houses over long periods. What makes an object worth documenting is whether it can be read.',
+  guideDecorativeLookP2: 'So we look for the things that carry evidence rather than atmosphere:',
+  guideDecorativeLookItem1: 'An identifiable maker, house or decorating workshop \u2014 named on the object rather than inferred from its style.',
+  guideDecorativeLookItem2: 'Marks: printed, painted, stamped or impressed, including size, pattern and reference numbers.',
+  guideDecorativeLookItem3: 'Original packaging \u2014 presentation boxes, sleeves and labels, which often name the range and the house in the form used at the time of sale.',
+  guideDecorativeLookItem4: 'Surviving manufacturer documentation: certificates, leaflets, guarantee slips and catalogue material.',
+  guideDecorativeLookItem5: 'Materials, decorative technique and construction \u2014 how the ground was laid, whether decoration is painted or transfer-printed, how a lid seats, how a foot was finished.',
+  guideDecorativeLookItem6: 'Distinctive design: a form or a decorative scheme specific enough to be traced, rather than a generic pattern.',
+  guideDecorativeLookNote: 'Objects that still have their documentation are particularly useful, because the object and the paperwork can be examined against each other. That is why two of the four pieces below are published with their boxes and, in one case, its certificate.',
+
+  // ── Limoges: a place, not a maker ──
+  guideDecorativeLimogesHeading: 'Limoges Porcelain and Documented French Decorative Objects',
+  guideDecorativeLimogesP1: 'Limoges porcelain turns up across the whole decorative field: dinner services, presentation plates, trinket and dresser boxes, small figural pieces and giftware. Because it is so widespread, and because the decoration is frequently transfer-printed rather than unique, the useful information is almost always on the underside or on the packaging rather than in the picture on the front.',
+  guideDecorativeLimogesP2: 'The two pieces below are both marked for the same house, Limoges Castel, and both arrived with their original presentation boxes. One also kept its printed certificate. Together they let us look at a mark, a marketing claim and a piece of manufacturer\u2019s paperwork on objects we can hold, which is considerably more than decoration alone would give us.',
+  guideDecorativeLimogesNote: 'Limoges is a city and a porcelain-producing region, not a manufacturer. \u201cLimoges\u201d on a base tells you where a piece was made or decorated, not who made it. The name that matters here is the house \u2014 in this case Limoges Castel \u2014 and even that does not, on its own, supply a date.',
+
+  // Case study 1: the oval box.
+  guideDecorativeBoxHeading: 'Limoges Castel \u2014 oval covered box',
+  guideDecorativeBoxP1: 'A small oval covered box with a very dark cobalt-blue ground, gilt scrollwork running round the sides and the lid, and a white reserve on the lid carrying a printed polychrome figural scene in a gilt cartouche. The interior is glazed in the same dark ground; the lid sits into a white, gilt-edged rim. It is a dresser or trinket box rather than a tableware piece.',
+  guideDecorativeBoxP2: 'It arrived in its original box: a blue printed presentation carton reading \u201cPORCELAINE LIMOGES CASTEL FRANCE\u201d around the same shield device that appears in gold on the porcelain itself. That correspondence between the mark on the object and the printing on the packaging is the sort of thing worth recording, because it fixes the form of the brand name the house was using when the piece was sold.',
+  guideDecorativeBoxAlt: 'Limoges Castel cobalt blue and gilt porcelain oval box with original presentation box',
+  guideDecorativeBoxCaption: 'The oval box with the original blue Limoges Castel presentation carton it arrived in.',
+  guideDecorativeBoxMarkAlt: 'Limoges Castel France 22 K Gold mark on porcelain decorative box',
+  guideDecorativeBoxMarkCaption: 'The underside of the box, with the gold Limoges Castel shield mark and the \u201c22 K GOLD\u201d line beneath it; the lid is shown alongside.',
+  guideDecorativeBoxMarkTitle: 'The mark, as it reads',
+  guideDecorativeBoxMarkText: 'Limoges Castel \u00b7 France \u00b7 22 K Gold',
+  guideDecorativeBoxMarkNote: 'Printed in gold inside a shield device on the base. \u201c22 K GOLD\u201d is a description of the gilding applied by the decorator \u2014 a manufacturer\u2019s statement present on the object, not an assay we have verified. None of these lines carries a year, and we do not assign one.',
+
+  // Case study 2: the plate, its box and its certificate.
+  guideDecorativePlateHeading: 'Limoges Castel \u2014 decorative plate with its original documentation',
+  guideDecorativePlateP1: 'The second piece is a presentation plate, photographed at the top of this page with the two things that came with it. The border is a deep red ground with gilt floral swags and a gilt rim line; the white centre carries a printed polychrome garden scene of two figures, one with a guitar. The plate is a wall or display piece, shown here on its hanging fitting.',
+  guideDecorativePlateP2: 'The printed transfer itself carries a name within the scene, alongside a second small printed inscription reading \u201cLimoges\u201d. That records the source the composition was sold as being after, in the decorator\u2019s own printing. It is not a signature, it does not make the plate a work by that painter, and it does not date it \u2014 we have not matched the composition to a specific original painting, and until we do we describe it as a printed scene.',
+  guideDecorativePlateAlt: 'Limoges Castel porcelain decorative plate with gilt border and romantic scene',
+  guideDecorativePlateCaption: 'The plate itself: deep red ground, gilt floral border and a printed polychrome scene in the white centre.',
+  guideDecorativeCertificateAlt: 'Original Limoges Castel certificate of authenticity accompanying a porcelain decorative plate',
+  guideDecorativeCertificateCaption: 'The surviving \u201cCertificat d\u2019authenticit\u00e9\u201d, photographed as it is \u2014 creased and folded \u2014 beside the plate and its box.',
+  guideDecorativePlateP3: 'The certificate is a printed bilingual slip, French above English. It states that the \u201cLIMOGES CASTEL\u201d backstamp guarantees the authenticity of a piece manufactured and decorated in the tradition of Limoges-France porcelain, and it reproduces the shield device, two award medals, a red seal motif and a printed signature. It is genuinely useful: it confirms the brand name, the terminology the house used about itself, and the fact that the backstamp was being presented to buyers as a guarantee.',
+  guideDecorativeCertificateNote: 'It is also worth being clear about what the certificate is. It is the house\u2019s own document, not an independent assessment, and it certifies the meaning of the backstamp rather than anything about this individual plate. One of the medals it reproduces is captioned with a city and a year; that is a printed reference to a distinction the house claimed, and it is not the date of this plate. We have not dated the plate, and the certificate does not date it either.',
+
+  // ── Longwy ──
+  guideDecorativeLongwyHeading: 'Longwy \u2014 Hand-Painted French Decorative Ceramics',
+  guideDecorativeLongwyP1: 'Longwy, in Lorraine, is the second identifiable French name in this part of the collection, and it works quite differently from the Limoges Castel pieces. Where those are porcelain with printed decoration and printed marks, these two are earthenware with a glossy black ground and painted decoration, and their marks are painted by hand on the underside.',
+  guideDecorativeLongwyP2: 'The pair share a form \u2014 an irregular rounded, almost triangular dish \u2014 a black ground and the same decorative method: polychrome enamels with fine gilt and white line work drawing the detail. The subjects are deliberately unalike. One shows a skier coming down a slope through conifers; the other a watermill with a red waterwheel beside falling water. Seeing them together is the point: two different scenes executed in one house style is what makes them read as related production rather than as a coincidence.',
+  guideDecorativeLongwyAlt: 'Pair of hand-painted Longwy French decorative ceramic pieces with black ground',
+  guideDecorativeLongwyCaption: 'The two black-ground Longwy pieces together: a winter skiing scene and a watermill landscape, in the same form and palette.',
+  guideDecorativeLongwyMarkAlt: 'Peint main Made in France Longwy mark on decorative ceramic',
+  guideDecorativeLongwyMarkCaption: 'The painted underside mark, with the wire hanging fitting through the pierced rim; a painted reference number runs below the mark.',
+  guideDecorativeLongwyMarkTitle: 'The mark, as it reads',
+  guideDecorativeLongwyMarkText: 'Peint Main \u00b7 Made in France \u00b7 Longwy',
+  guideDecorativeLongwyMarkNote: 'Painted by hand in a pale enamel. A further painted word sits under \u201cLongwy\u201d, and below that a painted reference number. We are transcribing only what is legible with confidence: the number cannot be read unambiguously in this photograph, so we record it as a painted reference number and do not reproduce it. Note also that the mark reads \u201cPeint Main\u201d, without the \u201c\u00e0\u201d that is often quoted \u2014 we follow the object.',
+  guideDecorativeLongwyP3: 'That reference number is exactly the kind of evidence that could narrow the period, and exactly the kind that should not be guessed at. Matching it would require a Longwy pattern register, a period catalogue or another reliable record; until we consult one, the pieces are described by their mark, their form and their decoration, with no production date attached. Their style is not evidence of a date either: a black ground and a painted landscape were produced over a long span.',
+
+  // ── Christian Dior ──
+  guideDecorativeDiorHeading: 'Christian Dior \u2014 French Design, Marked Made in Italy',
+  guideDecorativeDiorP1: 'The last object is here to make a point the first three cannot. \u201cFrench design\u201d and \u201cmade in France\u201d are not the same claim, and a French house\u2019s decorative objects were not necessarily produced in France. This is a Christian Dior covered ceramic vessel, and the mark painted under its foot says \u201cMade in Italy\u201d.',
+  guideDecorativeDiorP2: 'The piece is a white-ground covered vessel with two scrolled handles and a loop finial on the fitted lid, painted with polychrome floral ornament in blue, green and a rust orange, with hatched and scalloped bands framing the lid. The foot ring is left unglazed. We describe it as a covered decorative vessel rather than naming a function for it: the form would suit several uses, and none of them is documented for this object.',
+  guideDecorativeDiorAlt: 'Christian Dior decorative covered ceramic vessel marked Made in Italy',
+  guideDecorativeDiorCaption: 'The Christian Dior covered ceramic vessel: two scrolled handles, a fitted lid with a loop finial, and painted polychrome floral ornament.',
+  guideDecorativeDiorMarkAlt: 'Christian Dior Made in Italy mark on the underside of a decorative ceramic vessel',
+  guideDecorativeDiorMarkCaption: 'The underside inscription, painted by hand: \u201cChristian Dior\u201d above a painted device, with \u201cMade in Italy\u201d below it.',
+  guideDecorativeDiorMarkTitle: 'The mark, as it reads',
+  guideDecorativeDiorMarkText: 'Christian Dior \u00b7 [painted device] \u00b7 Made in Italy',
+  guideDecorativeDiorMarkNote: 'Painted freehand in dark brown on the glazed base, inside the unglazed foot ring. Between the two inscriptions there is a small painted device which we have not identified; we record its presence and leave it at that rather than offering a reading of it.',
+  guideDecorativeDiorNote: 'This object is associated with a French house and explicitly marked as Italian-made. Both facts belong in the description. We have not attributed it to a particular Italian pottery, because the mark does not name one and we have not consulted a source that would; we have not given it a production date; and we do not apply any later Dior homeware brand name to it, because nothing on the object or with it establishes that terminology for this piece.',
+
+  // ── Why marks, packaging and documentation matter ──
+  guideDecorativeEvidenceHeading: 'Why Marks, Packaging and Documentation Matter',
+  guideDecorativeEvidenceP1: 'Twentieth-century decorative objects were made in large numbers, frequently with bought-in decoration, and often by houses that commissioned rather than manufactured. That makes the surviving paperwork disproportionately valuable \u2014 not because it proves more, but because it records things the porcelain cannot. The four objects on this page each contribute a different kind of evidence.',
+  guideDecorativeEvidence1Label: 'Printed mark',
+  guideDecorativeEvidence1Title: 'A house, not a place',
+  guideDecorativeEvidence1Text: 'The gold Limoges Castel shield names a house. \u201cLimoges\u201d alone would only have told us a region; the shield is what makes the piece attributable at all.',
+  guideDecorativeEvidence2Label: 'Marketing claim',
+  guideDecorativeEvidence2Title: '“22 K Gold” on the base',
+  guideDecorativeEvidence2Text: 'A statement about the gilding, printed by the decorator. It tells us how the piece was positioned and sold. It is not an assay, and we do not repeat it as one.',
+  guideDecorativeEvidence3Label: 'Painted mark',
+  guideDecorativeEvidence3Title: '“Peint Main / Made in France / Longwy”',
+  guideDecorativeEvidence3Text: 'Origin, house and decorating method, painted on the object. The reference number beneath it is the thread that could lead to a pattern record \u2014 once it can be read reliably.',
+  guideDecorativeEvidence4Label: 'Country of manufacture',
+  guideDecorativeEvidence4Title: '“Made in Italy” under a French name',
+  guideDecorativeEvidence4Text: 'A single line that prevents a whole class of wrong assumptions, and a reminder to read the base before describing where something was made.',
+  guideDecorativeEvidenceNote: 'Original boxes add a further layer: they carry the brand name in the form used at the point of sale, and they sometimes name a range or a series that has since disappeared from the object itself.',
+  guideDecorativePackagingLabel: 'Original packaging is part of the evidence',
+  guideDecorativePackagingP1: 'Keep the box, the certificate and the leaflet when they survive. They document branding, terminology, presentation and the claims a manufacturer was making, and once separated from the object they are almost never reunited with it.',
+  guideDecorativePackagingP2: 'But read them critically. Packaging and paperwork establish only what they actually say, and they say it in the manufacturer\u2019s own voice. A certificate that guarantees a backstamp is not a dated provenance; a printed award is not a production year; a box can outlive one object and be paired with another. Documentation is evidence to be weighed against the object, not a substitute for examining it.',
+
+  // ── Attribution methodology ──
+  guideDecorativeMethodHeading: 'How We Attribute a Decorative Object',
+  guideDecorativeMethodP1: 'The order matters more than the conclusion. We work from the object outwards, and we stop when the evidence stops.',
+  guideDecorativeMethodStep1: 'Examine the object first: marks, labels, signatures, reference numbers, materials, decorative technique, construction and dimensions \u2014 recorded as observations, not yet as conclusions.',
+  guideDecorativeMethodStep2: 'Record what came with it: boxes, certificates, leaflets and labels, described in the condition they survive in.',
+  guideDecorativeMethodStep3: 'Compare those observations with reliable manufacturer, archival or institutional material where it exists \u2014 and note plainly where it does not.',
+  guideDecorativeMethodStep4: 'State the attribution at the strength the evidence supports, and leave the date open if nothing dates it.',
+  guideDecorativeMethodP2: 'Two shortcuts are worth naming because they are so easy to take. Dating an object from its style is unreliable: decorative conventions were repeated for decades and are still reproduced. Attributing an object because it resembles something else seen online compounds whatever error that listing already contained. Neither is evidence, and neither appears in our descriptions.',
+  guideDecorativeMethodStatus: 'Production periods: not established for any of the four objects on this page. Each is described by its marks, its materials and its surviving documentation, and each date is left open until a period catalogue, pattern register, advertisement or comparable record is located.',
+
+  // ── Related + back to the selection ──
+  guideDecorativeRelatedHeading: 'Where This Fits in Our Research',
+  guideDecorativeRelatedP1: 'The method on this page is the same one we apply to cookware: examine the object, transcribe the mark, record the documentation, and separate what is observed from what is inferred. The other guides work through it on different material.',
+  guideDecorativeRelatedCopperCta: 'Read our guide to vintage French copper cookware',
+  guideDecorativeRelatedChampagneCta: 'Read our guide to vintage French champagne buckets',
+  guideDecorativeRelatedIndexCta: 'Browse all Collector’s Guides',
+  guideDecorativeCuratedCta: 'Explore our curated French selection.',
+  // Listing card.
+  guideDecorativeCardEyebrow: 'French Design & Decorative Objects',
+  guideDecorativeCardTitle: 'French Design & Decorative Objects',
+  guideDecorativeCardSummary: 'Reading French porcelain, ceramics and decorative objects from their marks, original boxes and surviving certificates \u2014 through documented Limoges Castel, Longwy and Christian Dior pieces.',
+  guideDecorativeCardImageAlt: 'Limoges Castel porcelain plate with its original presentation box and certificate of authenticity',
+
 
   // ── Guide: Vintage Le Creuset (pillar / future multi-page cluster) ──
   // Source discipline: Le Creuset France's Heritage page and the official
@@ -1149,6 +1296,7 @@ const fr = {
   curatedCat2GuideLink: 'Lire notre guide du collectionneur sur les seaux à champagne vintage français',
   curatedCat3Title: 'Design & objets décoratifs français',
   curatedCat3Text: 'Arts de la table français, objets de service, pièces décoratives et design du XXᵉ siècle.',
+  curatedCat3GuideLink: 'Lire notre guide du design et des objets décoratifs français',
   curatedCat4Title: 'Fonte rare',
   curatedCat4Text: 'Uniquement des pièces de fonte françaises historiquement intéressantes, inhabituelles, signées ou particulièrement recherchées.',
   curatedGalleryHeading: 'La sélection',
@@ -1662,6 +1810,157 @@ const fr = {
   guideLecellierCardImageAlt: 'Série graduée de cinq casseroles en cuivre L. Lecellier Cuivralec de Villedieu-les-Poêles',
   guideLecellierRefIntro: 'L’indice principal de ce guide est l’objet lui-même : sa marque, ses indications de taille et ses étiquettes d’origine conservées. La recherche documentaire reste ouverte, et l’entrée ci-dessous le dit plutôt que de citer une source que nous n’avons pas consultée.',
   guideLecellierRefHeading: 'Recherches & références',
+
+  // ── Guide : Design & objets décoratifs français ──
+  // Guide d’entrée du domaine « Design & objets décoratifs français » de
+  // curated-selection.html. Quatre objets documentés de la collection, traités
+  // comme des cas d’étude de lecture — ni histoire des arts décoratifs
+  // français, ni de la porcelaine de Limoges, ni de Longwy.
+  //
+  // GARDE-FOUS FACTUELS — délibérés, ne pas « corriger » :
+  //   · Limoges est une ville porcelainière, pas un fabricant. La maison
+  //     marquée ici est Limoges Castel. Ne jamais écrire « fabriqué par
+  //     Limoges ».
+  //   · AUCUNE date de production n’est établie pour les quatre objets.
+  //   · « 22 K GOLD » est une mention portée sur l’objet, pas un titrage
+  //     vérifié.
+  //   · Le certificat Limoges Castel est le document de la maison elle-même.
+  //     Les médailles qu’il reproduit sont des références de distinction,
+  //     jamais une date pour l’assiette.
+  //   · La marque Longwy se lit « PEINT MAIN » — sans « À ». Le numéro peint
+  //     en dessous n’est pas lisible avec certitude : il est décrit comme
+  //     « un numéro de référence peint », jamais reconstitué ni utilisé pour
+  //     datation.
+  //   · Le vase couvert Dior porte la mention MADE IN ITALY. Jamais « fabriqué
+  //     en France », jamais Limoges, jamais « Dior Maison », jamais
+  //     « soupière », et le motif peint entre les deux inscriptions n’est
+  //     jamais interprété.
+  guideDecorativeDocTitle: 'Design & objets décoratifs français | Guide du collectionneur | Cook & Collect',
+  guideDecorativeMetaDesc: 'Le design et les objets décoratifs français lus à travers les marques de fabricants, les emballages d’origine et des exemples documentés Limoges Castel, Longwy et Christian Dior.',
+  guideDecorativeOgTitle: 'Design & objets décoratifs français : guide du collectionneur',
+  guideDecorativeOgDesc: 'Comment nous lisons les objets décoratifs français : marques, boîtes d’origine, certificats et fabrication, à travers quatre pièces documentées de la collection Cook & Collect.',
+  guideDecorativeBreadcrumbGuides: 'Guides',
+  guideDecorativeBreadcrumbCurrent: 'Design & objets décoratifs français',
+  guideDecorativeEyebrow: 'Guide du collectionneur',
+  guideDecorativeH1: 'Design & objets décoratifs français',
+  guideDecorativeSubtitle: 'Arts de la table, porcelaines, céramiques et objets décoratifs français retenus pour leur design, leur exécution, l’attribution possible de leur fabricant et les preuves documentaires conservées.',
+  guideDecorativeIntro: 'Les objets décoratifs sont la partie de la collection où l’attribution est la plus difficile et où les indices, lorsqu’ils subsistent, sont les plus intéressants. Une cocotte se lit dans son métal ; une boîte en porcelaine ou un plat peint ne livre souvent presque rien au-delà de son décor, à moins qu’une marque, une boîte ou un papier du fabricant ne l’ait accompagné. Ce guide expose ce que nous recherchons, à travers quatre objets documentés de notre propre collection. Ce sont des exemples d’une méthode, non une définition des arts décoratifs français.',
+  guideDecorativeNoteLabel: 'Note du collectionneur',
+  guideDecorativeResearchLabel: 'Recherche en cours',
+
+  guideDecorativeHeroAlt: 'Assiette décorative en porcelaine Limoges Castel avec sa boîte d’origine et son certificat d’authenticité',
+  guideDecorativeHeroCaption: 'Assiette en porcelaine Limoges Castel avec sa boîte de présentation d’origine et le certificat imprimé conservé avec elle — l’objet, l’emballage et le document réunis.',
+
+  // ── Ce que nous recherchons ──
+  guideDecorativeLookHeading: 'Ce que nous recherchons',
+  guideDecorativeLookP1: 'Nous ne retenons pas un objet décoratif parce qu’il est ancien, ni parce qu’il photographie bien. L’âge seul n’est pas une information, et le décor seul n’identifie presque jamais rien : la même scène imprimée, la même bordure dorée et le même fond bleu de cobalt ont servi à de nombreuses maisons sur de longues périodes. Ce qui rend un objet digne d’être documenté, c’est qu’il puisse être lu.',
+  guideDecorativeLookP2: 'Nous cherchons donc ce qui porte des indices plutôt qu’une atmosphère :',
+  guideDecorativeLookItem1: 'Un fabricant, une maison ou un atelier de décoration identifiable — nommé sur l’objet, et non déduit de son style.',
+  guideDecorativeLookItem2: 'Les marques : imprimées, peintes, frappées ou en creux, y compris les numéros de taille, de modèle et de référence.',
+  guideDecorativeLookItem3: 'L’emballage d’origine — boîtes de présentation, étuis et étiquettes, qui portent souvent le nom de la gamme et de la maison dans la forme employée au moment de la vente.',
+  guideDecorativeLookItem4: 'La documentation du fabricant conservée : certificats, notices, bons de garantie et matériel de catalogue.',
+  guideDecorativeLookItem5: 'Les matériaux, la technique décorative et la fabrication — comment le fond a été posé, si le décor est peint ou imprimé par transfert, comment un couvercle s’emboîte, comment un pied a été fini.',
+  guideDecorativeLookItem6: 'Un design distinctif : une forme ou un parti décoratif assez spécifique pour être retrouvé, plutôt qu’un motif générique.',
+  guideDecorativeLookNote: 'Les objets qui conservent leur documentation sont particulièrement utiles, parce que l’objet et le papier peuvent être confrontés l’un à l’autre. C’est pourquoi deux des quatre pièces ci-dessous sont publiées avec leur boîte et, dans un cas, avec son certificat.',
+
+  // ── Limoges : un lieu, pas un fabricant ──
+  guideDecorativeLimogesHeading: 'Porcelaine de Limoges et objets décoratifs français documentés',
+  guideDecorativeLimogesP1: 'La porcelaine de Limoges se rencontre dans tout le champ décoratif : services de table, assiettes de présentation, boîtes à bijoux et de coiffeuse, petits sujets et objets-cadeaux. Parce qu’elle est si répandue, et parce que le décor est fréquemment imprimé par transfert plutôt qu’unique, l’information utile se trouve presque toujours au revers ou sur l’emballage, et non dans l’image du dessus.',
+  guideDecorativeLimogesP2: 'Les deux pièces ci-dessous sont marquées pour une même maison, Limoges Castel, et toutes deux nous sont parvenues avec leur boîte de présentation d’origine. L’une a également conservé son certificat imprimé. Ensemble, elles permettent d’examiner une marque, un argument commercial et un papier de fabricant sur des objets que l’on peut tenir en main — bien plus que ce que le décor seul nous donnerait.',
+  guideDecorativeLimogesNote: 'Limoges est une ville et une région porcelainière, pas un fabricant. « Limoges » sous un objet indique où une pièce a été fabriquée ou décorée, non par qui. Le nom qui compte ici est celui de la maison — en l’occurrence Limoges Castel — et même lui ne fournit pas de date à lui seul.',
+
+  // Cas d’étude 1 : la boîte ovale.
+  guideDecorativeBoxHeading: 'Limoges Castel — boîte ovale couverte',
+  guideDecorativeBoxP1: 'Une petite boîte ovale couverte à fond bleu de cobalt très sombre, rehaussée de rinceaux dorés sur la panse et sur le couvercle, avec une réserve blanche sur le couvercle portant une scène figurée polychrome imprimée dans un cartouche doré. L’intérieur est émaillé du même fond sombre ; le couvercle s’emboîte dans un bord blanc souligné d’or. C’est une boîte de coiffeuse ou à bijoux, non une pièce de service.',
+  guideDecorativeBoxP2: 'Elle est arrivée dans sa boîte d’origine : un carton de présentation bleu imprimé « PORCELAINE LIMOGES CASTEL FRANCE » autour du même écu que celui porté en or sur la porcelaine. Cette correspondance entre la marque de l’objet et l’impression de l’emballage mérite d’être consignée : elle fixe la forme du nom commercial employé par la maison au moment de la vente.',
+  guideDecorativeBoxAlt: 'Boîte ovale en porcelaine Limoges Castel bleu de cobalt et or avec sa boîte de présentation d’origine',
+  guideDecorativeBoxCaption: 'La boîte ovale avec le carton de présentation bleu Limoges Castel d’origine qui l’accompagnait.',
+  guideDecorativeBoxMarkAlt: 'Marque Limoges Castel France 22 K Gold sur une boîte décorative en porcelaine',
+  guideDecorativeBoxMarkCaption: 'Le revers de la boîte, avec l’écu doré Limoges Castel et la mention « 22 K GOLD » en dessous ; le couvercle est présenté à côté.',
+  guideDecorativeBoxMarkTitle: 'La marque, telle qu’elle se lit',
+  guideDecorativeBoxMarkText: 'Limoges Castel · France · 22 K Gold',
+  guideDecorativeBoxMarkNote: 'Imprimée en or dans un écu, sous la base. « 22 K GOLD » décrit la dorure appliquée par le décorateur — une affirmation du fabricant présente sur l’objet, non un titrage que nous aurions vérifié. Aucune de ces lignes ne porte d’année, et nous n’en attribuons pas.',
+
+  // Cas d’étude 2 : l’assiette, sa boîte et son certificat.
+  guideDecorativePlateHeading: 'Limoges Castel — assiette décorative et sa documentation d’origine',
+  guideDecorativePlateP1: 'La seconde pièce est une assiette de présentation, photographiée en tête de cette page avec les deux éléments qui l’accompagnaient. La bordure présente un fond rouge profond à guirlandes florales dorées et un filet d’or au bord ; le centre blanc porte une scène de jardin polychrome imprimée, deux personnages dont l’un tient une guitare. C’est une pièce murale ou de vitrine, montrée ici sur son accroche.',
+  guideDecorativePlateP2: 'Le transfert imprimé porte lui-même un nom dans la scène, à côté d’une seconde petite inscription imprimée lisant « Limoges ». Cela consigne la source dont la composition était donnée comme issue, dans l’impression du décorateur. Ce n’est pas une signature, cela ne fait pas de l’assiette une œuvre de ce peintre, et cela ne la date pas — nous n’avons pas rattaché la composition à un tableau précis, et tant que ce n’est pas fait nous la décrivons comme une scène imprimée.',
+  guideDecorativePlateAlt: 'Assiette décorative en porcelaine Limoges Castel à bordure dorée et scène galante',
+  guideDecorativePlateCaption: 'L’assiette elle-même : fond rouge profond, bordure florale dorée et scène polychrome imprimée dans le centre blanc.',
+  guideDecorativeCertificateAlt: 'Certificat d’authenticité Limoges Castel d’origine accompagnant une assiette décorative en porcelaine',
+  guideDecorativeCertificateCaption: 'Le « Certificat d’authenticité » conservé, photographié tel quel — froissé et plié — à côté de l’assiette et de sa boîte.',
+  guideDecorativePlateP3: 'Le certificat est un feuillet imprimé bilingue, français au-dessus de l’anglais. Il énonce que l’estampille « LIMOGES CASTEL » garantit l’authenticité d’une pièce fabriquée et décorée dans la tradition de la porcelaine de Limoges-France, et il reproduit l’écu, deux médailles, un motif de sceau rouge et une signature imprimée. Il est réellement utile : il confirme le nom commercial, les termes que la maison employait à son propre sujet, et le fait que l’estampille était présentée aux acheteurs comme une garantie.',
+  guideDecorativeCertificateNote: 'Il faut aussi être clair sur ce qu’est ce certificat. C’est le document de la maison elle-même, non une appréciation indépendante, et il certifie le sens de l’estampille plutôt que quoi que ce soit sur cette assiette en particulier. L’une des médailles qu’il reproduit est légendée d’une ville et d’une année ; c’est la référence imprimée à une distinction revendiquée par la maison, et non la date de cette assiette. Nous n’avons pas daté l’assiette, et le certificat ne la date pas davantage.',
+
+  // ── Longwy ──
+  guideDecorativeLongwyHeading: 'Longwy — céramiques décoratives françaises peintes à la main',
+  guideDecorativeLongwyP1: 'Longwy, en Lorraine, est le second nom français identifiable de cette partie de la collection, et il fonctionne tout autrement que les pièces Limoges Castel. Là où celles-ci sont en porcelaine à décor imprimé et marques imprimées, ces deux-ci sont en faïence à fond noir brillant et décor peint, et leurs marques sont peintes à la main au revers.',
+  guideDecorativeLongwyP2: 'La paire partage une forme — un plat arrondi irrégulier, presque triangulaire —, un fond noir et la même technique : émaux polychromes avec de fins tracés d’or et de blanc pour le détail. Les sujets sont volontairement dissemblables. L’un montre un skieur descendant une pente entre les conifères ; l’autre un moulin à eau à roue rouge au bord d’une chute d’eau. Les voir ensemble est précisément l’intérêt : deux scènes différentes exécutées dans un même style de maison, c’est ce qui les fait lire comme une production apparentée et non comme une coïncidence.',
+  guideDecorativeLongwyAlt: 'Paire de céramiques décoratives françaises Longwy peintes à la main, à fond noir',
+  guideDecorativeLongwyCaption: 'Les deux pièces Longwy à fond noir réunies : une scène de ski hivernale et un paysage de moulin à eau, dans la même forme et la même palette.',
+  guideDecorativeLongwyMarkAlt: 'Marque Peint main Made in France Longwy sur une céramique décorative',
+  guideDecorativeLongwyMarkCaption: 'La marque peinte au revers, avec le fil d’accroche passé dans le bord percé ; un numéro de référence peint court sous la marque.',
+  guideDecorativeLongwyMarkTitle: 'La marque, telle qu’elle se lit',
+  guideDecorativeLongwyMarkText: 'Peint Main · Made in France · Longwy',
+  guideDecorativeLongwyMarkNote: 'Peinte à la main dans un émail pâle. Un mot peint supplémentaire figure sous « Longwy », et en dessous un numéro de référence peint. Nous ne transcrivons que ce qui est lisible avec certitude : le numéro ne peut être lu sans ambiguïté sur cette photographie, nous le consignons donc comme un numéro de référence peint sans le reproduire. Notons aussi que la marque se lit « Peint Main », sans le « à » souvent cité — nous suivons l’objet.',
+  guideDecorativeLongwyP3: 'Ce numéro de référence est exactement le type d’indice qui pourrait resserrer la période, et exactement celui qu’il ne faut pas deviner. Le rapprocher exigerait un registre de modèles Longwy, un catalogue d’époque ou un autre document fiable ; jusqu’à consultation d’une telle source, les pièces sont décrites par leur marque, leur forme et leur décor, sans date de production. Leur style n’est pas davantage une preuve de date : un fond noir et un paysage peint ont été produits sur une très longue période.',
+
+  // ── Christian Dior ──
+  guideDecorativeDiorHeading: 'Christian Dior — design français, marqué Made in Italy',
+  guideDecorativeDiorP1: 'Le dernier objet est ici pour établir un point que les trois premiers ne peuvent pas faire. « Design français » et « fabriqué en France » ne sont pas la même affirmation, et les objets décoratifs d’une maison française n’étaient pas nécessairement produits en France. Il s’agit d’un vase couvert en céramique Christian Dior, et la marque peinte sous son pied indique « Made in Italy ».',
+  guideDecorativeDiorP2: 'La pièce est un vase couvert à fond blanc, à deux anses en volute et bouton d’anneau sur le couvercle emboîtant, peint d’un décor floral polychrome en bleu, vert et orange rouille, avec des bandes hachurées et festonnées encadrant le couvercle. L’anneau de pied est laissé non émaillé. Nous la décrivons comme un vase décoratif couvert plutôt que de lui attribuer une fonction : la forme conviendrait à plusieurs usages, et aucun n’est documenté pour cet objet.',
+  guideDecorativeDiorAlt: 'Vase décoratif couvert en céramique Christian Dior portant la mention Made in Italy',
+  guideDecorativeDiorCaption: 'Le vase couvert en céramique Christian Dior : deux anses en volute, un couvercle emboîtant à bouton d’anneau et un décor floral polychrome peint.',
+  guideDecorativeDiorMarkAlt: 'Marque Christian Dior Made in Italy sous un vase décoratif en céramique',
+  guideDecorativeDiorMarkCaption: 'L’inscription du revers, peinte à la main : « Christian Dior » au-dessus d’un motif peint, avec « Made in Italy » en dessous.',
+  guideDecorativeDiorMarkTitle: 'La marque, telle qu’elle se lit',
+  guideDecorativeDiorMarkText: 'Christian Dior · [motif peint] · Made in Italy',
+  guideDecorativeDiorMarkNote: 'Peinte à main levée en brun foncé sur la base émaillée, à l’intérieur de l’anneau de pied non émaillé. Entre les deux inscriptions figure un petit motif peint que nous n’avons pas identifié ; nous consignons sa présence et nous en tenons là plutôt que d’en proposer une lecture.',
+  guideDecorativeDiorNote: 'Cet objet est associé à une maison française et explicitement marqué comme fabriqué en Italie. Les deux faits appartiennent à la description. Nous ne l’avons pas attribué à une faïencerie italienne particulière, parce que la marque n’en nomme aucune et que nous n’avons pas consulté de source qui le permettrait ; nous ne lui avons pas donné de date de production ; et nous ne lui appliquons aucun nom de marque d’art de vivre Dior postérieur, parce que rien sur l’objet ni avec lui n’établit cette terminologie pour cette pièce.',
+
+  // ── Pourquoi marques, emballages et documents comptent ──
+  guideDecorativeEvidenceHeading: 'Pourquoi les marques, les emballages et les documents comptent',
+  guideDecorativeEvidenceP1: 'Les objets décoratifs du XXᵉ siècle ont été produits en grand nombre, souvent avec un décor acheté à l’extérieur, et fréquemment par des maisons qui faisaient fabriquer plutôt qu’elles ne fabriquaient. Les papiers conservés en tirent une valeur disproportionnée — non parce qu’ils prouvent davantage, mais parce qu’ils consignent ce que la porcelaine ne peut pas dire. Les quatre objets de cette page apportent chacun un type d’indice différent.',
+  guideDecorativeEvidence1Label: 'Marque imprimée',
+  guideDecorativeEvidence1Title: 'Une maison, pas un lieu',
+  guideDecorativeEvidence1Text: 'L’écu doré Limoges Castel nomme une maison. « Limoges » seul n’aurait indiqué qu’une région ; c’est l’écu qui rend la pièce attribuable.',
+  guideDecorativeEvidence2Label: 'Argument commercial',
+  guideDecorativeEvidence2Title: '« 22 K Gold » sous la base',
+  guideDecorativeEvidence2Text: 'Une affirmation sur la dorure, imprimée par le décorateur. Elle nous renseigne sur le positionnement commercial de la pièce. Ce n’est pas un titrage, et nous ne le reprenons pas comme tel.',
+  guideDecorativeEvidence3Label: 'Marque peinte',
+  guideDecorativeEvidence3Title: '« Peint Main / Made in France / Longwy »',
+  guideDecorativeEvidence3Text: 'Origine, maison et méthode de décoration, peintes sur l’objet. Le numéro de référence en dessous est le fil qui pourrait mener à un registre de modèles — une fois qu’il sera lisible de façon fiable.',
+  guideDecorativeEvidence4Label: 'Pays de fabrication',
+  guideDecorativeEvidence4Title: '« Made in Italy » sous un nom français',
+  guideDecorativeEvidence4Text: 'Une seule ligne qui écarte toute une classe de suppositions fausses, et un rappel : lire la base avant de décrire où une chose a été faite.',
+  guideDecorativeEvidenceNote: 'Les boîtes d’origine ajoutent une couche supplémentaire : elles portent le nom commercial dans la forme employée au point de vente, et elles nomment parfois une gamme ou une série qui a depuis disparu de l’objet lui-même.',
+  guideDecorativePackagingLabel: 'L’emballage d’origine fait partie des preuves',
+  guideDecorativePackagingP1: 'Conservez la boîte, le certificat et la notice lorsqu’ils subsistent. Ils documentent la marque, la terminologie, la présentation et les affirmations du fabricant, et une fois séparés de l’objet ils ne lui sont presque jamais rendus.',
+  guideDecorativePackagingP2: 'Mais lisez-les d’un œil critique. Emballages et papiers n’établissent que ce qu’ils disent effectivement, et ils le disent dans la voix du fabricant. Un certificat qui garantit une estampille n’est pas une provenance datée ; une distinction imprimée n’est pas une année de production ; une boîte peut survivre à un objet et se retrouver appariée à un autre. La documentation est un indice à confronter à l’objet, non un substitut à son examen.',
+
+  // ── Méthode d’attribution ──
+  guideDecorativeMethodHeading: 'Comment nous attribuons un objet décoratif',
+  guideDecorativeMethodP1: 'L’ordre importe plus que la conclusion. Nous partons de l’objet vers l’extérieur, et nous nous arrêtons où s’arrêtent les indices.',
+  guideDecorativeMethodStep1: 'Examiner d’abord l’objet : marques, étiquettes, signatures, numéros de référence, matériaux, technique décorative, fabrication et dimensions — consignés comme observations, pas encore comme conclusions.',
+  guideDecorativeMethodStep2: 'Consigner ce qui l’accompagne : boîtes, certificats, notices et étiquettes, décrits dans l’état où ils subsistent.',
+  guideDecorativeMethodStep3: 'Confronter ces observations à des sources fiables — du fabricant, d’archives ou d’institutions — lorsqu’elles existent, et dire clairement quand elles n’existent pas.',
+  guideDecorativeMethodStep4: 'Énoncer l’attribution au degré de force que les indices autorisent, et laisser la date ouverte si rien ne la fixe.',
+  guideDecorativeMethodP2: 'Deux raccourcis méritent d’être nommés, tant ils sont faciles à prendre. Dater un objet d’après son style n’est pas fiable : les conventions décoratives ont été répétées pendant des décennies et le sont encore. Attribuer un objet parce qu’il ressemble à un autre vu en ligne ne fait qu’aggraver l’erreur que cette annonce contenait déjà. Ni l’un ni l’autre n’est un indice, et aucun n’apparaît dans nos descriptions.',
+  guideDecorativeMethodStatus: 'Périodes de production : non établies pour les quatre objets de cette page. Chacun est décrit par ses marques, ses matériaux et sa documentation conservée, et chaque date reste ouverte jusqu’à ce qu’un catalogue d’époque, un registre de modèles, une publicité ou un document comparable soit localisé.',
+
+  // ── Guides liés + retour à la sélection ──
+  guideDecorativeRelatedHeading: 'Où cela s’inscrit dans nos recherches',
+  guideDecorativeRelatedP1: 'La méthode de cette page est celle que nous appliquons aux ustensiles : examiner l’objet, transcrire la marque, consigner la documentation, et séparer l’observé de l’inféré. Les autres guides la déroulent sur d’autres matières.',
+  guideDecorativeRelatedCopperCta: 'Lire notre guide des cuivres de cuisine français vintage',
+  guideDecorativeRelatedChampagneCta: 'Lire notre guide des seaux à champagne vintage français',
+  guideDecorativeRelatedIndexCta: 'Parcourir tous les guides du collectionneur',
+  guideDecorativeCuratedCta: 'Découvrir notre sélection française.',
+  // Carte de l’index.
+  guideDecorativeCardEyebrow: 'Design & objets décoratifs français',
+  guideDecorativeCardTitle: 'Design & objets décoratifs français',
+  guideDecorativeCardSummary: 'Lire les porcelaines, céramiques et objets décoratifs français à partir de leurs marques, de leurs boîtes d’origine et de leurs certificats conservés — à travers des pièces documentées Limoges Castel, Longwy et Christian Dior.',
+  guideDecorativeCardImageAlt: 'Assiette en porcelaine Limoges Castel avec sa boîte de présentation d’origine et son certificat d’authenticité',
+
 
   // ── Guide : Le Creuset vintage (pilier / futur ensemble de pages) ──
   // Discipline des sources : la page Patrimoine de Le Creuset France et les

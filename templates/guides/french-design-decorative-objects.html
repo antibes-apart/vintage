@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html lang="{{LANG}}">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="{{guideDecorativeMetaDesc}}">
+  <title>{{guideDecorativeDocTitle}}</title>
+{{guideHead}}
+  <link rel="stylesheet" href="{{BASE}}css/style.css?v=12">
+</head>
+<body data-page="guide" class="guide-page">
+  {{nav}}
+
+  <!-- ─────────────────────────────────────────────────────────────
+       SPECIALIST GUIDE for the "French Design & Decorative Objects" area of
+       focus on curated-selection.html. Top-level guide (no pillar parent).
+
+       This is an editorial/reference page, NOT a shop category. It uses four
+       documented objects from the collection as case studies for how we read
+       decorative objects; it does not attempt a history of French decorative
+       arts, of Limoges porcelain or of Longwy.
+
+       FACTUAL GUARDS (do not weaken when editing):
+         · "Limoges" is a porcelain-producing city, not a manufacturer. Limoges
+           Castel is the marked house here; never present the city name as the
+           maker of a piece.
+         · no production date is established for ANY object on this page
+         · "22 K GOLD" is a marking on the object, not a verified assay
+         · the Limoges Castel certificate is the brand's own document; the
+           medals printed on it are award references, never a date
+         · the printed name inside the plate's transfer names the source of the
+           composition as sold; it is not a signature and does not date the plate
+         · the Longwy mark reads "PEINT MAIN" — there is no "A". A further
+           painted word and a painted reference number follow it; the number is
+           NOT confidently legible and must not be reconstructed or used to date
+         · the Dior vessel is marked MADE IN ITALY. Never describe it as
+           French-made or as Limoges, never apply a later Dior homeware brand
+           name to it, never name a function for it, and never interpret the
+           painted device between the two inscriptions
+
+       PHOTOGRAPHY — original Cook & Collect photography only.
+         img/guides/decorative-objects/
+       Every illustration uses the shared <g-figure> component with
+       frame="full": these are documentary photographs, and the shared fixed
+       card height crops with object-fit: cover, which would cut evidence out
+       of frame (the certificate, the 22 K GOLD line, the painted Longwy mark,
+       the MADE IN ITALY inscription).
+       ───────────────────────────────────────────────────────────── -->
+
+  <main>
+    <article class="guide">
+
+      <header class="guide-header">
+        <nav class="guide-breadcrumb" aria-label="Breadcrumb">
+          <ol>
+            <li><a href="../index.html">{{navCollection}}</a></li>
+            <li><a href="{{guidesHref}}">{{guideDecorativeBreadcrumbGuides}}</a></li>
+            <li aria-current="page">{{guideDecorativeBreadcrumbCurrent}}</li>
+          </ol>
+        </nav>
+        <p class="guide-eyebrow">{{guideDecorativeEyebrow}}</p>
+        <h1 class="guide-title">{{guideDecorativeH1}}</h1>
+        <p class="guide-subtitle">{{guideDecorativeSubtitle}}</p>
+      </header>
+
+      <p class="guide-intro">{{guideDecorativeIntro}}</p>
+
+      <!-- Hero: the plate with its original box and certificate. It states the
+           method of the whole page in one frame — object, packaging, paperwork —
+           and is referred back to by the plate case study below, so the same
+           asset is never published twice. frame="full" + .guide-figure-portrait
+           per the upright-hero pattern (see css/style.css). -->
+      <g-figure src="img/guides/decorative-objects/limoges-castel-porcelain-plate-original-box-certificate.jpeg"
+                hero="true"
+                frame="full"
+                class="guide-figure-portrait"
+                alt="{{guideDecorativeHeroAlt}}"
+                caption="{{guideDecorativeHeroCaption}}"></g-figure>
+
+      <!-- ── What we look for ── -->
+      <section class="guide-section" aria-labelledby="guide-s1">
+        <h2 id="guide-s1">{{guideDecorativeLookHeading}}</h2>
+        <p>{{guideDecorativeLookP1}}</p>
+        <p>{{guideDecorativeLookP2}}</p>
+        <ul class="guide-evidence-list">
+          <li>{{guideDecorativeLookItem1}}</li>
+          <li>{{guideDecorativeLookItem2}}</li>
+          <li>{{guideDecorativeLookItem3}}</li>
+          <li>{{guideDecorativeLookItem4}}</li>
+          <li>{{guideDecorativeLookItem5}}</li>
+          <li>{{guideDecorativeLookItem6}}</li>
+        </ul>
+        <p class="guide-note">{{guideDecorativeLookNote}}</p>
+      </section>
+
+      <!-- ── Limoges: a place, not a maker ── -->
+      <section class="guide-section" aria-labelledby="guide-s2">
+        <h2 id="guide-s2">{{guideDecorativeLimogesHeading}}</h2>
+        <p>{{guideDecorativeLimogesP1}}</p>
+        <p>{{guideDecorativeLimogesP2}}</p>
+        <div class="guide-note-box">
+          <p class="guide-note-label">{{guideDecorativeNoteLabel}}</p>
+          <p>{{guideDecorativeLimogesNote}}</p>
+        </div>
+
+        <!-- ── Case study 1: the oval box ── -->
+        <div class="guide-subsection">
+          <h3>{{guideDecorativeBoxHeading}}</h3>
+          <p>{{guideDecorativeBoxP1}}</p>
+          <p>{{guideDecorativeBoxP2}}</p>
+        </div>
+
+        <div class="guide-figure-pair">
+          <g-figure src="img/guides/decorative-objects/limoges-castel-cobalt-blue-22k-gold-oval-box.jpeg"
+                    frame="full"
+                    alt="{{guideDecorativeBoxAlt}}"
+                    caption="{{guideDecorativeBoxCaption}}"></g-figure>
+          <g-figure src="img/guides/decorative-objects/limoges-castel-france-22k-gold-mark.jpeg"
+                    frame="full"
+                    alt="{{guideDecorativeBoxMarkAlt}}"
+                    caption="{{guideDecorativeBoxMarkCaption}}"></g-figure>
+        </div>
+
+        <div class="guide-spec">
+          <p class="guide-spec-title">{{guideDecorativeBoxMarkTitle}}</p>
+          <p class="guide-label-transcription">{{guideDecorativeBoxMarkText}}</p>
+          <p class="guide-spec-note">{{guideDecorativeBoxMarkNote}}</p>
+        </div>
+
+        <!-- ── Case study 2: the plate, its box and its certificate ── -->
+        <div class="guide-subsection">
+          <h3>{{guideDecorativePlateHeading}}</h3>
+          <p>{{guideDecorativePlateP1}}</p>
+          <p>{{guideDecorativePlateP2}}</p>
+        </div>
+
+        <div class="guide-figure-pair">
+          <g-figure src="img/guides/decorative-objects/limoges-castel-gilt-decorative-plate.jpeg"
+                    frame="full"
+                    alt="{{guideDecorativePlateAlt}}"
+                    caption="{{guideDecorativePlateCaption}}"></g-figure>
+          <g-figure src="img/guides/decorative-objects/limoges-castel-certificate-authenticity.jpeg"
+                    frame="full"
+                    alt="{{guideDecorativeCertificateAlt}}"
+                    caption="{{guideDecorativeCertificateCaption}}"></g-figure>
+        </div>
+
+        <p>{{guideDecorativePlateP3}}</p>
+        <div class="guide-note-box">
+          <p class="guide-note-label">{{guideDecorativeNoteLabel}}</p>
+          <p>{{guideDecorativeCertificateNote}}</p>
+        </div>
+      </section>
+
+      <!-- ── Longwy ── -->
+      <section class="guide-section" aria-labelledby="guide-s3">
+        <h2 id="guide-s3">{{guideDecorativeLongwyHeading}}</h2>
+        <p>{{guideDecorativeLongwyP1}}</p>
+        <p>{{guideDecorativeLongwyP2}}</p>
+
+        <div class="guide-figure-pair">
+          <g-figure src="img/guides/decorative-objects/longwy-hand-painted-french-decorative-ceramics.jpeg"
+                    frame="full"
+                    alt="{{guideDecorativeLongwyAlt}}"
+                    caption="{{guideDecorativeLongwyCaption}}"></g-figure>
+          <g-figure src="img/guides/decorative-objects/longwy-peint-main-made-in-france-mark.jpeg"
+                    frame="full"
+                    alt="{{guideDecorativeLongwyMarkAlt}}"
+                    caption="{{guideDecorativeLongwyMarkCaption}}"></g-figure>
+        </div>
+
+        <div class="guide-spec">
+          <p class="guide-spec-title">{{guideDecorativeLongwyMarkTitle}}</p>
+          <p class="guide-label-transcription">{{guideDecorativeLongwyMarkText}}</p>
+          <p class="guide-spec-note">{{guideDecorativeLongwyMarkNote}}</p>
+        </div>
+
+        <p>{{guideDecorativeLongwyP3}}</p>
+      </section>
+
+      <!-- ── Christian Dior: French design, marked Made in Italy ── -->
+      <section class="guide-section" aria-labelledby="guide-s4">
+        <h2 id="guide-s4">{{guideDecorativeDiorHeading}}</h2>
+        <p>{{guideDecorativeDiorP1}}</p>
+        <p>{{guideDecorativeDiorP2}}</p>
+
+        <div class="guide-figure-pair">
+          <g-figure src="img/guides/decorative-objects/christian-dior-made-in-italy-covered-ceramic-vessel.jpeg"
+                    frame="full"
+                    alt="{{guideDecorativeDiorAlt}}"
+                    caption="{{guideDecorativeDiorCaption}}"></g-figure>
+          <g-figure src="img/guides/decorative-objects/christian-dior-made-in-italy-mark.jpeg"
+                    frame="full"
+                    alt="{{guideDecorativeDiorMarkAlt}}"
+                    caption="{{guideDecorativeDiorMarkCaption}}"></g-figure>
+        </div>
+
+        <div class="guide-spec">
+          <p class="guide-spec-title">{{guideDecorativeDiorMarkTitle}}</p>
+          <p class="guide-label-transcription">{{guideDecorativeDiorMarkText}}</p>
+          <p class="guide-spec-note">{{guideDecorativeDiorMarkNote}}</p>
+        </div>
+
+        <div class="guide-note-box">
+          <p class="guide-note-label">{{guideDecorativeNoteLabel}}</p>
+          <p>{{guideDecorativeDiorNote}}</p>
+        </div>
+      </section>
+
+      <!-- ── Why marks, packaging and documentation matter ── -->
+      <section class="guide-section" aria-labelledby="guide-s5">
+        <h2 id="guide-s5">{{guideDecorativeEvidenceHeading}}</h2>
+        <p>{{guideDecorativeEvidenceP1}}</p>
+        <div class="guide-preview-grid">
+          <article class="guide-preview-card">
+            <p class="guide-preview-eyebrow">{{guideDecorativeEvidence1Label}}</p>
+            <h3>{{guideDecorativeEvidence1Title}}</h3>
+            <p>{{guideDecorativeEvidence1Text}}</p>
+          </article>
+          <article class="guide-preview-card">
+            <p class="guide-preview-eyebrow">{{guideDecorativeEvidence2Label}}</p>
+            <h3>{{guideDecorativeEvidence2Title}}</h3>
+            <p>{{guideDecorativeEvidence2Text}}</p>
+          </article>
+          <article class="guide-preview-card">
+            <p class="guide-preview-eyebrow">{{guideDecorativeEvidence3Label}}</p>
+            <h3>{{guideDecorativeEvidence3Title}}</h3>
+            <p>{{guideDecorativeEvidence3Text}}</p>
+          </article>
+          <article class="guide-preview-card">
+            <p class="guide-preview-eyebrow">{{guideDecorativeEvidence4Label}}</p>
+            <h3>{{guideDecorativeEvidence4Title}}</h3>
+            <p>{{guideDecorativeEvidence4Text}}</p>
+          </article>
+        </div>
+        <p class="guide-note">{{guideDecorativeEvidenceNote}}</p>
+
+        <div class="guide-note-box">
+          <p class="guide-note-label">{{guideDecorativePackagingLabel}}</p>
+          <p>{{guideDecorativePackagingP1}}</p>
+          <p>{{guideDecorativePackagingP2}}</p>
+        </div>
+      </section>
+
+      <!-- ── How we attribute ── -->
+      <section class="guide-section" aria-labelledby="guide-s6">
+        <h2 id="guide-s6">{{guideDecorativeMethodHeading}}</h2>
+        <p>{{guideDecorativeMethodP1}}</p>
+        <ol class="guide-evidence-list guide-evidence-hierarchy">
+          <li>{{guideDecorativeMethodStep1}}</li>
+          <li>{{guideDecorativeMethodStep2}}</li>
+          <li>{{guideDecorativeMethodStep3}}</li>
+          <li>{{guideDecorativeMethodStep4}}</li>
+        </ol>
+        <p>{{guideDecorativeMethodP2}}</p>
+        <div class="guide-note-box">
+          <p class="guide-note-label">{{guideDecorativeResearchLabel}}</p>
+          <p>{{guideDecorativeMethodStatus}}</p>
+        </div>
+      </section>
+
+      <!-- ── Related guides + back to the curated selection ── -->
+      <section class="guide-section" aria-labelledby="guide-s7">
+        <h2 id="guide-s7">{{guideDecorativeRelatedHeading}}</h2>
+        <p>{{guideDecorativeRelatedP1}}</p>
+        <p class="guide-inline-cta"><a href="{{guideCopperHref}}">{{guideDecorativeRelatedCopperCta}} <span aria-hidden="true">&rarr;</span></a></p>
+        <p class="guide-inline-cta"><a href="{{guideChampagneHref}}">{{guideDecorativeRelatedChampagneCta}} <span aria-hidden="true">&rarr;</span></a></p>
+        <p class="guide-inline-cta"><a href="{{guidesHref}}">{{guideDecorativeRelatedIndexCta}} <span aria-hidden="true">&rarr;</span></a></p>
+        <p class="guide-cta"><a href="{{curatedHref}}">{{guideDecorativeCuratedCta}}</a></p>
+      </section>
+
+    </article>
+  </main>
+
+  {{contactButtons}}
+  {{footer}}
+</body>
+</html>

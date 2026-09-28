@@ -137,6 +137,20 @@ const GUIDES = [
     card: {image: 'img/guides/copper-cookware/lecellier-cuivralec/1-set.jpeg'},
     datePublished: '2026-09-20',
     dateModified: '2026-09-20'
+  },
+  // ── French design & decorative objects ──
+  // Top-level guide for the "French Design & Decorative Objects" area of focus
+  // on curated-selection.html. No pillar parent: it is the entry point for the
+  // area, and any future maker-specific page (Limoges Castel, Longwy, …) would
+  // declare parent: 'guideDecorative'.
+  {
+    strKey: 'guideDecorative',
+    template: 'guides/french-design-decorative-objects.html',
+    file: 'french-design-decorative-objects.html',
+    ogImage: 'img/guides/decorative-objects/limoges-castel-porcelain-plate-original-box-certificate.jpeg',
+    card: {image: 'img/guides/decorative-objects/limoges-castel-porcelain-plate-original-box-certificate.jpeg'},
+    datePublished: '2026-09-28',
+    dateModified: '2026-09-28'
   }
 ];
 

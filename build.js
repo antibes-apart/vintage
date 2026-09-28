@@ -389,7 +389,8 @@ LOCALES.forEach(locale => {
           guidesHref: guideHref('index.html'),
           guideChampagneHref: guideHref('vintage-french-champagne-buckets.html'),
           guideCopperHref: guideHref('vintage-french-copper-cookware.html'),
-          guideLeCreusetHref: guideHref('vintage-le-creuset.html')
+          guideLeCreusetHref: guideHref('vintage-le-creuset.html'),
+          guideDecorativeHref: guideHref('french-design-decorative-objects.html')
         };
       })()
     };
