@@ -129,6 +129,9 @@ function scanItems() {
       }
     }
 
+    // `hidden: true` keeps the folder but unpublishes the item (e.g. moved to the curated selection).
+    if (info.hidden === true) return null;
+
     const files = fs.readdirSync(folderPath);
     const images = files.filter(f => IMAGE_EXT.has(path.extname(f).toLowerCase()));
 
@@ -163,6 +166,7 @@ function scanItems() {
       images: allImages
     };
   })
+  .filter(Boolean)
   .sort((a, b) => {
     const groupDiff = compareNumbers(a.sortBucket.group, b.sortBucket.group);
     if (groupDiff !== 0) return groupDiff;

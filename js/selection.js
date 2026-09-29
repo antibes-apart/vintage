@@ -20,7 +20,16 @@ const SEL_STRINGS = {
     empty: 'New pieces are being prepared for this collection. Please check back soon.',
     viewLabel: 'View details',
     prev: 'Previous image',
-    next: 'Next image'
+    next: 'Next image',
+    upcomingEyebrow: 'In preparation',
+    upcomingLink: 'Looking for a specific piece? Send us a sourcing request',
+    upcoming: {
+      'French Copperware': ['More copper to come', 'Further pieces are being cleaned, researched and their stamps verified before joining the collection.'],
+      'Rare Cast Iron': ['More cast iron to come', 'Further designer and early enamelled pieces are being documented from their base marks before joining the collection.'],
+      'Champagne & Wine Objects': ['More champagne objects to come', 'Further coolers and wine accessories are being identified by maker and house before joining the collection.'],
+      'French Design & Decorative Objects': ['More decorative pieces to come', 'Further faience, porcelain and design objects are being authenticated and photographed before joining the collection.'],
+      '': ['More pieces to come', 'Further objects are being researched and documented before joining the collection.']
+    }
   },
   fr: {
     maker: 'Fabricant',
@@ -37,7 +46,16 @@ const SEL_STRINGS = {
     empty: 'De nouvelles pièces sont en préparation pour cette collection. Revenez bientôt.',
     viewLabel: 'Voir les détails',
     prev: 'Image précédente',
-    next: 'Image suivante'
+    next: 'Image suivante',
+    upcomingEyebrow: 'En préparation',
+    upcomingLink: 'Vous recherchez une pièce précise ? Confiez-nous une recherche',
+    upcoming: {
+      'French Copperware': ['D’autres cuivres à venir', 'D’autres pièces sont en cours de nettoyage, d’étude et de vérification de leurs poinçons avant de rejoindre la collection.'],
+      'Rare Cast Iron': ['D’autres fontes à venir', 'D’autres pièces émaillées, de designers ou anciennes, sont en cours de documentation à partir de leurs marques avant de rejoindre la collection.'],
+      'Champagne & Wine Objects': ['D’autres objets de champagne à venir', 'D’autres rafraîchissoirs et accessoires du vin sont en cours d’identification, fabricant et maison, avant de rejoindre la collection.'],
+      'French Design & Decorative Objects': ['D’autres pièces décoratives à venir', 'D’autres faïences, porcelaines et objets de design sont en cours d’authentification et de photographie avant de rejoindre la collection.'],
+      '': ['D’autres pièces à venir', 'D’autres objets sont en cours d’étude et de documentation avant de rejoindre la collection.']
+    }
   }
 };
 
@@ -169,12 +187,28 @@ function renderSelectionGrid(items) {
     `;
   };
 
+  // Closing card per section: signals ongoing sourcing and invites requests.
+  const renderUpcoming = (key) => {
+    const [heading, text] = ST.upcoming[key] || ST.upcoming[''];
+    return `
+      <div class="curated-card curated-card--upcoming">
+        <span class="curated-card-image curated-upcoming-panel">
+          <span class="curated-upcoming-eyebrow">${selEscape(ST.upcomingEyebrow)}</span>
+          <span class="curated-upcoming-title">${selEscape(heading)}</span>
+          <span class="curated-upcoming-rule" aria-hidden="true"></span>
+          <span class="curated-upcoming-text">${selEscape(text)}</span>
+          <a class="curated-upcoming-link" href="#curated-enquiry">${selEscape(ST.upcomingLink)} →</a>
+        </span>
+      </div>
+    `;
+  };
+
   grid.classList.remove('curated-grid');
   grid.classList.add('curated-groups');
   grid.innerHTML = groups.map(group => `
     <div class="curated-group">
       <h3 class="curated-group-heading">${selEscape(group.key ? selCategoryLabel(group.key) : ST.otherPieces)}</h3>
-      <div class="curated-grid">${group.entries.map(renderCard).join('')}</div>
+      <div class="curated-grid">${group.entries.map(renderCard).join('')}${renderUpcoming(group.key)}</div>
     </div>
   `).join('');
 

@@ -35,7 +35,9 @@ The site is generated from **templates + item data** by `build.js`.
   runtime strings (grid, item detail, lightbox). **Template strings live in
   `i18n.js`; runtime/dynamic strings live in `js/app.js`.** Keep them in sync.
 - `items/<slug>/` — one folder per item, each containing:
-  - `info.json` — `{ title, price, description, sold?, category?, issueNumber?, sortPriority? }`
+  - `info.json` — `{ title, price, description, sold?, hidden?, category?, issueNumber?, sortPriority? }`
+    (`hidden: true` unpublishes the item entirely — not in the grid, sold page or
+    manifest — while keeping its folder, e.g. when a piece moves to the curated selection)
   - `cover.jpg` — the grid thumbnail (any image ext; filename stem must be `cover`)
   - `2.jpg`, `3.jpg`, … — gallery images (sorted by filename)
 - `css/style.css` — all styling.
