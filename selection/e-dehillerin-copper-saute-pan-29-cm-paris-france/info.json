@@ -6,6 +6,9 @@
   "materials": "Heavy-gauge copper (approx. 3 mm wall), tin lining, iron handle",
   "dimensions": "Diameter approx. 29 cm; weight 4.685 kg",
   "marks": "Oval 'E. DEHILLERIN / PARIS' stamp on the side; each of the three interior rivet heads stamped '18'",
+  "imageAlts": {
+    "cover.jpg": "E. Dehillerin 29 cm tinned copper sauté pan with iron handle, three-quarter view"
+  },
   "description": "A heavy professional sauté pan from E. Dehillerin, the Parisian house on rue Coquillière that has supplied restaurant kitchens since the nineteenth century and once ran its own boilermaking and tinning workshops. With a wall of approximately 3 mm and a weight of 4.685 kg, it is built for the thermal stability of a working kitchen — a massive iron handle fixed by three large rivets completing a pan made to be used, retinned and used again.",
   "condition": "Good working condition. Original tin lining worn in places, as expected on a used piece, and ready to be retinned if desired; copper exterior with natural patina and light marks; handle firmly riveted (see photographs).",
   "status": "Available",
@@ -15,6 +18,9 @@
     "materials": "Cuivre de forte épaisseur (paroi d'environ 3 mm), étamage, queue en fer",
     "dimensions": "Diamètre env. 29 cm ; poids 4,685 kg",
     "marks": "Poinçon ovale « E. DEHILLERIN / PARIS » sur le flanc ; chacune des trois têtes de rivet intérieures frappée « 18 »",
+    "imageAlts": {
+      "cover.jpg": "Sauteuse en cuivre étamé E. Dehillerin de 29 cm avec queue en fer, vue trois quarts"
+    },
     "description": "Une lourde sauteuse professionnelle de la maison E. Dehillerin, rue Coquillière, qui approvisionne les cuisines de restaurant depuis le XIXe siècle et exploitait autrefois ses propres ateliers de chaudronnerie et d'étamage. Avec une paroi d'environ 3 mm et un poids de 4,685 kg, elle est conçue pour la stabilité thermique d'une cuisine en activité — une queue en fer massif fixée par trois gros rivets complétant une pièce faite pour servir, être réétamée et servir encore.",
     "condition": "Bon état d'usage. Étamage d'origine usé par endroits, comme attendu sur une pièce ayant servi, à réétamer si souhaité ; extérieur en cuivre à la patine naturelle avec de légères marques ; queue solidement rivetée (voir photos)."
   }

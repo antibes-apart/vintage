@@ -101,6 +101,17 @@ function selCategoryLabel(cat) {
   return (SEL_CATEGORY_LABELS[SEL_LANG] && SEL_CATEGORY_LABELS[SEL_LANG][cat]) || cat;
 }
 
+// Mirrors selectionImageAlt() in build.js: looks up the image's filename in
+// item.imageAlts, falling back to the supplied default when no specific alt
+// text has been written for that file.
+function selImageAlt(item, relPath, fallback) {
+  const filename = (relPath || '').split('/').pop();
+  if (item.imageAlts && typeof item.imageAlts[filename] === 'string' && item.imageAlts[filename].trim()) {
+    return item.imageAlts[filename];
+  }
+  return fallback;
+}
+
 /* ─── Boot ───
    The gallery markup itself is now rendered server-side by build.js from the
    SAME manifest.selection data (single source of truth), so the full
@@ -197,6 +208,7 @@ function openSelModal(index) {
 
   const imgs = (item.images || []).map(selAssetUrl);
   const mainImage = imgs[0] || '';
+  const mainImageAlt = selImageAlt(item, (item.images || [])[0], item.title);
 
   const details =
     selField(ST.maker, item.maker) +
@@ -217,7 +229,7 @@ function openSelModal(index) {
         <div class="sel-main-frame">
           ${mainImage
             ? `<canvas class="sel-main-fill" id="selMainFill" aria-hidden="true"></canvas>
-               <img src="${mainImage}" alt="${selEscape(item.title)}" class="sel-main-image" id="selMainImage" onload="selFillMargins()" onclick="openLightbox(window._selImageIndex || 0)">`
+               <img src="${mainImage}" alt="${selEscape(mainImageAlt)}" class="sel-main-image" id="selMainImage" onload="selFillMargins()" onclick="openLightbox(window._selImageIndex || 0)">`
             : `<div class="sel-main-image no-cover">${ST.noPhotos}</div>`}
           ${imgs.length > 1 ? `
             <button type="button" class="sel-arrow sel-arrow-prev" onclick="selNavImage(-1)" aria-label="${ST.prev}">&#8249;</button>
@@ -227,7 +239,7 @@ function openSelModal(index) {
         ${imgs.length > 1 ? `
           <div class="sel-thumbnails">
             ${imgs.map((img, i) => `
-              <img src="${img}" alt="${selEscape(item.title)} — ${i + 1}"
+              <img src="${img}" alt="${selEscape(selImageAlt(item, (item.images || [])[i], `${item.title} — ${i + 1}`))}"
                    class="${i === 0 ? 'active' : ''}"
                    onclick="selSwitchImage(${i})" loading="lazy">
             `).join('')}

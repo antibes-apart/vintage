@@ -204,6 +204,17 @@ const SELECTION_STRING_FIELDS = [
   'dimensions', 'marks', 'description', 'condition', 'status'
 ];
 
+// Validates an info.json `imageAlts` map ({ "cover.jpg": "…" }), keeping only
+// non-empty string values. Returns undefined if there is nothing usable.
+function parseImageAlts(raw) {
+  if (!raw || typeof raw !== 'object') return undefined;
+  const alts = {};
+  Object.entries(raw).forEach(([file, text]) => {
+    if (typeof text === 'string' && text.trim() !== '') alts[file] = text.trim();
+  });
+  return Object.keys(alts).length ? alts : undefined;
+}
+
 function scanSelection() {
   if (!fs.existsSync(SELECTION_DIR)) return [];
 
@@ -251,6 +262,11 @@ function scanSelection() {
       }
     });
 
+    // Optional per-image ALT text: info.imageAlts = { "cover.jpg": "…", "02.jpg": "…" }.
+    // Any image not listed simply falls back to the item title (see selectionImageAlt).
+    const imageAlts = parseImageAlts(info.imageAlts);
+    if (imageAlts) entry.imageAlts = imageAlts;
+
     // Optional French translations: info.fr = { title, description, … }.
     if (info.fr && typeof info.fr === 'object') {
       const fr = {};
@@ -258,6 +274,8 @@ function scanSelection() {
         const value = info.fr[field];
         if (typeof value === 'string' && value.trim() !== '') fr[field] = value;
       });
+      const frImageAlts = parseImageAlts(info.fr.imageAlts);
+      if (frImageAlts) fr.imageAlts = frImageAlts;
       if (Object.keys(fr).length) entry.fr = fr;
     }
 
@@ -374,6 +392,19 @@ function selectionField(label, value) {
   return `<div class="sel-field"><dt>${escapeHtml(label)}</dt><dd>${escapeHtml(value)}</dd></div>`;
 }
 
+// Per-image ALT text: looks up the image's filename in item.imageAlts (an
+// optional { "cover.jpg": "…", "02.jpg": "…" } map from info.json). Falls
+// back to the supplied default when no specific alt text has been written,
+// so every image can have a distinct, accurate description without it being
+// mandatory for every file.
+function selectionImageAlt(item, relPath, fallback) {
+  const filename = path.basename(relPath);
+  if (item.imageAlts && typeof item.imageAlts[filename] === 'string' && item.imageAlts[filename].trim()) {
+    return item.imageAlts[filename];
+  }
+  return fallback;
+}
+
 function renderSelectionCard(item, index, strings, base) {
   const cover = item.cover ? selectionAssetUrl(item.cover, base) : null;
   const dims = item.cover ? imageDimensions(item.cover) : null;
@@ -389,7 +420,8 @@ function renderSelectionCard(item, index, strings, base) {
             const url = selectionAssetUrl(src, base);
             const d = imageDimensions(src);
             const attrs = d ? ` width="${d.width}" height="${d.height}"` : '';
-            return `<img src="${url}" alt="${escapeHtml(title)} — ${i + 2}"${attrs} loading="lazy">`;
+            const alt = selectionImageAlt(item, src, `${title} — ${i + 2}`);
+            return `<img src="${url}" alt="${escapeHtml(alt)}"${attrs} loading="lazy">`;
           }).join('')}
         </div>` : '';
 
@@ -411,7 +443,7 @@ function renderSelectionCard(item, index, strings, base) {
         <summary class="curated-card-summary" aria-label="${escapeHtml(title)}">
           <span class="curated-card-image">
             ${cover
-              ? `<img src="${cover}" alt="${escapeHtml(title)}"${dimAttrs} loading="lazy">`
+              ? `<img src="${cover}" alt="${escapeHtml(selectionImageAlt(item, item.cover, title))}"${dimAttrs} loading="lazy">`
               : `<span class="no-cover">${escapeHtml(strings.selNoPhotos)}</span>`}
             ${statusBadge}
           </span>

@@ -1,21 +1,28 @@
 {
   "title": "Laurent-Perrier Champagne Cooler, Stainless Steel, France",
   "category": "Champagne & Wine Objects",
-  "maker": "Laurent-Perrier",
+  "maker": "Produced for Laurent-Perrier (manufacturer unmarked)",
   "origin": "France",
   "materials": "Stainless steel, leather handle grip",
   "dimensions": "Height approx. 21–22 cm, top diameter approx. 20 cm",
-  "marks": "Laurent-Perrier branding on the front plate and handle detail; logo on the leather grip",
-  "description": "A refined French champagne cooler in stainless steel, produced for the house of Laurent-Perrier. The elegant, understated form is finished with a leather handle grip and discreet maker's branding — a stylish piece equally suited to serving or display.",
+  "marks": "Laurent-Perrier branding on the front plate and handle detail; logo on the leather grip. No separate manufacturer's mark is present.",
+  "imageAlts": {
+    "cover.jpg": "Laurent-Perrier champagne cooler in stainless steel with leather-wrapped handle grip"
+  },
+  "description": "A refined French champagne cooler in stainless steel, bearing the branding of the Champagne house Laurent-Perrier rather than a named manufacturer. The elegant, understated form is finished with a leather handle grip and discreet house branding — a stylish piece equally suited to serving or display.",
   "condition": "Very good. Clean interior; light signs of use to the exterior (minor surface marks, see photographs). No dents.",
   "status": "Available",
   "fr": {
     "title": "Seau à champagne Laurent-Perrier, acier inoxydable, France",
+    "maker": "Réalisé pour la maison Laurent-Perrier (fabricant non identifié)",
     "origin": "France",
     "materials": "Acier inoxydable, poignée gainée de cuir",
     "dimensions": "Hauteur env. 21–22 cm, diamètre supérieur env. 20 cm",
-    "marks": "Plaque Laurent-Perrier en façade et détail sur l'anse ; logo sur la poignée en cuir",
-    "description": "Un élégant seau à champagne français en acier inoxydable, réalisé pour la maison Laurent-Perrier. Sa forme sobre et raffinée, rehaussée d'une poignée gainée de cuir et d'un marquage discret de la maison, en fait une pièce aussi juste pour le service que pour la présentation.",
+    "marks": "Plaque Laurent-Perrier en façade et détail sur l'anse ; logo sur la poignée en cuir. Aucune marque de fabricant distincte n'est présente.",
+    "imageAlts": {
+      "cover.jpg": "Seau à champagne Laurent-Perrier en acier inoxydable avec poignée gainée de cuir"
+    },
+    "description": "Un élégant seau à champagne français en acier inoxydable, portant le marquage de la maison de Champagne Laurent-Perrier plutôt que celui d'un fabricant nommé. Sa forme sobre et raffinée, rehaussée d'une poignée gainée de cuir et d'un marquage discret de la maison, en fait une pièce aussi juste pour le service que pour la présentation.",
     "condition": "Très bon état. Intérieur propre ; légères traces d'usage à l'extérieur (petites marques de surface, voir photos). Aucune bosse."
   }
 }
