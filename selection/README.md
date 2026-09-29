@@ -45,16 +45,35 @@ from the page — empty fields are never displayed.
   "description":"Short curatorial description of the piece.",
   "condition":  "Very good vintage condition, retinned interior.",
   "status":     "Available",            // "Available" or "Collection Archive"
-  "sortPriority": 10                     // lower = shown earlier (optional)
+  "sortPriority": 10,                    // lower = shown earlier (optional)
+  "fr": {                                // French translations (optional, per field)
+    "title":       "Sauteuse en cuivre E. Dehillerin, Paris, France, XXe siècle",
+    "description": "…",
+    "condition":   "…"
+  }
 }
 ```
 
+### French translations (`fr`)
+
+The French page (`fr/curated-selection.html`) uses `fr.<field>` when present and
+falls back to the English value otherwise. Translatable fields: `title`,
+`maker`, `designer`, `origin`, `period`, `materials`, `dimensions`, `marks`,
+`description`, `condition`, `status`. Keep English and French in sync: every
+object should have at least `title`, `description`, `materials`,
+`dimensions`, `marks` and `condition` translated. `status` values
+`Available` / `Collection Archive` and categories are translated automatically.
+
 ### Categories (`category`)
 
+The gallery is grouped by category, in this order (set by `SELECTION_CATEGORIES`
+in `build.js`); empty categories are not shown. Within a group, objects are
+ordered by `sortPriority`, then title.
+
 - `French Copperware`
+- `Rare Cast Iron`
 - `Champagne & Wine Objects`
 - `French Design & Decorative Objects`
-- `Rare Cast Iron`
 
 If `category` is omitted, the object still appears in the gallery under
 "Other pieces".

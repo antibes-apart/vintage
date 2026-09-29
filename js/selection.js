@@ -52,7 +52,25 @@ const SEL_CATEGORY_LABELS = {
   }
 };
 
+// Status values are stored in English in info.json; FR labels for display.
+const SEL_STATUS_LABELS = {
+  en: {},
+  fr: {
+    'Available': 'Disponible',
+    'Collection Archive': 'Archives de la collection'
+  }
+};
+
 const ST = SEL_STRINGS[SEL_LANG];
+
+// On French pages, overlay the item's optional `fr` translations (English fallback).
+function selLocalize(item) {
+  const localized = SEL_LANG === 'fr' && item.fr ? {...item, ...item.fr} : {...item};
+  if (localized.status && !(SEL_LANG === 'fr' && item.fr && item.fr.status)) {
+    localized.status = (SEL_STATUS_LABELS[SEL_LANG] || {})[item.status] || item.status;
+  }
+  return localized;
+}
 const SEL_BASE = window.__BASE__ || '';
 
 function selAssetUrl(p) {
@@ -91,6 +109,7 @@ function selCategoryLabel(cat) {
     console.error('Error loading selection:', err);
   }
 
+  selection = selection.map(selLocalize);
   window._selection = selection;
   renderSelectionGrid(selection);
 })();
@@ -122,9 +141,18 @@ function renderSelectionGrid(items) {
     return;
   }
 
-  grid.innerHTML = items.map((item, i) => {
+  // Items arrive sorted by category (see build.js), so consecutive runs form the groups.
+  const groups = [];
+  items.forEach((item, i) => {
+    const key = item.category || '';
+    const last = groups[groups.length - 1];
+    if (last && last.key === key) last.entries.push([item, i]);
+    else groups.push({key, entries: [[item, i]]});
+  });
+
+  const renderCard = ([item, i]) => {
     const cover = item.cover ? selAssetUrl(item.cover) : null;
-    const meta = [selCategoryLabel(item.category), item.period].filter(Boolean).join(' · ');
+    const meta = item.period || '';
     return `
       <button type="button" class="curated-card" data-index="${i}" aria-label="${selEscape(item.title)} — ${ST.viewLabel}">
         <span class="curated-card-image">
@@ -139,7 +167,16 @@ function renderSelectionGrid(items) {
         </span>
       </button>
     `;
-  }).join('');
+  };
+
+  grid.classList.remove('curated-grid');
+  grid.classList.add('curated-groups');
+  grid.innerHTML = groups.map(group => `
+    <div class="curated-group">
+      <h3 class="curated-group-heading">${selEscape(group.key ? selCategoryLabel(group.key) : ST.otherPieces)}</h3>
+      <div class="curated-grid">${group.entries.map(renderCard).join('')}</div>
+    </div>
+  `).join('');
 
   grid.querySelectorAll('.curated-card').forEach(btn => {
     btn.addEventListener('click', (e) => {

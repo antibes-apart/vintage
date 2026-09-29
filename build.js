@@ -185,11 +185,12 @@ function scanItems() {
    Read from selection/<slug>/ and kept in a SEPARATE manifest array.
    These objects never carry a price and never mix with the shop `items`. */
 
+// Order here is the display order of the category groups on the page.
 const SELECTION_CATEGORIES = [
   'French Copperware',
+  'Rare Cast Iron',
   'Champagne & Wine Objects',
-  'French Design & Decorative Objects',
-  'Rare Cast Iron'
+  'French Design & Decorative Objects'
 ];
 const SELECTION_CATEGORY_SET = new Set(SELECTION_CATEGORIES);
 
@@ -246,10 +247,23 @@ function scanSelection() {
       }
     });
 
+    // Optional French translations: info.fr = { title, description, … }.
+    if (info.fr && typeof info.fr === 'object') {
+      const fr = {};
+      ['title', ...SELECTION_STRING_FIELDS].forEach(field => {
+        const value = info.fr[field];
+        if (typeof value === 'string' && value.trim() !== '') fr[field] = value;
+      });
+      if (Object.keys(fr).length) entry.fr = fr;
+    }
+
     entry._sortPriority = parseSortPriority(info.sortPriority);
     return entry;
   })
   .sort((a, b) => {
+    const categoryRank = e => (e.category ? SELECTION_CATEGORIES.indexOf(e.category) : SELECTION_CATEGORIES.length);
+    const categoryDiff = categoryRank(a) - categoryRank(b);
+    if (categoryDiff !== 0) return categoryDiff;
     const priorityDiff = compareNumbers(a._sortPriority, b._sortPriority);
     if (priorityDiff !== 0) return priorityDiff;
     return a.title.localeCompare(b.title);

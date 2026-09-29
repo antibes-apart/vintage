@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="description" content="{{curatedMetaDesc}}">
   <title>{{curatedDocTitle}}</title>
-  <link rel="stylesheet" href="{{BASE}}css/style.css?v=6">
+  <link rel="stylesheet" href="{{BASE}}css/style.css?v=9">
 </head>
 <body data-page="curated" class="curated-page">
   {{nav}}
@@ -29,6 +29,13 @@
           </p>
         </article>
         <article class="curated-category">
+          <h3>{{curatedCat4Title}}</h3>
+          <p>{{curatedCat4Text}}</p>
+          <p class="curated-category-link">
+            <a href="{{guideLeCreusetHref}}">{{curatedCat4GuideLink}}</a>
+          </p>
+        </article>
+        <article class="curated-category">
           <h3>{{curatedCat2Title}}</h3>
           <p>{{curatedCat2Text}}</p>
           <p class="curated-category-link">
@@ -40,13 +47,6 @@
           <p>{{curatedCat3Text}}</p>
           <p class="curated-category-link">
             <a href="{{guideDecorativeHref}}">{{curatedCat3GuideLink}}</a>
-          </p>
-        </article>
-        <article class="curated-category">
-          <h3>{{curatedCat4Title}}</h3>
-          <p>{{curatedCat4Text}}</p>
-          <p class="curated-category-link">
-            <a href="{{guideLeCreusetHref}}">{{curatedCat4GuideLink}}</a>
           </p>
         </article>
       </div>
@@ -105,6 +105,6 @@
 
   {{contactButtons}}
   {{footer}}
-  <script src="{{BASE}}js/selection.js"></script>
+  <script src="{{BASE}}js/selection.js?v=3"></script>
 </body>
 </html>
