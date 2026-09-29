@@ -19,7 +19,8 @@ const STRINGS = {
     itemsWord: 'items',
     of: 'of',
     shippingNote: 'International shipping available — costs at buyer\'s expense. <a href="https://wa.me/33627335434" target="_blank" rel="noopener noreferrer">Contact us</a> for a quote!',
-    titleSuffix: 'Cook & Collect'
+    titleSuffix: 'Cook & Collect',
+    viewPermanentLink: 'View the permanent listing for this item &rarr;'
   },
   fr: {
     allCategory: 'Tous les articles',
@@ -39,7 +40,8 @@ const STRINGS = {
     itemsWord: 'articles',
     of: 'sur',
     shippingNote: 'Livraison internationale disponible — frais à la charge de l\'acheteur. <a href="https://wa.me/33627335434" target="_blank" rel="noopener noreferrer">Contactez-nous</a> pour un devis !',
-    titleSuffix: 'Cook & Collect'
+    titleSuffix: 'Cook & Collect',
+    viewPermanentLink: 'Voir la fiche permanente de cet article &rarr;'
   }
 };
 
@@ -76,6 +78,16 @@ const BASE = window.__BASE__ || '';
 function assetUrl(p) {
   if (!p) return p;
   return p.startsWith('/') || /^https?:/.test(p) ? p : BASE + p;
+}
+
+// Permanent item URL (see build.js renderCollectionPage). Only EN currently has
+// permanent /collection/<id>.html pages; FR falls back to the legacy
+// item.html?id= route until FR item descriptions exist (see build report).
+const COLLECTION_BASE = window.__COLLECTION_BASE__ || null;
+function itemHref(item) {
+  return COLLECTION_BASE
+    ? `${COLLECTION_BASE}${encodeURIComponent(item.id)}.html`
+    : `item.html?id=${encodeURIComponent(item.id)}`;
 }
 
 (async function () {
@@ -236,7 +248,7 @@ function renderGrid(items, showSoldBadge) {
   }
 
   grid.innerHTML = items.map(item => `
-    <a href="item.html?id=${encodeURIComponent(item.id)}" class="item-card">
+    <a href="${itemHref(item)}" class="item-card">
       <div class="image-wrapper">
         ${item.cover
           ? `<img src="${assetUrl(item.cover)}" alt="${escapeHtml(item.title)}" loading="lazy">`
@@ -268,12 +280,14 @@ function renderItemDetail(allItems) {
 
   document.title = `${item.title} — ${T.titleSuffix}`;
   updateLangSwitchForItem(item.id);
+  updateCanonicalForItem(item);
 
   const imgs = item.images.map(assetUrl);
   const mainImage = imgs[0] || '';
 
   container.innerHTML = `
     <a href="${item.sold ? 'sold.html' : 'index.html'}" class="back-link">${item.sold ? T.backSold : T.backCollection}</a>
+    ${COLLECTION_BASE ? `<p class="permanent-link-note"><a href="${itemHref(item)}">${T.viewPermanentLink}</a></p>` : ''}
     <div class="item-layout">
       <div class="gallery">
         ${mainImage
@@ -310,6 +324,38 @@ function updateLangSwitchForItem(id) {
   Array.from(select.options).forEach(opt => {
     opt.value = `${opt.value.split('?')[0]}?id=${encodeURIComponent(id)}`;
   });
+}
+
+// The legacy item.html?id=<id> route has no permanent URL of its own (one
+// shared template serves every item), so it cannot carry a build-time
+// canonical tag. Where a permanent /collection/<id>.html page exists for
+// this locale, inject a best-effort canonical + meta description pointing
+// at it for JS-executing crawlers. A true HTTP redirect from item.html?id=
+// to the permanent URL requires hosting-level configuration (see SEO
+// report) and is intentionally not done here.
+function updateCanonicalForItem(item) {
+  if (!COLLECTION_BASE) return; // FR: no permanent page yet
+  const absoluteBase = window.location.href.split('item.html')[0];
+  const canonicalUrl = absoluteBase + itemHref(item);
+
+  let link = document.querySelector('link[rel="canonical"]');
+  if (!link) {
+    link = document.createElement('link');
+    link.setAttribute('rel', 'canonical');
+    document.head.appendChild(link);
+  }
+  link.setAttribute('href', canonicalUrl);
+
+  if (item.description) {
+    let meta = document.querySelector('meta[name="description"]');
+    if (!meta) {
+      meta = document.createElement('meta');
+      meta.setAttribute('name', 'description');
+      document.head.appendChild(meta);
+    }
+    const desc = item.description.replace(/\s+/g, ' ').trim();
+    meta.setAttribute('content', desc.length > 158 ? `${desc.slice(0, 155).trim()}…` : desc);
+  }
 }
 
 /* ─── Image Gallery Controls ─── */

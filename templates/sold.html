@@ -8,6 +8,8 @@
   <link rel="icon" href="{{BASE}}favicon.svg" type="image/svg+xml">
   <link rel="icon" href="{{BASE}}favicon.ico" sizes="any">
   <link rel="apple-touch-icon" href="{{BASE}}apple-touch-icon.png">
+  {{canonicalBlock}}
+  {{structuredData}}
   <link rel="stylesheet" href="{{BASE}}css/style.css?v=6">
 </head>
 <body data-page="sold">
@@ -22,7 +24,7 @@
     <nav class="category-nav" id="category-nav" aria-label="Filter by category"></nav>
     <p id="item-count" class="item-count"></p>
     <div id="grid" class="items-grid">
-      <div class="empty-state"><p>{{loading}}</p></div>
+      {{gridHTML}}
     </div>
   </main>
   {{contactButtons}}

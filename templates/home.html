@@ -8,6 +8,8 @@
   <link rel="icon" href="{{BASE}}favicon.svg" type="image/svg+xml">
   <link rel="icon" href="{{BASE}}favicon.ico" sizes="any">
   <link rel="apple-touch-icon" href="{{BASE}}apple-touch-icon.png">
+  {{canonicalBlock}}
+  {{structuredData}}
   <link rel="stylesheet" href="{{BASE}}css/style.css?v=6">
 </head>
 <body data-page="home">
@@ -26,7 +28,7 @@
       <p><strong>{{shipBannerStrong}}</strong> {{shipBannerText}} <a href="shipping.html">{{shipBannerLink}}</a> {{shipBannerAfter}}</p>
     </div>
     <div id="grid" class="items-grid">
-      <div class="empty-state"><p>{{loading}}</p></div>
+      {{gridHTML}}
     </div>
     <div class="cta-section">
       <h2>{{ctaHeading}}</h2>

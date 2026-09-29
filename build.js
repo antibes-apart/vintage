@@ -525,6 +525,266 @@ function renderSelectionStructuredData(selectionList, langCode, strings, canonic
   return `<script type="application/ld+json">${JSON.stringify(json)}</script>`;
 }
 
+/* ─── Shop catalogue: server-side rendered grid + permanent item pages ───
+   Mirrors the curated-selection SSR approach: `items` (from items/<slug>/,
+   the single source of truth) is rendered directly into static HTML for the
+   home (available) and sold grids, and into one permanent page per item at
+   en/collection/<id>.html. js/app.js only *enhances* this markup (search,
+   category filter); it must not be required to discover the inventory. */
+
+// Where a shop item's permanent URL lives, relative to the current page's
+// locale dir. Only EN has permanent collection pages today (see report:
+// FR item descriptions are not yet translated, so FR pages are not
+// generated rather than duplicating English text under a French URL).
+function collectionBaseFor(localeDir) {
+  if (localeDir === '') return 'en/collection/';
+  if (localeDir === 'en') return 'collection/';
+  return null; // fr: no permanent page yet, fall back to item.html?id=
+}
+
+function itemHref(item, collectionBase) {
+  return collectionBase
+    ? `${collectionBase}${encodeURIComponent(item.id)}.html`
+    : `item.html?id=${encodeURIComponent(item.id)}`;
+}
+
+function renderItemCard(item, strings, base, collectionBase, showSoldBadge) {
+  const cover = item.cover ? selectionAssetUrl(item.cover, base) : null;
+  const dims = item.cover ? imageDimensions(item.cover) : null;
+  const dimAttrs = dims ? ` width="${dims.width}" height="${dims.height}"` : '';
+  return `
+    <a href="${itemHref(item, collectionBase)}" class="item-card">
+      <div class="image-wrapper">
+        ${cover
+          ? `<img src="${cover}" alt="${escapeHtml(item.title)}"${dimAttrs} loading="lazy">`
+          : `<div class="no-cover">${escapeHtml(strings.selNoPhotos)}</div>`}
+        ${showSoldBadge ? `<span class="sold-badge">${escapeHtml(strings.sold)}</span>` : ''}
+      </div>
+      <div class="card-body">
+        <h3 class="card-title">${escapeHtml(item.title)}</h3>
+        <p class="card-price">${escapeHtml(item.price)}</p>
+      </div>
+    </a>`;
+}
+
+function renderItemGrid(itemList, strings, base, collectionBase, showSoldBadge, emptyMsg) {
+  if (!itemList.length) {
+    return `<div class="empty-state"><p>${escapeHtml(emptyMsg)}</p></div>`;
+  }
+  return itemList.map(item => renderItemCard(item, strings, base, collectionBase, showSoldBadge)).join('');
+}
+
+// Category → specialist guide, for the 1-2 contextual links shown on a
+// permanent item page. Deliberately narrow: only maps categories/entities the
+// guides actually cover, so unrelated items (e.g. Terrines, Baking Dishes)
+// get no forced link rather than an irrelevant one.
+function itemGuideLinks(item, guideHrefs, strings) {
+  const links = [];
+  if (item.category === 'Copper') {
+    links.push({href: guideHrefs.guideCopperHref, label: strings.guideLinkCopper});
+  }
+  if (isLeCreuset(item)) {
+    links.push({href: guideHrefs.guideLeCreusetHref, label: strings.guideLinkLeCreuset});
+    if (isCocotte(item)) {
+      links.push({href: guideHrefs.guideDatingHref, label: strings.guideLinkDating});
+    }
+  }
+  if (item.category === 'Ice Buckets') {
+    links.push({href: guideHrefs.guideChampagneHref, label: strings.guideLinkChampagne});
+  }
+  return links.slice(0, 2);
+}
+
+// Minimal, non-invented Product + BreadcrumbList JSON-LD for a permanent item
+// page. Offer/availability only reflects real sold/available status; no
+// GTIN/MPN/brand/reviews are added since none of that data exists.
+function renderItemStructuredData(item, canonicalUrl, breadcrumbs) {
+  const images = (item.images || []).map(src => `${SITE_URL}/${src}`);
+  const priceMatch = typeof item.price === 'string' ? item.price.match(/([\d.,]+)\s*€/) : null;
+  const priceValue = priceMatch ? priceMatch[1].replace(/\./g, '').replace(',', '.') : null;
+
+  const product = {
+    '@context': 'https://schema.org',
+    '@type': 'Product',
+    name: item.title,
+    ...(item.description ? {description: item.description} : {}),
+    ...(images.length ? {image: images} : {}),
+    ...(item.category ? {category: item.category} : {}),
+    itemCondition: 'https://schema.org/UsedCondition',
+    url: canonicalUrl,
+    ...(priceValue ? {
+      offers: {
+        '@type': 'Offer',
+        priceCurrency: 'EUR',
+        price: priceValue,
+        availability: item.sold ? 'https://schema.org/SoldOut' : 'https://schema.org/InStock',
+        url: canonicalUrl
+      }
+    } : {})
+  };
+
+  const breadcrumbList = {
+    '@context': 'https://schema.org',
+    '@type': 'BreadcrumbList',
+    itemListElement: breadcrumbs.map((crumb, i) => ({
+      '@type': 'ListItem',
+      position: i + 1,
+      name: crumb.name,
+      item: crumb.url
+    }))
+  };
+
+  return `<script type="application/ld+json">${JSON.stringify(product)}</script>\n  <script type="application/ld+json">${JSON.stringify(breadcrumbList)}</script>`;
+}
+
+// CollectionPage + ItemList JSON-LD for the home (available) and sold
+// catalogue pages. Mirrors exactly what is rendered in gridHTML for the same
+// items/locale — no data beyond what a visitor already sees on the page.
+function renderCatalogListStructuredData(itemsList, canonicalUrl, name, description, collectionBase) {
+  if (!itemsList.length) return '';
+  const pageDir = canonicalUrl.replace(/[^/]+$/, '');
+  const itemListElement = itemsList.map((item, i) => ({
+    '@type': 'ListItem',
+    position: i + 1,
+    url: `${pageDir}${itemHref(item, collectionBase)}`
+  }));
+
+  const json = {
+    '@context': 'https://schema.org',
+    '@type': 'CollectionPage',
+    name,
+    description,
+    url: canonicalUrl,
+    mainEntity: {
+      '@type': 'ItemList',
+      itemListElement
+    }
+  };
+
+  return `<script type="application/ld+json">${JSON.stringify(json)}</script>`;
+}
+
+function renderItemGallery(item, base) {
+  const imgs = item.images || [];
+  if (!imgs.length) return '';
+  const main = imgs[0];
+  const mainDims = imageDimensions(main);
+  const mainAttrs = mainDims ? ` width="${mainDims.width}" height="${mainDims.height}"` : '';
+  const thumbs = imgs.slice(1).map((src, i) => {
+    const url = selectionAssetUrl(src, base);
+    const d = imageDimensions(src);
+    const attrs = d ? ` width="${d.width}" height="${d.height}"` : '';
+    return `<img src="${url}" alt="${escapeHtml(item.title)} — photo ${i + 2}"${attrs} loading="lazy">`;
+  }).join('');
+  return `
+      <div class="gallery">
+        <img src="${selectionAssetUrl(main, base)}" alt="${escapeHtml(item.title)}" class="main-image"${mainAttrs}>
+        ${thumbs ? `<div class="thumbnails">${thumbs}</div>` : ''}
+      </div>`;
+}
+
+// Renders one permanent /en/collection/<id>.html page. `strings` = i18n.en.
+function renderCollectionPage(item, strings, guideHrefs, base) {
+  const canonicalUrl = `${SITE_URL}/en/collection/${item.id}.html`;
+  const listHref = item.sold ? '../sold.html' : '../index.html';
+  const listLabel = item.sold ? strings.collectionBreadcrumbSold : strings.collectionBreadcrumbAvailable;
+  const backLabel = item.sold ? strings.backSold : strings.backCollection;
+  const statusLabel = item.sold ? strings.collectionStatusSold : strings.collectionStatusAvailable;
+
+  const breadcrumbs = [
+    {name: strings.collectionBreadcrumbHome, url: `${SITE_URL}/en/index.html`},
+    {name: listLabel, url: `${SITE_URL}/en/${item.sold ? 'sold.html' : 'index.html'}`},
+    {name: item.title, url: canonicalUrl}
+  ];
+
+  const guideLinks = itemGuideLinks(item, guideHrefs, strings);
+  const guideLinksHTML = guideLinks.length ? `
+      <p class="collection-related-links">
+        ${guideLinks.map(l => `<a href="../${l.href}">${escapeHtml(l.label)}</a>`).join(' &middot; ')}
+      </p>` : '';
+
+  const metaDescRaw = item.description ? item.description.replace(/\s+/g, ' ').trim() : item.title;
+  const metaDesc = metaDescRaw.length > 158 ? `${metaDescRaw.slice(0, 155).trim()}…` : metaDescRaw;
+  const docTitle = `${item.title} | Cook & Collect`;
+
+  const langSwitchHTML = `<li class="lang-switch">
+          <select onchange="location.href=this.value" aria-label="{{ariaLanguage}}">
+            <option value="${item.id}.html" selected>EN</option>
+            <option value="../../fr/item.html?id=${encodeURIComponent(item.id)}">FR</option>
+          </select>
+        </li>`;
+
+  const rawHtml = `<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="${escapeHtml(metaDesc)}">
+  <title>${escapeHtml(docTitle)}</title>
+  <link rel="icon" href="../../favicon.svg" type="image/svg+xml">
+  <link rel="icon" href="../../favicon.ico" sizes="any">
+  <link rel="apple-touch-icon" href="../../apple-touch-icon.png">
+  <link rel="canonical" href="${canonicalUrl}">
+  <meta property="og:type" content="product">
+  <meta property="og:title" content="${escapeHtml(docTitle)}">
+  <meta property="og:description" content="${escapeHtml(metaDesc)}">
+  <meta property="og:url" content="${canonicalUrl}">
+  ${item.cover ? `<meta property="og:image" content="${SITE_URL}/${item.cover}">` : ''}
+  <link rel="stylesheet" href="../../css/style.css?v=6">
+  ${renderItemStructuredData(item, canonicalUrl, breadcrumbs)}
+</head>
+<body data-page="collection-item">
+  ${renderNav('home', langSwitchHTML, '../')}
+  <main>
+    <nav class="breadcrumbs" aria-label="Breadcrumb">
+      <a href="../index.html">${escapeHtml(strings.collectionBreadcrumbHome)}</a> &rsaquo;
+      <a href="${listHref}">${escapeHtml(listLabel)}</a> &rsaquo;
+      <span aria-current="page">${escapeHtml(item.title)}</span>
+    </nav>
+    <a href="${listHref}" class="back-link">${escapeHtml(backLabel)}</a>
+    <div class="item-layout">
+      ${renderItemGallery(item, '../../')}
+      <div class="item-info">
+        <span class="${item.sold ? 'sold-badge' : 'available-badge'}">${escapeHtml(statusLabel)}</span>
+        <h1 class="item-title">${escapeHtml(item.title)}</h1>
+        <p class="item-price">${escapeHtml(item.price)}</p>
+        ${item.description ? `<p class="item-description">${escapeHtml(item.description)}</p>` : ''}
+        ${!item.sold ? `<div class="shipping-note"><span class="shipping-icon">&#9992;</span> ${strings.shippingNote} <a href="../shipping.html">${escapeHtml(strings.collectionViewShipping)}</a></div>` : ''}
+        ${guideLinksHTML}
+      </div>
+    </div>
+  </main>
+  ${CONTACT_BUTTONS}
+  ${FOOTER}
+</body>
+</html>`;
+
+  return substitute(rawHtml, {...strings, legalHref: '../legal-notice.html'});
+}
+
+/* ─── Canonical / hreflang for standard (non-catalogue-injected) pages ───
+   Long-term architecture: /en/ and /fr/ are the canonical language roots.
+   Root-level duplicates (see LOCALES) are a legacy holdover from before the
+   /en/ + /fr/ split and should NOT be treated as canonical going forward —
+   they point their canonical at the matching /en/ page instead. Root's own
+   hreflang is omitted (rather than pointing hreflang at itself) so it never
+   competes with the real /en/⇄/fr/ pair. The domain homepage ("/") is
+   intentionally NOT covered by this helper — see build report. */
+function renderCanonicalBlock(localeDir, file, frFile = file) {
+  if (localeDir === '') {
+    return `<link rel="canonical" href="${SITE_URL}/en/${file}">`;
+  }
+  const enUrl = `${SITE_URL}/en/${file}`;
+  const frUrl = `${SITE_URL}/fr/${frFile}`;
+  const selfUrl = localeDir === 'en' ? enUrl : frUrl;
+  return [
+    `<link rel="canonical" href="${selfUrl}">`,
+    `<link rel="alternate" hreflang="en" href="${enUrl}">`,
+    `<link rel="alternate" hreflang="fr" href="${frUrl}">`,
+    `<link rel="alternate" hreflang="x-default" href="${enUrl}">`
+  ].join('\n  ');
+}
+
 /* ─── Bilingual page generation ─── */
 
 // Root serves English (canonical); /en/ duplicates it; /fr/ is French.
@@ -569,16 +829,17 @@ const CONTACT_BUTTONS = `<!-- Floating Contact Buttons -->
     </a>
   </div>`;
 
-function renderNav(activePage, langSwitch) {
+function renderNav(activePage, langSwitch, hrefPrefix) {
+  const prefix = hrefPrefix || '';
   const cls = p => (p === activePage ? ' class="active"' : '');
   return `<nav>
     <div class="nav-inner">
-      <a href="index.html" class="logo">Cook &amp; Collect</a>
+      <a href="${prefix}index.html" class="logo">Cook &amp; Collect</a>
       <ul class="nav-links">
-        <li><a href="index.html"${cls('home')}>{{navCollection}}</a></li>
-        <li><a href="about.html"${cls('about')}>{{navAbout}}</a></li>
-        <li><a href="shipping.html"${cls('shipping')}>{{navShipping}}</a></li>
-        <li><a href="sold.html"${cls('sold')}>{{navSold}}</a></li>
+        <li><a href="${prefix}index.html"${cls('home')}>{{navCollection}}</a></li>
+        <li><a href="${prefix}about.html"${cls('about')}>{{navAbout}}</a></li>
+        <li><a href="${prefix}shipping.html"${cls('shipping')}>{{navShipping}}</a></li>
+        <li><a href="${prefix}sold.html"${cls('sold')}>{{navSold}}</a></li>
         ${langSwitch}
       </ul>
     </div>
@@ -650,17 +911,19 @@ LOCALES.forEach(locale => {
           guideChampagneHref: guideHref('vintage-french-champagne-buckets.html'),
           guideCopperHref: guideHref('vintage-french-copper-cookware.html'),
           guideLeCreusetHref: guideHref('vintage-le-creuset.html'),
+          guideDatingHref: guideHref('le-creuset-dating-guide.html'),
           guideDecorativeHref: guideHref('french-design-decorative-objects.html')
         };
       })(),
-      // Canonical/hreflang architecture: root ('') is the canonical English
-      // structure and /en/ is an intentional duplicate (see LOCALES comment
-      // above), so both English copies point their canonical at the root URL.
+      // Canonical/hreflang architecture: /en/ and /fr/ are the canonical
+      // language roots going forward. Root ('') is a legacy pre-/en/ duplicate
+      // and canonicalizes to the /en/ page instead of the other way around
+      // (see renderCanonicalBlock and the build report for the reasoning).
       ...(pageDef.page === 'curated' ? (() => {
-        const canonicalUrl = locale.code === 'fr'
-          ? `${SITE_URL}/fr/curated-selection.html`
-          : `${SITE_URL}/curated-selection.html`;
-        const hreflangEn = `${SITE_URL}/curated-selection.html`;
+        const canonicalUrl = locale.dir === ''
+          ? `${SITE_URL}/en/curated-selection.html`
+          : `${SITE_URL}/${locale.dir}/curated-selection.html`;
+        const hreflangEn = `${SITE_URL}/en/curated-selection.html`;
         const hreflangFr = `${SITE_URL}/fr/curated-selection.html`;
         const firstCover = selection.find(e => e.cover);
         const ogImage = firstCover
@@ -668,18 +931,53 @@ LOCALES.forEach(locale => {
           : '';
         return {
           curatedCanonical: canonicalUrl,
-          curatedHreflangEn: hreflangEn,
-          curatedHreflangFr: hreflangFr,
+          // Root omits its own hreflang pair (it isn't a real language root
+          // any more); only /en/ and /fr/ carry reciprocal hreflang.
+          curatedHreflangBlock: locale.dir === ''
+            ? ''
+            : `<link rel="alternate" hreflang="en" href="${hreflangEn}">
+  <link rel="alternate" hreflang="fr" href="${hreflangFr}">
+  <link rel="alternate" hreflang="x-default" href="${hreflangEn}">`,
           curatedOgImage: ogImage,
           curatedGalleryHTML: renderSelectionGallery(selection, locale.code, strings, base),
           curatedStructuredData: renderSelectionStructuredData(selection, locale.code, strings, canonicalUrl)
         };
-      })() : {})
+      })() : {}),
+      // Home/sold: server-rendered item grid (crawlable without JS) +
+      // generic canonical/hreflang block for every other standard page type.
+      ...(pageDef.page === 'home' ? (() => {
+        const available = items.filter(i => !i.sold);
+        const collectionBase = collectionBaseFor(locale.dir);
+        // The domain homepage ("/") is deliberately left self-canonical for
+        // now — see build report re: long-term homepage/language routing.
+        const canonicalUrl = locale.dir === '' ? `${SITE_URL}/` : `${SITE_URL}/${locale.dir}/index.html`;
+        return {
+          gridHTML: renderItemGrid(available, strings, base, collectionBase, false, strings.noAvailable),
+          canonicalBlock: locale.dir === ''
+            ? `<link rel="canonical" href="${canonicalUrl}">`
+            : renderCanonicalBlock(locale.dir, 'index.html'),
+          structuredData: renderCatalogListStructuredData(available, canonicalUrl, strings.homeTitle, strings.homeMetaDesc, collectionBase)
+        };
+      })() : {}),
+      ...(pageDef.page === 'sold' ? (() => {
+        const sold = items.filter(i => i.sold);
+        const collectionBase = collectionBaseFor(locale.dir);
+        const canonicalUrl = `${SITE_URL}/${locale.dir ? `${locale.dir}/` : 'en/'}sold.html`;
+        return {
+          gridHTML: renderItemGrid(sold, strings, base, collectionBase, true, strings.noSold),
+          canonicalBlock: renderCanonicalBlock(locale.dir, 'sold.html'),
+          structuredData: renderCatalogListStructuredData(sold, canonicalUrl, strings.soldTitle, strings.soldMetaDesc, collectionBase)
+        };
+      })() : {}),
+      ...(pageDef.page === 'about' ? {canonicalBlock: renderCanonicalBlock(locale.dir, 'about.html')} : {}),
+      ...(pageDef.page === 'shipping' ? {canonicalBlock: renderCanonicalBlock(locale.dir, 'shipping.html')} : {}),
+      ...(pageDef.page === 'legal' ? {canonicalBlock: renderCanonicalBlock(locale.dir, 'legal-notice.html', 'mentions-legales.html')} : {})
     };
     html = substitute(html, ctx);
 
     if (pageDef.inject) {
-      const head = `<script>window.__BASE__=${JSON.stringify(base)};</script>${manifestScript}`;
+      const collectionBase = collectionBaseFor(locale.dir);
+      const head = `<script>window.__BASE__=${JSON.stringify(base)};window.__COLLECTION_BASE__=${JSON.stringify(collectionBase)};</script>${manifestScript}`;
       html = html.replace('</head>', `${head}\n</head>`);
     }
 
@@ -689,6 +987,66 @@ LOCALES.forEach(locale => {
     generated++;
   });
 });
+
+/* ─── Permanent per-item pages: /en/collection/<id>.html ───
+   EN only for now (see collectionBaseFor). Every available AND sold item
+   gets one, and the URL never changes when an item sells — only its
+   status/badge/JSON-LD availability do (see PHASE 6 / Sold Archive). */
+const collectionGuideHrefs = {
+  guideCopperHref: 'guides/vintage-french-copper-cookware.html',
+  guideLeCreusetHref: 'guides/vintage-le-creuset.html',
+  guideDatingHref: 'guides/le-creuset-dating-guide.html',
+  guideChampagneHref: 'guides/vintage-french-champagne-buckets.html'
+};
+const collectionDir = path.join(__dirname, 'en', 'collection');
+fs.mkdirSync(collectionDir, {recursive: true});
+items.forEach(item => {
+  const html = renderCollectionPage(item, i18n.en, collectionGuideHrefs, '../../');
+  fs.writeFileSync(path.join(collectionDir, `${item.id}.html`), html);
+});
+console.log(`Generated ${items.length} permanent collection page(s) in en/collection/.`);
+
+/* ─── sitemap.xml + robots.txt ───
+   Canonical, indexable URLs only: no root duplicates, no legacy
+   item.html?id= query URLs, no non-canonical FR item pages (none exist). */
+const GUIDE_FILES = [
+  'index.html',
+  'e-dehillerin-copper-cookware.html',
+  'french-design-decorative-objects.html',
+  'le-creuset-dating-guide.html',
+  'lecellier-cuivralec.html',
+  'mauviel-vintage-copper-cookware.html',
+  'vintage-french-champagne-buckets.html',
+  'vintage-french-copper-cookware.html',
+  'vintage-le-creuset.html'
+];
+
+const sitemapUrls = [];
+// Domain homepage: left as its own entry (see canonical note above).
+sitemapUrls.push(`${SITE_URL}/`);
+['en', 'fr'].forEach(dir => {
+  ['index.html', 'sold.html', 'about.html', 'shipping.html', 'curated-selection.html'].forEach(file => {
+    sitemapUrls.push(`${SITE_URL}/${dir}/${file}`);
+  });
+  sitemapUrls.push(`${SITE_URL}/${dir}/${dir === 'fr' ? 'mentions-legales.html' : 'legal-notice.html'}`);
+  GUIDE_FILES.forEach(file => sitemapUrls.push(`${SITE_URL}/${dir}/guides/${file}`));
+});
+items.forEach(item => sitemapUrls.push(`${SITE_URL}/en/collection/${item.id}.html`));
+
+const sitemapXml = `<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+${sitemapUrls.map(u => `  <url><loc>${u}</loc></url>`).join('\n')}
+</urlset>
+`;
+fs.writeFileSync(path.join(__dirname, 'sitemap.xml'), sitemapXml);
+
+const robotsTxt = `User-agent: *
+Allow: /
+
+Sitemap: ${SITE_URL}/sitemap.xml
+`;
+fs.writeFileSync(path.join(__dirname, 'robots.txt'), robotsTxt);
+console.log(`Generated sitemap.xml (${sitemapUrls.length} URLs) and robots.txt.`);
 
 console.log(`Generated manifest.json - ${items.length} item(s) (${items.filter(i => i.sold).length} sold)`);
 console.log(`Generated ${generated} page(s) across ${LOCALES.length} locale target(s).`);
