@@ -15,10 +15,7 @@ const SEL_STRINGS = {
     marks: 'Marks & signatures',
     condition: 'Condition',
     status: 'Status',
-    otherPieces: 'Other pieces',
     noPhotos: 'No photos available',
-    empty: 'New pieces are being prepared for this collection. Please check back soon.',
-    viewLabel: 'View details',
     prev: 'Previous image',
     next: 'Next image',
     upcomingEyebrow: 'In preparation',
@@ -41,10 +38,7 @@ const SEL_STRINGS = {
     marks: 'Marques & signatures',
     condition: 'État',
     status: 'Statut',
-    otherPieces: 'Autres pièces',
     noPhotos: 'Aucune photo disponible',
-    empty: 'De nouvelles pièces sont en préparation pour cette collection. Revenez bientôt.',
-    viewLabel: 'Voir les détails',
     prev: 'Image précédente',
     next: 'Image suivante',
     upcomingEyebrow: 'En préparation',
@@ -107,29 +101,22 @@ function selCategoryLabel(cat) {
   return (SEL_CATEGORY_LABELS[SEL_LANG] && SEL_CATEGORY_LABELS[SEL_LANG][cat]) || cat;
 }
 
-/* ─── Boot ─── */
+/* ─── Boot ───
+   The gallery markup itself is now rendered server-side by build.js from the
+   SAME manifest.selection data (single source of truth), so the full
+   inventory is present without JavaScript. This script only *enhances* the
+   existing DOM: it wires clicks to the modal/gallery and appends the
+   decorative "in preparation" teaser cards. It no longer builds the grid. */
 
-(async function () {
+(function () {
   hideEmptyStats();
 
-  let selection = [];
-  try {
-    if (window.__MANIFEST__ && Array.isArray(window.__MANIFEST__.selection)) {
-      selection = window.__MANIFEST__.selection;
-    } else {
-      const response = await fetch(SEL_BASE + 'manifest.json');
-      if (response.ok) {
-        const data = await response.json();
-        selection = Array.isArray(data.selection) ? data.selection : [];
-      }
-    }
-  } catch (err) {
-    console.error('Error loading selection:', err);
-  }
-
-  selection = selection.map(selLocalize);
+  const selection = (window.__MANIFEST__ && Array.isArray(window.__MANIFEST__.selection))
+    ? window.__MANIFEST__.selection.map(selLocalize)
+    : [];
   window._selection = selection;
-  renderSelectionGrid(selection);
+
+  enhanceSelectionGrid();
 })();
 
 // If a track-record stat has no value yet, hide that stat so no empty box shows.
@@ -148,44 +135,15 @@ function hideEmptyStats() {
   if (shown === 0) list.remove();
 }
 
-/* ─── Grid ─── */
+/* ─── Grid enhancement ───
+   Server-rendered <details class="curated-card"> elements already contain
+   the full content. With JS enabled we intercept the native disclosure
+   toggle and open the richer modal/gallery instead, and append the
+   decorative "more to come" teaser card at the end of each group. */
 
-function renderSelectionGrid(items) {
+function enhanceSelectionGrid() {
   const grid = document.getElementById('curated-grid');
   if (!grid) return;
-
-  if (!items.length) {
-    grid.innerHTML = `<div class="empty-state"><p>${ST.empty}</p></div>`;
-    return;
-  }
-
-  // Items arrive sorted by category (see build.js), so consecutive runs form the groups.
-  const groups = [];
-  items.forEach((item, i) => {
-    const key = item.category || '';
-    const last = groups[groups.length - 1];
-    if (last && last.key === key) last.entries.push([item, i]);
-    else groups.push({key, entries: [[item, i]]});
-  });
-
-  const renderCard = ([item, i]) => {
-    const cover = item.cover ? selAssetUrl(item.cover) : null;
-    const meta = item.period || '';
-    return `
-      <button type="button" class="curated-card" data-index="${i}" aria-label="${selEscape(item.title)} — ${ST.viewLabel}">
-        <span class="curated-card-image">
-          ${cover
-            ? `<img src="${cover}" alt="${selEscape(item.title)}" loading="lazy">`
-            : `<span class="no-cover">${ST.noPhotos}</span>`}
-          ${item.status ? `<span class="curated-status">${selEscape(item.status)}</span>` : ''}
-        </span>
-        <span class="curated-card-body">
-          <span class="curated-card-title">${selEscape(item.title)}</span>
-          ${meta ? `<span class="curated-card-meta">${selEscape(meta)}</span>` : ''}
-        </span>
-      </button>
-    `;
-  };
 
   // Closing card per section: signals ongoing sourcing and invites requests.
   const renderUpcoming = (key) => {
@@ -203,19 +161,19 @@ function renderSelectionGrid(items) {
     `;
   };
 
-  grid.classList.remove('curated-grid');
-  grid.classList.add('curated-groups');
-  grid.innerHTML = groups.map(group => `
-    <div class="curated-group">
-      <h3 class="curated-group-heading">${selEscape(group.key ? selCategoryLabel(group.key) : ST.otherPieces)}</h3>
-      <div class="curated-grid">${group.entries.map(renderCard).join('')}${renderUpcoming(group.key)}</div>
-    </div>
-  `).join('');
+  grid.querySelectorAll('.curated-group').forEach(groupEl => {
+    const categoryKey = groupEl.dataset.category || '';
+    const inner = groupEl.querySelector('.curated-grid');
+    if (inner) inner.insertAdjacentHTML('beforeend', renderUpcoming(categoryKey));
+  });
 
-  grid.querySelectorAll('.curated-card').forEach(btn => {
-    btn.addEventListener('click', (e) => {
+  grid.querySelectorAll('.curated-card[data-index]').forEach(card => {
+    const summary = card.querySelector('summary.curated-card-summary');
+    if (!summary) return;
+    summary.addEventListener('click', (e) => {
+      e.preventDefault(); // keep the modal experience instead of the native <details> toggle
       e.stopPropagation();
-      openSelModal(Number(btn.dataset.index));
+      openSelModal(Number(card.dataset.index));
     });
   });
 }
@@ -258,7 +216,8 @@ function openSelModal(index) {
       <div class="sel-detail-gallery">
         <div class="sel-main-frame">
           ${mainImage
-            ? `<img src="${mainImage}" alt="${selEscape(item.title)}" class="sel-main-image" id="selMainImage" onclick="openLightbox(window._selImageIndex || 0)">`
+            ? `<canvas class="sel-main-fill" id="selMainFill" aria-hidden="true"></canvas>
+               <img src="${mainImage}" alt="${selEscape(item.title)}" class="sel-main-image" id="selMainImage" onload="selFillMargins()" onclick="openLightbox(window._selImageIndex || 0)">`
             : `<div class="sel-main-image no-cover">${ST.noPhotos}</div>`}
           ${imgs.length > 1 ? `
             <button type="button" class="sel-arrow sel-arrow-prev" onclick="selNavImage(-1)" aria-label="${ST.prev}">&#8249;</button>
@@ -289,6 +248,7 @@ function openSelModal(index) {
   modal.classList.add('open');
   modal.setAttribute('aria-hidden', 'false');
   document.body.style.overflow = 'hidden';
+  requestAnimationFrame(selFillMargins);
 }
 
 function closeSelModal(event) {
@@ -318,6 +278,57 @@ function selNavImage(direction) {
   const next = ((window._selImageIndex || 0) + direction + imgs.length) % imgs.length;
   selSwitchImage(next);
 }
+
+// The main image is letterboxed (object-fit: contain). Fill the empty bars behind it
+// with a softened mirror of the photo's own edges, so no white margins show.
+function selFillMargins() {
+  const img = document.getElementById('selMainImage');
+  const canvas = document.getElementById('selMainFill');
+  if (!img || !canvas || !img.complete || !img.naturalWidth) return;
+  const cw = canvas.clientWidth, ch = canvas.clientHeight;
+  if (!cw || !ch) return;
+  const dpr = window.devicePixelRatio || 1;
+  canvas.width = Math.round(cw * dpr);
+  canvas.height = Math.round(ch * dpr);
+  const ctx = canvas.getContext('2d');
+  ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+  ctx.clearRect(0, 0, cw, ch);
+  ctx.imageSmoothingEnabled = true;
+  ctx.imageSmoothingQuality = 'high';
+
+  const iw = img.naturalWidth, ih = img.naturalHeight;
+  const scale = Math.min(cw / iw, ch / ih);
+  const dw = iw * scale, dh = ih * scale;
+  const dx = (cw - dw) / 2, dy = (ch - dh) / 2;
+  const soft = 16; // blur strength in CSS px (via downscale then smooth upscale)
+
+  // Mirror the photo region next to the bar into it, softened, so the seam is continuous.
+  const mirror = (sx, sy, sw, sh, flipX, x, y, w, h) => {
+    const tmp = document.createElement('canvas');
+    tmp.width = Math.max(1, Math.round(w / soft));
+    tmp.height = Math.max(1, Math.round(h / soft));
+    const t = tmp.getContext('2d');
+    t.imageSmoothingEnabled = true;
+    t.imageSmoothingQuality = 'high';
+    if (flipX) { t.translate(tmp.width, 0); t.scale(-1, 1); }
+    else { t.translate(0, tmp.height); t.scale(1, -1); }
+    t.drawImage(img, sx, sy, sw, sh, 0, 0, tmp.width, tmp.height);
+    ctx.drawImage(tmp, x, y, w, h);
+  };
+
+  if (dx > 0.5) {
+    const sw = Math.min(iw, dx / scale);
+    mirror(0, 0, sw, ih, true, 0, 0, dx + 1, ch);
+    mirror(iw - sw, 0, sw, ih, true, dx + dw - 1, 0, dx + 1, ch);
+  }
+  if (dy > 0.5) {
+    const sh = Math.min(ih, dy / scale);
+    mirror(0, 0, iw, sh, false, 0, 0, cw, dy + 1);
+    mirror(0, ih - sh, iw, sh, false, 0, dy + dh - 1, cw, dy + 1);
+  }
+}
+
+window.addEventListener('resize', selFillMargins);
 
 /* ─── Lightbox (image zoom) — self-contained for this page ─── */
 

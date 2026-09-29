@@ -948,6 +948,13 @@ footer {
   display: block;
   align-self: start; /* buttons centre their content when stretched, which misaligns images */
   width: 100%;
+}
+
+/* The <summary> is the clickable disclosure header — reset it to look like the
+   previous <button>, and hide the native expand/collapse marker. */
+.curated-card-summary {
+  display: block;
+  width: 100%;
   text-align: left;
   background: transparent;
   border: none;
@@ -955,6 +962,19 @@ footer {
   cursor: pointer;
   font-family: inherit;
   color: inherit;
+  list-style: none;
+}
+
+.curated-card-summary::-webkit-details-marker {
+  display: none;
+}
+
+.curated-card-summary::marker {
+  content: '';
+}
+
+.curated-card-details {
+  padding: 1rem 0.25rem 0;
 }
 
 .curated-card-image {
@@ -984,7 +1004,7 @@ footer {
   transform: scale(1.03);
 }
 
-.curated-card:focus-visible .curated-card-image {
+.curated-card-summary:focus-visible .curated-card-image {
   outline: 2px solid var(--accent);
   outline-offset: 3px;
 }
@@ -1016,6 +1036,7 @@ footer {
 
 .curated-card-title {
   display: block;
+  margin: 0;
   font-family: 'Playfair Display', serif;
   font-size: 1.05rem;
   font-weight: 600;
@@ -1237,12 +1258,24 @@ footer {
   position: relative;
 }
 
+/* Edge-colour fill behind the letterboxed main image (drawn by selFillMargins) */
+.sel-main-fill {
+  position: absolute;
+  inset: 1px;
+  width: calc(100% - 2px);
+  height: calc(100% - 2px);
+  border-radius: var(--radius);
+  background: #fff;
+  pointer-events: none;
+}
+
 .sel-main-image {
+  position: relative;
   display: block;
   width: 100%;
   aspect-ratio: 4 / 5;
   object-fit: contain;
-  background: #fff;
+  background: transparent;
   border: 1px solid var(--border);
   border-radius: var(--radius);
   cursor: zoom-in;

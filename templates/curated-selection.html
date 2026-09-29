@@ -5,7 +5,23 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="description" content="{{curatedMetaDesc}}">
   <title>{{curatedDocTitle}}</title>
-  <link rel="stylesheet" href="{{BASE}}css/style.css?v=10">
+  <link rel="icon" href="{{BASE}}favicon.svg" type="image/svg+xml">
+  <link rel="icon" href="{{BASE}}favicon.ico" sizes="any">
+  <link rel="apple-touch-icon" href="{{BASE}}apple-touch-icon.png">
+  <link rel="canonical" href="{{curatedCanonical}}">
+  <link rel="alternate" hreflang="en" href="{{curatedHreflangEn}}">
+  <link rel="alternate" hreflang="fr" href="{{curatedHreflangFr}}">
+  <link rel="alternate" hreflang="x-default" href="{{curatedHreflangEn}}">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="{{curatedDocTitle}}">
+  <meta property="og:description" content="{{curatedMetaDesc}}">
+  <meta property="og:url" content="{{curatedCanonical}}">
+  {{curatedOgImage}}
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="{{curatedDocTitle}}">
+  <meta name="twitter:description" content="{{curatedMetaDesc}}">
+  <link rel="stylesheet" href="{{BASE}}css/style.css?v=11">
+  {{curatedStructuredData}}
 </head>
 <body data-page="curated" class="curated-page">
   {{nav}}
@@ -55,8 +71,8 @@
     <!-- Gallery -->
     <section class="curated-section" aria-labelledby="curated-gallery-heading">
       <h2 id="curated-gallery-heading" class="curated-section-heading">{{curatedGalleryHeading}}</h2>
-      <div id="curated-grid" class="curated-grid">
-        <div class="empty-state"><p>{{loading}}</p></div>
+      <div id="curated-grid" class="curated-groups">
+        {{curatedGalleryHTML}}
       </div>
     </section>
 
@@ -105,6 +121,6 @@
 
   {{contactButtons}}
   {{footer}}
-  <script src="{{BASE}}js/selection.js?v=4"></script>
+  <script src="{{BASE}}js/selection.js?v=5"></script>
 </body>
 </html>

@@ -283,6 +283,216 @@ const selection = scanSelection();
 const manifest = {items, categories: CATEGORIES, selection};
 fs.writeFileSync(OUTPUT, JSON.stringify(manifest, null, 2));
 
+/* ─── Curated Selection: server-side rendered gallery ───
+   Renders the SAME `selection` array (single source of truth, from
+   selection/<slug>/info.json) directly into static HTML, so the full
+   inventory (title, description, maker, dates, materials, dimensions,
+   images) is present in the page source without requiring JavaScript.
+   js/selection.js only *enhances* this markup (modal, gallery, lightbox);
+   it no longer generates the content itself. */
+
+const SITE_URL = 'https://cookandcollect.eu';
+
+function escapeHtml(str) {
+  return String(str == null ? '' : str)
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&#39;');
+}
+
+// Minimal synchronous JPEG dimension reader (avoids an extra dependency just
+// for width/height attributes). Returns null for non-JPEG or unparsable files.
+function readJpegDimensions(absPath) {
+  try {
+    const buf = fs.readFileSync(absPath);
+    if (buf.length < 4 || buf[0] !== 0xFF || buf[1] !== 0xD8) return null;
+    let offset = 2;
+    while (offset < buf.length) {
+      if (buf[offset] !== 0xFF) { offset++; continue; }
+      const marker = buf[offset + 1];
+      // SOF markers (baseline/progressive), excluding DHT/JPG extensions.
+      const isSOF = (marker >= 0xC0 && marker <= 0xCF) && marker !== 0xC4 && marker !== 0xC8 && marker !== 0xCC;
+      const length = buf.readUInt16BE(offset + 2);
+      if (isSOF) {
+        const height = buf.readUInt16BE(offset + 5);
+        const width = buf.readUInt16BE(offset + 7);
+        return {width, height};
+      }
+      if (marker === 0xD8 || marker === 0xD9) { offset += 2; continue; }
+      offset += 2 + length;
+    }
+  } catch (e) {
+    return null;
+  }
+  return null;
+}
+
+const imageSizeCache = new Map();
+function imageDimensions(relPathToImage) {
+  if (imageSizeCache.has(relPathToImage)) return imageSizeCache.get(relPathToImage);
+  const absPath = path.join(__dirname, relPathToImage);
+  const ext = path.extname(absPath).toLowerCase();
+  const dims = (ext === '.jpg' || ext === '.jpeg') ? readJpegDimensions(absPath) : null;
+  imageSizeCache.set(relPathToImage, dims);
+  return dims;
+}
+
+// Category values are stored in English (see selection/README.md); the display
+// label is simply the matching, already-translated curatedCatXTitle string.
+function selectionCategoryLabel(category, strings) {
+  const labels = {
+    'French Copperware': strings.curatedCat1Title,
+    'Champagne & Wine Objects': strings.curatedCat2Title,
+    'French Design & Decorative Objects': strings.curatedCat3Title,
+    'Rare Cast Iron': strings.curatedCat4Title
+  };
+  if (!category) return strings.selOtherPieces;
+  return labels[category] || category;
+}
+
+// Mirrors selLocalize() in js/selection.js: overlay `fr` translations and
+// translate the (English-stored) status value for display.
+function localizeSelectionEntry(entry, langCode, strings) {
+  const hasFr = langCode === 'fr' && entry.fr;
+  const localized = hasFr ? {...entry, ...entry.fr} : {...entry};
+  if (!(hasFr && entry.fr.status)) {
+    if (localized.status === 'Available') localized.status = strings.selStatusAvailable;
+    else if (localized.status === 'Collection Archive') localized.status = strings.selStatusArchive;
+  }
+  return localized;
+}
+
+function selectionAssetUrl(p, base) {
+  if (!p) return p;
+  return /^https?:/.test(p) ? p : base + p;
+}
+
+function selectionField(label, value) {
+  if (!value) return '';
+  return `<div class="sel-field"><dt>${escapeHtml(label)}</dt><dd>${escapeHtml(value)}</dd></div>`;
+}
+
+function renderSelectionCard(item, index, strings, base) {
+  const cover = item.cover ? selectionAssetUrl(item.cover, base) : null;
+  const dims = item.cover ? imageDimensions(item.cover) : null;
+  const dimAttrs = dims ? ` width="${dims.width}" height="${dims.height}"` : '';
+  const meta = item.period || '';
+  const title = item.title || '';
+  const statusBadge = item.status ? `<span class="curated-status">${escapeHtml(item.status)}</span>` : '';
+
+  const extraImages = (item.images || []).slice(1);
+  const gallery = extraImages.length ? `
+        <div class="sel-thumbnails">
+          ${extraImages.map((src, i) => {
+            const url = selectionAssetUrl(src, base);
+            const d = imageDimensions(src);
+            const attrs = d ? ` width="${d.width}" height="${d.height}"` : '';
+            return `<img src="${url}" alt="${escapeHtml(title)} — ${i + 2}"${attrs} loading="lazy">`;
+          }).join('')}
+        </div>` : '';
+
+  const fields =
+    selectionField(strings.selMaker, item.maker) +
+    selectionField(strings.selDesigner, item.designer) +
+    selectionField(strings.selOrigin, item.origin) +
+    selectionField(strings.selPeriod, item.period) +
+    selectionField(strings.selMaterials, item.materials) +
+    selectionField(strings.selDimensions, item.dimensions) +
+    selectionField(strings.selMarks, item.marks) +
+    selectionField(strings.selCondition, item.condition) +
+    selectionField(strings.selStatus, item.status);
+
+  const categoryLabel = item.category ? selectionCategoryLabel(item.category, strings) : '';
+
+  return `
+      <details class="curated-card" data-index="${index}">
+        <summary class="curated-card-summary" aria-label="${escapeHtml(title)}">
+          <span class="curated-card-image">
+            ${cover
+              ? `<img src="${cover}" alt="${escapeHtml(title)}"${dimAttrs} loading="lazy">`
+              : `<span class="no-cover">${escapeHtml(strings.selNoPhotos)}</span>`}
+            ${statusBadge}
+          </span>
+          <span class="curated-card-body">
+            <h4 class="curated-card-title">${escapeHtml(title)}</h4>
+            ${meta ? `<span class="curated-card-meta">${escapeHtml(meta)}</span>` : ''}
+          </span>
+        </summary>
+        <div class="curated-card-details">
+          ${categoryLabel ? `<p class="sel-detail-category">${escapeHtml(categoryLabel)}</p>` : ''}
+          ${item.description ? `<p class="sel-detail-description">${escapeHtml(item.description)}</p>` : ''}
+          ${fields ? `<dl class="sel-detail-fields">${fields}</dl>` : ''}
+          ${gallery}
+        </div>
+      </details>`;
+}
+
+// Renders the full static gallery for one locale: grouped by category (same
+// order as manifest.selection), every object's complete data present in HTML.
+function renderSelectionGallery(selectionList, langCode, strings, base) {
+  if (!selectionList.length) {
+    return `<div class="empty-state"><p>${escapeHtml(strings.curatedEmpty)}</p></div>`;
+  }
+
+  const localized = selectionList.map(entry => localizeSelectionEntry(entry, langCode, strings));
+
+  const groups = [];
+  localized.forEach((item, i) => {
+    const key = item.category || '';
+    const last = groups[groups.length - 1];
+    if (last && last.key === key) last.entries.push([item, i]);
+    else groups.push({key, entries: [[item, i]]});
+  });
+
+  return groups.map(group => `
+    <div class="curated-group" data-category="${escapeHtml(group.key)}">
+      <h3 class="curated-group-heading">${escapeHtml(group.key ? selectionCategoryLabel(group.key, strings) : strings.selOtherPieces)}</h3>
+      <div class="curated-grid">${group.entries.map(([item, i]) => renderSelectionCard(item, i, strings, base)).join('')}</div>
+    </div>`).join('');
+}
+
+// Minimal, non-invented JSON-LD: only fields actually present in the data.
+// No price/offers/brand/sku/gtin/availability/reviews are added (none exist).
+function renderSelectionStructuredData(selectionList, langCode, strings, canonicalUrl) {
+  if (!selectionList.length) return '';
+  const localized = selectionList.map(entry => localizeSelectionEntry(entry, langCode, strings));
+
+  const itemListElement = localized.map((item, i) => {
+    const image = item.cover ? `${SITE_URL}/${item.cover}` : undefined;
+    const additionalProperty = [
+      ['Maker', item.maker], ['Designer', item.designer], ['Origin', item.origin],
+      ['Period', item.period], ['Materials', item.materials], ['Dimensions', item.dimensions],
+      ['Marks & signatures', item.marks], ['Condition', item.condition], ['Status', item.status]
+    ]
+      .filter(([, value]) => !!value)
+      .map(([name, value]) => ({'@type': 'PropertyValue', name, value}));
+
+    const product = {
+      '@type': 'Product',
+      name: item.title,
+      ...(item.description ? {description: item.description} : {}),
+      ...(image ? {image} : {}),
+      ...(item.category ? {category: selectionCategoryLabel(item.category, strings)} : {}),
+      ...(additionalProperty.length ? {additionalProperty} : {})
+    };
+
+    return {'@type': 'ListItem', position: i + 1, item: product};
+  });
+
+  const json = {
+    '@context': 'https://schema.org',
+    '@type': 'ItemList',
+    name: strings.curatedTitle,
+    description: strings.curatedMetaDesc,
+    url: canonicalUrl,
+    itemListElement
+  };
+
+  return `<script type="application/ld+json">${JSON.stringify(json)}</script>`;
+}
+
 /* ─── Bilingual page generation ─── */
 
 // Root serves English (canonical); /en/ duplicates it; /fr/ is French.
@@ -410,7 +620,29 @@ LOCALES.forEach(locale => {
           guideLeCreusetHref: guideHref('vintage-le-creuset.html'),
           guideDecorativeHref: guideHref('french-design-decorative-objects.html')
         };
-      })()
+      })(),
+      // Canonical/hreflang architecture: root ('') is the canonical English
+      // structure and /en/ is an intentional duplicate (see LOCALES comment
+      // above), so both English copies point their canonical at the root URL.
+      ...(pageDef.page === 'curated' ? (() => {
+        const canonicalUrl = locale.code === 'fr'
+          ? `${SITE_URL}/fr/curated-selection.html`
+          : `${SITE_URL}/curated-selection.html`;
+        const hreflangEn = `${SITE_URL}/curated-selection.html`;
+        const hreflangFr = `${SITE_URL}/fr/curated-selection.html`;
+        const firstCover = selection.find(e => e.cover);
+        const ogImage = firstCover
+          ? `<meta property="og:image" content="${SITE_URL}/${firstCover.cover}">`
+          : '';
+        return {
+          curatedCanonical: canonicalUrl,
+          curatedHreflangEn: hreflangEn,
+          curatedHreflangFr: hreflangFr,
+          curatedOgImage: ogImage,
+          curatedGalleryHTML: renderSelectionGallery(selection, locale.code, strings, base),
+          curatedStructuredData: renderSelectionStructuredData(selection, locale.code, strings, canonicalUrl)
+        };
+      })() : {})
     };
     html = substitute(html, ctx);
 

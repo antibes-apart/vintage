@@ -85,6 +85,10 @@ const en = {
   selPrev: 'Previous image',
   selNext: 'Next image',
   selNoPhotos: 'No photos available',
+  selOtherPieces: 'Other pieces',
+  selStatusAvailable: 'Available',
+  selStatusArchive: 'Collection Archive',
+  selViewDetails: 'View details',
   // ── Guide #1: Vintage French Champagne Buckets ──
   // (Editorial collector guide. Conservative wording; no invented dates or makers.)
   guideChampagneDocTitle: 'Vintage French Champagne Buckets: A Collector\u2019s Guide | Cook & Collect',
@@ -1328,6 +1332,10 @@ const fr = {
   selPrev: 'Image précédente',
   selNext: 'Image suivante',
   selNoPhotos: 'Aucune photo disponible',
+  selOtherPieces: 'Autres pièces',
+  selStatusAvailable: 'Disponible',
+  selStatusArchive: 'Archives de la collection',
+  selViewDetails: 'Voir les détails',
   // ── Guide n°1 : Seaux à champagne vintage français ──
   // (Guide éditorial de collectionneur. Formulations prudentes ; aucune date ni fabricant inventés.)
   guideChampagneDocTitle: 'Seaux à champagne vintage français : guide du collectionneur | Cook & Collect',
