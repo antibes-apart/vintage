@@ -9,7 +9,9 @@
   <link rel="icon" href="../favicon.ico" sizes="any">
   <link rel="apple-touch-icon" href="../apple-touch-icon.png">
   <link rel="canonical" href="https://cookandcollect.eu/en/curatedselection">
-  
+  <link rel="alternate" hreflang="en" href="https://cookandcollect.eu/en/curatedselection">
+  <link rel="alternate" hreflang="fr" href="https://cookandcollect.eu/fr/curated-selection.html">
+  <link rel="alternate" hreflang="x-default" href="https://cookandcollect.eu/en/curatedselection">
   <meta property="og:type" content="website">
   <meta property="og:title" content="Curated Selection | French Vintage Design & Copperware | Cook & Collect">
   <meta property="og:description" content="A curated selection of French vintage copperware, collectible champagne objects, 20th-century design and exceptional decorative pieces from Cook & Collect by Vintage French.">

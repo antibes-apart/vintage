@@ -537,7 +537,7 @@ function buildGuideIndex(locale) {
     LANG: locale.code,
     BASE: base,
     legalHref: `${rootPrefix}${locale.legalFile}`,
-    curatedHref: `${rootPrefix}curated-selection.html`,
+    curatedHref: `${rootPrefix}${locale.code === 'en' ? 'curatedselection' : 'curated-selection.html'}`,
     aboutHref: `${rootPrefix}about.html`
   };
   html = substitute(html, ctx);
@@ -577,7 +577,7 @@ GUIDES.forEach(guide => {
       LANG: locale.code,
       BASE: base,
       legalHref: `${rootPrefix}${locale.legalFile}`,
-      curatedHref: `${rootPrefix}curated-selection.html`,
+      curatedHref: `${rootPrefix}${locale.code === 'en' ? 'curatedselection' : 'curated-selection.html'}`,
       aboutHref: `${rootPrefix}about.html`,
       // The Collector's Guides index is a sibling file in the same folder.
       guidesHref: 'index.html',

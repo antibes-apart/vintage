@@ -881,7 +881,11 @@ LOCALES.forEach(locale => {
   const base = locale.dir === '' ? '' : '../';
   PAGES.forEach(pageDef => {
     const outFile = pageDef.page === 'legal' ? locale.legal : pageDef.out;
-    const enFile = pageDef.page === 'legal' ? 'legal-notice.html' : pageDef.out;
+    // EN Curated Selection lives at the extension/hyphen-free /en/curatedselection
+    // (see build report). FR keeps curated-selection.html unchanged.
+    const enFile = pageDef.page === 'legal' ? 'legal-notice.html'
+      : pageDef.page === 'curated' ? 'curatedselection'
+      : pageDef.out;
     const frFile = pageDef.page === 'legal' ? 'mentions-legales.html' : pageDef.out;
     const langSwitch = renderLangSwitch(locale.dir, locale.code, enFile, frFile);
 
@@ -920,27 +924,34 @@ LOCALES.forEach(locale => {
       // and canonicalizes to the /en/ page instead of the other way around
       // (see renderCanonicalBlock and the build report for the reasoning).
       ...(pageDef.page === 'curated' ? (() => {
-        const canonicalUrl = locale.dir === ''
-          ? `${SITE_URL}/en/curated-selection.html`
-          : `${SITE_URL}/${locale.dir}/curated-selection.html`;
-        const hreflangEn = `${SITE_URL}/en/curated-selection.html`;
+        // The true canonical is /en/curatedselection (hyphen/extension-free —
+        // see build report). Root's own duplicate and the legacy
+        // en/curated-selection.html file (kept live, non-destructively, for
+        // existing links) both point their canonical there and omit
+        // hreflang, exactly like the other legacy-root-duplicate pages.
+        // fr/curated-selection.html is unchanged and stays self-canonical.
+        const curatedSelectionUrl = `${SITE_URL}/en/curatedselection`;
         const hreflangFr = `${SITE_URL}/fr/curated-selection.html`;
+        const isFr = locale.dir === 'fr';
+        const selfCanonical = isFr ? hreflangFr : curatedSelectionUrl;
         const firstCover = selection.find(e => e.cover);
         const ogImage = firstCover
           ? `<meta property="og:image" content="${SITE_URL}/${firstCover.cover}">`
           : '';
         return {
-          curatedCanonical: canonicalUrl,
-          // Root omits its own hreflang pair (it isn't a real language root
-          // any more); only /en/ and /fr/ carry reciprocal hreflang.
-          curatedHreflangBlock: locale.dir === ''
-            ? ''
-            : `<link rel="alternate" hreflang="en" href="${hreflangEn}">
+          curatedCanonical: selfCanonical,
+          // Only the true canonical pages (fr's own page, and the real
+          // /en/curatedselection file generated separately below) carry
+          // hreflang. Root and the legacy en/curated-selection.html
+          // duplicate omit it.
+          curatedHreflangBlock: isFr
+            ? `<link rel="alternate" hreflang="en" href="${curatedSelectionUrl}">
   <link rel="alternate" hreflang="fr" href="${hreflangFr}">
-  <link rel="alternate" hreflang="x-default" href="${hreflangEn}">`,
+  <link rel="alternate" hreflang="x-default" href="${curatedSelectionUrl}">`
+            : '',
           curatedOgImage: ogImage,
           curatedGalleryHTML: renderSelectionGallery(selection, locale.code, strings, base),
-          curatedStructuredData: renderSelectionStructuredData(selection, locale.code, strings, canonicalUrl)
+          curatedStructuredData: renderSelectionStructuredData(selection, locale.code, strings, selfCanonical)
         };
       })() : {}),
       // Home/sold: server-rendered item grid (crawlable without JS) +
@@ -973,6 +984,10 @@ LOCALES.forEach(locale => {
       ...(pageDef.page === 'shipping' ? {canonicalBlock: renderCanonicalBlock(locale.dir, 'shipping.html')} : {}),
       ...(pageDef.page === 'legal' ? {canonicalBlock: renderCanonicalBlock(locale.dir, 'legal-notice.html', 'mentions-legales.html')} : {})
     };
+    // Pre-substitution copy, reused below to render the real
+    // /en/curatedselection canonical file from the same nav/footer/langSwitch
+    // markup without a second render pass (see build report).
+    const preCtxHtml = html;
     html = substitute(html, ctx);
 
     if (pageDef.inject) {
@@ -985,6 +1000,36 @@ LOCALES.forEach(locale => {
     fs.mkdirSync(outDir, {recursive: true});
     fs.writeFileSync(path.join(outDir, outFile), html);
     generated++;
+
+    // Real canonical Curated Selection URL: /en/curatedselection (no
+    // hyphen/extension). Rendered from the same pre-substitution markup as
+    // the legacy en/curated-selection.html file above, but self-canonical
+    // with full reciprocal hreflang, mirroring the other canonical pages.
+    if (pageDef.page === 'curated' && locale.dir === 'en') {
+      const curatedSelectionUrl = `${SITE_URL}/en/curatedselection`;
+      const hreflangFr = `${SITE_URL}/fr/curated-selection.html`;
+      const firstCover = selection.find(e => e.cover);
+      const ogImage = firstCover
+        ? `<meta property="og:image" content="${SITE_URL}/${firstCover.cover}">`
+        : '';
+      const canonicalCtx = {
+        ...ctx,
+        curatedCanonical: curatedSelectionUrl,
+        curatedHreflangBlock: `<link rel="alternate" hreflang="en" href="${curatedSelectionUrl}">
+  <link rel="alternate" hreflang="fr" href="${hreflangFr}">
+  <link rel="alternate" hreflang="x-default" href="${curatedSelectionUrl}">`,
+        curatedOgImage: ogImage,
+        curatedStructuredData: renderSelectionStructuredData(selection, locale.code, strings, curatedSelectionUrl)
+      };
+      let canonicalHtml = substitute(preCtxHtml, canonicalCtx);
+      if (pageDef.inject) {
+        const collectionBase = collectionBaseFor(locale.dir);
+        const head = `<script>window.__BASE__=${JSON.stringify(base)};window.__COLLECTION_BASE__=${JSON.stringify(collectionBase)};</script>${manifestScript}`;
+        canonicalHtml = canonicalHtml.replace('</head>', `${head}\n</head>`);
+      }
+      fs.writeFileSync(path.join(outDir, 'curatedselection'), canonicalHtml);
+      generated++;
+    }
   });
 });
 
@@ -1025,9 +1070,14 @@ const sitemapUrls = [];
 // Domain homepage: left as its own entry (see canonical note above).
 sitemapUrls.push(`${SITE_URL}/`);
 ['en', 'fr'].forEach(dir => {
-  ['index.html', 'sold.html', 'about.html', 'shipping.html', 'curated-selection.html'].forEach(file => {
+  ['index.html', 'sold.html', 'about.html', 'shipping.html'].forEach(file => {
     sitemapUrls.push(`${SITE_URL}/${dir}/${file}`);
   });
+  // Curated Selection: EN canonical is the hyphen/extension-free
+  // /en/curatedselection; the legacy en/curated-selection.html duplicate is
+  // intentionally excluded from the sitemap (non-canonical, kept live only
+  // for existing links). FR is unchanged.
+  sitemapUrls.push(`${SITE_URL}/${dir}/${dir === 'en' ? 'curatedselection' : 'curated-selection.html'}`);
   sitemapUrls.push(`${SITE_URL}/${dir}/${dir === 'fr' ? 'mentions-legales.html' : 'legal-notice.html'}`);
   GUIDE_FILES.forEach(file => sitemapUrls.push(`${SITE_URL}/${dir}/guides/${file}`));
 });
