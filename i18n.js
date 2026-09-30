@@ -8,7 +8,7 @@ const legal = {
   legalSiren: '107691016',
   legalRcs: '107 691 016 R.C.S. Paris',
   legalAddress: '173 rue de Courcelles 75017 Paris',
-  legalEmail: 'cookandtravelcontact@gmail.com',
+  legalEmail: 'vintagetreasurecontact@gmail.com',
   legalPhone: '+33 6 27 33 54 34',
   legalHostName: 'GitHub, Inc.',
   legalHostPhone: '+1 877 448 4820'
