@@ -68,7 +68,8 @@ nav {
 
 .nav-links {
   display: flex;
-  gap: 1.5rem;
+  flex-wrap: wrap;
+  gap: 0.5rem 1.25rem;
   list-style: none;
 }
 
@@ -76,12 +77,33 @@ nav {
   text-decoration: none;
   color: var(--text-light);
   font-weight: 500;
-  transition: color 0.2s;
+  transition: color 0.2s, background-color 0.2s, border-color 0.2s;
 }
 
 .nav-links a:hover,
 .nav-links a.active {
   color: var(--accent);
+}
+
+/* "Our Selection" / "Notre sélection" — subtly set apart from the regular
+   nav links (curated, not a promotion) via the accent star alone; no
+   button/badge treatment so it never outweighs the logo. */
+.nav-links a.nav-highlight {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  color: var(--heading);
+}
+
+.nav-links a.nav-highlight:hover,
+.nav-links a.nav-highlight.active {
+  color: var(--accent);
+}
+
+.nav-star {
+  color: var(--accent);
+  font-size: 0.85em;
+  line-height: 1;
 }
 
 .lang-switch {
@@ -769,6 +791,11 @@ footer {
   .nav-inner {
     flex-direction: column;
     gap: 0.75rem;
+  }
+
+  .nav-links {
+    justify-content: center;
+    gap: 0.5rem 0.75rem;
   }
 
   .lightbox-nav {
@@ -2475,6 +2502,32 @@ footer {
 }
 
 .guide-index-card-link:hover .guide-index-card-cta {
+  color: var(--accent);
+}
+
+/* Secondary/specialist guides (e.g. maker-specific pages under a pillar
+   guide) — listed as restrained text links, not equal cards. */
+.guide-index-card-related {
+  margin-top: 0.8rem;
+  padding-top: 0.7rem;
+  border-top: 1px solid var(--border);
+  font-size: 0.85rem;
+  color: var(--text-light);
+}
+
+.guide-index-card-related-label {
+  font-weight: 600;
+  color: var(--text-light);
+  margin-right: 0.35rem;
+}
+
+.guide-index-card-related a {
+  color: var(--heading);
+  text-decoration: none;
+  border-bottom: 1px solid var(--accent);
+}
+
+.guide-index-card-related a:hover {
   color: var(--accent);
 }
 

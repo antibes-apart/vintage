@@ -180,12 +180,15 @@ const FOOTER = `<footer>
 // Guides sit at <locale>/guides/, one level below the locale root, so links
 // to the locale root need "../". The lang switch keeps the same filename and
 // only swaps the language folder.
-function renderNav(rootPrefix, langSwitch) {
+function renderNav(rootPrefix, langSwitch, curatedHref, activePage) {
+  const guidesCls = activePage === 'guides' ? ' class="active"' : '';
   return `<nav>
     <div class="nav-inner">
       <a href="${rootPrefix}index.html" class="logo">Cook &amp; Collect</a>
       <ul class="nav-links">
         <li><a href="${rootPrefix}index.html">{{navCollection}}</a></li>
+        <li><a href="${curatedHref}" class="nav-highlight"><span class="nav-star" aria-hidden="true">★</span>{{navOurSelection}}</a></li>
+        <li><a href="index.html"${guidesCls}>{{navGuides}}</a></li>
         <li><a href="${rootPrefix}about.html">{{navAbout}}</a></li>
         <li><a href="${rootPrefix}shipping.html">{{navShipping}}</a></li>
         <li><a href="${rootPrefix}sold.html">{{navSold}}</a></li>
@@ -477,7 +480,9 @@ function renderGuideIndexHead(code, s) {
 
 function renderGuideIndexCards(code, base) {
   const s = i18n[code];
-  return GUIDES.map(guide => {
+  const relatedLabel = s.guidesIndexRelatedLabel || '';
+  const topLevel = GUIDES.filter(g => !g.parent);
+  return topLevel.map(guide => {
     const k = guide.strKey;
     const get = suffix => s[`${k}${suffix}`] || '';
     const eyebrow = get('CardEyebrow') || get('Eyebrow');
@@ -502,6 +507,17 @@ function renderGuideIndexCards(code, base) {
               </div>
             </figure>`;
     }
+    // Specialist/maker-specific guides (e.g. Dehillerin, Mauviel, Lecellier
+    // under the Copper pillar; the Dating Guide under Le Creuset) are not
+    // equal top-level cards — they're listed as secondary "Related" links
+    // under their pillar's card, per the registry's `parent` field. Sits
+    // outside the card's own <a> to avoid nesting anchors.
+    const children = GUIDES.filter(g => g.parent === guide.strKey);
+    const relatedHTML = children.length ? `
+            <div class="guide-index-card-related">
+              <span class="guide-index-card-related-label">${relatedLabel}</span>
+              ${children.map(c => `<a href="${c.file}">${i18n[code][`${c.strKey}CardTitle`] || i18n[code][`${c.strKey}H1`] || ''}</a>`).join(' &middot; ')}
+            </div>` : '';
     return `        <article class="guide-index-card">
           <a class="guide-index-card-link" href="${guide.file}">
             ${media}
@@ -511,7 +527,7 @@ function renderGuideIndexCards(code, base) {
               <p class="guide-index-card-summary">${summary}</p>
               <span class="guide-index-card-cta">${cta}</span>
             </div>
-          </a>
+          </a>${relatedHTML}
         </article>`;
   }).join('\n');
 }
@@ -523,10 +539,11 @@ function buildGuideIndex(locale) {
   const enHref = '../../en/guides/index.html';
   const frHref = '../../fr/guides/index.html';
   const langSwitch = renderLangSwitch(locale.code, enHref, frHref);
+  const curatedHref = `${rootPrefix}${locale.code === 'en' ? 'curatedselection' : 'curated-selection.html'}`;
   const template = tpl('guides/index.html');
 
   let html = template
-    .replace('{{nav}}', renderNav(rootPrefix, langSwitch))
+    .replace('{{nav}}', renderNav(rootPrefix, langSwitch, curatedHref, 'guides'))
     .replace('{{contactButtons}}', CONTACT_BUTTONS)
     .replace('{{footer}}', FOOTER)
     .replace('{{guideIndexHead}}', renderGuideIndexHead(locale.code, strings))
@@ -537,7 +554,7 @@ function buildGuideIndex(locale) {
     LANG: locale.code,
     BASE: base,
     legalHref: `${rootPrefix}${locale.legalFile}`,
-    curatedHref: `${rootPrefix}${locale.code === 'en' ? 'curatedselection' : 'curated-selection.html'}`,
+    curatedHref,
     aboutHref: `${rootPrefix}about.html`
   };
   html = substitute(html, ctx);
@@ -562,9 +579,10 @@ GUIDES.forEach(guide => {
     // site-root assets resolve with "../../" and the locale root with "../".
     const base = '../../';
     const rootPrefix = '../';
+    const curatedHref = `${rootPrefix}${locale.code === 'en' ? 'curatedselection' : 'curated-selection.html'}`;
 
     let html = template
-      .replace('{{nav}}', renderNav(rootPrefix, langSwitch))
+      .replace('{{nav}}', renderNav(rootPrefix, langSwitch, curatedHref, 'guides'))
       .replace('{{contactButtons}}', CONTACT_BUTTONS)
       .replace('{{footer}}', FOOTER)
       .replace('{{guideHead}}', renderGuideHead(guide, locale.code, strings, guide.strKey));
@@ -577,7 +595,7 @@ GUIDES.forEach(guide => {
       LANG: locale.code,
       BASE: base,
       legalHref: `${rootPrefix}${locale.legalFile}`,
-      curatedHref: `${rootPrefix}${locale.code === 'en' ? 'curatedselection' : 'curated-selection.html'}`,
+      curatedHref,
       aboutHref: `${rootPrefix}about.html`,
       // The Collector's Guides index is a sibling file in the same folder.
       guidesHref: 'index.html',

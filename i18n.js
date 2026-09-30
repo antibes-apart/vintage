@@ -18,6 +18,8 @@ const en = {
   ...legal,
   // nav / shared
   navCollection: 'Collection',
+  navOurSelection: 'Our Selection',
+  navGuides: 'Guides',
   navShipping: 'Shipping',
   navAbout: 'About',
   legal: 'Legal notice',
@@ -228,8 +230,7 @@ const en = {
   guidesIndexTitle: 'Collector\u2019s Guides',
   guidesIndexIntro: 'Explore the history, makers and details behind collectible French objects. Our guides draw on pieces sourced and examined by Cook & Collect, combining physical evidence, maker\u2019s marks and original labels with documented historical research.',
   guidesIndexCardCta: 'Read the guide',
-
-  // Copper guide listing card (shown on the Collector's Guides index).
+  guidesIndexRelatedLabel: 'Related:',
   guideCopperCardEyebrow: 'French Copper Cookware',
   guideCopperCardTitle: 'Vintage French Copper Cookware',
   guideCopperCardSummary: 'Explore vintage French copper through pieces by E. Dehillerin, Mauviel and L. Lecellier, with a closer look at maker\u2019s marks, construction, linings, patina and dating.',
@@ -1283,6 +1284,8 @@ const fr = {
   ...legal,
   // nav / shared
   navCollection: 'Collection',
+  navOurSelection: 'Notre sélection',
+  navGuides: 'Guides',
   navShipping: 'Livraison',
   navAbout: 'À propos',
   legal: 'Mentions légales',
@@ -1490,8 +1493,7 @@ const fr = {
   guidesIndexTitle: 'Guides du collectionneur',
   guidesIndexIntro: 'Découvrez l’histoire, les fabricants et les détails qui permettent de mieux comprendre les objets français de collection. Nos guides s’appuient sur des pièces sélectionnées et examinées par Cook & Collect, en croisant indices matériels, poinçons, étiquettes d’origine et recherches historiques documentées.',
   guidesIndexCardCta: 'Lire le guide',
-
-  // Fiche listing du guide du cuivre (affichée sur l’index des Guides).
+  guidesIndexRelatedLabel: 'À lire aussi :',
   guideCopperCardEyebrow: 'Cuivre culinaire français',
   guideCopperCardTitle: 'Ustensiles de cuisine français en cuivre vintage',
   guideCopperCardSummary: 'Découvrez le cuivre culinaire français vintage à travers des pièces E. Dehillerin, Mauviel et L. Lecellier, leurs marques, techniques de fabrication, revêtements, patines et éléments de datation.',

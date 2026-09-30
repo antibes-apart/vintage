@@ -734,7 +734,7 @@ function renderCollectionPage(item, strings, guideHrefs, base) {
   ${renderItemStructuredData(item, canonicalUrl, breadcrumbs)}
 </head>
 <body data-page="collection-item">
-  ${renderNav('home', langSwitchHTML, '../')}
+  ${renderNav('home', langSwitchHTML, '../', '../curatedselection', '../guides/')}
   <main>
     <nav class="breadcrumbs" aria-label="Breadcrumb">
       <a href="../index.html">${escapeHtml(strings.collectionBreadcrumbHome)}</a> &rsaquo;
@@ -829,14 +829,17 @@ const CONTACT_BUTTONS = `<!-- Floating Contact Buttons -->
     </a>
   </div>`;
 
-function renderNav(activePage, langSwitch, hrefPrefix) {
+function renderNav(activePage, langSwitch, hrefPrefix, ourSelectionHref, guidesHref) {
   const prefix = hrefPrefix || '';
   const cls = p => (p === activePage ? ' class="active"' : '');
+  const selectionCls = activePage === 'curated' ? ' class="nav-highlight active"' : ' class="nav-highlight"';
   return `<nav>
     <div class="nav-inner">
       <a href="${prefix}index.html" class="logo">Cook &amp; Collect</a>
       <ul class="nav-links">
         <li><a href="${prefix}index.html"${cls('home')}>{{navCollection}}</a></li>
+        <li><a href="${ourSelectionHref || `${prefix}index.html`}"${selectionCls}><span class="nav-star" aria-hidden="true">★</span>{{navOurSelection}}</a></li>
+        <li><a href="${guidesHref || `${prefix}index.html`}"${cls('guides')}>{{navGuides}}</a></li>
         <li><a href="${prefix}about.html"${cls('about')}>{{navAbout}}</a></li>
         <li><a href="${prefix}shipping.html"${cls('shipping')}>{{navShipping}}</a></li>
         <li><a href="${prefix}sold.html"${cls('sold')}>{{navSold}}</a></li>
@@ -888,9 +891,16 @@ LOCALES.forEach(locale => {
       : pageDef.out;
     const frFile = pageDef.page === 'legal' ? 'mentions-legales.html' : pageDef.out;
     const langSwitch = renderLangSwitch(locale.dir, locale.code, enFile, frFile);
+    // Nav-only hrefs for the "Our Selection" / "Guides" entries (site-wide
+    // nav — see build report). Mirrors the existing root->en/ crossover
+    // pattern used for guideHref below.
+    const ourSelectionHref = locale.dir === '' ? 'en/curatedselection'
+      : locale.dir === 'en' ? 'curatedselection'
+      : 'curated-selection.html';
+    const guidesNavHref = locale.dir === '' ? 'en/guides/' : 'guides/';
 
     let html = tpl(pageDef.tpl)
-      .replace('{{nav}}', renderNav(pageDef.page, langSwitch))
+      .replace('{{nav}}', renderNav(pageDef.page, langSwitch, '', ourSelectionHref, guidesNavHref))
       .replace('{{contactButtons}}', CONTACT_BUTTONS)
       .replace('{{footer}}', FOOTER);
 
@@ -1058,7 +1068,6 @@ console.log(`Generated ${items.length} permanent collection page(s) in en/collec
    Canonical, indexable URLs only: no root duplicates, no legacy
    item.html?id= query URLs, no non-canonical FR item pages (none exist). */
 const GUIDE_FILES = [
-  'index.html',
   'e-dehillerin-copper-cookware.html',
   'french-design-decorative-objects.html',
   'le-creuset-dating-guide.html',
@@ -1082,6 +1091,10 @@ sitemapUrls.push(`${SITE_URL}/`);
   // for existing links). FR is unchanged.
   sitemapUrls.push(`${SITE_URL}/${dir}/${dir === 'en' ? 'curatedselection' : 'curated-selection.html'}`);
   sitemapUrls.push(`${SITE_URL}/${dir}/${dir === 'fr' ? 'mentions-legales.html' : 'legal-notice.html'}`);
+  // Guides landing page: canonical is the directory-index trailing-slash
+  // form (matches renderGuideIndexHead's canonical in build-guides.js), not
+  // guides/index.html, so the sitemap doesn't create a duplicate URL.
+  sitemapUrls.push(`${SITE_URL}/${dir}/guides/`);
   GUIDE_FILES.forEach(file => sitemapUrls.push(`${SITE_URL}/${dir}/guides/${file}`));
 });
 items.forEach(item => sitemapUrls.push(`${SITE_URL}/en/collection/${item.id}.html`));
