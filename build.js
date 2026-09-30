@@ -1002,9 +1002,12 @@ LOCALES.forEach(locale => {
     generated++;
 
     // Real canonical Curated Selection URL: /en/curatedselection (no
-    // hyphen/extension). Rendered from the same pre-substitution markup as
-    // the legacy en/curated-selection.html file above, but self-canonical
-    // with full reciprocal hreflang, mirroring the other canonical pages.
+    // hyphen/extension). The physical backing file is en/curatedselection.html
+    // — GitHub Pages resolves the extensionless clean URL to it, mirroring
+    // the already-verified /en/curated-selection → curated-selection.html
+    // behavior. Rendered from the same pre-substitution markup as the
+    // legacy en/curated-selection.html file above, but self-canonical with
+    // full reciprocal hreflang, mirroring the other canonical pages.
     if (pageDef.page === 'curated' && locale.dir === 'en') {
       const curatedSelectionUrl = `${SITE_URL}/en/curatedselection`;
       const hreflangFr = `${SITE_URL}/fr/curated-selection.html`;
@@ -1027,7 +1030,7 @@ LOCALES.forEach(locale => {
         const head = `<script>window.__BASE__=${JSON.stringify(base)};window.__COLLECTION_BASE__=${JSON.stringify(collectionBase)};</script>${manifestScript}`;
         canonicalHtml = canonicalHtml.replace('</head>', `${head}\n</head>`);
       }
-      fs.writeFileSync(path.join(outDir, 'curatedselection'), canonicalHtml);
+      fs.writeFileSync(path.join(outDir, 'curatedselection.html'), canonicalHtml);
       generated++;
     }
   });
