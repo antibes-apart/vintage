@@ -1071,6 +1071,15 @@ footer {
   line-height: 1.4;
 }
 
+.curated-card-price {
+  display: block;
+  margin-top: 0.25rem;
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: var(--accent);
+  letter-spacing: 0.01em;
+}
+
 .curated-card-meta {
   display: block;
   margin-top: 0.3rem;

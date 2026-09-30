@@ -254,6 +254,13 @@ function scanSelection() {
       entry.category = info.category;
     }
 
+    // Optional retail price (free-text, e.g. "€475") for the 1stDibs dealer
+    // application. Only shown/emitted when present — the Curated Selection
+    // remains price-free for pieces where none is set (e.g. Laurent-Perrier).
+    if (typeof info.price === 'string' && info.price.trim() !== '') {
+      entry.price = info.price.trim();
+    }
+
     // Copy only known, non-empty string fields (unknown info is simply not shown).
     SELECTION_STRING_FIELDS.forEach(field => {
       const value = info[field];
@@ -449,6 +456,7 @@ function renderSelectionCard(item, index, strings, base) {
           </span>
           <span class="curated-card-body">
             <h4 class="curated-card-title">${escapeHtml(title)}</h4>
+            ${item.price ? `<span class="curated-card-price">${escapeHtml(item.price)}</span>` : ''}
             ${meta ? `<span class="curated-card-meta">${escapeHtml(meta)}</span>` : ''}
           </span>
         </summary>
@@ -485,8 +493,10 @@ function renderSelectionGallery(selectionList, langCode, strings, base) {
     </div>`).join('');
 }
 
-// Minimal, non-invented JSON-LD: only fields actually present in the data.
-// No price/offers/brand/sku/gtin/availability/reviews are added (none exist).
+// JSON-LD: only fields actually present in the data. `offers.price` is
+// added only for items that carry a visible retail price (see
+// renderSelectionCard) and is always numerically identical to it, so the
+// visible price and structured-data price never diverge.
 function renderSelectionStructuredData(selectionList, langCode, strings, canonicalUrl) {
   if (!selectionList.length) return '';
   const localized = selectionList.map(entry => localizeSelectionEntry(entry, langCode, strings));
@@ -501,13 +511,19 @@ function renderSelectionStructuredData(selectionList, langCode, strings, canonic
       .filter(([, value]) => !!value)
       .map(([name, value]) => ({'@type': 'PropertyValue', name, value}));
 
+    // item.price is free-text (e.g. "€475"); extract the numeric amount for
+    // schema.org's Offer.price, which must be a plain number/string.
+    const priceMatch = item.price ? item.price.match(/[\d.,]+/) : null;
+    const priceAmount = priceMatch ? priceMatch[0].replace(/[.,](?=\d{3}\b)/g, '').replace(',', '.') : null;
+
     const product = {
       '@type': 'Product',
       name: item.title,
       ...(item.description ? {description: item.description} : {}),
       ...(image ? {image} : {}),
       ...(item.category ? {category: selectionCategoryLabel(item.category, strings)} : {}),
-      ...(additionalProperty.length ? {additionalProperty} : {})
+      ...(additionalProperty.length ? {additionalProperty} : {}),
+      ...(priceAmount ? {offers: {'@type': 'Offer', price: priceAmount, priceCurrency: 'EUR'}} : {})
     };
 
     return {'@type': 'ListItem', position: i + 1, item: product};
