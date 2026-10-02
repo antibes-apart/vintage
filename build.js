@@ -626,7 +626,6 @@ function renderItemStructuredData(item, canonicalUrl, breadcrumbs) {
     ...(item.description ? {description: item.description} : {}),
     ...(images.length ? {image: images} : {}),
     ...(item.category ? {category: item.category} : {}),
-    itemCondition: 'https://schema.org/UsedCondition',
     url: canonicalUrl,
     ...(priceValue ? {
       offers: {
@@ -634,6 +633,7 @@ function renderItemStructuredData(item, canonicalUrl, breadcrumbs) {
         priceCurrency: 'EUR',
         price: priceValue,
         availability: item.sold ? 'https://schema.org/SoldOut' : 'https://schema.org/InStock',
+        itemCondition: 'https://schema.org/UsedCondition',
         url: canonicalUrl
       }
     } : {})
