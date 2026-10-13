@@ -23,7 +23,7 @@ jobs:
       - name: Setup Node
         uses: actions/setup-node@v6
         with:
-          node-version: "20"
+          node-version: "lts/*"
 
       - name: Install dependencies
         run: npm install
@@ -107,7 +107,7 @@ jobs:
       - name: Setup Node
         uses: actions/setup-node@v6
         with:
-          node-version: "20"
+          node-version: "lts/*"
 
       - name: Build site (app pages + manifest, then editorial guides)
         run: |
@@ -171,7 +171,7 @@ jobs:
       - name: Setup Node
         uses: actions/setup-node@v6
         with:
-          node-version: "20"
+          node-version: "lts/*"
 
       - name: Build site (app pages + manifest, then editorial guides)
         run: |

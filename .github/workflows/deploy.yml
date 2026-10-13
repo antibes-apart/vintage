@@ -15,7 +15,11 @@ concurrency:
   cancel-in-progress: false
 
 jobs:
+  tests:
+    uses: ./.github/workflows/tests.yml
+
   deploy:
+    needs: tests
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
@@ -27,7 +31,7 @@ jobs:
       - name: Setup Node
         uses: actions/setup-node@v6
         with:
-          node-version: "20"
+          node-version: "lts/*"
 
       - name: Build site (app pages + manifest, then editorial guides)
         run: |

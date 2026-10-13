@@ -64,7 +64,11 @@ All three parse the issue body with a shared `getField('### Label Name')` helper
   upload artifact → deploy → comment + close issue.
   Permissions: `contents: write`, `issues: write`, `pages: write`, `id-token: write`.
 - `deploy.yml` — builds and deploys to GitHub Pages on push to `main` (and manual
-  `workflow_dispatch`). This is what publishes ordinary commits.
+  `workflow_dispatch`). Calls `tests.yml` first and deploys only if it passes.
+- `tests.yml` — runs `npm ci`, installs Chromium, and runs unit tests plus
+  desktop/mobile Playwright tests. Triggered by pull requests, non-main pushes,
+  manual runs, and reusable workflow calls from `deploy.yml`. Uploads browser
+  reports, including failure screenshots and traces, for seven days.
 
 ## Gotchas for agents
 
@@ -80,5 +84,6 @@ All three parse the issue body with a shared `getField('### Label Name')` helper
 - Slugs are truncated to 50 chars; two titles that collide after slugging will fail
   with "already exists". `mark-sold`/`remove` take the **folder name** (the `?id=`
   value from the item URL), not the title.
-- These scripts run in the GitHub Actions runner (Node 20), not the browser. Keep
-  them dependency-light (only `fs`, `path`, and optionally `sharp`).
+- Workflows use the latest Node.js LTS via `actions/setup-node` (`lts/*`).
+  These scripts run in GitHub Actions, not the browser. Keep them
+  dependency-light (only `fs`, `path`, and optionally `sharp`).

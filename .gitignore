@@ -2,4 +2,6 @@ manifest.json
 sitemap.xml
 robots.txt
 node_modules/
+playwright-report/
+test-results/
 .DS_Store

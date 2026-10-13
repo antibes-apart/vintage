@@ -18,8 +18,9 @@ it is a catalog, not a store.
 ## Tech stack
 
 - **No framework.** Plain HTML, CSS, and vanilla JavaScript.
-- **Node.js** is used only for the build script and a tiny dev server. The only
-  dependency is `sharp` (image compression, used in CI when adding items).
+- **Node.js** runs the builds, dev server, and tests. Development dependencies
+  are `sharp` (image compression) and `@playwright/test` (browser regression tests);
+  the deployed site has no runtime dependencies.
 - Everything is static output deployable to GitHub Pages.
 
 ## How it works (architecture)
@@ -84,6 +85,8 @@ Non-technical item management runs through GitHub Issue Forms + Actions:
   issue label (`add-item` / `mark-sold` / `remove-item`), commits, rebuilds, and
   deploys to Pages, then closes the issue with a confirmation comment.
 - `.github/workflows/deploy.yml` — builds and deploys on every push to `main`.
+- `.github/workflows/tests.yml` — unit and Playwright tests on pull requests and
+  non-main pushes. Also called by `deploy.yml` to gate regular Pages deployments.
 
 Item slugs are derived from the title (lowercased, non-alphanumerics stripped,
 truncated to 50 chars). "Mark sold" sets `sold: true` in `info.json`; sold items
@@ -95,15 +98,29 @@ workflows that drive this automation.
 ## Local development
 
 ```bash
-npm install        # only needed for image compression (sharp)
+npm ci             # install locked build/test dependencies
+npx playwright install chromium  # once, for browser tests
 npm run build      # regenerate manifest.json + all locale pages
-node --test tests/*.test.js  # gallery controls and generated navigation markup
+npm test           # rebuild, then unit + desktop/mobile browser tests
+npm run test:e2e    # browser tests only; automatically builds and starts the server
 node server.js     # static server at http://localhost:8080
 ```
 
 `server.js` is a minimal static file server (port 8080) with basic
 path-traversal protection. There is no watch mode — re-run `npm run build`
 after changing templates, `i18n.js`, or item data.
+
+Browser tests live in `tests/e2e/` and use `playwright.config.js`. They cover
+item/curated galleries, image bounds, thumbnail and lightbox navigation, zoom,
+modal scroll locking, breadcrumb styling and scrolling, guide navigation,
+category filters, and the no-JavaScript item fallback. They choose representative
+items from the built catalog rather than depending on a particular item's slug.
+Port 8081 must be free: tests start their own freshly built server and stop it
+afterward. External font CSS is stubbed so tests do not require Google Fonts.
+Failure screenshots and traces are saved in `test-results/`; the HTML report is
+in `playwright-report/` (`npx playwright show-report`). CI uploads both for seven
+days. These generated test artifacts are gitignored. The normal dev server
+still defaults to port 8080; `PORT` overrides it when needed.
 
 ## Conventions and gotchas for agents
 
