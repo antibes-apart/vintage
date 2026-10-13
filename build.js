@@ -686,15 +686,15 @@ function renderItemGallery(item, base) {
   const main = imgs[0];
   const mainDims = imageDimensions(main);
   const mainAttrs = mainDims ? ` width="${mainDims.width}" height="${mainDims.height}"` : '';
-  const thumbs = imgs.slice(1).map((src, i) => {
+  const thumbs = imgs.length > 1 ? imgs.map((src, i) => {
     const url = selectionAssetUrl(src, base);
     const d = imageDimensions(src);
     const attrs = d ? ` width="${d.width}" height="${d.height}"` : '';
-    return `<img src="${url}" alt="${escapeHtml(item.title)} — photo ${i + 2}"${attrs} loading="lazy">`;
-  }).join('');
+    return `<img src="${url}" alt="${escapeHtml(item.title)} — photo ${i + 1}"${attrs} class="${i === 0 ? 'active' : ''}" onclick="switchImage(${i})" loading="lazy">`;
+  }).join('') : '';
   return `
       <div class="gallery">
-        <img src="${selectionAssetUrl(main, base)}" alt="${escapeHtml(item.title)}" class="main-image"${mainAttrs}>
+        <img src="${selectionAssetUrl(main, base)}" alt="${escapeHtml(item.title)}" class="main-image" id="mainImage"${mainAttrs} onclick="openLightbox(window._currentImageIndex || 0)">
         ${thumbs ? `<div class="thumbnails">${thumbs}</div>` : ''}
       </div>`;
 }
@@ -746,16 +746,18 @@ function renderCollectionPage(item, strings, guideHrefs, base) {
   <meta property="og:description" content="${escapeHtml(metaDesc)}">
   <meta property="og:url" content="${canonicalUrl}">
   ${item.cover ? `<meta property="og:image" content="${SITE_URL}/${item.cover}">` : ''}
-  <link rel="stylesheet" href="../../css/style.css?v=6">
+  <link rel="stylesheet" href="../../css/style.css?v=16">
   ${renderItemStructuredData(item, canonicalUrl, breadcrumbs)}
 </head>
 <body data-page="collection-item">
   ${renderNav('home', langSwitchHTML, '../', '../curatedselection', '../guides/')}
   <main>
     <nav class="breadcrumbs" aria-label="Breadcrumb">
-      <a href="../index.html">${escapeHtml(strings.collectionBreadcrumbHome)}</a> &rsaquo;
-      <a href="${listHref}">${escapeHtml(listLabel)}</a> &rsaquo;
-      <span aria-current="page">${escapeHtml(item.title)}</span>
+      <ol>
+        <li><a href="../index.html">${escapeHtml(strings.collectionBreadcrumbHome)}</a></li>
+        <li><a href="${listHref}">${escapeHtml(listLabel)}</a></li>
+        <li aria-current="page">${escapeHtml(item.title)}</li>
+      </ol>
     </nav>
     <a href="${listHref}" class="back-link">${escapeHtml(backLabel)}</a>
     <div class="item-layout">
@@ -770,8 +772,10 @@ function renderCollectionPage(item, strings, guideHrefs, base) {
       </div>
     </div>
   </main>
+  ${tpl('lightbox.html')}
   ${CONTACT_BUTTONS}
   ${FOOTER}
+  <script src="../../js/app.js?v=2"></script>
 </body>
 </html>`;
 
@@ -917,6 +921,7 @@ LOCALES.forEach(locale => {
 
     let html = tpl(pageDef.tpl)
       .replace('{{nav}}', renderNav(pageDef.page, langSwitch, '', ourSelectionHref, guidesNavHref))
+      .replace('{{lightbox}}', tpl('lightbox.html'))
       .replace('{{contactButtons}}', CONTACT_BUTTONS)
       .replace('{{footer}}', FOOTER);
 

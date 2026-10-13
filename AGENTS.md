@@ -41,6 +41,11 @@ The site is generated from **templates + item data** by `build.js`.
   - `cover.jpg` — the grid thumbnail (any image ext; filename stem must be `cover`)
   - `2.jpg`, `3.jpg`, … — gallery images (sorted by filename)
 - `css/style.css` — all styling.
+- `en/collection/<slug>.html` — generated permanent item pages. Their gallery
+  is rendered by `build.js` and enhanced by the same `js/app.js` controls as
+  the legacy item pages, without fetching the manifest.
+- `templates/lightbox.html` — shared lightbox partial for permanent and
+  legacy item pages.
 
 ### The build (`node build.js` / `npm run build`)
 1. Scans `items/*/`, reads each `info.json`, collects images (cover first, rest
@@ -92,6 +97,7 @@ workflows that drive this automation.
 ```bash
 npm install        # only needed for image compression (sharp)
 npm run build      # regenerate manifest.json + all locale pages
+node --test tests/*.test.js  # gallery controls and generated navigation markup
 node server.js     # static server at http://localhost:8080
 ```
 
@@ -116,6 +122,9 @@ after changing templates, `i18n.js`, or item data.
   `.github/ISSUE_TEMPLATE/add-item.yml`, and `CATEGORY_LABELS`.
 - **Asset paths** are manifest-relative (`items/…`); pages resolve them with a
   per-locale base (`""` at root, `"../"` in `en/`+`fr/`) via `window.__BASE__`.
+- **Navigation:** sticky menu styling is scoped to `body > nav`. Breadcrumbs
+  and other in-page navigation stay in normal flow; item and guide breadcrumbs
+  share ordered-list styling in `css/style.css`.
 - **After any change to templates, `i18n.js`, `js/app.js`, or items, run
   `npm run build`** so the committed pages stay in sync. CI also rebuilds on
   deploy, but committing stale pages is confusing.

@@ -91,6 +91,16 @@ function itemHref(item) {
 }
 
 (async function () {
+  if (document.body.dataset.page === 'collection-item') {
+    const mainImg = document.getElementById('mainImage');
+    const thumbnails = document.querySelectorAll('.thumbnails img');
+    window._galleryImages = thumbnails.length
+      ? Array.from(thumbnails, img => img.src)
+      : mainImg ? [mainImg.src] : [];
+    window._currentImageIndex = 0;
+    return;
+  }
+
   try {
     let data;
     // Use inlined manifest if available (works without a server), otherwise fetch
@@ -397,11 +407,11 @@ function closeLightbox() {
 }
 
 function navigateLightbox(direction) {
-  if (!window._galleryImages) return;
+  if (!window._galleryImages || window._galleryImages.length === 0) return;
 
   resetZoom();
   const len = window._galleryImages.length;
-  window._currentImageIndex = (window._currentImageIndex + direction + len) % len;
+  switchImage((window._currentImageIndex + direction + len) % len);
 
   const lightboxImg = document.getElementById('lightboxImg');
   if (lightboxImg) {

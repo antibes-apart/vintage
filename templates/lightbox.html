@@ -1,0 +1,6 @@
+<div class="lightbox" id="lightbox" onclick="closeLightbox()">
+    <button class="lightbox-close" onclick="closeLightbox()" aria-label="{{lightboxClose}}">&times;</button>
+    <button class="lightbox-nav lightbox-prev" onclick="event.stopPropagation(); navigateLightbox(-1)" aria-label="{{lightboxPrev}}">&#8249;</button>
+    <img id="lightboxImg" src="" alt="{{lightboxAlt}}" onclick="event.stopPropagation()">
+    <button class="lightbox-nav lightbox-next" onclick="event.stopPropagation(); navigateLightbox(1)" aria-label="{{lightboxNext}}">&#8250;</button>
+  </div>
