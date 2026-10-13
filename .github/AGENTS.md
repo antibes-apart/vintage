@@ -87,3 +87,6 @@ All three parse the issue body with a shared `getField('### Label Name')` helper
 - Workflows use the latest Node.js LTS via `actions/setup-node` (`lts/*`).
   These scripts run in GitHub Actions, not the browser. Keep them
   dependency-light (only `fs`, `path`, and optionally `sharp`).
+- Actions have their own Node runtimes, independent of `setup-node`. Pages
+  configuration and artifact actions use Node 24-compatible releases;
+  `upload-pages-artifact` also bundles its own `upload-artifact` action.
