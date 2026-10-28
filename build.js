@@ -822,8 +822,16 @@ const PAGES = [
   {tpl: 'shipping.html', out: 'shipping.html', page: 'shipping'},
   {tpl: 'about.html', out: 'about.html', page: 'about'},
   {tpl: 'legal.html', out: null, page: 'legal'}, // out resolved per-locale (legal filename)
-  {tpl: 'sold.html', out: 'sold.html', page: 'sold', inject: true} // hidden / unlinked
+  {tpl: 'sold.html', out: 'sold.html', page: 'sold', inject: true}, // hidden / unlinked
+  {tpl: 'studio.html', out: 'studio.html', page: 'studio'} // listing studio: unlinked, noindex, not in sitemap
 ];
+
+// Listing studio (studio.html): the chat page calls the separate identify-agent Worker API.
+// Leave STUDIO_API_BASE empty until that Worker is deployed: the page then shows "not available yet".
+// STUDIO_TURNSTILE_SITE_KEY is Cloudflare Turnstile's *public* site key (the secret stays on the Worker).
+const STUDIO_API_BASE = process.env.STUDIO_API_BASE || '';
+const STUDIO_TURNSTILE_SITE_KEY = process.env.STUDIO_TURNSTILE_SITE_KEY || '';
+const attr = value => String(value).replace(/&/g, '&amp;').replace(/"/g, '&quot;').replace(/</g, '&lt;');
 
 // Set to true to restore the detailed shipping cost tables on the Shipping page.
 // While false, that page shows only a "contact us for a quote" message.
@@ -1012,6 +1020,11 @@ LOCALES.forEach(locale => {
         };
       })() : {}),
       ...(pageDef.page === 'about' ? {canonicalBlock: renderCanonicalBlock(locale.dir, 'about.html')} : {}),
+      ...(pageDef.page === 'studio' ? {
+        canonicalBlock: renderCanonicalBlock(locale.dir, 'studio.html'),
+        studioApiBase: attr(STUDIO_API_BASE),
+        studioTurnstileSiteKey: attr(STUDIO_TURNSTILE_SITE_KEY)
+      } : {}),
       ...(pageDef.page === 'shipping' ? {canonicalBlock: renderCanonicalBlock(locale.dir, 'shipping.html')} : {}),
       ...(pageDef.page === 'legal' ? {canonicalBlock: renderCanonicalBlock(locale.dir, 'legal-notice.html', 'mentions-legales.html')} : {})
     };

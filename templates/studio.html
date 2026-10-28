@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="{{LANG}}">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="{{studioMetaDesc}}">
+  <!-- A working tool, not editorial content: kept out of search results and the sitemap. -->
+  <meta name="robots" content="noindex, nofollow">
+  <title>{{studioDocTitle}}</title>
+  <link rel="icon" href="{{BASE}}favicon.svg" type="image/svg+xml">
+  <link rel="icon" href="{{BASE}}favicon.ico" sizes="any">
+  <link rel="apple-touch-icon" href="{{BASE}}apple-touch-icon.png">
+  {{canonicalBlock}}
+  <link rel="stylesheet" href="{{BASE}}css/style.css?v=17">
+</head>
+<body data-page="studio" data-api="{{studioApiBase}}" data-turnstile-sitekey="{{studioTurnstileSiteKey}}">
+  {{nav}}
+  <main class="studio">
+    <h1 class="page-title">{{studioTitle}}</h1>
+    <p class="studio-intro">{{studioIntro}}</p>
+
+    <p class="studio-unavailable" id="studio-unavailable" hidden>{{studioUnavailable}}</p>
+
+    <form class="studio-form" id="studio-form" novalidate>
+      <div class="studio-field">
+        <label for="studio-photos">{{studioPhotosLabel}}</label>
+        <input type="file" id="studio-photos" accept="image/*" multiple>
+        <p class="studio-hint">{{studioPhotosHint}}</p>
+        <ul class="studio-thumbs" id="studio-thumbs" aria-label="{{studioPhotosLabel}}"></ul>
+      </div>
+      <div class="studio-field">
+        <label for="studio-notes">{{studioNotesLabel}}</label>
+        <textarea id="studio-notes" rows="3" maxlength="2000" placeholder="{{studioNotesPlaceholder}}"></textarea>
+        <p class="studio-hint">{{studioNotesHint}}</p>
+      </div>
+      <div class="studio-field studio-field-inline">
+        <label for="studio-language">{{studioLanguageLabel}}</label>
+        <select id="studio-language">
+          <option value="en">English</option>
+          <option value="fr">Français</option>
+        </select>
+      </div>
+      <div class="studio-turnstile" id="studio-turnstile"></div>
+      <button type="submit" class="studio-btn" id="studio-generate">{{studioGenerate}}</button>
+      <p class="studio-privacy">{{studioPrivacy}}</p>
+    </form>
+
+    <p class="studio-status" id="studio-status" role="status" aria-live="polite"></p>
+
+    <section class="studio-result" id="studio-result" hidden aria-labelledby="studio-result-heading">
+      <h2 id="studio-result-heading">{{studioResultTitle}}</h2>
+      <div class="studio-listing">
+        <p class="studio-listing-title" id="studio-listing-title"></p>
+        <div class="studio-listing-text" id="studio-listing-text"></div>
+      </div>
+      <div class="studio-actions">
+        <button type="button" class="studio-btn" id="studio-copy">{{studioCopy}}</button>
+        <button type="button" class="studio-btn studio-btn-secondary" id="studio-new">{{studioNew}}</button>
+      </div>
+      <details class="studio-details" id="studio-details">
+        <summary>{{studioDetails}}</summary>
+        <h3>{{studioUncertain}}</h3>
+        <ul id="studio-uncertain"></ul>
+        <h3>{{studioCondition}}</h3>
+        <ul id="studio-condition"></ul>
+      </details>
+
+      <div class="studio-chat">
+        <h3>{{studioChatTitle}}</h3>
+        <ol class="studio-chat-log" id="studio-chat-log"></ol>
+        <form class="studio-chat-form" id="studio-chat-form" novalidate>
+          <label for="studio-chat-input" class="studio-visually-hidden">{{studioChatLabel}}</label>
+          <input type="text" id="studio-chat-input" maxlength="1000" placeholder="{{studioChatPlaceholder}}" autocomplete="off">
+          <button type="submit" class="studio-btn" id="studio-send">{{studioSend}}</button>
+        </form>
+        <p class="studio-hint" id="studio-remaining"></p>
+      </div>
+    </section>
+
+    <details class="studio-owner" id="studio-owner" hidden>
+      <summary>{{studioOwnerSummary}}</summary>
+      <p class="studio-hint">{{studioOwnerHint}}</p>
+      <label for="studio-owner-key" class="studio-visually-hidden">{{studioOwnerLabel}}</label>
+      <input type="password" id="studio-owner-key" autocomplete="off" placeholder="{{studioOwnerLabel}}">
+      <button type="button" class="studio-btn studio-btn-secondary" id="studio-owner-save">{{studioOwnerSave}}</button>
+      <button type="button" class="studio-btn studio-btn-secondary" id="studio-owner-remove">{{studioOwnerRemove}}</button>
+      <p class="studio-hint" id="studio-owner-status"></p>
+    </details>
+  </main>
+  {{contactButtons}}
+  {{footer}}
+  <script src="{{BASE}}js/studio.js?v=1"></script>
+</body>
+</html>

@@ -122,10 +122,32 @@ in `playwright-report/` (`npx playwright show-report`). CI uploads both for seve
 days. These generated test artifacts are gitignored. The normal dev server
 still defaults to port 8080; `PORT` overrides it when needed.
 
+## Listing studio (`studio.html`)
+
+- Unlinked, `noindex` page (not in the nav or sitemap) where photos and notes become a
+  Catawiki description, adjustable by chat. Template `templates/studio.html`, strings
+  `studio*` in `i18n.js`, runtime strings and logic in `js/studio.js`, styles under
+  "Listing studio" in `css/style.css`.
+- It calls the separate **identify-agent** Worker API (`POST /listing`,
+  `POST /listing/revise`). The address comes from `STUDIO_API_BASE` in `build.js`
+  (environment variable at build time). While it is empty, the page shows "not available
+  yet", so the site can be deployed safely before the Worker exists.
+- `STUDIO_TURNSTILE_SITE_KEY` is Cloudflare Turnstile's public site key; the secret key
+  stays on the Worker. Photos are resized in the browser to JPEG at most 1 MiB.
+- Local testing only: on `localhost`/`127.0.0.1` the page accepts `?api=<url>`, e.g.
+  `http://127.0.0.1:8080/en/studio.html?api=http://127.0.0.1:8787`.
+- Owner-only studio: the identify-agent Worker requires the admin key (`Authorization: Bearer
+  <LISTING_ADMIN_KEY>`) on both routes and refuses everyone else with `403 OWNER_ONLY`. The page
+  therefore shows the photo/notes form only when this browser holds a saved owner key; without a
+  key the owner panel is always visible and prompts for it. `studio.js` attaches the saved key to
+  every request. (Server-side this is gated by `LISTING_OWNER_ONLY`, default on; the visitor
+  quotas/Turnstile/budget code remains for a future public identification page.)
+- E2E tests (`tests/e2e/studio.spec.js`) mock the API and never call a real service.
+
 ## Conventions and gotchas for agents
 
 - **Do not hand-edit generated pages** (`index.html`, `en/*.html`, `fr/*.html`,
-  root `item.html`/`about.html`/`shipping.html`/`sold.html`/`legal-notice.html`).
+  root `item.html`/`about.html`/`shipping.html`/`sold.html`/`legal-notice.html`/`studio.html`).
   Edit `templates/*.html` and `i18n.js`, then run `npm run build`. The generated
   files will be overwritten.
 - **`item.html` at the repo root is generated**; `templates/item.html` is the
