@@ -131,7 +131,9 @@ still defaults to port 8080; `PORT` overrides it when needed.
 - It calls the separate **identify-agent** Worker API (`POST /listing`,
   `POST /listing/revise`). The address comes from `STUDIO_API_BASE` in `build.js`
   (environment variable at build time). While it is empty, the page shows "not available
-  yet", so the site can be deployed safely before the Worker exists.
+  yet". The GitHub Pages deploy (`.github/workflows/deploy.yml`) sets it to
+  `https://api.cookandcollect.eu`; local builds and the test job leave it empty, so the
+  committed `studio.html` files keep `data-api=""` and the e2e tests still see "not available".
 - `STUDIO_TURNSTILE_SITE_KEY` is Cloudflare Turnstile's public site key; the secret key
   stays on the Worker. Photos are resized in the browser to JPEG at most 1 MiB.
 - Local testing only: on `localhost`/`127.0.0.1` the page accepts `?api=<url>`, e.g.

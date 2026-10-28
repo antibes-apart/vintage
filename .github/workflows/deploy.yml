@@ -34,6 +34,10 @@ jobs:
           node-version: "lts/*"
 
       - name: Build site (app pages + manifest, then editorial guides)
+        env:
+          # Listing studio API (identify-agent Worker). Not a secret: the page calls it from the browser,
+          # and the Worker refuses every request without the owner's admin key.
+          STUDIO_API_BASE: https://api.cookandcollect.eu
         run: |
           node build.js
           node build-guides.js
