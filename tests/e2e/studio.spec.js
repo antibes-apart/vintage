@@ -187,6 +187,59 @@ test('the studio is owner-only: the form appears only after the key is saved, an
   await expect(page.locator('#studio-owner')).toBeVisible();
 });
 
+test('the owner saves the object to the archive with both photo sizes prepared in the browser', async ({ page }) => {
+  const requests = await mockApi(page, {
+    '/listing': async () => [200, listing('Vintage Cousances Cocotte', 'A handsome cocotte.')],
+    '/listing/save': async () => [200, { status: 'SAVED', slug: 'vintage-cousances-cocotte-abc123', publish_status: 'NOT_PUBLISHED', record: {} }]
+  });
+  await page.goto(`/en/studio.html?api=${encodeURIComponent(API)}`);
+  await page.locator('#studio-owner-key').fill('owner-admin-key-0123456789abcdef');
+  await page.locator('#studio-owner-save').click();
+  // A large photo, so both archive sizes are real reductions.
+  const big = await sharp({ create: { width: 3000, height: 2000, channels: 3, background: '#d2691e' } }).jpeg().toBuffer();
+  await page.locator('#studio-photos').setInputFiles([{ name: 'big.jpg', mimeType: 'image/jpeg', buffer: big }]);
+  await page.locator('#studio-generate').click();
+  await expect(page.locator('#studio-listing-title')).toHaveText('Vintage Cousances Cocotte');
+
+  await expect(page.locator('#studio-save')).toBeEnabled();
+  await page.locator('#studio-save').click();
+  await expect(page.locator('#studio-status')).toHaveText('Saved to the archive. It will appear on the website once publishing is switched on.');
+  const saved = requests.find(r => r.path === '/listing/save');
+  expect(saved.authorization).toBe('Bearer owner-admin-key-0123456789abcdef');
+  expect(saved.body.session).toBe('session-25');
+  expect(saved.body.photos).toHaveLength(1);
+  const large = Buffer.from(saved.body.photos[0].large.data, 'base64');
+  const small = Buffer.from(saved.body.photos[0].small.data, 'base64');
+  expect(saved.body.photos[0].large.media_type).toBe('image/jpeg');
+  expect(large.length).toBeLessThanOrEqual(700 * 1024);
+  expect(small.length).toBeLessThanOrEqual(200 * 1024);
+  const [l, s] = await Promise.all([sharp(large).metadata(), sharp(small).metadata()]);
+  expect([l.width, l.height]).toEqual([1600, 1067]);
+  expect([s.width, s.height]).toEqual([800, 533]);
+
+  // After a reload the photos are no longer in memory: saving needs them again, so the button says so.
+  await page.reload();
+  await expect(page.locator('#studio-listing-title')).toHaveText('Vintage Cousances Cocotte');
+  await expect(page.locator('#studio-save')).toBeDisabled();
+  await expect(page.locator('#studio-save-hint')).toContainText('photos');
+});
+
+test('archive save errors are explained to the owner', async ({ page }) => {
+  await mockApi(page, {
+    '/listing': async () => [200, listing('Le Creuset Cocotte', 'Text.')],
+    '/listing/save': async () => [502, { error: { code: 'CONTENT_SEO_REJECTED' } }]
+  });
+  await page.goto(`/fr/studio.html?api=${encodeURIComponent(API)}`);
+  await page.locator('#studio-owner-key').fill('owner-admin-key-0123456789abcdef');
+  await page.locator('#studio-owner-save').click();
+  await page.locator('#studio-photos').setInputFiles([await photoFile()]);
+  await page.locator('#studio-generate').click();
+  await expect(page.locator('#studio-listing-title')).toHaveText('Le Creuset Cocotte');
+  await page.locator('#studio-save').click();
+  await expect(page.locator('#studio-status')).toHaveText('Le texte de la page d’archive n’a pas passé les contrôles. Réessayez ou ajustez la description.');
+  await expect(page.locator('#studio-status')).toHaveClass(/studio-status-error/);
+});
+
 test('the API address can only be overridden on a local development host', async ({ page }) => {
   await page.goto(`/en/studio.html?api=${encodeURIComponent('javascript:alert(1)')}`);
   await expect(page.locator('#studio-unavailable')).toBeVisible();

@@ -145,6 +145,10 @@ still defaults to port 8080; `PORT` overrides it when needed.
   every request. (Server-side this is gated by `LISTING_OWNER_ONLY`, default on; the visitor
   quotas/Turnstile/budget code remains for a future public identification page.)
 - E2E tests (`tests/e2e/studio.spec.js`) mock the API and never call a real service.
+- "Save to the archive" (under the listing) prepares each photo twice in the browser
+  (about 1600 px and 800 px) and calls `POST /listing/save`; the Worker writes the archive
+  text, stores the photos in R2 and the record in D1. It needs the photo files, which only
+  live in the page's memory: after a reload the button is disabled with a hint.
 
 ## Archive of documented pieces (`build-archive.js`)
 

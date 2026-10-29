@@ -2862,6 +2862,17 @@ footer {
   margin-bottom: 1rem;
 }
 
+/* Save to the archive: below the copy/new actions, set apart from them. */
+.studio-archive {
+  margin: 0 0 1.25rem;
+  padding-top: 1rem;
+  border-top: 1px solid var(--border);
+}
+
+.studio-archive .studio-hint {
+  margin-top: 0.5rem;
+}
+
 .studio-details {
   margin-bottom: 1.25rem;
   font-size: 0.9rem;

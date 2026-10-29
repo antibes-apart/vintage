@@ -27,6 +27,9 @@
       ownerSaved: 'Owner key saved.',
       ownerRemoved: 'Owner key removed.',
       ownerRequired: 'This studio is reserved for the site owner. Enter the owner key to use it.',
+      savingArchive: 'Preparing the photos and saving to the archive…',
+      savedArchive: 'Saved to the archive. It will appear on the website once publishing is switched on.',
+      saveNeedsPhotos: 'The photos are no longer in this page. Start a new object with the same photos to save it to the archive.',
       errors: {
         VISITOR_DAILY_LIMIT: 'You have reached today’s limit. Please come back tomorrow.',
         IP_DAILY_LIMIT: 'Today’s limit has been reached from this connection. Please come back tomorrow.',
@@ -47,6 +50,9 @@
         REQUEST_TOO_LARGE: 'The photos are too large together. Use fewer photos.',
         ORIGIN_NOT_ALLOWED: 'The studio cannot be used from this address.',
         OWNER_ONLY: 'The studio is reserved for the site owner. Enter the owner key to continue.',
+        CONTENT_SEO_REJECTED: 'The archive page text did not pass the checks. Try again or adjust the description.',
+        ARCHIVE_UNAVAILABLE: 'The archive is not available yet.',
+        STORAGE_FAILED: 'The photos could not be stored. Please try again.',
         LISTING_UNAVAILABLE: 'The studio is temporarily unavailable. Please try again later.',
         network: 'The studio could not be reached. Check your connection and try again.',
         generic: 'Something went wrong. Please try again.'
@@ -71,6 +77,9 @@
       ownerSaved: 'Clé propriétaire enregistrée.',
       ownerRemoved: 'Clé propriétaire supprimée.',
       ownerRequired: 'Ce studio est réservé au propriétaire du site. Saisissez la clé propriétaire pour l’utiliser.',
+      savingArchive: 'Préparation des photos et enregistrement dans les archives…',
+      savedArchive: 'Enregistré dans les archives. La page apparaîtra sur le site dès que la publication sera activée.',
+      saveNeedsPhotos: 'Les photos ne sont plus dans cette page. Recommencez un nouvel objet avec les mêmes photos pour l’enregistrer dans les archives.',
       errors: {
         VISITOR_DAILY_LIMIT: 'Vous avez atteint la limite du jour. Revenez demain.',
         IP_DAILY_LIMIT: 'La limite du jour est atteinte pour cette connexion. Revenez demain.',
@@ -91,6 +100,9 @@
         REQUEST_TOO_LARGE: 'Les photos sont trop lourdes ensemble. Utilisez moins de photos.',
         ORIGIN_NOT_ALLOWED: 'Le studio ne peut pas être utilisé depuis cette adresse.',
         OWNER_ONLY: 'Le studio est réservé au propriétaire du site. Saisissez la clé propriétaire pour continuer.',
+        CONTENT_SEO_REJECTED: 'Le texte de la page d’archive n’a pas passé les contrôles. Réessayez ou ajustez la description.',
+        ARCHIVE_UNAVAILABLE: 'Les archives ne sont pas encore disponibles.',
+        STORAGE_FAILED: 'Les photos n’ont pas pu être enregistrées. Veuillez réessayer.',
         LISTING_UNAVAILABLE: 'Le studio est momentanément indisponible. Réessayez plus tard.',
         network: 'Le studio est injoignable. Vérifiez votre connexion et réessayez.',
         generic: 'Une erreur est survenue. Veuillez réessayer.'
@@ -103,9 +115,14 @@
   var MAX_PHOTO_BYTES = 1024 * 1024;
   // Largest edge and JPEG quality, tried in order until a photo fits the upload limit.
   var ATTEMPTS = [[2560, 0.88], [2560, 0.8], [2048, 0.8], [1600, 0.75], [1280, 0.7]];
+  // Archive photos (saved to the website's photo store): a page size and a thumbnail size.
+  var ARCHIVE_LARGE = { bytes: 700 * 1024, attempts: [[1600, 0.85], [1600, 0.78], [1400, 0.75], [1200, 0.72]] };
+  var ARCHIVE_SMALL = { bytes: 200 * 1024, attempts: [[800, 0.8], [800, 0.7], [640, 0.7]] };
   var KEYS = { session: 'studio-session', visitor: 'studio-visitor', admin: 'studio-admin-key' };
 
   var $ = function (id) { return document.getElementById(id); };
+  // The default hint is the page's own (translated) text; it is replaced when the photos are gone.
+  var STUDIO_SAVE_HINT = '';
   var photos = []; // { file, url }
   var state = null; // { session, title, description, history: [], remaining, uncertain: [], condition: [] }
   var turnstileWidget = null;
@@ -135,7 +152,7 @@
   }
 
   function busy(on) {
-    ['studio-generate', 'studio-send', 'studio-chat-input', 'studio-photos'].forEach(function (id) {
+    ['studio-generate', 'studio-send', 'studio-chat-input', 'studio-photos', 'studio-save'].forEach(function (id) {
       var el = $(id); if (el) el.disabled = on;
     });
     document.body.classList.toggle('studio-busy', on);
@@ -182,22 +199,24 @@
 
   // Orientation is applied, the photo is drawn on a white background and re-encoded as JPEG: this also removes
   // EXIF/GPS metadata. The server strips metadata again and never trusts the browser alone.
-  async function preparePhoto(file) {
+  async function preparePhoto(file, attempts, maxBytes) {
+    attempts = attempts || ATTEMPTS;
+    maxBytes = maxBytes || MAX_PHOTO_BYTES;
     var bitmap;
     try { bitmap = await createImageBitmap(file, { imageOrientation: 'from-image' }); }
     catch (e) { throw new Error('photoUnreadable'); }
     var canvas = document.createElement('canvas');
     try {
-      for (var i = 0; i < ATTEMPTS.length; i++) {
-        var scale = Math.min(1, ATTEMPTS[i][0] / Math.max(bitmap.width, bitmap.height));
+      for (var i = 0; i < attempts.length; i++) {
+        var scale = Math.min(1, attempts[i][0] / Math.max(bitmap.width, bitmap.height));
         canvas.width = Math.max(1, Math.round(bitmap.width * scale));
         canvas.height = Math.max(1, Math.round(bitmap.height * scale));
         var ctx = canvas.getContext('2d');
         ctx.fillStyle = '#ffffff';
         ctx.fillRect(0, 0, canvas.width, canvas.height);
         ctx.drawImage(bitmap, 0, 0, canvas.width, canvas.height);
-        var blob = await new Promise(function (resolve) { canvas.toBlob(resolve, 'image/jpeg', ATTEMPTS[i][1]); });
-        if (blob && blob.size <= MAX_PHOTO_BYTES) return { media_type: 'image/jpeg', data: await blobToBase64(blob) };
+        var blob = await new Promise(function (resolve) { canvas.toBlob(resolve, 'image/jpeg', attempts[i][1]); });
+        if (blob && blob.size <= maxBytes) return { media_type: 'image/jpeg', data: await blobToBase64(blob) };
       }
     } finally {
       if (bitmap.close) bitmap.close();
@@ -271,6 +290,9 @@
     var canAdjust = state.remaining > 0;
     $('studio-chat-input').disabled = !canAdjust;
     $('studio-send').disabled = !canAdjust;
+    // Saving needs the photo files, which only exist in memory until the page is reloaded.
+    $('studio-save').disabled = !photos.length;
+    $('studio-save-hint').textContent = photos.length ? STUDIO_SAVE_HINT : T.saveNeedsPhotos;
   }
 
   function apply(result, request) {
@@ -357,6 +379,28 @@
     }
   }
 
+  async function saveToArchive() {
+    if (!state || !photos.length) { setStatus(T.saveNeedsPhotos, true); return; }
+    busy(true);
+    setStatus(T.savingArchive);
+    try {
+      var prepared = [];
+      for (var i = 0; i < photos.length; i++) {
+        prepared.push({
+          large: await preparePhoto(photos[i].file, ARCHIVE_LARGE.attempts, ARCHIVE_LARGE.bytes),
+          small: await preparePhoto(photos[i].file, ARCHIVE_SMALL.attempts, ARCHIVE_SMALL.bytes)
+        });
+      }
+      await call('/listing/save', { session: state.session, photos: prepared });
+      setStatus(T.savedArchive);
+    } catch (error) {
+      setStatus(errorText(error), true);
+    } finally {
+      busy(false);
+      render();
+    }
+  }
+
   async function copy() {
     var text = state.title + '\n\n' + state.description;
     try {
@@ -400,6 +444,7 @@
       return;
     }
     $('studio-language').value = LANG;
+    STUDIO_SAVE_HINT = $('studio-save-hint').textContent;
     $('studio-photos').addEventListener('change', function (event) {
       setStatus('');
       addFiles(event.target.files);
@@ -408,6 +453,7 @@
     $('studio-form').addEventListener('submit', generate);
     $('studio-chat-form').addEventListener('submit', revise);
     $('studio-copy').addEventListener('click', copy);
+    $('studio-save').addEventListener('click', saveToArchive);
     $('studio-new').addEventListener('click', reset);
     $('studio-owner-save').addEventListener('click', function () {
       var key = $('studio-owner-key').value.trim();
