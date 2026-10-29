@@ -41,3 +41,23 @@ test('sticky navigation styling is limited to the top-level menu', () => {
   assert.doesNotMatch(css, /(?:^|\n)nav\s*\{/);
   assert.match(css, /\.breadcrumbs ol,\s*\.guide-breadcrumb ol\s*\{/);
 });
+
+test('the cast iron makers guide is built in both languages and listed in the sitemap', () => {
+  const file = 'european-enamelled-cast-iron-makers.html';
+  const makers = ['le-creuset', 'cousances', 'staub', 'invicta', 'fontignac', 'descoware', 'dru'];
+  for (const locale of ['en', 'fr']) {
+    const page = path.join(root, locale, 'guides', file);
+    assert.ok(fs.existsSync(page), `${locale}/guides/${file}`);
+    const html = fs.readFileSync(page, 'utf8');
+    assert.doesNotMatch(html, /\{\{\w+\}\}/, `${locale}: unresolved template token`);
+    assert.match(html, /href="vintage-le-creuset\.html"/, `${locale}: link to the Le Creuset guide`);
+    assert.match(html, /href="le-creuset-dating-guide\.html"/, `${locale}: link to the dating guide`);
+    assert.match(html, /class="guide-section guide-references"/, `${locale}: references section`);
+    const ids = [...html.matchAll(/<h2 id="maker-([a-z-]+)"/g)].map(m => m[1]);
+    assert.deepEqual(ids, makers, `${locale}: one profile per maker, in order`);
+    assert.doesNotMatch(html, /href="[^"]*archive\//, `${locale}: no archive link until the archive is published`);
+  }
+  const sitemap = fs.readFileSync(path.join(root, 'sitemap.xml'), 'utf8');
+  assert.match(sitemap, new RegExp(`/en/guides/${file.replace(/\./g, '\\.')}<`));
+  assert.match(sitemap, new RegExp(`/fr/guides/${file.replace(/\./g, '\\.')}<`));
+});

@@ -1,6 +1,10 @@
 manifest.json
 sitemap.xml
 robots.txt
+# Archive pages (build-archive.js): built at deploy time from archive/<slug>/info.json.
+en/archive/
+fr/archive/
+sitemap-archive.xml
 node_modules/
 playwright-report/
 test-results/

@@ -105,6 +105,19 @@ const GUIDES = [
     datePublished: '2026-09-22',
     dateModified: '2026-09-24'
   },
+  {
+    // Top-level overview of European enamelled cast iron makers (who, where,
+    // when, how they connect). Facts and their sources: docs/superpowers/specs/
+    // 2026-10-28-cast-iron-makers-guide-facts.md. Photographs still to come:
+    // every figure renders as a placeholder until its file exists.
+    strKey: 'guideCastIron',
+    template: 'guides/european-enamelled-cast-iron-makers.html',
+    file: 'european-enamelled-cast-iron-makers.html',
+    ogImage: 'img/guides/cast-iron-makers/european-enamelled-cast-iron-makers-cook-collect.jpeg',
+    card: {image: 'img/guides/cast-iron-makers/european-enamelled-cast-iron-makers-cook-collect.jpeg'},
+    datePublished: '2026-10-28',
+    dateModified: '2026-10-28'
+  },
   // ── Specialist guides under the copper pillar ──
   // Each one owns the detailed case study for its maker/supplier; the pillar
   // page introduces them and links out. Keep search intents distinct.

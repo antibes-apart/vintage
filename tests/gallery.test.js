@@ -21,9 +21,13 @@ function image(src) {
   };
 }
 
-function gallery(sources) {
+function gallery(sources, fullSizes = []) {
   const main = sources.length ? image(sources[0]) : null;
-  const thumbs = sources.length > 1 ? sources.map(image) : [];
+  const thumbs = sources.length > 1 ? sources.map((src, i) => {
+    const thumb = image(src);
+    thumb.dataset = fullSizes[i] ? { full: fullSizes[i] } : {};
+    return thumb;
+  }) : [];
   const lightbox = image('');
   const lightboxImg = image('');
   const nodes = { mainImage: main, lightbox, lightboxImg };
@@ -84,6 +88,15 @@ test('single-photo galleries work without thumbnails', () => {
   context.navigateLightbox(1);
   assert.equal(main.src, 'cover.jpg');
   assert.equal(lightboxImg.src, 'cover.jpg');
+});
+
+test('thumbnails can point to a larger photo than they display (archive pages)', () => {
+  const { context, main, lightboxImg } = gallery(['1-small.jpg', '2-small.jpg'], ['1-large.jpg', '2-large.jpg']);
+  assert.deepEqual(Array.from(context.window._galleryImages), ['1-large.jpg', '2-large.jpg']);
+  context.switchImage(1);
+  assert.equal(main.src, '2-large.jpg');
+  context.openLightbox(1);
+  assert.equal(lightboxImg.src, '2-large.jpg');
 });
 
 test('photo-free galleries do not open or navigate an empty lightbox', () => {

@@ -1,0 +1,31 @@
+{
+  "schema_version": "1",
+  "slug": "staub-cocotte-black",
+  "brand": "staub",
+  "category": "Cocottes",
+  "date_published": "2026-10-22",
+  "date_modified": "2026-10-22",
+  "shop_item": "fixture-staub-cocotte-for-sale",
+  "photos": [
+    {
+      "key": "archive/staub-cocotte-black/1-1600.jpg", "width": 400, "height": 300,
+      "small": { "key": "archive/staub-cocotte-black/1-800.jpg", "width": 200, "height": 150 },
+      "alt": { "en": "Sample: black Staub cocotte", "fr": "Exemple : cocotte Staub noire" }
+    }
+  ],
+  "markings": [{ "text": "STAUB", "where": { "en": "Lid", "fr": "Couvercle" } }],
+  "dimensions": [],
+  "archive_findings": [],
+  "en": {
+    "title": "Sample: black Staub cocotte (also in the shop)",
+    "meta_description": "Sample archive record linked to a shop item.",
+    "intro": ["Sample text: this object is also listed in the shop, so it has no archive page of its own."],
+    "condition": "Sample: good condition."
+  },
+  "fr": {
+    "title": "Exemple : cocotte Staub noire (aussi en boutique)",
+    "meta_description": "Exemple de fiche d'archive liée à un article de la boutique.",
+    "intro": ["Texte d'exemple : cet objet est aussi en boutique, il n'a donc pas de page d'archive propre."],
+    "condition": "Exemple : bon état."
+  }
+}

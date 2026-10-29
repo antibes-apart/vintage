@@ -146,6 +146,27 @@ still defaults to port 8080; `PORT` overrides it when needed.
   quotas/Turnstile/budget code remains for a future public identification page.)
 - E2E tests (`tests/e2e/studio.spec.js`) mock the API and never call a real service.
 
+## Archive of documented pieces (`build-archive.js`)
+
+- SEO pages for pieces the owner documented (sold on Catawiki), **not for sale here**: one page per
+  piece in English and French (`en/archive/<slug>.html`, `fr/archive/<slug>.html`), a hub per
+  language grouped by brand (`en/archive/`, `fr/archive/`) and `sitemap-archive.xml`, which is also
+  added to `robots.txt`.
+- Source: `archive/<slug>/info.json`, one folder per piece. The contract is `validateObject()` in
+  `build-archive.js`; an invalid record stops the build and names the file and field. Photos are
+  not in the repo: each is a key on `https://images.cookandcollect.eu/` with its pixel size.
+- Runs after `build.js` (it reads `manifest.json` for the "Available now" block: up to four shop
+  items for sale, same brand first). It deletes and regenerates everything it owns on each run,
+  so a removed record loses its pages. Its outputs are gitignored and built at deploy time
+  (`deploy.yml` and every job in `manage-items.yml`); no `archive/` folder means no pages.
+- A record with `shop_item` naming an existing shop item gets no archive page: the hub links to
+  the shop page instead (one page per object).
+- Text strings: `archive*` in `i18n.js`. Styles: "Archive of documented pieces" at the end of
+  `css/style.css` (archive pages load `style.css?v=18`, `app.js?v=3`).
+- Local preview with the sample records in `tests/fixtures/archive/`: `npm run preview:archive`,
+  then `node server.js` and open `http://127.0.0.1:8080/en/archive/index.html`. Run
+  `npm run build` afterwards to remove the sample pages. Tests: `tests/archive.test.js`.
+
 ## Conventions and gotchas for agents
 
 - **Do not hand-edit generated pages** (`index.html`, `en/*.html`, `fr/*.html`,

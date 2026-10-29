@@ -41,6 +41,7 @@ jobs:
         run: |
           node build.js
           node build-guides.js
+          node build-archive.js
 
       - name: Setup Pages
         uses: actions/configure-pages@v6

@@ -3,9 +3,11 @@
   "version": "1.0.0",
   "private": true,
   "scripts": {
-    "build": "node build.js && node build-guides.js",
+    "build": "node build.js && node build-guides.js && node build-archive.js",
     "build:app": "node build.js",
     "build:guides": "node build-guides.js",
+    "build:archive": "node build-archive.js",
+    "preview:archive": "node build.js && node build-guides.js && ARCHIVE_DIR=tests/fixtures/archive ARCHIVE_IMAGE_BASE=/tests/fixtures/archive-images/ node build-archive.js",
     "test": "npm run test:unit && npm run test:e2e",
     "test:unit": "npm run build && node --test tests/*.test.js",
     "test:e2e": "playwright test"

@@ -1,0 +1,58 @@
+{
+  "schema_version": "1",
+  "slug": "cousances-oval-cocotte-orange",
+  "brand": "cousances",
+  "category": "Cocottes",
+  "date_published": "2026-10-20",
+  "date_modified": "2026-10-28",
+  "photos": [
+    {
+      "key": "archive/cousances-oval-cocotte-orange/1-1600.jpg", "width": 400, "height": 300,
+      "small": { "key": "archive/cousances-oval-cocotte-orange/1-800.jpg", "width": 200, "height": 150 },
+      "alt": { "en": "Sample: orange oval Cousances cocotte with its lid, side view", "fr": "Exemple : cocotte ovale Cousances orange avec son couvercle, vue de côté" }
+    },
+    {
+      "key": "archive/cousances-oval-cocotte-orange/2-1600.jpg", "width": 400, "height": 300,
+      "small": { "key": "archive/cousances-oval-cocotte-orange/2-800.jpg", "width": 200, "height": 150 },
+      "alt": { "en": "Sample: COUSANCES marking cast into the base", "fr": "Exemple : marquage COUSANCES coulé sous le fond" }
+    },
+    {
+      "key": "archive/cousances-oval-cocotte-orange/3-1600.jpg", "width": 400, "height": 300,
+      "small": { "key": "archive/cousances-oval-cocotte-orange/3-800.jpg", "width": 200, "height": 150 },
+      "alt": { "en": "Sample: lid seen from above", "fr": "Exemple : couvercle vu de dessus" }
+    },
+    {
+      "key": "archive/cousances-oval-cocotte-orange/4-1600.jpg", "width": 400, "height": 300,
+      "small": { "key": "archive/cousances-oval-cocotte-orange/4-800.jpg", "width": 200, "height": 150 },
+      "alt": { "en": "Sample: tape measure across the length", "fr": "Exemple : mètre ruban sur la longueur" }
+    }
+  ],
+  "markings": [
+    { "text": "COUSANCES", "where": { "en": "Base", "fr": "Fond" } },
+    { "text": "29", "where": { "en": "Base", "fr": "Fond" } }
+  ],
+  "dimensions": [
+    { "label": { "en": "Length", "fr": "Longueur" }, "value": { "en": "31.5 cm", "fr": "31,5 cm" } },
+    { "label": { "en": "Width", "fr": "Largeur" }, "value": { "en": "24.5 cm", "fr": "24,5 cm" } },
+    { "label": { "en": "Height without lid", "fr": "Hauteur sans couvercle" }, "value": { "en": "12 cm", "fr": "12 cm" } }
+  ],
+  "archive_findings": [],
+  "en": {
+    "title": "Sample: orange oval Cousances cocotte, marked 29",
+    "meta_description": "Sample archive record: an orange oval Cousances cocotte with COUSANCES and 29 cast into the base, 31.5 x 24.5 cm.",
+    "intro": [
+      "Sample text for the page generator. An oval cocotte in orange enamel with COUSANCES and the number 29 cast into the base.",
+      "This record documents the markings and measurements seen on this piece."
+    ],
+    "condition": "Sample: light marks of use on the base; no chips seen in the photos."
+  },
+  "fr": {
+    "title": "Exemple : cocotte ovale Cousances orange, marquée 29",
+    "meta_description": "Exemple de fiche d'archive : cocotte ovale Cousances orange, COUSANCES et 29 coulés sous le fond, 31,5 x 24,5 cm.",
+    "intro": [
+      "Texte d'exemple pour le générateur de pages. Une cocotte ovale en émail orange, avec COUSANCES et le chiffre 29 coulés sous le fond.",
+      "Cette fiche documente les marquages et les mesures relevés sur cette pièce."
+    ],
+    "condition": "Exemple : légères traces d'usage sous le fond ; aucun éclat visible sur les photos."
+  }
+}

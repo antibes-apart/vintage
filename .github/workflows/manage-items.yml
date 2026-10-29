@@ -46,9 +46,13 @@ jobs:
           git push
 
       - name: Build site (app pages + manifest, then editorial guides)
+        env:
+          # Listing studio API (identify-agent Worker); same value as in deploy.yml.
+          STUDIO_API_BASE: https://api.cookandcollect.eu
         run: |
           node build.js
           node build-guides.js
+          node build-archive.js
 
       - name: Setup Pages
         uses: actions/configure-pages@v6
@@ -110,9 +114,13 @@ jobs:
           node-version: "lts/*"
 
       - name: Build site (app pages + manifest, then editorial guides)
+        env:
+          # Listing studio API (identify-agent Worker); same value as in deploy.yml.
+          STUDIO_API_BASE: https://api.cookandcollect.eu
         run: |
           node build.js
           node build-guides.js
+          node build-archive.js
 
       - name: Setup Pages
         uses: actions/configure-pages@v6
@@ -174,9 +182,13 @@ jobs:
           node-version: "lts/*"
 
       - name: Build site (app pages + manifest, then editorial guides)
+        env:
+          # Listing studio API (identify-agent Worker); same value as in deploy.yml.
+          STUDIO_API_BASE: https://api.cookandcollect.eu
         run: |
           node build.js
           node build-guides.js
+          node build-archive.js
 
       - name: Setup Pages
         uses: actions/configure-pages@v6

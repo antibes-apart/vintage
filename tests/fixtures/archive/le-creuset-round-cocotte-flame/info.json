@@ -1,0 +1,41 @@
+{
+  "schema_version": "1",
+  "slug": "le-creuset-round-cocotte-flame",
+  "brand": "le-creuset",
+  "category": "Cocottes",
+  "date_published": "2026-10-21",
+  "date_modified": "2026-10-21",
+  "photos": [
+    {
+      "key": "archive/le-creuset-round-cocotte-flame/1-1600.jpg", "width": 400, "height": 300,
+      "small": { "key": "archive/le-creuset-round-cocotte-flame/1-800.jpg", "width": 200, "height": 150 },
+      "alt": { "en": "Sample: round Le Creuset cocotte in flame orange", "fr": "Exemple : cocotte ronde Le Creuset orange flamme" }
+    },
+    {
+      "key": "archive/le-creuset-round-cocotte-flame/2-1600.jpg", "width": 400, "height": 300,
+      "alt": { "en": "Sample: LE CREUSET marking on the base", "fr": "Exemple : marquage LE CREUSET sous le fond" }
+    }
+  ],
+  "markings": [
+    { "text": "LE CREUSET", "where": { "en": "Base", "fr": "Fond" } },
+    { "text": "24", "where": { "en": "Base", "fr": "Fond" } }
+  ],
+  "dimensions": [
+    { "label": { "en": "Diameter", "fr": "Diamètre" }, "value": { "en": "24 cm", "fr": "24 cm" } }
+  ],
+  "archive_findings": [
+    { "en": "Sample: a round cocotte with a 24 cm diameter appears in the archive's catalogues.", "fr": "Exemple : une cocotte ronde de 24 cm de diamètre figure dans les catalogues de l'archive." }
+  ],
+  "en": {
+    "title": "Sample: round Le Creuset cocotte 24 in flame orange",
+    "meta_description": "Sample archive record: a round Le Creuset cocotte in flame orange, LE CREUSET and 24 on the base, 24 cm diameter.",
+    "intro": ["Sample text for the page generator. A round cocotte in flame orange, marked LE CREUSET and 24 on the base."],
+    "condition": "Sample: good condition with normal signs of use."
+  },
+  "fr": {
+    "title": "Exemple : cocotte ronde Le Creuset 24 orange flamme",
+    "meta_description": "Exemple de fiche d'archive : cocotte ronde Le Creuset orange flamme, LE CREUSET et 24 sous le fond, 24 cm de diamètre.",
+    "intro": ["Texte d'exemple pour le générateur de pages. Une cocotte ronde orange flamme, marquée LE CREUSET et 24 sous le fond."],
+    "condition": "Exemple : bon état avec des traces d'usage normales."
+  }
+}

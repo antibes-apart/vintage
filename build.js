@@ -1103,6 +1103,7 @@ console.log(`Generated ${items.length} permanent collection page(s) in en/collec
    item.html?id= query URLs, no non-canonical FR item pages (none exist). */
 const GUIDE_FILES = [
   'e-dehillerin-copper-cookware.html',
+  'european-enamelled-cast-iron-makers.html',
   'french-design-decorative-objects.html',
   'le-creuset-dating-guide.html',
   'lecellier-cuivralec.html',

@@ -94,8 +94,9 @@ function itemHref(item) {
   if (document.body.dataset.page === 'collection-item') {
     const mainImg = document.getElementById('mainImage');
     const thumbnails = document.querySelectorAll('.thumbnails img');
+    // A thumbnail may display a small photo and name the large one in data-full (archive pages).
     window._galleryImages = thumbnails.length
-      ? Array.from(thumbnails, img => img.src)
+      ? Array.from(thumbnails, img => (img.dataset && img.dataset.full) || img.src)
       : mainImg ? [mainImg.src] : [];
     window._currentImageIndex = 0;
     return;
