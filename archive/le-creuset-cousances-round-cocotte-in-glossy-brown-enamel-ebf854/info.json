@@ -1,0 +1,108 @@
+{
+  "schema_version": "1",
+  "brand": "cousances",
+  "category": "Cocottes",
+  "markings": [],
+  "dimensions": [
+    {
+      "label": {
+        "en": "Diameter",
+        "fr": "Diamètre"
+      },
+      "value": {
+        "en": "26 cm",
+        "fr": "26 cm"
+      }
+    },
+    {
+      "label": {
+        "en": "Height",
+        "fr": "Hauteur"
+      },
+      "value": {
+        "en": "11 cm",
+        "fr": "11 cm"
+      }
+    }
+  ],
+  "archive_findings": [],
+  "en": {
+    "title": "Le Creuset Cousances Round Cocotte in Glossy Brown Enamel",
+    "meta_description": "Le Creuset Cousances round enamelled cast iron cocotte in brown, measuring 26 cm in diameter and 11 cm in height, with domed lid and dark central knob.",
+    "intro": [
+      "This round Le Creuset Cousances cooking pot features a glossy brown exterior finish, described by the owner as a rare colour. Measuring 26 cm in diameter and 11 cm in height, the body is fitted with two integrated horizontal side loop handles.",
+      "A matching domed round lid covers the vessel, finished with a dark contrasting rim edge and a central flat-topped dark knob."
+    ],
+    "condition": "Surface wear and signs of use are visible across the piece."
+  },
+  "fr": {
+    "title": "Cocotte ronde Le Creuset Cousances en émail marron brillant",
+    "meta_description": "Cocotte ronde Le Creuset Cousances en fonte émaillée marron, diamètre 26 cm et hauteur 11 cm, avec couvercle bombé et bouton supérieur foncé.",
+    "intro": [
+      "Cette cocotte ronde Le Creuset Cousances se distingue par son émail extérieur marron brillant, qualifié de couleur rare par son propriétaire. Elle mesure 26 cm de diamètre pour 11 cm de hauteur et dispose de deux poignées latérales intégrées.",
+      "Le récipient est coiffé d'un couvercle bombé assorti présentant une bordure sombre contrastante et un bouton central plat foncé."
+    ],
+    "condition": "Des marques d'usage et traces d'usure de surface sont visibles sur l'ensemble."
+  },
+  "slug": "le-creuset-cousances-round-cocotte-in-glossy-brown-enamel-ebf854",
+  "date_published": "2026-10-29",
+  "date_modified": "2026-10-29",
+  "photos": [
+    {
+      "key": "archive/le-creuset-cousances-round-cocotte-in-glossy-brown-enamel-ebf854/1-5dd57378-1600.jpg",
+      "width": 1600,
+      "height": 1062,
+      "small": {
+        "key": "archive/le-creuset-cousances-round-cocotte-in-glossy-brown-enamel-ebf854/1-2811be5d-800.jpg",
+        "width": 800,
+        "height": 531
+      },
+      "alt": {
+        "en": "Le Creuset Cousances round brown cocotte with domed lid and side handles",
+        "fr": "Cocotte ronde Le Creuset Cousances marron avec couvercle bombé et poignées"
+      }
+    },
+    {
+      "key": "archive/le-creuset-cousances-round-cocotte-in-glossy-brown-enamel-ebf854/2-0dfc052c-1600.jpg",
+      "width": 1600,
+      "height": 1062,
+      "small": {
+        "key": "archive/le-creuset-cousances-round-cocotte-in-glossy-brown-enamel-ebf854/2-dafa2d36-800.jpg",
+        "width": 800,
+        "height": 531
+      },
+      "alt": {
+        "en": "Side view of the brown Le Creuset Cousances pot showing the black lid knob",
+        "fr": "Vue latérale de la cocotte marron Le Creuset Cousances montrant le bouton noir"
+      }
+    },
+    {
+      "key": "archive/le-creuset-cousances-round-cocotte-in-glossy-brown-enamel-ebf854/3-38388b68-1600.jpg",
+      "width": 1600,
+      "height": 1062,
+      "small": {
+        "key": "archive/le-creuset-cousances-round-cocotte-in-glossy-brown-enamel-ebf854/3-923e3fde-800.jpg",
+        "width": 800,
+        "height": 531
+      },
+      "alt": {
+        "en": "Top view of the brown enamelled lid and the integrated loop handles",
+        "fr": "Vue supérieure du couvercle émaillé marron et des poignées intégrées"
+      }
+    },
+    {
+      "key": "archive/le-creuset-cousances-round-cocotte-in-glossy-brown-enamel-ebf854/4-84d54ed0-1600.jpg",
+      "width": 1600,
+      "height": 1062,
+      "small": {
+        "key": "archive/le-creuset-cousances-round-cocotte-in-glossy-brown-enamel-ebf854/4-167beec8-800.jpg",
+        "width": 800,
+        "height": 531
+      },
+      "alt": {
+        "en": "Close-up of the dark flat-topped knob mounted on the lid",
+        "fr": "Gros plan sur le bouton plat foncé fixé au centre du couvercle"
+      }
+    }
+  ]
+}
