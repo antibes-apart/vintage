@@ -1,0 +1,207 @@
+{
+  "schema_version": "1",
+  "brand": "le-creuset",
+  "category": "Cocottes",
+  "markings": [
+    {
+      "text": "D",
+      "where": {
+        "en": "Lid",
+        "fr": "Couvercle"
+      }
+    },
+    {
+      "text": "D",
+      "where": {
+        "en": "Body",
+        "fr": "Corps"
+      }
+    }
+  ],
+  "dimensions": [
+    {
+      "label": {
+        "en": "Diameter",
+        "fr": "Diamètre"
+      },
+      "value": {
+        "en": "about 20 cm",
+        "fr": "environ 20 cm"
+      }
+    },
+    {
+      "label": {
+        "en": "Height",
+        "fr": "Hauteur"
+      },
+      "value": {
+        "en": "about 10.5 cm",
+        "fr": "environ 10,5 cm"
+      }
+    }
+  ],
+  "archive_findings": [],
+  "en": {
+    "title": "Le Creuset Round Casserole with Integrated Bridge Handle",
+    "meta_description": "Vintage round Le Creuset casserole in orange to red gradient enamel, featuring an integrated lid bridge handle, grey interior, and marked D. Measures 20 cm.",
+    "intro": [
+      "This vintage round Le Creuset casserole is finished in an orange to red gradient exterior with concentric raised rings on the cover. It is distinguished by an integrated cast-iron bridge handle on the lid and matching side loop handles on the base.",
+      "The interior displays a grey enamel finish, while the underside of the lid is orange with a dark outer rim. Both the lid and the base are marked \"D\". The casserole measures approximately 20 cm in diameter excluding handles and 10.5 cm in height."
+    ],
+    "condition": "Chipping and wear are present along the top rim edge of the body and around the base edge. The underside shows surface crazing and discolouration, with dark spotting and wear marks across the interior bottom."
+  },
+  "fr": {
+    "title": "Cocotte ronde Le Creuset avec poignée pont intégrée",
+    "meta_description": "Cocotte ronde vintage Le Creuset en émail dégradé orange à rouge, poignée pont intégrée, intérieur gris et marquée D. Diamètre d'environ 20 cm.",
+    "intro": [
+      "Cette cocotte ronde vintage Le Creuset présente un émail extérieur dégradé orange à rouge et un couvercle orné de cercles concentriques en relief. Elle se distingue par sa poignée pont moulée dans la masse du couvercle et ses deux anses latérales intégrées.",
+      "L'intérieur est revêtu d'un émail gris, tandis que le dessous du couvercle est orange avec un rebord sombre. La cuve et le couvercle portent le marquage « D ». La cocotte mesure environ 20 cm de diamètre hors anses pour 10,5 cm de hauteur."
+    ],
+    "condition": "Des éclats et des traces d'usure sont visibles sur le rebord supérieur de la cuve ainsi que sur le pourtour de la base. Le dessous présente un faïençage avec décoloration, et le fond intérieur montre des taches sombres et des marques d'usure."
+  },
+  "slug": "le-creuset-round-casserole-with-integrated-bridge-handle-e67c3e",
+  "date_published": "2026-10-29",
+  "date_modified": "2026-10-29",
+  "photos": [
+    {
+      "key": "archive/le-creuset-round-casserole-with-integrated-bridge-handle-e67c3e/1-d9f6439f-1600.jpg",
+      "width": 1200,
+      "height": 1600,
+      "small": {
+        "key": "archive/le-creuset-round-casserole-with-integrated-bridge-handle-e67c3e/1-b52264a9-800.jpg",
+        "width": 600,
+        "height": 800
+      },
+      "alt": {
+        "en": "Orange gradient round casserole with lid and integrated bridge handle",
+        "fr": "Cocotte ronde dégradé orange avec couvercle et poignée pont intégrée"
+      }
+    },
+    {
+      "key": "archive/le-creuset-round-casserole-with-integrated-bridge-handle-e67c3e/2-38ad335d-1600.jpg",
+      "width": 1200,
+      "height": 1600,
+      "small": {
+        "key": "archive/le-creuset-round-casserole-with-integrated-bridge-handle-e67c3e/2-bf22cdb4-800.jpg",
+        "width": 600,
+        "height": 800
+      },
+      "alt": {
+        "en": "Lid with concentric raised rings and integrated loop bridge handle",
+        "fr": "Couvercle à cercles concentriques et poignée pont intégrée"
+      }
+    },
+    {
+      "key": "archive/le-creuset-round-casserole-with-integrated-bridge-handle-e67c3e/3-5c938d35-1600.jpg",
+      "width": 1200,
+      "height": 1600,
+      "small": {
+        "key": "archive/le-creuset-round-casserole-with-integrated-bridge-handle-e67c3e/3-b03cd841-800.jpg",
+        "width": 600,
+        "height": 800
+      },
+      "alt": {
+        "en": "Top view of the orange gradient lid showing concentric rings",
+        "fr": "Vue de dessus du couvercle dégradé orange montrant les cercles concentriques"
+      }
+    },
+    {
+      "key": "archive/le-creuset-round-casserole-with-integrated-bridge-handle-e67c3e/4-c1ca776c-1600.jpg",
+      "width": 1200,
+      "height": 1600,
+      "small": {
+        "key": "archive/le-creuset-round-casserole-with-integrated-bridge-handle-e67c3e/4-e230cde9-800.jpg",
+        "width": 600,
+        "height": 800
+      },
+      "alt": {
+        "en": "Open casserole showing the grey interior and orange underside of the lid",
+        "fr": "Cocotte ouverte montrant l'intérieur gris et le dessous orange du couvercle"
+      }
+    },
+    {
+      "key": "archive/le-creuset-round-casserole-with-integrated-bridge-handle-e67c3e/5-35d1303b-1600.jpg",
+      "width": 1200,
+      "height": 1600,
+      "small": {
+        "key": "archive/le-creuset-round-casserole-with-integrated-bridge-handle-e67c3e/5-584e3878-800.jpg",
+        "width": 600,
+        "height": 800
+      },
+      "alt": {
+        "en": "Interior bottom with dark wear spots, alongside the overturned lid",
+        "fr": "Fond intérieur avec taches d'usure sombres, à côté du couvercle retourné"
+      }
+    },
+    {
+      "key": "archive/le-creuset-round-casserole-with-integrated-bridge-handle-e67c3e/6-701338f2-1600.jpg",
+      "width": 1200,
+      "height": 1600,
+      "small": {
+        "key": "archive/le-creuset-round-casserole-with-integrated-bridge-handle-e67c3e/6-875ebfdd-800.jpg",
+        "width": 600,
+        "height": 800
+      },
+      "alt": {
+        "en": "Underside of the base showing the cast mark D and crazing",
+        "fr": "Dessous de la base montrant la lettre D moulée et un faïençage"
+      }
+    },
+    {
+      "key": "archive/le-creuset-round-casserole-with-integrated-bridge-handle-e67c3e/7-e1d39ba3-1600.jpg",
+      "width": 1600,
+      "height": 723,
+      "small": {
+        "key": "archive/le-creuset-round-casserole-with-integrated-bridge-handle-e67c3e/7-12198288-800.jpg",
+        "width": 800,
+        "height": 362
+      },
+      "alt": {
+        "en": "Detail of the base underside displaying discolouration and rim wear",
+        "fr": "Détail du dessous de la base montrant décoloration et usure du bord"
+      }
+    },
+    {
+      "key": "archive/le-creuset-round-casserole-with-integrated-bridge-handle-e67c3e/8-583f08b7-1600.jpg",
+      "width": 1200,
+      "height": 1600,
+      "small": {
+        "key": "archive/le-creuset-round-casserole-with-integrated-bridge-handle-e67c3e/8-641aeb1b-800.jpg",
+        "width": 600,
+        "height": 800
+      },
+      "alt": {
+        "en": "Side profile of the casserole and lid resting on its base",
+        "fr": "Profil latéral de la cocotte et de son couvercle reposant sur la base"
+      }
+    },
+    {
+      "key": "archive/le-creuset-round-casserole-with-integrated-bridge-handle-e67c3e/9-31171784-1600.jpg",
+      "width": 1200,
+      "height": 1600,
+      "small": {
+        "key": "archive/le-creuset-round-casserole-with-integrated-bridge-handle-e67c3e/9-8d504b24-800.jpg",
+        "width": 600,
+        "height": 800
+      },
+      "alt": {
+        "en": "Top-down view of the grey interior showing rim chipping and wear",
+        "fr": "Vue du dessus de l'intérieur gris montrant éclats et usure sur le rebord"
+      }
+    },
+    {
+      "key": "archive/le-creuset-round-casserole-with-integrated-bridge-handle-e67c3e/10-2cbd12a5-1600.jpg",
+      "width": 1200,
+      "height": 1600,
+      "small": {
+        "key": "archive/le-creuset-round-casserole-with-integrated-bridge-handle-e67c3e/10-bc8180bc-800.jpg",
+        "width": 600,
+        "height": 800
+      },
+      "alt": {
+        "en": "Detail of the body rim exhibiting enamel chipping",
+        "fr": "Détail du rebord supérieur de la cuve présentant des éclats d'émail"
+      }
+    }
+  ]
+}
