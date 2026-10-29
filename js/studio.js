@@ -29,6 +29,11 @@
       ownerRequired: 'This studio is reserved for the site owner. Enter the owner key to use it.',
       savingArchive: 'Preparing the photos and saving to the archive…',
       savedArchive: 'Saved to the archive. It will appear on the website once publishing is switched on.',
+      publishing: 'Saved and sent to the website. The page is being built…',
+      published: 'The page is live:',
+      publishFailed: function (code) { return 'Saved, but publishing to the website failed (' + code + '). You can try again.'; },
+      buildFailed: 'The website build failed, so the page is not live. The site keeps its previous version.',
+      publishSlow: 'The page is still being built. Check the website in a few minutes.',
       saveNeedsPhotos: 'The photos are no longer in this page. Start a new object with the same photos to save it to the archive.',
       errors: {
         VISITOR_DAILY_LIMIT: 'You have reached today’s limit. Please come back tomorrow.',
@@ -50,6 +55,8 @@
         REQUEST_TOO_LARGE: 'The photos are too large together. Use fewer photos.',
         ORIGIN_NOT_ALLOWED: 'The studio cannot be used from this address.',
         OWNER_ONLY: 'The studio is reserved for the site owner. Enter the owner key to continue.',
+        PUBLISHING_UNAVAILABLE: 'Publishing to the website is not set up yet.',
+        ARCHIVE_NOT_FOUND: 'This object is no longer in the archive.',
         CONTENT_SEO_REJECTED: 'The archive page text did not pass the checks. Try again or adjust the description.',
         ARCHIVE_UNAVAILABLE: 'The archive is not available yet.',
         STORAGE_FAILED: 'The photos could not be stored. Please try again.',
@@ -79,6 +86,11 @@
       ownerRequired: 'Ce studio est réservé au propriétaire du site. Saisissez la clé propriétaire pour l’utiliser.',
       savingArchive: 'Préparation des photos et enregistrement dans les archives…',
       savedArchive: 'Enregistré dans les archives. La page apparaîtra sur le site dès que la publication sera activée.',
+      publishing: 'Enregistré et envoyé au site. La page est en cours de construction…',
+      published: 'La page est en ligne :',
+      publishFailed: function (code) { return 'Enregistré, mais la publication sur le site a échoué (' + code + '). Vous pouvez réessayer.'; },
+      buildFailed: 'La construction du site a échoué : la page n’est pas en ligne. Le site garde sa version précédente.',
+      publishSlow: 'La page est encore en construction. Vérifiez le site dans quelques minutes.',
       saveNeedsPhotos: 'Les photos ne sont plus dans cette page. Recommencez un nouvel objet avec les mêmes photos pour l’enregistrer dans les archives.',
       errors: {
         VISITOR_DAILY_LIMIT: 'Vous avez atteint la limite du jour. Revenez demain.',
@@ -100,6 +112,8 @@
         REQUEST_TOO_LARGE: 'Les photos sont trop lourdes ensemble. Utilisez moins de photos.',
         ORIGIN_NOT_ALLOWED: 'Le studio ne peut pas être utilisé depuis cette adresse.',
         OWNER_ONLY: 'Le studio est réservé au propriétaire du site. Saisissez la clé propriétaire pour continuer.',
+        PUBLISHING_UNAVAILABLE: 'La publication sur le site n’est pas encore configurée.',
+        ARCHIVE_NOT_FOUND: 'Cet objet n’est plus dans les archives.',
         CONTENT_SEO_REJECTED: 'Le texte de la page d’archive n’a pas passé les contrôles. Réessayez ou ajustez la description.',
         ARCHIVE_UNAVAILABLE: 'Les archives ne sont pas encore disponibles.',
         STORAGE_FAILED: 'Les photos n’ont pas pu être enregistrées. Veuillez réessayer.',
@@ -391,8 +405,61 @@
           small: await preparePhoto(photos[i].file, ARCHIVE_SMALL.attempts, ARCHIVE_SMALL.bytes)
         });
       }
-      await call('/listing/save', { session: state.session, photos: prepared });
+      await call('/listing/save', { session: state.session, photos: prepared }).then(showPublication);
+    } catch (error) {
+      setStatus(errorText(error), true);
+    } finally {
+      busy(false);
+      render();
+    }
+  }
+
+  /* ── Publication (H5): the Worker commits the record; the site's build then deploys the page. ── */
+  var POLL_MS = 20000;
+  var POLL_LIMIT = 45; // about 15 minutes
+  var pollTimer = null;
+  var publishSlug = null;
+
+  function setLinkStatus(text, url) {
+    var el = $('studio-status');
+    el.textContent = text + ' ';
+    var a = document.createElement('a');
+    a.href = url; a.textContent = url; a.target = '_blank'; a.rel = 'noopener';
+    el.appendChild(a);
+    el.classList.remove('studio-status-error');
+  }
+
+  function showPublication(result) {
+    clearTimeout(pollTimer);
+    publishSlug = result.slug || publishSlug;
+    $('studio-publish-retry').hidden = result.publish_status !== 'FAILED';
+    if (result.publish_status === 'PUBLISHED') {
+      setStatus(T.publishing);
+      poll(0);
+    } else if (result.publish_status === 'FAILED') {
+      setStatus(T.publishFailed(result.publish_error || ''), true);
+    } else {
       setStatus(T.savedArchive);
+    }
+  }
+
+  function poll(count) {
+    if (count >= POLL_LIMIT) { setStatus(T.publishSlow); return; }
+    pollTimer = setTimeout(async function () {
+      try {
+        var status = await call('/listing/publish-status', { slug: publishSlug });
+        if (status.deployment === 'LIVE') { setLinkStatus(T.published, status.page_url); return; }
+        if (status.deployment === 'FAILED') { setStatus(T.buildFailed, true); return; }
+      } catch (e) { /* a missed check is retried at the next interval */ }
+      poll(count + 1);
+    }, POLL_MS);
+  }
+
+  async function retryPublish() {
+    if (!publishSlug) return;
+    busy(true);
+    try {
+      showPublication(await call('/listing/publish', { slug: publishSlug }));
     } catch (error) {
       setStatus(errorText(error), true);
     } finally {
@@ -454,6 +521,7 @@
     $('studio-chat-form').addEventListener('submit', revise);
     $('studio-copy').addEventListener('click', copy);
     $('studio-save').addEventListener('click', saveToArchive);
+    $('studio-publish-retry').addEventListener('click', retryPublish);
     $('studio-new').addEventListener('click', reset);
     $('studio-owner-save').addEventListener('click', function () {
       var key = $('studio-owner-key').value.trim();

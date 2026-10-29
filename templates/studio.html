@@ -11,7 +11,7 @@
   <link rel="icon" href="{{BASE}}favicon.ico" sizes="any">
   <link rel="apple-touch-icon" href="{{BASE}}apple-touch-icon.png">
   {{canonicalBlock}}
-  <link rel="stylesheet" href="{{BASE}}css/style.css?v=17">
+  <link rel="stylesheet" href="{{BASE}}css/style.css?v=19">
 </head>
 <body data-page="studio" data-api="{{studioApiBase}}" data-turnstile-sitekey="{{studioTurnstileSiteKey}}">
   {{nav}}
@@ -59,6 +59,7 @@
       </div>
       <div class="studio-archive">
         <button type="button" class="studio-btn" id="studio-save">{{studioSave}}</button>
+        <button type="button" class="studio-btn studio-btn-secondary" id="studio-publish-retry" hidden>{{studioPublishRetry}}</button>
         <p class="studio-hint" id="studio-save-hint">{{studioSaveHint}}</p>
       </div>
       <details class="studio-details" id="studio-details">
@@ -93,6 +94,6 @@
   </main>
   {{contactButtons}}
   {{footer}}
-  <script src="{{BASE}}js/studio.js?v=2"></script>
+  <script src="{{BASE}}js/studio.js?v=3"></script>
 </body>
 </html>

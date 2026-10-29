@@ -2873,6 +2873,11 @@ footer {
   margin-top: 0.5rem;
 }
 
+/* The button style sets a display value, which would otherwise override the hidden attribute. */
+.studio-btn[hidden] {
+  display: none;
+}
+
 .studio-details {
   margin-bottom: 1.25rem;
   font-size: 0.9rem;

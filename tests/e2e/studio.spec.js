@@ -240,6 +240,58 @@ test('archive save errors are explained to the owner', async ({ page }) => {
   await expect(page.locator('#studio-status')).toHaveClass(/studio-status-error/);
 });
 
+test('after saving, the studio follows the publication until the page is live', async ({ page }) => {
+  await page.clock.install();
+  let checks = 0;
+  const requests = await mockApi(page, {
+    '/listing': async () => [200, listing('Vintage Cousances Cocotte', 'A handsome cocotte.')],
+    '/listing/save': async () => [200, { status: 'SAVED', slug: 'vintage-cousances-cocotte-abc123', publish_status: 'PUBLISHED',
+      commit_sha: 'a'.repeat(40), page_url: 'https://cookandcollect.eu/en/archive/vintage-cousances-cocotte-abc123.html', record: {} }],
+    '/listing/publish-status': async () => [200, { slug: 'vintage-cousances-cocotte-abc123', publish_status: 'PUBLISHED',
+      deployment: ++checks < 2 ? 'BUILDING' : 'LIVE', page_url: 'https://cookandcollect.eu/en/archive/vintage-cousances-cocotte-abc123.html' }]
+  });
+  await page.goto(`/en/studio.html?api=${encodeURIComponent(API)}`);
+  await page.locator('#studio-owner-key').fill('owner-admin-key-0123456789abcdef');
+  await page.locator('#studio-owner-save').click();
+  await page.locator('#studio-photos').setInputFiles([await photoFile()]);
+  await page.locator('#studio-generate').click();
+  await expect(page.locator('#studio-listing-title')).toHaveText('Vintage Cousances Cocotte');
+  await page.locator('#studio-save').click();
+  await expect(page.locator('#studio-status')).toHaveText('Saved and sent to the website. The page is being built…');
+  await page.clock.fastForward(20_000);
+  await expect(page.locator('#studio-status')).toHaveText('Saved and sent to the website. The page is being built…');
+  await page.clock.fastForward(20_000);
+  await expect(page.locator('#studio-status')).toHaveText('The page is live: https://cookandcollect.eu/en/archive/vintage-cousances-cocotte-abc123.html');
+  await expect(page.locator('#studio-status a')).toHaveAttribute('href', 'https://cookandcollect.eu/en/archive/vintage-cousances-cocotte-abc123.html');
+  expect(requests.filter(r => r.path === '/listing/publish-status').map(r => r.body)).toEqual([
+    { slug: 'vintage-cousances-cocotte-abc123' }, { slug: 'vintage-cousances-cocotte-abc123' }]);
+});
+
+test('a failed publication can be retried from the studio', async ({ page }) => {
+  const requests = await mockApi(page, {
+    '/listing': async () => [200, listing('Le Creuset Cocotte', 'Text.')],
+    '/listing/save': async () => [200, { status: 'SAVED', slug: 'le-creuset-cocotte-abc123', publish_status: 'FAILED',
+      publish_error: 'GITHUB_FAILED:500', record: {} }],
+    '/listing/publish': async () => [200, { slug: 'le-creuset-cocotte-abc123', publish_status: 'PUBLISHED', commit_sha: 'b'.repeat(40),
+      page_url: 'https://cookandcollect.eu/en/archive/le-creuset-cocotte-abc123.html' }],
+    '/listing/publish-status': async () => [200, { slug: 'le-creuset-cocotte-abc123', publish_status: 'PUBLISHED', deployment: 'BUILDING' }]
+  });
+  await page.goto(`/fr/studio.html?api=${encodeURIComponent(API)}`);
+  await page.locator('#studio-owner-key').fill('owner-admin-key-0123456789abcdef');
+  await page.locator('#studio-owner-save').click();
+  await page.locator('#studio-photos').setInputFiles([await photoFile()]);
+  await page.locator('#studio-generate').click();
+  await expect(page.locator('#studio-listing-title')).toHaveText('Le Creuset Cocotte');
+  await expect(page.locator('#studio-publish-retry')).toBeHidden();
+  await page.locator('#studio-save').click();
+  await expect(page.locator('#studio-status')).toHaveText('Enregistré, mais la publication sur le site a échoué (GITHUB_FAILED:500). Vous pouvez réessayer.');
+  await expect(page.locator('#studio-publish-retry')).toBeVisible();
+  await page.locator('#studio-publish-retry').click();
+  await expect(page.locator('#studio-status')).toHaveText('Enregistré et envoyé au site. La page est en cours de construction…');
+  await expect(page.locator('#studio-publish-retry')).toBeHidden();
+  expect(requests.find(r => r.path === '/listing/publish').body).toEqual({ slug: 'le-creuset-cocotte-abc123' });
+});
+
 test('the API address can only be overridden on a local development host', async ({ page }) => {
   await page.goto(`/en/studio.html?api=${encodeURIComponent('javascript:alert(1)')}`);
   await expect(page.locator('#studio-unavailable')).toBeVisible();
