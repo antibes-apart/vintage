@@ -1,0 +1,158 @@
+{
+  "schema_version": "1",
+  "brand": "other",
+  "category": "Cocottes",
+  "markings": [
+    {
+      "text": "24",
+      "where": {
+        "en": "Lid",
+        "fr": "Couvercle"
+      }
+    },
+    {
+      "text": "FRANCE",
+      "where": {
+        "en": "Lid",
+        "fr": "Couvercle"
+      }
+    },
+    {
+      "text": "FRANCE",
+      "where": {
+        "en": "Body",
+        "fr": "Corps"
+      }
+    }
+  ],
+  "dimensions": [
+    {
+      "label": {
+        "en": "Height",
+        "fr": "Hauteur"
+      },
+      "value": {
+        "en": "about 11.5 cm",
+        "fr": "environ 11,5 cm"
+      }
+    },
+    {
+      "label": {
+        "en": "Diameter",
+        "fr": "Diamètre"
+      },
+      "value": {
+        "en": "about 24 cm",
+        "fr": "environ 24 cm"
+      }
+    }
+  ],
+  "archive_findings": [],
+  "en": {
+    "title": "French Cast Iron Round Cocotte in Green, Marked 24 and FRANCE",
+    "meta_description": "Green French round cast iron cocotte, diameter 24 cm, height 11.5 cm. Spiked underside lid, dark interior, marked 24 and FRANCE.",
+    "intro": [
+      "This round cast iron cocotte features a bright green exterior paired with a dark grey or black interior. The matching green lid is fitted with a central knob and displays raised circular nodules across its underside.",
+      "The body includes two integrated side handles and a bare circular base. Markings include \"FRANCE\" and \"24\" on the lid and body, with dimensions measuring 24 cm in diameter and 11.5 cm in height excluding handles."
+    ],
+    "condition": "Surface marks and discolouration spots are visible across the lid, alongside surface wear and rubbing along the upper rim of the pot."
+  },
+  "fr": {
+    "title": "Cocotte ronde en fonte verte fabriquée en France, marquée 24 et FRANCE",
+    "meta_description": "Cocotte ronde française en fonte verte, diamètre 24 cm, hauteur 11,5 cm. Couvercle à picots, intérieur sombre, marquée 24 et FRANCE.",
+    "intro": [
+      "Cette cocotte ronde en fonte se distingue par son extérieur vert vif contrastant avec un intérieur gris foncé ou noir. Son couvercle assorti présente un bouton central ainsi que des picots circulaires en relief sur sa face inférieure.",
+      "La cuve possède deux poignées latérales intégrées et un fond extérieur circulaire nu. Les mentions « FRANCE » et « 24 » y sont moulées, pour des dimensions de 24 cm de diamètre et 11,5 cm de hauteur hors poignées."
+    ],
+    "condition": "Des marques de surface et des décolorations sont visibles sur le couvercle, ainsi qu'une usure par frottement sur le rebord supérieur de la cuve."
+  },
+  "slug": "french-cast-iron-round-cocotte-in-green-marked-24-and-france-b5986b",
+  "date_published": "2026-10-30",
+  "date_modified": "2026-10-30",
+  "photos": [
+    {
+      "key": "archive/french-cast-iron-round-cocotte-in-green-marked-24-and-france-b5986b/1-cd2ad8d0-1600.jpg",
+      "width": 1200,
+      "height": 1600,
+      "small": {
+        "key": "archive/french-cast-iron-round-cocotte-in-green-marked-24-and-france-b5986b/1-c06ff1bf-800.jpg",
+        "width": 600,
+        "height": 800
+      },
+      "alt": {
+        "en": "Front view of the green round cast iron cocotte with its lid on.",
+        "fr": "Vue de face de la cocotte ronde en fonte verte avec son couvercle."
+      }
+    },
+    {
+      "key": "archive/french-cast-iron-round-cocotte-in-green-marked-24-and-france-b5986b/2-00abd417-1600.jpg",
+      "width": 1200,
+      "height": 1600,
+      "small": {
+        "key": "archive/french-cast-iron-round-cocotte-in-green-marked-24-and-france-b5986b/2-497d7c2b-800.jpg",
+        "width": 600,
+        "height": 800
+      },
+      "alt": {
+        "en": "Circular unpainted underside of the green cast iron cocotte base.",
+        "fr": "Fond circulaire non émaillé sous la base de la cocotte en fonte verte."
+      }
+    },
+    {
+      "key": "archive/french-cast-iron-round-cocotte-in-green-marked-24-and-france-b5986b/3-c7e83319-1600.jpg",
+      "width": 1200,
+      "height": 1600,
+      "small": {
+        "key": "archive/french-cast-iron-round-cocotte-in-green-marked-24-and-france-b5986b/3-d99eeb3d-800.jpg",
+        "width": 600,
+        "height": 800
+      },
+      "alt": {
+        "en": "Dark interior of the green cocotte beside the overturned lid.",
+        "fr": "Intérieur sombre de la cocotte verte posée à côté du couvercle retourné."
+      }
+    },
+    {
+      "key": "archive/french-cast-iron-round-cocotte-in-green-marked-24-and-france-b5986b/4-997afcc4-1600.jpg",
+      "width": 1600,
+      "height": 1200,
+      "small": {
+        "key": "archive/french-cast-iron-round-cocotte-in-green-marked-24-and-france-b5986b/4-43c0571e-800.jpg",
+        "width": 800,
+        "height": 600
+      },
+      "alt": {
+        "en": "Overhead view showing the dark interior cavity and the top rim wear.",
+        "fr": "Vue plongeante montrant la cuve sombre et l'usure du rebord supérieur."
+      }
+    },
+    {
+      "key": "archive/french-cast-iron-round-cocotte-in-green-marked-24-and-france-b5986b/5-fd8f1dbf-1600.jpg",
+      "width": 1200,
+      "height": 1600,
+      "small": {
+        "key": "archive/french-cast-iron-round-cocotte-in-green-marked-24-and-france-b5986b/5-9f688b09-800.jpg",
+        "width": 600,
+        "height": 800
+      },
+      "alt": {
+        "en": "Underside of the lid showing raised circular spikes and central screw.",
+        "fr": "Dessous du couvercle avec picots circulaires en relief et vis centrale."
+      }
+    },
+    {
+      "key": "archive/french-cast-iron-round-cocotte-in-green-marked-24-and-france-b5986b/6-aa88d0e4-1600.jpg",
+      "width": 1200,
+      "height": 1600,
+      "small": {
+        "key": "archive/french-cast-iron-round-cocotte-in-green-marked-24-and-france-b5986b/6-72452313-800.jpg",
+        "width": 600,
+        "height": 800
+      },
+      "alt": {
+        "en": "Side angled view of the closed green cocotte showing side handles.",
+        "fr": "Vue latérale de la cocotte fermée montrant les poignées intégrées."
+      }
+    }
+  ]
+}
