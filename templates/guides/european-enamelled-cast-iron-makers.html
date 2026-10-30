@@ -30,11 +30,12 @@
        LE CREUSET — summarised in one profile; its history, designers and
        dating live on vintage-le-creuset.html and le-creuset-dating-guide.html.
 
-       ARCHIVE — no link to /archive/ yet: it is added once the archive has
-       published pieces, so the guide never ships a dead link.
+       ARCHIVE — linked from the method section (../archive/index.html) since the
+       archive has published pieces (2026-10-30).
 
-       PHOTOGRAPHY — ORIGINAL COOK & COLLECT PHOTOGRAPHY ONLY. Every figure is a
-       placeholder until the photograph is taken; drop the file at the src path.
+       PHOTOGRAPHY — ORIGINAL COOK & COLLECT PHOTOGRAPHY ONLY. The hero is a shop
+       photograph (see img/guides/cast-iron-makers/README.md); the maker figures
+       are placeholders until photographed; drop the file at the src path.
        ───────────────────────────────────────────────────────────── -->
 
   <main>
@@ -67,6 +68,8 @@
 
       <g-figure src="img/guides/cast-iron-makers/european-enamelled-cast-iron-makers-cook-collect.jpeg"
                 hero="true"
+                frame="full"
+                class="guide-figure-portrait"
                 alt="{{guideCastIronHeroAlt}}"
                 caption="{{guideCastIronHeroCaption}}"></g-figure>
 
@@ -177,6 +180,7 @@
       <section class="guide-section" aria-labelledby="guide-method">
         <h2 id="guide-method">{{guideCastIronMethodHeading}}</h2>
         <p>{{guideCastIronMethodP1}}</p>
+        <p class="guide-cta"><a href="../archive/index.html">{{guideCastIronArchiveCta}}</a></p>
         <p class="guide-cta"><a href="../index.html">{{guideCastIronCollectionCta}}</a></p>
       </section>
 

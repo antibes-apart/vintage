@@ -1226,8 +1226,8 @@ const en = {
   guideCastIronSubtitle: 'Who made the cocottes collectors look for, where they worked, and how the makers connect',
   guideCastIronIntro: 'Enamelled cast iron is cast iron with a coating of enamel. In the twentieth century a handful of foundries in France, Belgium and the Netherlands made the pots, cocottes and casseroles that collectors look for today, and several of those names later came under the same owners. This guide introduces seven makers. Every statement comes from a source listed at the end, and where the record is thin we say so rather than fill the gap.',
   guideCastIronMakerNavLabel: 'Makers in this guide',
-  guideCastIronHeroAlt: 'Vintage enamelled cast iron cocottes by several European makers, side by side',
-  guideCastIronHeroCaption: 'Vintage enamelled cast iron from several European makers. Original Cook & Collect photography.',
+  guideCastIronHeroAlt: 'Oval Cousances by Le Creuset cocotte in flame orange enamel, from the Cook and Collect collection',
+  guideCastIronHeroCaption: 'An oval Cousances by Le Creuset cocotte in flame orange enamel. Original Cook & Collect photography.',
   guideCastIronCountryFrance: 'France',
   guideCastIronCountryBelgium: 'Belgium',
   guideCastIronCountryNetherlands: 'The Netherlands',
@@ -1275,6 +1275,7 @@ const en = {
   guideCastIronMethodHeading: 'How This Guide Was Researched',
   guideCastIronMethodP1: 'Every statement on this page comes from a source listed below that we have read: court and heritage records, period press, museum records, company histories and national and regional press. Marketplace listings, auction descriptions and forum posts are not used as sources. Where good sources disagree we say so, and where the record is thin, as it is for Descoware and the early history of Fontignac, we leave the gap open.',
   guideCastIronCollectionCta: 'Browse vintage enamelled cast iron in the Cook & Collect collection.',
+  guideCastIronArchiveCta: 'See the pieces we have documented in the Cook & Collect archive.',
 
   guideCastIronRefHeading: 'Research & References',
   guideCastIronRefIntro: 'The references are ordered by evidential weight: court, heritage and period records first, then museum records, the makers’ own histories, press articles, and finally a collector’s account used only where nothing better exists.',
@@ -1320,7 +1321,7 @@ const en = {
   guideCastIronCardEyebrow: 'European Cast Iron',
   guideCastIronCardTitle: 'Enamelled Cast Iron Makers',
   guideCastIronCardSummary: 'Le Creuset, Cousances, Staub, Invicta, Fontignac, Descoware and DRU: who they were, where they worked, and how they connect.',
-  guideCastIronCardImageAlt: 'Vintage enamelled cast iron cocottes by several European makers',
+  guideCastIronCardImageAlt: 'Oval Cousances by Le Creuset cocotte in flame orange enamel',
 
   // listing studio page (studio.html)
   studioDocTitle: 'Listing studio — Cook & Collect',
@@ -2650,8 +2651,8 @@ const fr = {
   guideCastIronSubtitle: 'Qui fabriquait les cocottes que recherchent les collectionneurs, où, et quels liens unissent ces maisons',
   guideCastIronIntro: 'La fonte émaillée est une fonte revêtue d’émail. Au XXe siècle, une poignée de fonderies en France, en Belgique et aux Pays-Bas ont fabriqué les marmites, cocottes et faitouts que les collectionneurs recherchent aujourd’hui, et plusieurs de ces noms sont ensuite passés entre les mêmes mains. Ce guide présente sept fabricants. Chaque affirmation s’appuie sur une source citée en fin de page, et lorsque les informations manquent, nous le disons plutôt que de combler le vide.',
   guideCastIronMakerNavLabel: 'Fabricants présentés dans ce guide',
-  guideCastIronHeroAlt: 'Cocottes vintage en fonte émaillée de plusieurs fabricants européens, côte à côte',
-  guideCastIronHeroCaption: 'Fonte émaillée vintage de plusieurs fabricants européens. Photographie originale Cook & Collect.',
+  guideCastIronHeroAlt: 'Cocotte ovale Cousances by Le Creuset en émail orange flamme, de la collection Cook and Collect',
+  guideCastIronHeroCaption: 'Une cocotte ovale Cousances by Le Creuset en émail orange flamme. Photographie originale Cook & Collect.',
   guideCastIronCountryFrance: 'France',
   guideCastIronCountryBelgium: 'Belgique',
   guideCastIronCountryNetherlands: 'Pays-Bas',
@@ -2699,6 +2700,7 @@ const fr = {
   guideCastIronMethodHeading: 'Comment ce guide a été préparé',
   guideCastIronMethodP1: 'Chaque affirmation de cette page s’appuie sur une source citée ci-dessous et que nous avons lue : décisions de justice et registres du patrimoine, presse d’époque, fiches de musée, historiques d’entreprises, presse nationale et régionale. Les annonces de vente, descriptions d’enchères et messages de forum ne sont pas utilisés comme sources. Lorsque de bonnes sources divergent, nous le disons, et lorsque les informations sont minces, comme pour Descoware et les débuts de Fontignac, nous laissons la question ouverte.',
   guideCastIronCollectionCta: 'Découvrir la fonte émaillée vintage de la collection Cook & Collect.',
+  guideCastIronArchiveCta: 'Voir les pièces documentées dans les archives Cook & Collect.',
 
   guideCastIronRefHeading: 'Recherches & références',
   guideCastIronRefIntro: 'Les références sont classées par valeur de preuve : décisions de justice, registres du patrimoine et documents d’époque d’abord, puis fiches de musée, historiques des fabricants, articles de presse, et enfin un récit de collectionneur utilisé uniquement faute de mieux.',
@@ -2744,7 +2746,7 @@ const fr = {
   guideCastIronCardEyebrow: 'Fonte européenne',
   guideCastIronCardTitle: 'Les fabricants de fonte émaillée',
   guideCastIronCardSummary: 'Le Creuset, Cousances, Staub, Invicta, Fontignac, Descoware et DRU : qui ils étaient, où ils travaillaient et quels liens les unissent.',
-  guideCastIronCardImageAlt: 'Cocottes vintage en fonte émaillée de plusieurs fabricants européens',
+  guideCastIronCardImageAlt: 'Cocotte ovale Cousances by Le Creuset en émail orange flamme',
 
   // about page
   // page studio d'annonces (studio.html)

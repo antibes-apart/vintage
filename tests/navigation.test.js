@@ -55,9 +55,19 @@ test('the cast iron makers guide is built in both languages and listed in the si
     assert.match(html, /class="guide-section guide-references"/, `${locale}: references section`);
     const ids = [...html.matchAll(/<h2 id="maker-([a-z-]+)"/g)].map(m => m[1]);
     assert.deepEqual(ids, makers, `${locale}: one profile per maker, in order`);
-    assert.doesNotMatch(html, /href="[^"]*archive\//, `${locale}: no archive link until the archive is published`);
+    assert.match(html, /<p class="guide-cta"><a href="\.\.\/archive\/index\.html">/, `${locale}: link to the archive of documented pieces`);
+    assert.match(html, /<img [^>]*src="\.\.\/\.\.\/img\/guides\/cast-iron-makers\/european-enamelled-cast-iron-makers-cook-collect\.jpeg"/,
+      `${locale}: the hero has its photograph`);
   }
   const sitemap = fs.readFileSync(path.join(root, 'sitemap.xml'), 'utf8');
   assert.match(sitemap, new RegExp(`/en/guides/${file.replace(/\./g, '\\.')}<`));
   assert.match(sitemap, new RegExp(`/fr/guides/${file.replace(/\./g, '\\.')}<`));
+  // Its card on the Guides index shows the photograph, not a placeholder.
+  for (const locale of ['en', 'fr']) {
+    const index = fs.readFileSync(path.join(root, locale, 'guides', 'index.html'), 'utf8');
+    const card = index.match(new RegExp(`<a class="guide-index-card-link" href="${file.replace(/\./g, '\\.')}">([\\s\\S]*?)</a>`));
+    assert.ok(card, `${locale}: card on the index`);
+    assert.match(card[1], /<img src="\.\.\/\.\.\/img\/guides\/cast-iron-makers\//, `${locale}: card photograph`);
+    assert.doesNotMatch(card[1], /guide-figure-pending/, `${locale}: no placeholder on the card`);
+  }
 });
