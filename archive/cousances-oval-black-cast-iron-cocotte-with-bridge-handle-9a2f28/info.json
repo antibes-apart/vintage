@@ -1,0 +1,182 @@
+{
+  "schema_version": "1",
+  "brand": "cousances",
+  "category": "Cocottes",
+  "markings": [
+    {
+      "text": "9",
+      "where": {
+        "en": "Lid",
+        "fr": "Couvercle"
+      }
+    },
+    {
+      "text": "9",
+      "where": {
+        "en": "Body",
+        "fr": "Corps"
+      }
+    },
+    {
+      "text": "COUSANCES FRANCE",
+      "where": {
+        "en": "Body",
+        "fr": "Corps"
+      }
+    }
+  ],
+  "dimensions": [
+    {
+      "label": {
+        "en": "Width",
+        "fr": "Largeur"
+      },
+      "value": {
+        "en": "about 19.5 cm",
+        "fr": "environ 19,5 cm"
+      }
+    },
+    {
+      "label": {
+        "en": "Length",
+        "fr": "Longueur"
+      },
+      "value": {
+        "en": "about 25.5 cm",
+        "fr": "environ 25,5 cm"
+      }
+    },
+    {
+      "label": {
+        "en": "Height",
+        "fr": "Hauteur"
+      },
+      "value": {
+        "en": "about 10.5 cm",
+        "fr": "environ 10,5 cm"
+      }
+    }
+  ],
+  "archive_findings": [],
+  "en": {
+    "title": "Cousances Oval Black Cast Iron Cocotte with Bridge Handle Lid",
+    "meta_description": "Oval matte black Cousances cast iron cocotte with bridge handle lid, measuring approximately 25.5 cm by 19.5 cm, marked COUSANCES FRANCE and 9.",
+    "intro": [
+      "This matte dark grey or black oval lidded vessel by Cousances features integrated side loop handles and a matching lid with a central cast bridge handle.",
+      "The ribbed exterior base is embossed with the marking COUSANCES FRANCE and the number 9, which also appears marked on the lid. The inner dimensions measure approximately 25.5 cm in length by 19.5 cm in width, with a body height of approximately 10.5 cm."
+    ],
+    "condition": "The interior base shows slight discoloration and minor surface variation. The upper rim of the body and lid display an exposed lighter edge."
+  },
+  "fr": {
+    "title": "Cocotte ovale en fonte noire Cousances avec couvercle à anse pont",
+    "meta_description": "Cocotte ovale Cousances en fonte noire mate avec couvercle à anse pont, mesurant environ 25,5 cm sur 19,5 cm, marquée COUSANCES FRANCE et 9.",
+    "intro": [
+      "Cette cocotte ovale Cousances de couleur noir mat ou gris foncé est équipée de poignées latérales intégrées et d'un couvercle surmonté d'une poignée pont.",
+      "Le dessous rainuré de la base porte l'inscription en relief COUSANCES FRANCE ainsi que le chiffre 9, également visible sur le couvercle. L'intérieur mesure environ 25,5 cm de longueur pour 19,5 cm de largeur, avec une hauteur de cuve d'environ 10,5 cm."
+    ],
+    "condition": "Le fond intérieur présente de légères décolorations et de menues variations de surface. Les rebords de la cuve et du couvercle laissent apparaître une tranche plus claire."
+  },
+  "slug": "cousances-oval-black-cast-iron-cocotte-with-bridge-handle-9a2f28",
+  "date_published": "2026-10-30",
+  "date_modified": "2026-10-30",
+  "photos": [
+    {
+      "key": "archive/cousances-oval-black-cast-iron-cocotte-with-bridge-handle-9a2f28/1-7b346c04-1600.jpg",
+      "width": 1200,
+      "height": 1600,
+      "small": {
+        "key": "archive/cousances-oval-black-cast-iron-cocotte-with-bridge-handle-9a2f28/1-71f3f6a0-800.jpg",
+        "width": 600,
+        "height": 800
+      },
+      "alt": {
+        "en": "Black oval Cousances cocotte viewed with its fitted bridge-handle lid.",
+        "fr": "Cocotte ovale noire Cousances vue avec son couvercle à poignée pont."
+      }
+    },
+    {
+      "key": "archive/cousances-oval-black-cast-iron-cocotte-with-bridge-handle-9a2f28/2-be19f3d4-1600.jpg",
+      "width": 1200,
+      "height": 1600,
+      "small": {
+        "key": "archive/cousances-oval-black-cast-iron-cocotte-with-bridge-handle-9a2f28/2-e38049d3-800.jpg",
+        "width": 600,
+        "height": 800
+      },
+      "alt": {
+        "en": "Interior of the black oval body showing the inner cooking surface and exposed rim.",
+        "fr": "Intérieur de la cuve ovale noire montrant la surface de cuisson et le rebord."
+      }
+    },
+    {
+      "key": "archive/cousances-oval-black-cast-iron-cocotte-with-bridge-handle-9a2f28/3-fb956911-1600.jpg",
+      "width": 1200,
+      "height": 1600,
+      "small": {
+        "key": "archive/cousances-oval-black-cast-iron-cocotte-with-bridge-handle-9a2f28/3-9a01521b-800.jpg",
+        "width": 600,
+        "height": 800
+      },
+      "alt": {
+        "en": "Oval black pot shown beside its lid, displaying the interior surface.",
+        "fr": "Cocotte ovale noire posée à côté de son couvercle, montrant l'intérieur."
+      }
+    },
+    {
+      "key": "archive/cousances-oval-black-cast-iron-cocotte-with-bridge-handle-9a2f28/4-d8b65a2d-1600.jpg",
+      "width": 1200,
+      "height": 1600,
+      "small": {
+        "key": "archive/cousances-oval-black-cast-iron-cocotte-with-bridge-handle-9a2f28/4-be58ba2a-800.jpg",
+        "width": 600,
+        "height": 800
+      },
+      "alt": {
+        "en": "Ribbed base exterior embossed with COUSANCES FRANCE and the number 9.",
+        "fr": "Dessous rainuré marqué en relief COUSANCES FRANCE et le numéro 9."
+      }
+    },
+    {
+      "key": "archive/cousances-oval-black-cast-iron-cocotte-with-bridge-handle-9a2f28/5-00fec9c5-1600.jpg",
+      "width": 1600,
+      "height": 1200,
+      "small": {
+        "key": "archive/cousances-oval-black-cast-iron-cocotte-with-bridge-handle-9a2f28/5-4e6335c7-800.jpg",
+        "width": 800,
+        "height": 600
+      },
+      "alt": {
+        "en": "Cousances Oval Black Cast Iron Cocotte with Bridge Handle Lid — photo 5",
+        "fr": "Cocotte ovale en fonte noire Cousances avec couvercle à anse pont — photo 5"
+      }
+    },
+    {
+      "key": "archive/cousances-oval-black-cast-iron-cocotte-with-bridge-handle-9a2f28/6-63b13302-1600.jpg",
+      "width": 1600,
+      "height": 1200,
+      "small": {
+        "key": "archive/cousances-oval-black-cast-iron-cocotte-with-bridge-handle-9a2f28/6-cce99400-800.jpg",
+        "width": 800,
+        "height": 600
+      },
+      "alt": {
+        "en": "Cousances Oval Black Cast Iron Cocotte with Bridge Handle Lid — photo 6",
+        "fr": "Cocotte ovale en fonte noire Cousances avec couvercle à anse pont — photo 6"
+      }
+    },
+    {
+      "key": "archive/cousances-oval-black-cast-iron-cocotte-with-bridge-handle-9a2f28/7-7d66ba48-1600.jpg",
+      "width": 1200,
+      "height": 1600,
+      "small": {
+        "key": "archive/cousances-oval-black-cast-iron-cocotte-with-bridge-handle-9a2f28/7-79d34bcb-800.jpg",
+        "width": 600,
+        "height": 800
+      },
+      "alt": {
+        "en": "Side profile of the oval black body showing the side handle and exposed rim.",
+        "fr": "Vue latérale de la cuve ovale noire montrant la poignée et le rebord."
+      }
+    }
+  ]
+}
