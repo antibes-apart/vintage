@@ -1,0 +1,200 @@
+{
+  "schema_version": "1",
+  "brand": "staub",
+  "category": "Cocottes",
+  "markings": [
+    {
+      "text": "31",
+      "where": {
+        "en": "Lid",
+        "fr": "Couvercle"
+      }
+    }
+  ],
+  "dimensions": [
+    {
+      "label": {
+        "en": "Length",
+        "fr": "Longueur"
+      },
+      "value": {
+        "en": "about 31 cm",
+        "fr": "environ 31 cm"
+      }
+    },
+    {
+      "label": {
+        "en": "Height",
+        "fr": "Hauteur"
+      },
+      "value": {
+        "en": "about 13 cm",
+        "fr": "environ 13 cm"
+      }
+    }
+  ],
+  "archive_findings": [],
+  "en": {
+    "title": "Nomar Paul Bocuse Oval Automijoteur Cocotte in Matte Black, 31 cm",
+    "meta_description": "Nomar Paul Bocuse automijoteur oval cocotte in matte black with blue underside base. Measures 31 cm long and 13 cm high, marked 31 under the lid.",
+    "intro": [
+      "Distinguished by its sculpted lid handle with an open circular cutout and stepped oval tiers, this cast iron automijoteur combines a matte black exterior with a glossy dark blue or teal underside.",
+      "The underside of the fitted oval lid displays radiating wavy condensation spikes alongside an embossed 31. Excluding handles, the body measures approximately 31 cm in length and 13 cm in height."
+    ],
+    "condition": "A vertical crack extends downwards from the upper rim of the body. Surface wear and light marks appear along the rim and base."
+  },
+  "fr": {
+    "title": "Cocotte automijoteur ovale Nomar Paul Bocuse en noir mat, 31 cm",
+    "meta_description": "Cocotte automijoteur ovale Nomar Paul Bocuse noir mat à fond bleu. Longueur de 31 cm, hauteur de 13 cm, numéro 31 embossé sous le couvercle.",
+    "intro": [
+      "Remarquable par sa poignée de couvercle ajourée d'un anneau central et ses gradins ovales, cet automijoteur associe une finition extérieure noir mat à une base émaillée bleu foncé ou sarcelle.",
+      "Le revers du couvercle présente des nervures ondulées rayonnantes ainsi que le numéro 31 en relief. Hors poignées, la cuve mesure environ 31 cm de long pour 13 cm de hauteur."
+    ],
+    "condition": "Une fissure verticale descend depuis le rebord supérieur de la cuve. Des marques d'usure superficielles sont visibles sur le rebord et le fond."
+  },
+  "slug": "nomar-paul-bocuse-oval-automijoteur-cocotte-in-matte-black-157cad",
+  "date_published": "2026-10-30",
+  "date_modified": "2026-10-30",
+  "photos": [
+    {
+      "key": "archive/nomar-paul-bocuse-oval-automijoteur-cocotte-in-matte-black-157cad/1-259157c9-1600.jpg",
+      "width": 1600,
+      "height": 1600,
+      "small": {
+        "key": "archive/nomar-paul-bocuse-oval-automijoteur-cocotte-in-matte-black-157cad/1-5584dbd9-800.jpg",
+        "width": 800,
+        "height": 800
+      },
+      "alt": {
+        "en": "Matte black oval cocotte with fitted stepped lid and open-ring handle, front view",
+        "fr": "Cocotte ovale noir mat avec couvercle à gradins et poignée ajourée, vue de face"
+      }
+    },
+    {
+      "key": "archive/nomar-paul-bocuse-oval-automijoteur-cocotte-in-matte-black-157cad/2-a0d8a96c-1600.jpg",
+      "width": 1600,
+      "height": 1600,
+      "small": {
+        "key": "archive/nomar-paul-bocuse-oval-automijoteur-cocotte-in-matte-black-157cad/2-0957ed31-800.jpg",
+        "width": 800,
+        "height": 800
+      },
+      "alt": {
+        "en": "Three-quarter view of the matte black oval automijoteur showing side handle and stepped lid",
+        "fr": "Vue de trois-quarts de l'automijoteur ovale noir mat avec poignée latérale et couvercle"
+      }
+    },
+    {
+      "key": "archive/nomar-paul-bocuse-oval-automijoteur-cocotte-in-matte-black-157cad/3-8c24b021-1600.jpg",
+      "width": 1600,
+      "height": 1600,
+      "small": {
+        "key": "archive/nomar-paul-bocuse-oval-automijoteur-cocotte-in-matte-black-157cad/3-f7c9521e-800.jpg",
+        "width": 800,
+        "height": 800
+      },
+      "alt": {
+        "en": "Black interior of the oval cocotte showing a vertical crack descending from the rim",
+        "fr": "Intérieur noir de la cocotte ovale montrant une fissure verticale depuis le rebord"
+      }
+    },
+    {
+      "key": "archive/nomar-paul-bocuse-oval-automijoteur-cocotte-in-matte-black-157cad/4-588414cc-1600.jpg",
+      "width": 1600,
+      "height": 1600,
+      "small": {
+        "key": "archive/nomar-paul-bocuse-oval-automijoteur-cocotte-in-matte-black-157cad/4-0b40473d-800.jpg",
+        "width": 800,
+        "height": 800
+      },
+      "alt": {
+        "en": "Overhead view into the black interior base of the oval body",
+        "fr": "Vue plongeante de l'intérieur noir de la cocotte ovale"
+      }
+    },
+    {
+      "key": "archive/nomar-paul-bocuse-oval-automijoteur-cocotte-in-matte-black-157cad/5-d7537646-1600.jpg",
+      "width": 1600,
+      "height": 1600,
+      "small": {
+        "key": "archive/nomar-paul-bocuse-oval-automijoteur-cocotte-in-matte-black-157cad/5-65900eae-800.jpg",
+        "width": 800,
+        "height": 800
+      },
+      "alt": {
+        "en": "Underside of the lid with radial wavy ridges and embossed number 31 beside the open pot",
+        "fr": "Revers du couvercle à nervures ondulantes et chiffre 31 embossé à côté de la cuve"
+      }
+    },
+    {
+      "key": "archive/nomar-paul-bocuse-oval-automijoteur-cocotte-in-matte-black-157cad/6-8435304b-1600.jpg",
+      "width": 1600,
+      "height": 1600,
+      "small": {
+        "key": "archive/nomar-paul-bocuse-oval-automijoteur-cocotte-in-matte-black-157cad/6-139b44ce-800.jpg",
+        "width": 800,
+        "height": 800
+      },
+      "alt": {
+        "en": "Close-up of the hairline crack extending down from the upper edge of the rim",
+        "fr": "Gros plan sur la fissure verticale partant du bord supérieur de la cuve"
+      }
+    },
+    {
+      "key": "archive/nomar-paul-bocuse-oval-automijoteur-cocotte-in-matte-black-157cad/7-782cf030-1600.jpg",
+      "width": 1600,
+      "height": 1600,
+      "small": {
+        "key": "archive/nomar-paul-bocuse-oval-automijoteur-cocotte-in-matte-black-157cad/7-43da4659-800.jpg",
+        "width": 800,
+        "height": 800
+      },
+      "alt": {
+        "en": "Side profile of the assembled oval roaster showing the two-tone exterior and stepped lid",
+        "fr": "Profil de la cocotte ovale assemblée montrant l'extérieur bicolore et le couvercle à gradins"
+      }
+    },
+    {
+      "key": "archive/nomar-paul-bocuse-oval-automijoteur-cocotte-in-matte-black-157cad/8-e09ad23a-1600.jpg",
+      "width": 1600,
+      "height": 1600,
+      "small": {
+        "key": "archive/nomar-paul-bocuse-oval-automijoteur-cocotte-in-matte-black-157cad/8-6b1e7c77-800.jpg",
+        "width": 800,
+        "height": 800
+      },
+      "alt": {
+        "en": "Exterior side view highlighting the loop handle and hairline crack on the rim",
+        "fr": "Vue latérale extérieure soulignant la poignée intégrée et la fissure sur le rebord"
+      }
+    },
+    {
+      "key": "archive/nomar-paul-bocuse-oval-automijoteur-cocotte-in-matte-black-157cad/9-bcc1227e-1600.jpg",
+      "width": 1600,
+      "height": 1600,
+      "small": {
+        "key": "archive/nomar-paul-bocuse-oval-automijoteur-cocotte-in-matte-black-157cad/9-8afc4849-800.jpg",
+        "width": 800,
+        "height": 800
+      },
+      "alt": {
+        "en": "Glossy teal-blue enamelled base on the underside of the matte black body",
+        "fr": "Fond extérieur émaillé bleu sarcelle brillant sous la cuve noir mat"
+      }
+    },
+    {
+      "key": "archive/nomar-paul-bocuse-oval-automijoteur-cocotte-in-matte-black-157cad/10-bcc00b49-1600.jpg",
+      "width": 1600,
+      "height": 1600,
+      "small": {
+        "key": "archive/nomar-paul-bocuse-oval-automijoteur-cocotte-in-matte-black-157cad/10-09d13393-800.jpg",
+        "width": 800,
+        "height": 800
+      },
+      "alt": {
+        "en": "Detail view of the vertical crack visible on the upper wall and rim",
+        "fr": "Détail de la fissure verticale visible sur la paroi supérieure et le rebord"
+      }
+    }
+  ]
+}
