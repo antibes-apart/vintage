@@ -159,10 +159,14 @@
     try { if (value === null) s.removeItem(key); else s.setItem(key, value); } catch (e) { /* storage full or blocked */ }
   }
 
-  function setStatus(text, isError) {
-    var el = $('studio-status');
+  function setStatus(text, isError, id) {
+    var el = $(id || 'studio-status');
     el.textContent = text || '';
     el.classList.toggle('studio-status-error', !!isError);
+  }
+  // Messages about saving and publishing appear under the Save button, where the owner is looking.
+  function setSaveStatus(text, isError) {
+    setStatus(text, isError, 'studio-save-status');
   }
 
   function busy(on) {
@@ -394,9 +398,12 @@
   }
 
   async function saveToArchive() {
-    if (!state || !photos.length) { setStatus(T.saveNeedsPhotos, true); return; }
+    if (!state || !photos.length) { setSaveStatus(T.saveNeedsPhotos, true); return; }
     busy(true);
-    setStatus(T.savingArchive);
+    // Clear the message at the top (e.g. "Description ready.") so only the save line speaks.
+    setStatus('');
+    $('studio-publish-retry').hidden = true;
+    setSaveStatus(T.savingArchive);
     try {
       var prepared = [];
       for (var i = 0; i < photos.length; i++) {
@@ -407,7 +414,7 @@
       }
       await call('/listing/save', { session: state.session, photos: prepared }).then(showPublication);
     } catch (error) {
-      setStatus(errorText(error), true);
+      setSaveStatus(errorText(error), true);
     } finally {
       busy(false);
       render();
@@ -421,7 +428,7 @@
   var publishSlug = null;
 
   function setLinkStatus(text, url) {
-    var el = $('studio-status');
+    var el = $('studio-save-status');
     el.textContent = text + ' ';
     var a = document.createElement('a');
     a.href = url; a.textContent = url; a.target = '_blank'; a.rel = 'noopener';
@@ -434,22 +441,22 @@
     publishSlug = result.slug || publishSlug;
     $('studio-publish-retry').hidden = result.publish_status !== 'FAILED';
     if (result.publish_status === 'PUBLISHED') {
-      setStatus(T.publishing);
+      setSaveStatus(T.publishing);
       poll(0);
     } else if (result.publish_status === 'FAILED') {
-      setStatus(T.publishFailed(result.publish_error || ''), true);
+      setSaveStatus(T.publishFailed(result.publish_error || ''), true);
     } else {
-      setStatus(T.savedArchive);
+      setSaveStatus(T.savedArchive);
     }
   }
 
   function poll(count) {
-    if (count >= POLL_LIMIT) { setStatus(T.publishSlow); return; }
+    if (count >= POLL_LIMIT) { setSaveStatus(T.publishSlow); return; }
     pollTimer = setTimeout(async function () {
       try {
         var status = await call('/listing/publish-status', { slug: publishSlug });
         if (status.deployment === 'LIVE') { setLinkStatus(T.published, status.page_url); return; }
-        if (status.deployment === 'FAILED') { setStatus(T.buildFailed, true); return; }
+        if (status.deployment === 'FAILED') { setSaveStatus(T.buildFailed, true); return; }
       } catch (e) { /* a missed check is retried at the next interval */ }
       poll(count + 1);
     }, POLL_MS);
@@ -461,7 +468,7 @@
     try {
       showPublication(await call('/listing/publish', { slug: publishSlug }));
     } catch (error) {
-      setStatus(errorText(error), true);
+      setSaveStatus(errorText(error), true);
     } finally {
       busy(false);
       render();
@@ -480,6 +487,9 @@
 
   function reset() {
     state = null;
+    clearTimeout(pollTimer);
+    setSaveStatus('');
+    $('studio-publish-retry').hidden = true;
     save(KEYS.session, null, 'session');
     photos.forEach(function (photo) { URL.revokeObjectURL(photo.url); });
     photos = [];

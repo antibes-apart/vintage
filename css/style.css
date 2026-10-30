@@ -2873,6 +2873,11 @@ footer {
   margin-top: 0.5rem;
 }
 
+/* Status line under the Save button: closer to it, no extra space below. */
+.studio-archive .studio-status {
+  margin: 0.75rem 0 0;
+}
+
 /* The button style sets a display value, which would otherwise override the hidden attribute. */
 .studio-btn[hidden] {
   display: none;

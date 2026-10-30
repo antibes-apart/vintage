@@ -203,7 +203,10 @@ test('the owner saves the object to the archive with both photo sizes prepared i
 
   await expect(page.locator('#studio-save')).toBeEnabled();
   await page.locator('#studio-save').click();
-  await expect(page.locator('#studio-status')).toHaveText('Saved to the archive. It will appear on the website once publishing is switched on.');
+  await expect(page.locator('#studio-save-status')).toHaveText('Saved to the archive. It will appear on the website once publishing is switched on.');
+  // The save messages sit right under the button, not in the status line at the top of the result.
+  await expect(page.locator('.studio-archive #studio-save-status')).toBeVisible();
+  await expect(page.locator('#studio-status')).toHaveText('');
   const saved = requests.find(r => r.path === '/listing/save');
   expect(saved.authorization).toBe('Bearer owner-admin-key-0123456789abcdef');
   expect(saved.body.session).toBe('session-25');
@@ -236,8 +239,8 @@ test('archive save errors are explained to the owner', async ({ page }) => {
   await page.locator('#studio-generate').click();
   await expect(page.locator('#studio-listing-title')).toHaveText('Le Creuset Cocotte');
   await page.locator('#studio-save').click();
-  await expect(page.locator('#studio-status')).toHaveText('Le texte de la page d’archive n’a pas passé les contrôles. Réessayez ou ajustez la description.');
-  await expect(page.locator('#studio-status')).toHaveClass(/studio-status-error/);
+  await expect(page.locator('#studio-save-status')).toHaveText('Le texte de la page d’archive n’a pas passé les contrôles. Réessayez ou ajustez la description.');
+  await expect(page.locator('#studio-save-status')).toHaveClass(/studio-status-error/);
 });
 
 test('after saving, the studio follows the publication until the page is live', async ({ page }) => {
@@ -257,12 +260,12 @@ test('after saving, the studio follows the publication until the page is live', 
   await page.locator('#studio-generate').click();
   await expect(page.locator('#studio-listing-title')).toHaveText('Vintage Cousances Cocotte');
   await page.locator('#studio-save').click();
-  await expect(page.locator('#studio-status')).toHaveText('Saved and sent to the website. The page is being built…');
+  await expect(page.locator('#studio-save-status')).toHaveText('Saved and sent to the website. The page is being built…');
   await page.clock.fastForward(20_000);
-  await expect(page.locator('#studio-status')).toHaveText('Saved and sent to the website. The page is being built…');
+  await expect(page.locator('#studio-save-status')).toHaveText('Saved and sent to the website. The page is being built…');
   await page.clock.fastForward(20_000);
-  await expect(page.locator('#studio-status')).toHaveText('The page is live: https://cookandcollect.eu/en/archive/vintage-cousances-cocotte-abc123.html');
-  await expect(page.locator('#studio-status a')).toHaveAttribute('href', 'https://cookandcollect.eu/en/archive/vintage-cousances-cocotte-abc123.html');
+  await expect(page.locator('#studio-save-status')).toHaveText('The page is live: https://cookandcollect.eu/en/archive/vintage-cousances-cocotte-abc123.html');
+  await expect(page.locator('#studio-save-status a')).toHaveAttribute('href', 'https://cookandcollect.eu/en/archive/vintage-cousances-cocotte-abc123.html');
   expect(requests.filter(r => r.path === '/listing/publish-status').map(r => r.body)).toEqual([
     { slug: 'vintage-cousances-cocotte-abc123' }, { slug: 'vintage-cousances-cocotte-abc123' }]);
 });
@@ -284,10 +287,10 @@ test('a failed publication can be retried from the studio', async ({ page }) => 
   await expect(page.locator('#studio-listing-title')).toHaveText('Le Creuset Cocotte');
   await expect(page.locator('#studio-publish-retry')).toBeHidden();
   await page.locator('#studio-save').click();
-  await expect(page.locator('#studio-status')).toHaveText('Enregistré, mais la publication sur le site a échoué (GITHUB_FAILED:500). Vous pouvez réessayer.');
+  await expect(page.locator('#studio-save-status')).toHaveText('Enregistré, mais la publication sur le site a échoué (GITHUB_FAILED:500). Vous pouvez réessayer.');
   await expect(page.locator('#studio-publish-retry')).toBeVisible();
   await page.locator('#studio-publish-retry').click();
-  await expect(page.locator('#studio-status')).toHaveText('Enregistré et envoyé au site. La page est en cours de construction…');
+  await expect(page.locator('#studio-save-status')).toHaveText('Enregistré et envoyé au site. La page est en cours de construction…');
   await expect(page.locator('#studio-publish-retry')).toBeHidden();
   expect(requests.find(r => r.path === '/listing/publish').body).toEqual({ slug: 'le-creuset-cocotte-abc123' });
 });
