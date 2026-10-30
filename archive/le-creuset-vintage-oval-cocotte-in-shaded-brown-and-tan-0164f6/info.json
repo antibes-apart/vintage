@@ -1,0 +1,161 @@
+{
+  "schema_version": "1",
+  "brand": "le-creuset",
+  "category": "Cocottes",
+  "markings": [
+    {
+      "text": "33",
+      "where": {
+        "en": "Lid",
+        "fr": "Couvercle"
+      }
+    },
+    {
+      "text": "LE CREUSET MADE IN FRANCE 33",
+      "where": {
+        "en": "Body",
+        "fr": "Corps"
+      }
+    }
+  ],
+  "dimensions": [
+    {
+      "label": {
+        "en": "Width",
+        "fr": "Largeur"
+      },
+      "value": {
+        "en": "about 26 cm",
+        "fr": "environ 26 cm"
+      }
+    },
+    {
+      "label": {
+        "en": "Length",
+        "fr": "Longueur"
+      },
+      "value": {
+        "en": "about 33 cm",
+        "fr": "environ 33 cm"
+      }
+    },
+    {
+      "label": {
+        "en": "Height",
+        "fr": "Hauteur"
+      },
+      "value": {
+        "en": "about 12.5 cm",
+        "fr": "environ 12,5 cm"
+      }
+    }
+  ],
+  "archive_findings": [],
+  "en": {
+    "title": "Le Creuset Vintage Oval Cocotte in Shaded Brown and Tan",
+    "meta_description": "Vintage Le Creuset oval cocotte in shaded brown with a blue base, design Barault. Features recessed lid bar handle and marked LE CREUSET MADE IN FRANCE 33.",
+    "intro": [
+      "Finished in shaded brown and tan tones with an unexpected blue underside, this vintage Le Creuset oval cocotte reflects a design Barault. It features two integrated side handles and a fitted lid set with a dark central bar handle along a recessed channel.",
+      "The body measures approximately 33 cm in length and 26 cm in width across the rim excluding handles, with a height of 12.5 cm. The base is marked \"LE CREUSET MADE IN FRANCE 33\", and the underside of the lid bears the marking \"33\"."
+    ],
+    "condition": "Surface scratches are visible on the blue exterior base."
+  },
+  "fr": {
+    "title": "Cocotte ovale vintage Le Creuset en dégradé de brun et beige",
+    "meta_description": "Cocotte ovale vintage Le Creuset brun dégradé et dessous bleu, design Barault. Couvercle à poignée barre encastrée, marquée LE CREUSET MADE IN FRANCE 33.",
+    "intro": [
+      "Parée d'un dégradé de tons bruns et beiges avec une base émaillée bleue contrastante, cette cocotte ovale vintage Le Creuset présente un design Barault. Elle est équipée de deux poignées latérales intégrées et d'un couvercle assorti doté d'une poignée centrale sombre logée dans une gorge.",
+      "La cuve mesure environ 33 cm de longueur et 26 cm de largeur au rebord hors poignées, pour une hauteur de 12,5 cm. Le dessous porte l'inscription « LE CREUSET MADE IN FRANCE 33 », et le revers du couvercle est marqué « 33 »."
+    ],
+    "condition": "Des rayures de surface sont visibles sur le fond extérieur bleu."
+  },
+  "slug": "le-creuset-vintage-oval-cocotte-in-shaded-brown-and-tan-0164f6",
+  "date_published": "2026-10-30",
+  "date_modified": "2026-10-30",
+  "photos": [
+    {
+      "key": "archive/le-creuset-vintage-oval-cocotte-in-shaded-brown-and-tan-0164f6/1-8c9e83f4-1600.jpg",
+      "width": 1200,
+      "height": 1600,
+      "small": {
+        "key": "archive/le-creuset-vintage-oval-cocotte-in-shaded-brown-and-tan-0164f6/1-6235266c-800.jpg",
+        "width": 600,
+        "height": 800
+      },
+      "alt": {
+        "en": "Vintage Le Creuset oval cocotte with lid in shaded brown and tan.",
+        "fr": "Cocotte ovale vintage Le Creuset avec couvercle en dégradé de brun et beige."
+      }
+    },
+    {
+      "key": "archive/le-creuset-vintage-oval-cocotte-in-shaded-brown-and-tan-0164f6/2-b480e49e-1600.jpg",
+      "width": 1200,
+      "height": 1600,
+      "small": {
+        "key": "archive/le-creuset-vintage-oval-cocotte-in-shaded-brown-and-tan-0164f6/2-6dddbe3a-800.jpg",
+        "width": 600,
+        "height": 800
+      },
+      "alt": {
+        "en": "Cocotte body with off-white interior and inverted lid.",
+        "fr": "Cuve de cocotte à intérieur blanc cassé et couvercle retourné."
+      }
+    },
+    {
+      "key": "archive/le-creuset-vintage-oval-cocotte-in-shaded-brown-and-tan-0164f6/3-76caf557-1600.jpg",
+      "width": 1200,
+      "height": 1600,
+      "small": {
+        "key": "archive/le-creuset-vintage-oval-cocotte-in-shaded-brown-and-tan-0164f6/3-ef686966-800.jpg",
+        "width": 600,
+        "height": 800
+      },
+      "alt": {
+        "en": "Blue underside of base showing LE CREUSET MADE IN FRANCE 33 marking.",
+        "fr": "Dessous bleu de la cuve avec marquage LE CREUSET MADE IN FRANCE 33."
+      }
+    },
+    {
+      "key": "archive/le-creuset-vintage-oval-cocotte-in-shaded-brown-and-tan-0164f6/4-b58dcef6-1600.jpg",
+      "width": 1200,
+      "height": 1600,
+      "small": {
+        "key": "archive/le-creuset-vintage-oval-cocotte-in-shaded-brown-and-tan-0164f6/4-f6569583-800.jpg",
+        "width": 600,
+        "height": 800
+      },
+      "alt": {
+        "en": "Side view showing interior of cocotte and inner rim of lid.",
+        "fr": "Vue latérale montrant l'intérieur de la cuve et le rebord du couvercle."
+      }
+    },
+    {
+      "key": "archive/le-creuset-vintage-oval-cocotte-in-shaded-brown-and-tan-0164f6/5-3d8053aa-1600.jpg",
+      "width": 1200,
+      "height": 1600,
+      "small": {
+        "key": "archive/le-creuset-vintage-oval-cocotte-in-shaded-brown-and-tan-0164f6/5-9a8b19e7-800.jpg",
+        "width": 600,
+        "height": 800
+      },
+      "alt": {
+        "en": "Top-down view of cream-coloured interior with lid underside marked 33.",
+        "fr": "Vue plongeante de l'intérieur crème avec revers du couvercle marqué 33."
+      }
+    },
+    {
+      "key": "archive/le-creuset-vintage-oval-cocotte-in-shaded-brown-and-tan-0164f6/6-749f3783-1600.jpg",
+      "width": 1200,
+      "height": 1600,
+      "small": {
+        "key": "archive/le-creuset-vintage-oval-cocotte-in-shaded-brown-and-tan-0164f6/6-237eb9ca-800.jpg",
+        "width": 600,
+        "height": 800
+      },
+      "alt": {
+        "en": "Cocotte with lid resting upside down showing integrated handles.",
+        "fr": "Cocotte avec couvercle retourné montrant les poignées intégrées."
+      }
+    }
+  ]
+}
