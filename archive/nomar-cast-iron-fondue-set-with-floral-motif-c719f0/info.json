@@ -1,0 +1,101 @@
+{
+  "schema_version": "1",
+  "brand": "other",
+  "category": "Fondues",
+  "markings": [],
+  "dimensions": [],
+  "archive_findings": [],
+  "en": {
+    "title": "Nomar Cast Iron Fondue Set with Floral Motif",
+    "meta_description": "Cast iron fondue set by Nomar featuring a black pot with pink and white floral motif, fitted ring lid, burner, stand, and wooden forks.",
+    "intro": [
+      "This cast iron fondue set by Nomar stands out with its glossy black pot decorated with a floral motif of pink and white petals and pale green leaves. The round pot is built with two integrated flat side handles and a flat circular base.",
+      "The set includes a fitted black ring lid featuring a scalloped central aperture to support fondue forks, an elevated dark support stand, a metal burner unit with handles, and wooden-handled fondue forks identified by coloured tips."
+    ],
+    "condition": "Minor surface wear consistent with handling is visible across the metal components and wooden fork handles."
+  },
+  "fr": {
+    "title": "Service à fondue en fonte Nomar à décor floral",
+    "meta_description": "Service à fondue en fonte Nomar avec caquelon noir à décor floral rose et blanc, collerette anti-éclaboussures, réchaud, brûleur et fourchettes.",
+    "intro": [
+      "Ce service à fondue en fonte Nomar se distingue par son caquelon noir brillant orné d'un motif floral aux pétales roses et blancs et feuilles vert pâle. La cuve ronde est dotée de deux poignées latérales plates intégrées et d'un fond plat.",
+      "L'ensemble comprend une collerette noire festonnée servant de repose-fourchettes, un réchaud surélevé sombre, un brûleur métallique à poignées ainsi que des fourchettes à manche en bois terminées par des repères colorés."
+    ],
+    "condition": "De légères traces d'usage sont visibles sur les surfaces métalliques et sur les manches en bois des fourchettes."
+  },
+  "slug": "nomar-cast-iron-fondue-set-with-floral-motif-c719f0",
+  "date_published": "2026-10-30",
+  "date_modified": "2026-10-30",
+  "photos": [
+    {
+      "key": "archive/nomar-cast-iron-fondue-set-with-floral-motif-c719f0/1-5ed14c65-1600.jpg",
+      "width": 1200,
+      "height": 1600,
+      "small": {
+        "key": "archive/nomar-cast-iron-fondue-set-with-floral-motif-c719f0/1-45035379-800.jpg",
+        "width": 600,
+        "height": 800
+      },
+      "alt": {
+        "en": "Nomar cast iron fondue pot with floral pattern, ring lid, burner, stand, and forks.",
+        "fr": "Caquelon à fondue Nomar à décor floral avec collerette, brûleur, socle et fourchettes."
+      }
+    },
+    {
+      "key": "archive/nomar-cast-iron-fondue-set-with-floral-motif-c719f0/2-65846dd9-1600.jpg",
+      "width": 1200,
+      "height": 1600,
+      "small": {
+        "key": "archive/nomar-cast-iron-fondue-set-with-floral-motif-c719f0/2-edc2ba76-800.jpg",
+        "width": 600,
+        "height": 800
+      },
+      "alt": {
+        "en": "Close view of the black fondue pot showing the floral motif, scalloped lid, and forks.",
+        "fr": "Détail du caquelon noir montrant le motif floral, la collerette festonnée et les fourchettes."
+      }
+    },
+    {
+      "key": "archive/nomar-cast-iron-fondue-set-with-floral-motif-c719f0/3-8e05d624-1600.jpg",
+      "width": 1200,
+      "height": 1600,
+      "small": {
+        "key": "archive/nomar-cast-iron-fondue-set-with-floral-motif-c719f0/3-48f3ba7e-800.jpg",
+        "width": 600,
+        "height": 800
+      },
+      "alt": {
+        "en": "Fondue pot set on its dark support stand alongside the metal burner and forks.",
+        "fr": "Caquelon à fondue posé sur son réchaud avec le brûleur métallique et les fourchettes."
+      }
+    },
+    {
+      "key": "archive/nomar-cast-iron-fondue-set-with-floral-motif-c719f0/4-3024c15a-1600.jpg",
+      "width": 1200,
+      "height": 1600,
+      "small": {
+        "key": "archive/nomar-cast-iron-fondue-set-with-floral-motif-c719f0/4-fcba63e2-800.jpg",
+        "width": 600,
+        "height": 800
+      },
+      "alt": {
+        "en": "Dark support stand and metal burner assembly shown separately.",
+        "fr": "Socle de réchaud sombre et ensemble brûleur métallique présentés séparément."
+      }
+    },
+    {
+      "key": "archive/nomar-cast-iron-fondue-set-with-floral-motif-c719f0/5-2e032056-1600.jpg",
+      "width": 1200,
+      "height": 1600,
+      "small": {
+        "key": "archive/nomar-cast-iron-fondue-set-with-floral-motif-c719f0/5-6b73660b-800.jpg",
+        "width": 600,
+        "height": 800
+      },
+      "alt": {
+        "en": "Round cast iron fondue pot showing the floral decoration and flat side handles.",
+        "fr": "Caquelon rond en fonte montrant le décor floral et les poignées latérales plates."
+      }
+    }
+  ]
+}
