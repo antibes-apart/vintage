@@ -171,6 +171,55 @@ for (const sold of [false, true]) {
 }
 
 for (const locale of ['en', 'fr']) {
+  test(`${locale} cast iron maker photos load from the existing item covers`, async ({ page }) => {
+    await page.goto(`/${locale}/guides/european-enamelled-cast-iron-makers.html`);
+    for (const maker of ['cousances', 'staub', 'invicta', 'fontignac']) {
+      const image = page.locator(`[aria-labelledby="maker-${maker}"] img`);
+      await image.scrollIntoViewIfNeeded();
+      await loadedImage(image);
+      await expect(image).toHaveAttribute('src', /^\.\.\/\.\.\/items\/[^/]+\/cover\.jpg$/);
+    }
+    await expect(page.locator('.guide-figure-pending')).toHaveCount(0);
+  });
+
+  test(`${locale} guide index related links stay inside their cards and remain clickable`, async ({ page, isMobile }) => {
+    for (const width of isMobile ? [393] : [560, 900, 1440]) {
+      await page.setViewportSize({ width, height: 900 });
+      await page.goto(`/${locale}/guides/`);
+      const related = page.locator('.guide-index-card-related');
+      expect(await related.count()).toBeGreaterThan(0);
+      for (const section of await related.all()) {
+        const bounds = await section.evaluate(element => {
+          const card = element.closest('.guide-index-card');
+          const rect = element.getBoundingClientRect();
+          const parent = card.getBoundingClientRect();
+          return {
+            top: rect.top, bottom: rect.bottom,
+            cardTop: parent.top, cardBottom: parent.bottom,
+            overlaps: [...document.querySelectorAll('.guide-index-card')]
+              .filter(other => other !== card)
+              .some(other => {
+                const sibling = other.getBoundingClientRect();
+                return rect.left < sibling.right && rect.right > sibling.left &&
+                  rect.top < sibling.bottom && rect.bottom > sibling.top;
+              })
+          };
+        });
+        expect(bounds.top).toBeGreaterThanOrEqual(bounds.cardTop);
+        expect(bounds.bottom).toBeLessThanOrEqual(bounds.cardBottom + 1);
+        expect(bounds.overlaps).toBe(false);
+        for (const link of await section.locator('a').all()) {
+          await link.click({ trial: true });
+        }
+      }
+      const link = related.locator('a').first();
+      const destination = new URL(await link.getAttribute('href'), page.url()).href;
+      await link.click();
+      await expect(page).toHaveURL(destination);
+      await expect(page.locator('h1')).toBeVisible();
+    }
+  });
+
   test(`${locale} guide breadcrumbs and period navigation scroll normally`, async ({ page }) => {
     const directory = path.join(__dirname, '../..', locale, 'guides');
     for (const file of fs.readdirSync(directory).filter(file => file.endsWith('.html'))) {

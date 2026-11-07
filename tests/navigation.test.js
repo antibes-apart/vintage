@@ -56,8 +56,27 @@ test('the cast iron makers guide is built in both languages and listed in the si
     const ids = [...html.matchAll(/<h2 id="maker-([a-z-]+)"/g)].map(m => m[1]);
     assert.deepEqual(ids, makers, `${locale}: one profile per maker, in order`);
     assert.match(html, /<p class="guide-cta"><a href="\.\.\/archive\/index\.html">/, `${locale}: link to the archive of documented pieces`);
-    assert.match(html, /<img [^>]*src="\.\.\/\.\.\/img\/guides\/cast-iron-makers\/european-enamelled-cast-iron-makers-cook-collect\.jpeg"/,
+    assert.match(html, /<img [^>]*src="\.\.\/\.\.\/img\/guides\/le-creuset\/archive\/vintage-le-creuset-collection-cook-collect\.jpeg"/,
       `${locale}: the hero has its photograph`);
+    const photos = {
+      cousances: 'cousances-le-creuset-cast-iron-casserole-dish-mode',
+      staub: 'staub-cast-iron-tealight-food-warmer-vintage-19701',
+      invicta: 'invicta-cast-iron-rectangular-dish-red-made-in-fra',
+      fontignac: 'cocotte-fontignac-vintage-31-cm-fonte-maille'
+    };
+    for (const [maker, slug] of Object.entries(photos)) {
+      const section = html.match(new RegExp(`<section[^>]*aria-labelledby="maker-${maker}"[^>]*>([\\s\\S]*?)</section>`));
+      assert.ok(section, `${locale}: ${maker} section`);
+      assert.ok(section[1].includes(`src="../../items/${slug}/cover.jpg"`), `${locale}: ${maker} uses the selected cover`);
+      assert.ok(fs.existsSync(path.join(root, 'items', slug, 'cover.jpg')), `${maker}: cover exists`);
+    }
+    assert.doesNotMatch(html, /guide-figure-pending/, `${locale}: no photo placeholders`);
+    for (const maker of ['descoware', 'dru']) {
+      const section = html.match(new RegExp(`<section[^>]*aria-labelledby="maker-${maker}"[^>]*>([\\s\\S]*?)</section>`));
+      assert.ok(section, `${locale}: ${maker} section`);
+      assert.doesNotMatch(section[1], /<figure|guide-split/, `${locale}: ${maker} has a text-only layout`);
+      assert.match(section[1], /<p>.+<\/p>/, `${locale}: ${maker} retains its description`);
+    }
   }
   const sitemap = fs.readFileSync(path.join(root, 'sitemap.xml'), 'utf8');
   assert.match(sitemap, new RegExp(`/en/guides/${file.replace(/\./g, '\\.')}<`));
@@ -67,7 +86,7 @@ test('the cast iron makers guide is built in both languages and listed in the si
     const index = fs.readFileSync(path.join(root, locale, 'guides', 'index.html'), 'utf8');
     const card = index.match(new RegExp(`<a class="guide-index-card-link" href="${file.replace(/\./g, '\\.')}">([\\s\\S]*?)</a>`));
     assert.ok(card, `${locale}: card on the index`);
-    assert.match(card[1], /<img src="\.\.\/\.\.\/img\/guides\/cast-iron-makers\//, `${locale}: card photograph`);
+    assert.match(card[1], /<img src="\.\.\/\.\.\/img\/guides\/le-creuset\/archive\/vintage-le-creuset-collection-cook-collect\.jpeg"/, `${locale}: selected archive photograph on the card`);
     assert.doesNotMatch(card[1], /guide-figure-pending/, `${locale}: no placeholder on the card`);
   }
 });

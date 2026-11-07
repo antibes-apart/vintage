@@ -113,8 +113,8 @@ const GUIDES = [
     strKey: 'guideCastIron',
     template: 'guides/european-enamelled-cast-iron-makers.html',
     file: 'european-enamelled-cast-iron-makers.html',
-    ogImage: 'img/guides/cast-iron-makers/european-enamelled-cast-iron-makers-cook-collect.jpeg',
-    card: {image: 'img/guides/cast-iron-makers/european-enamelled-cast-iron-makers-cook-collect.jpeg'},
+    ogImage: 'img/guides/le-creuset/archive/vintage-le-creuset-collection-cook-collect.jpeg',
+    card: {image: 'img/guides/le-creuset/archive/vintage-le-creuset-collection-cook-collect.jpeg'},
     datePublished: '2026-10-28',
     dateModified: '2026-10-28'
   },

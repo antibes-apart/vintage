@@ -1226,8 +1226,8 @@ const en = {
   guideCastIronSubtitle: 'Who made the cocottes collectors look for, where they worked, and how the makers connect',
   guideCastIronIntro: 'Enamelled cast iron is cast iron with a coating of enamel. In the twentieth century a handful of foundries in France, Belgium and the Netherlands made the pots, cocottes and casseroles that collectors look for today, and several of those names later came under the same owners. This guide introduces seven makers. Every statement comes from a source listed at the end, and where the record is thin we say so rather than fill the gap.',
   guideCastIronMakerNavLabel: 'Makers in this guide',
-  guideCastIronHeroAlt: 'Oval Cousances by Le Creuset cocotte in flame orange enamel, from the Cook and Collect collection',
-  guideCastIronHeroCaption: 'An oval Cousances by Le Creuset cocotte in flame orange enamel. Original Cook & Collect photography.',
+  guideCastIronHeroAlt: 'Selection of vintage enamelled cast iron cookware from the Cook and Collect archive',
+  guideCastIronHeroCaption: 'A selection of vintage enamelled cast iron cookware. Original Cook & Collect photography.',
   guideCastIronCountryFrance: 'France',
   guideCastIronCountryBelgium: 'Belgium',
   guideCastIronCountryNetherlands: 'The Netherlands',
@@ -1242,23 +1242,23 @@ const en = {
   guideCastIronLeCreusetGuideLink: 'Vintage Le Creuset',
   guideCastIronLeCreusetDatingLink: 'How to date vintage Le Creuset',
 
-  guideCastIronCousancesAlt: 'Vintage Cousances enamelled cast iron cocotte',
-  guideCastIronCousancesCaption: 'Vintage Cousances enamelled cast iron. Original Cook & Collect photography.',
+  guideCastIronCousancesAlt: 'Vintage Cousances / Le Creuset enamelled cast iron casserole, model 16, 31 cm',
+  guideCastIronCousancesCaption: 'Cousances / Le Creuset casserole, model 16, 31 cm. Original Cook & Collect photography.',
   guideCastIronCousancesP1: 'Cousances takes its name from its foundry village, Cousances-les-Forges in the Meuse, in eastern France, where the company traded as Haut Fourneau et Fonderies de Cousances. It traces its foundry back to the sixteenth century: a company catalogue states that the works were founded in 1553, a date Le Creuset repeats.',
   guideCastIronCousancesP2: 'Le Creuset says it bought Cousances in 1957, and a 1990 court ruling shows that the company was a subsidiary of the Le Creuset group in the 1980s. The Cousances name now lives on in a Le Creuset range that revives designs the two makers shared.',
 
-  guideCastIronStaubAlt: 'Vintage Staub enamelled cast iron cocotte with its lid',
-  guideCastIronStaubCaption: 'Vintage Staub enamelled cast iron. Original Cook & Collect photography.',
+  guideCastIronStaubAlt: 'Vintage Staub enamelled cast iron tealight food warmer',
+  guideCastIronStaubCaption: 'Vintage Staub cast iron tealight food warmer. Original Cook & Collect photography.',
   guideCastIronStaubP1: 'Staub was founded in 1974 by Francis Staub at Turckheim, next to Colmar in Alsace. Its first cocottes appeared in the second half of the 1970s: Zwilling dates the first design to 1974, while the magazine YAM places the first cocottes in 1978. Staub is known for its “cocottes à picots”: enamelled cocottes whose lids carry small spikes, the picots.',
   guideCastIronStaubP2: 'Staub grew by buying an enamelling works in the Loire in 1988 and a foundry in 2002, and its cast iron is now made at Merville, in the Nord. The Zwilling J.A. Henckels group took the company over in 2008.',
 
-  guideCastIronInvictaAlt: 'Vintage Invicta enamelled cast iron cocotte',
-  guideCastIronInvictaCaption: 'Vintage Invicta enamelled cast iron. Original Cook & Collect photography.',
+  guideCastIronInvictaAlt: 'Red Invicta enamelled cast iron rectangular dish',
+  guideCastIronInvictaCaption: 'Red Invicta enamelled cast iron rectangular dish. Original Cook & Collect photography.',
   guideCastIronInvictaP1: 'Invicta was founded in 1924 at Donchery, in the Meuse valley in the Ardennes; the foundry is now in the neighbouring village of Vivier-au-Court and the enamelling works remain at Donchery. According to the company, it began by casting washbasins and sanitary ware, and over the twentieth century added cast iron furniture, trivets, cocottes and other kitchenware.',
   guideCastIronInvictaP2: 'Today Invicta is best known for wood stoves and fireplaces, and it still makes cast iron cocottes and barbecues. Long run by the Dupire family, it came under the majority control of the investment fund Qualium Investissement in 2013.',
 
-  guideCastIronFontignacAlt: 'Vintage Fontignac enamelled cast iron cocotte',
-  guideCastIronFontignacCaption: 'Vintage Fontignac enamelled cast iron. Original Cook & Collect photography.',
+  guideCastIronFontignacAlt: 'Vintage Fontignac enamelled cast iron cocotte, 31 cm',
+  guideCastIronFontignacCaption: 'Vintage Fontignac cocotte, 31 cm. Original Cook & Collect photography.',
   guideCastIronFontignacP1: 'Fontignac was a cookware brand of the Fonderies Franco-Belges at Merville, in the Nord, a company founded in 1926 as a stove maker. In 2002 Staub took over its cookware business, sold under the Fontignac and Ménastyl names, together with the foundry, which now casts Staub cocottes.',
   guideCastIronFontignacP2: 'Zwilling listed Fontignac among its kitchen brands in 2017. When the Fontignac name was first used is not documented in any source we found, and dates given for it online are not reliable.',
 
@@ -1321,7 +1321,7 @@ const en = {
   guideCastIronCardEyebrow: 'European Cast Iron',
   guideCastIronCardTitle: 'Enamelled Cast Iron Makers',
   guideCastIronCardSummary: 'Le Creuset, Cousances, Staub, Invicta, Fontignac, Descoware and DRU: who they were, where they worked, and how they connect.',
-  guideCastIronCardImageAlt: 'Oval Cousances by Le Creuset cocotte in flame orange enamel',
+  guideCastIronCardImageAlt: 'Selection of vintage enamelled cast iron cookware from the Cook and Collect archive',
 
   // listing studio page (studio.html)
   studioDocTitle: 'Listing studio — Cook & Collect',
@@ -2651,8 +2651,8 @@ const fr = {
   guideCastIronSubtitle: 'Qui fabriquait les cocottes que recherchent les collectionneurs, où, et quels liens unissent ces maisons',
   guideCastIronIntro: 'La fonte émaillée est une fonte revêtue d’émail. Au XXe siècle, une poignée de fonderies en France, en Belgique et aux Pays-Bas ont fabriqué les marmites, cocottes et faitouts que les collectionneurs recherchent aujourd’hui, et plusieurs de ces noms sont ensuite passés entre les mêmes mains. Ce guide présente sept fabricants. Chaque affirmation s’appuie sur une source citée en fin de page, et lorsque les informations manquent, nous le disons plutôt que de combler le vide.',
   guideCastIronMakerNavLabel: 'Fabricants présentés dans ce guide',
-  guideCastIronHeroAlt: 'Cocotte ovale Cousances by Le Creuset en émail orange flamme, de la collection Cook and Collect',
-  guideCastIronHeroCaption: 'Une cocotte ovale Cousances by Le Creuset en émail orange flamme. Photographie originale Cook & Collect.',
+  guideCastIronHeroAlt: 'Sélection de pièces vintage en fonte émaillée des archives Cook and Collect',
+  guideCastIronHeroCaption: 'Une sélection de pièces vintage en fonte émaillée. Photographie originale Cook & Collect.',
   guideCastIronCountryFrance: 'France',
   guideCastIronCountryBelgium: 'Belgique',
   guideCastIronCountryNetherlands: 'Pays-Bas',
@@ -2667,23 +2667,23 @@ const fr = {
   guideCastIronLeCreusetGuideLink: 'Le Creuset vintage',
   guideCastIronLeCreusetDatingLink: 'Dater une pièce Le Creuset vintage',
 
-  guideCastIronCousancesAlt: 'Cocotte Cousances vintage en fonte émaillée',
-  guideCastIronCousancesCaption: 'Fonte émaillée Cousances vintage. Photographie originale Cook & Collect.',
+  guideCastIronCousancesAlt: 'Cocotte Cousances / Le Creuset vintage en fonte émaillée, modèle 16, 31 cm',
+  guideCastIronCousancesCaption: 'Cocotte Cousances / Le Creuset, modèle 16, 31 cm. Photographie originale Cook & Collect.',
   guideCastIronCousancesP1: 'Cousances tient son nom du village de sa fonderie, Cousances-les-Forges, dans la Meuse, où la société s’appelait Haut Fourneau et Fonderies de Cousances. Elle fait remonter sa fonderie au XVIe siècle : un catalogue de la société indique une usine fondée en 1553, date que reprend Le Creuset.',
   guideCastIronCousancesP2: 'Le Creuset indique avoir racheté Cousances en 1957, et un arrêt de 1990 montre que la société était une filiale du groupe Le Creuset dans les années 1980. Le nom Cousances survit aujourd’hui dans une gamme Le Creuset qui reprend des modèles communs aux deux maisons.',
 
-  guideCastIronStaubAlt: 'Cocotte Staub vintage en fonte émaillée avec son couvercle',
-  guideCastIronStaubCaption: 'Fonte émaillée Staub vintage. Photographie originale Cook & Collect.',
+  guideCastIronStaubAlt: 'Chauffe-plat Staub vintage en fonte émaillée pour bougies chauffe-plat',
+  guideCastIronStaubCaption: 'Chauffe-plat Staub vintage en fonte pour bougies chauffe-plat. Photographie originale Cook & Collect.',
   guideCastIronStaubP1: 'Staub a été fondé en 1974 par Francis Staub à Turckheim, près de Colmar, en Alsace. Ses premières cocottes datent de la seconde moitié des années 1970 : Zwilling date le premier modèle de 1974, tandis que le magazine YAM situe la sortie des premières cocottes en 1978. Staub est connu pour ses « cocottes à picots » : des cocottes émaillées dont le couvercle porte de petites pointes, les picots.',
   guideCastIronStaubP2: 'Staub s’est développé en rachetant une émaillerie dans la Loire en 1988, puis une fonderie en 2002, et sa fonte est aujourd’hui produite à Merville, dans le Nord. Le groupe Zwilling J.A. Henckels a repris l’entreprise en 2008.',
 
-  guideCastIronInvictaAlt: 'Cocotte Invicta vintage en fonte émaillée',
-  guideCastIronInvictaCaption: 'Fonte émaillée Invicta vintage. Photographie originale Cook & Collect.',
+  guideCastIronInvictaAlt: 'Plat rectangulaire Invicta rouge en fonte émaillée',
+  guideCastIronInvictaCaption: 'Plat rectangulaire Invicta rouge en fonte émaillée. Photographie originale Cook & Collect.',
   guideCastIronInvictaP1: 'Invicta a été fondé en 1924 à Donchery, dans la vallée de la Meuse, dans les Ardennes ; la fonderie se trouve aujourd’hui dans le village voisin de Vivier-au-Court et l’émaillerie est restée à Donchery. Selon l’entreprise, elle a commencé par couler des lavabos et des pièces sanitaires, puis a ajouté au fil du XXe siècle du mobilier en fonte, des dessous-de-plat, des cocottes et d’autres ustensiles de cuisine.',
   guideCastIronInvictaP2: 'Invicta est aujourd’hui surtout connu pour ses poêles à bois et ses cheminées, et fabrique toujours des cocottes et des barbecues en fonte. Longtemps dirigé par la famille Dupire, il est passé en 2013 sous le contrôle majoritaire du fonds d’investissement Qualium Investissement.',
 
-  guideCastIronFontignacAlt: 'Cocotte Fontignac vintage en fonte émaillée',
-  guideCastIronFontignacCaption: 'Fonte émaillée Fontignac vintage. Photographie originale Cook & Collect.',
+  guideCastIronFontignacAlt: 'Cocotte Fontignac vintage en fonte émaillée, 31 cm',
+  guideCastIronFontignacCaption: 'Cocotte Fontignac vintage, 31 cm. Photographie originale Cook & Collect.',
   guideCastIronFontignacP1: 'Fontignac était une marque d’ustensiles de cuisine des Fonderies Franco-Belges, à Merville (Nord), une entreprise fondée en 1926 pour fabriquer des poêles. En 2002, Staub a repris son activité de poterie culinaire, vendue sous les marques Fontignac et Ménastyl, ainsi que la fonderie, qui coule aujourd’hui les cocottes Staub.',
   guideCastIronFontignacP2: 'Zwilling citait Fontignac parmi ses marques d’ustensiles de cuisine en 2017. La date d’apparition du nom Fontignac n’est documentée dans aucune source que nous avons trouvée, et les dates qui circulent en ligne ne sont pas fiables.',
 
@@ -2746,7 +2746,7 @@ const fr = {
   guideCastIronCardEyebrow: 'Fonte européenne',
   guideCastIronCardTitle: 'Les fabricants de fonte émaillée',
   guideCastIronCardSummary: 'Le Creuset, Cousances, Staub, Invicta, Fontignac, Descoware et DRU : qui ils étaient, où ils travaillaient et quels liens les unissent.',
-  guideCastIronCardImageAlt: 'Cocotte ovale Cousances by Le Creuset en émail orange flamme',
+  guideCastIronCardImageAlt: 'Sélection de pièces vintage en fonte émaillée des archives Cook and Collect',
 
   // about page
   // page studio d'annonces (studio.html)
