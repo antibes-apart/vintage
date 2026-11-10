@@ -29,7 +29,9 @@ async function mockApi(page, respond) {
     if (request.method() === 'OPTIONS') return route.fulfill({ status: 204, headers: CORS });
     const body = JSON.parse(request.postData() || '{}');
     requests.push(body);
-    const [status, json] = respond(body, requests.length);
+    const reply = respond(body, requests.length);
+    if (reply === 'drop') return route.abort('failed');
+    const [status, json] = reply;
     return route.fulfill({ status, headers: CORS, contentType: 'application/json', body: JSON.stringify(json) });
   });
   return requests;
@@ -44,8 +46,13 @@ const answer = {
   notice: 'Documentary possibilities from our reference archive: not an identification.',
   message: 'These are documentary possibilities, not an identification.', clarification: null,
   observations: [{ kind: 'reference', value: '<b>0437</b>', component: 'body', certainty: 'clear' }],
+  period: { from: 1965, to: 1972, sources: 2 },
+  ai_estimate: { identification: 'Le Creuset <i>oval</i> cocotte, size E', maker: 'Le Creuset', period: { from: 1960, to: 1975 },
+    confidence: 'medium', archive_agreement: 'agrees', explanation: 'The size letter and handles fit the period.',
+    model: 'gemini-3.8-flash', version: 'identify-estimate-1' },
   possibilities: [{ source_title: 'Le Creuset catalogue 1965', reliability_level: 'PRIMARY', component: 'unknown',
     supporting_observations: 1, conflicting_observations: 0, documented_years: [1965],
+    matched: [{ kind: 'marking', value: 'E' }, { kind: 'measurement', value: 29, unit: 'cm', property: 'LENGTH' }], close_match: true,
     evidence: [{ property: 'ITEM_REFERENCE_CODE', value: '0437', documented_year: 1965, page_label: '7', validation_status: 'OWNER_TRANSCRIBED' }] }]
 };
 
@@ -114,7 +121,16 @@ test('storage consent is required, then cited possibilities and the case referen
   expect(requests[0].consent).toEqual({ accepted: true, version: '2026-11-identify-2' });
   expect(requests[0].notes).toBe('Orange oval, 29 cm');
   expect(requests[0].photos[0].media_type).toBe('image/jpeg');
+  await expect(page.locator('#identify-period')).toHaveText(/^Pieces matching yours are documented between 1965 and 1972 \(2 sources\)\./);
+  const estimate = page.locator('#identify-estimate');
+  await expect(estimate).toContainText('AI estimate (opinion, not documented)');
+  await expect(estimate).toContainText('Le Creuset <i>oval</i> cocotte, size E');
+  await expect(estimate).toContainText('Probably made between 1960 and 1975 · medium confidence.');
+  await expect(estimate).toContainText('Consistent with the documents found in our archive.');
+  await expect(estimate).toContainText('only the documents below are evidence');
   await expect(page.locator('.identify-possibility h3')).toHaveText('Le Creuset catalogue 1965');
+  await expect(page.locator('.identify-matched')).toHaveText('Matches: marking E, length 29 cm.');
+  await expect(page.locator('.identify-possibility')).toContainText('Close match: your measurements are within 5%');
   await expect(page.locator('.identify-possibility li')).toHaveText('item reference code: 0437 (1965) — page 7');
   // API text is never rendered as HTML.
   await expect(page.locator('#identify-observations li')).toHaveText('reference: <b>0437</b> (body)');
@@ -136,4 +152,30 @@ test('at most six photos are sent and errors keep the case reference for deletio
   await expect(page.locator('#identify-status')).toContainText('could not be read this time');
   await expect(page.locator('#identify-status')).toContainText('case-ref-42');
   expect(requests[0].photos).toHaveLength(6);
+});
+
+test('a dropped upload is retried once; matches without dated documents say no period can be given', async ({ page }) => {
+  const undated = { ...answer, period: null, ai_estimate: null, possibilities: [{ ...answer.possibilities[0], documented_years: [], close_match: false }] };
+  const requests = await mockApi(page, (body, count) => count === 1 ? 'drop' : [200, undated]);
+  await page.goto(PAGE);
+  await page.locator('#identify-photos').setInputFiles([await photo('base.jpg')]);
+  await page.locator('#identify-consent').check();
+  await page.locator('#identify-submit').click();
+  await expect(page.locator('#identify-result')).toBeVisible();
+  expect(requests).toHaveLength(2);
+  expect(requests[1]).toEqual(requests[0]);
+  await expect(page.locator('#identify-period')).toHaveText('The matching documents are not dated yet in our archive, so no period can be given.');
+  await expect(page.locator('.identify-possibility')).not.toContainText('Close match');
+  await expect(page.locator('#identify-estimate')).toBeHidden();
+});
+
+test('a second dropped upload reports the connection problem', async ({ page }) => {
+  const requests = await mockApi(page, () => 'drop');
+  await page.goto(PAGE);
+  await page.locator('#identify-photos').setInputFiles([await photo('base.jpg')]);
+  await page.locator('#identify-consent').check();
+  await page.locator('#identify-submit').click();
+  await expect(page.locator('#identify-status')).toHaveText('The agent could not be reached, even after a second try. Check your connection and try again.');
+  expect(requests).toHaveLength(2);
+  await expect(page.locator('#identify-result')).toBeHidden();
 });

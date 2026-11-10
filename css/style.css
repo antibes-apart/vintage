@@ -3228,6 +3228,33 @@ footer {
   font-weight: 600;
 }
 
+.identify-period {
+  font-weight: 600;
+  border-left: 3px solid var(--accent);
+  padding-left: 0.75rem;
+}
+
+.identify-estimate {
+  background: var(--card-bg);
+  border: 1px dashed var(--accent);
+  border-radius: var(--radius);
+  padding: 1rem 1.25rem;
+  margin: 1rem 0;
+}
+
+.identify-estimate h3 {
+  margin-top: 0;
+}
+
+.identify-estimate-name {
+  font-weight: 600;
+  font-size: 1.1rem;
+}
+
+.identify-matched {
+  margin-bottom: 0.25rem;
+}
+
 .identify-possibility {
   border: 1px solid var(--border);
   border-radius: var(--radius);

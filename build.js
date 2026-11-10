@@ -746,7 +746,7 @@ function renderCollectionPage(item, strings, guideHrefs, base) {
   <meta property="og:description" content="${escapeHtml(metaDesc)}">
   <meta property="og:url" content="${canonicalUrl}">
   ${item.cover ? `<meta property="og:image" content="${SITE_URL}/${item.cover}">` : ''}
-  <link rel="stylesheet" href="../../css/style.css?v=23">
+  <link rel="stylesheet" href="../../css/style.css?v=24">
   ${renderItemStructuredData(item, canonicalUrl, breadcrumbs)}
 </head>
 <body data-page="collection-item">

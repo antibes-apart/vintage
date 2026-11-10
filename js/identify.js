@@ -18,11 +18,31 @@
     noConsent: 'Please tick the box to agree that your photos are stored. The agent cannot be used without it.',
     photoUnreadable: 'This photo could not be read. Use a JPEG, PNG or WebP photo.',
     preparing: 'Preparing your photos…',
-    working: 'Reading your photos and searching the archive. This can take up to a minute…',
+    working: 'Reading your photos, searching the archive and asking the AI. This can take up to two minutes…',
     done: 'Done.',
     removePhoto: 'Remove photo',
     nothingRead: 'Nothing readable was found in these photos.',
     years: function (years) { return years.length === 1 ? 'Documented in ' + years[0] : 'Documented ' + years[0] + '–' + years[years.length - 1]; },
+    period: function (period) {
+      var span = period.from === period.to ? 'in ' + period.from : 'between ' + period.from + ' and ' + period.to;
+      return 'Pieces matching yours are documented ' + span + ' (' + period.sources + (period.sources === 1 ? ' source' : ' sources') +
+        '). This is when such pieces appear in our documents, not proof of when yours was made.';
+    },
+    estimateTitle: 'AI estimate (opinion, not documented)',
+    estimatePeriod: function (period) {
+      return period.from === period.to ? 'Probably made around ' + period.from : 'Probably made between ' + period.from + ' and ' + period.to;
+    },
+    estimateNoPeriod: 'No period could be estimated from these photos',
+    confidence: { low: 'low confidence', medium: 'medium confidence', high: 'high confidence' },
+    agreement: {
+      agrees: 'Consistent with the documents found in our archive.',
+      differs: 'This differs from the documents found in our archive; see below.',
+      no_archive_match: 'Our archive has no matching document yet, so this estimate is not backed by a document.'
+    },
+    estimateHint: 'Written by an AI from your photos. It can be wrong; only the documents below are evidence.',
+    undated: 'The matching documents are not dated yet in our archive, so no period can be given.',
+    matched: 'Matches: ',
+    closeMatch: 'Close match: your measurements are within 5% of the documented size, and the document does not say exactly how it was measured.',
     support: function (n, c) {
       return n + (n === 1 ? ' of your details matches' : ' of your details match') +
         (c ? ', ' + c + ' ' + (c === 1 ? 'conflicts' : 'conflict') : '') + '.';
@@ -31,6 +51,7 @@
     reference: function (ref) {
       return 'Case reference: ' + ref + '. Keep it if you want your photos deleted: email vintagetreasurecontact@gmail.com with this reference.';
     },
+    retrying: 'The connection was interrupted. Trying again…',
     remaining: function (n) { return n === 1 ? ' 1 identification left today.' : ' ' + n + ' identifications left today.'; },
     errors: {
       VISITOR_DAILY_LIMIT: 'You have reached today’s limit. Please come back tomorrow.',
@@ -47,7 +68,7 @@
       INVALID_REQUEST: 'The request was not accepted. Reload the page and try again.',
       ORIGIN_NOT_ALLOWED: 'The agent cannot be used from this address.',
       IDENTIFY_UNAVAILABLE: 'The agent is temporarily unavailable. Please try again later.',
-      network: 'The agent could not be reached. Check your connection and try again.',
+      network: 'The agent could not be reached, even after a second try. Check your connection and try again.',
       generic: 'Something went wrong. Please try again.'
     }
   };
@@ -169,6 +190,10 @@
     if (row.certainty === 'uncertain') parts.push(' — uncertain');
     return parts.join('');
   }
+  function matchedText(row) {
+    return row.kind === 'measurement' ? row.property.toLowerCase() + ' ' + row.value + (row.unit ? ' ' + row.unit : '')
+      : row.kind + ' ' + row.value;
+  }
   function renderPossibility(possibility) {
     var card = element('article', 'identify-possibility');
     card.appendChild(element('h3', null, possibility.source_title));
@@ -176,6 +201,10 @@
     if (possibility.documented_years.length) meta.push(T.years(possibility.documented_years));
     meta.push(T.support(possibility.supporting_observations, possibility.conflicting_observations));
     card.appendChild(element('p', 'studio-hint', meta.join(' · ')));
+    if (possibility.matched && possibility.matched.length) {
+      card.appendChild(element('p', 'identify-matched', T.matched + possibility.matched.map(matchedText).join(', ') + '.'));
+    }
+    if (possibility.close_match) card.appendChild(element('p', 'studio-hint', T.closeMatch));
     var list = element('ul');
     possibility.evidence.forEach(function (claim) {
       var text = claim.property.toLowerCase().replace(/_/g, ' ') + ': ' + (claim.value || '—');
@@ -186,14 +215,33 @@
     card.appendChild(list);
     return card;
   }
+  function renderEstimate(estimate) {
+    var box = $('identify-estimate');
+    box.textContent = '';
+    box.hidden = !estimate;
+    if (!estimate) return;
+    box.appendChild(element('h3', null, T.estimateTitle));
+    box.appendChild(element('p', 'identify-estimate-name', estimate.identification));
+    var period = estimate.period ? T.estimatePeriod(estimate.period) : T.estimateNoPeriod;
+    box.appendChild(element('p', 'studio-hint', period + ' · ' + (T.confidence[estimate.confidence] || '') + '.'));
+    box.appendChild(element('p', null, estimate.explanation));
+    if (T.agreement[estimate.archive_agreement]) box.appendChild(element('p', null, T.agreement[estimate.archive_agreement]));
+    box.appendChild(element('p', 'studio-hint', T.estimateHint));
+  }
+
   function showResult(result) {
     $('identify-notice').textContent = result.notice || '';
     $('identify-message').textContent = result.message || '';
     var question = $('identify-question');
     question.hidden = !result.clarification;
     question.textContent = result.clarification ? result.clarification.question : '';
+    renderEstimate(result.ai_estimate || null);
     var possibilities = $('identify-possibilities');
     possibilities.textContent = '';
+    var period = $('identify-period');
+    var found = (result.possibilities || []).length > 0;
+    period.hidden = !found;
+    period.textContent = !found ? '' : result.period ? T.period(result.period) : T.undated;
     (result.possibilities || []).forEach(function (row) { possibilities.appendChild(renderPossibility(row)); });
     var observations = $('identify-observations');
     observations.textContent = '';
@@ -203,6 +251,22 @@
     $('identify-reference').textContent = T.reference(result.case_reference);
     $('identify-result').hidden = false;
     $('identify-result').scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }
+
+  function wait(ms) { return new Promise(function (resolve) { setTimeout(resolve, ms); }); }
+  // One automatic retry when the upload never got an HTTP answer (a dropped mobile connection); errors with an
+  // answer are not retried. If the first upload did reach the agent, the retry may count once more towards today's limit.
+  async function post(payload) {
+    for (var attempt = 0; ; attempt++) {
+      try {
+        return await fetch(apiBase() + '/identify', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: payload });
+      } catch (e) {
+        if (attempt > 0) throw new Error('network');
+        setStatus(T.retrying);
+        await wait(2000);
+        setStatus(T.working);
+      }
+    }
   }
 
   async function submit(event) {
@@ -220,11 +284,7 @@
       if (visitor) body.visitor = visitor;
       var token = turnstileToken();
       if (token) body.turnstile_token = token;
-      var response;
-      try {
-        response = await fetch(apiBase() + '/identify', { method: 'POST', headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify(body) });
-      } catch (e) { throw new Error('network'); }
+      var response = await post(JSON.stringify(body));
       var result = null;
       try { result = await response.json(); } catch (e) { /* not JSON */ }
       if (!response.ok) {

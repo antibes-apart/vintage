@@ -11,7 +11,7 @@
   <link rel="icon" href="{{BASE}}favicon.ico" sizes="any">
   <link rel="apple-touch-icon" href="{{BASE}}apple-touch-icon.png">
   {{canonicalBlock}}
-  <link rel="stylesheet" href="{{BASE}}css/style.css?v=23">
+  <link rel="stylesheet" href="{{BASE}}css/style.css?v=24">
 </head>
 <body data-page="identify" data-api="{{identifyApiBase}}" data-turnstile-sitekey="{{identifyTurnstileSiteKey}}">
   {{nav}}
@@ -48,6 +48,8 @@
       <h2 id="identify-result-heading">{{identifyResultTitle}}</h2>
       <p class="identify-notice" id="identify-notice"></p>
       <p class="identify-message" id="identify-message"></p>
+      <section class="identify-estimate" id="identify-estimate" hidden aria-label="AI estimate"></section>
+      <p class="identify-period" id="identify-period" hidden></p>
       <p class="identify-question" id="identify-question" hidden></p>
       <div id="identify-possibilities"></div>
       <details class="studio-details">
@@ -72,6 +74,6 @@
   </main>
   {{contactButtons}}
   {{footer}}
-  <script src="{{BASE}}js/identify.js?v=1"></script>
+  <script src="{{BASE}}js/identify.js?v=3"></script>
 </body>
 </html>
