@@ -1,4 +1,36 @@
-@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Inter:wght@300;400;500;600&display=swap');
+/* Self-hosted fonts (SIL Open Font License, see fonts/OFL-*.txt): no request to Google Fonts. */
+@font-face {
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 300 600;
+  font-display: swap;
+  src: url('../fonts/inter-latin-ext.woff2') format('woff2');
+  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C4, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+@font-face {
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 300 600;
+  font-display: swap;
+  src: url('../fonts/inter-latin.woff2') format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+@font-face {
+  font-family: 'Playfair Display';
+  font-style: normal;
+  font-weight: 400 700;
+  font-display: swap;
+  src: url('../fonts/playfair-display-latin-ext.woff2') format('woff2');
+  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C4, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+@font-face {
+  font-family: 'Playfair Display';
+  font-style: normal;
+  font-weight: 400 700;
+  font-display: swap;
+  src: url('../fonts/playfair-display-latin.woff2') format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
 
 :root {
   --bg: #faf6f1;
@@ -3163,4 +3195,96 @@ footer {
   .archive-grid .card-title {
     font-size: 0.9rem;
   }
+}
+
+/* ─── Visitor identification (en/identify.html) — reuses the studio styles ─── */
+.identify-consent {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.6rem;
+}
+
+.identify-consent input {
+  margin-top: 0.3rem;
+  flex: none;
+  width: 1.1rem;
+  height: 1.1rem;
+}
+
+.identify-consent label {
+  font-weight: 400;
+  line-height: 1.5;
+  margin-bottom: 0;
+}
+
+.identify-notice {
+  font-size: 0.9rem;
+  color: var(--text-light);
+  border-left: 3px solid var(--border);
+  padding-left: 0.75rem;
+}
+
+.identify-question {
+  font-weight: 600;
+}
+
+.identify-possibility {
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 1rem 1.25rem;
+  margin: 1rem 0;
+}
+
+.identify-possibility h3 {
+  font-size: 1.05rem;
+  color: var(--heading);
+  margin-bottom: 0.3rem;
+}
+
+.identify-possibility ul,
+#identify-observations {
+  padding-left: 1.2rem;
+  line-height: 1.6;
+}
+
+.identify-shop {
+  background: var(--card-bg);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 1.5rem;
+  margin-top: 2rem;
+}
+
+.identify-shop h2 {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.35rem;
+  color: var(--heading);
+  margin-bottom: 0.5rem;
+}
+
+.identify-shop-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  margin-top: 1rem;
+}
+
+.identify-shop-links .studio-btn {
+  text-decoration: none;
+}
+
+/* Privacy notice (privacy.html) */
+.privacy section {
+  max-width: 46rem;
+  margin-top: 1.75rem;
+}
+
+.privacy h2 {
+  font-size: 1.2rem;
+  margin-bottom: 0.5rem;
+}
+
+.privacy p {
+  line-height: 1.6;
+  margin-bottom: 0.75rem;
 }

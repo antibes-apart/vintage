@@ -23,6 +23,7 @@ const en = {
   navShipping: 'Shipping',
   navAbout: 'About',
   legal: 'Legal notice',
+  privacy: 'Privacy',
   loading: 'Loading...',
   ariaWhatsApp: 'Contact us on WhatsApp',
   ariaMessenger: 'Contact us on Messenger',
@@ -1323,6 +1324,30 @@ const en = {
   guideCastIronCardSummary: 'Le Creuset, Cousances, Staub, Invicta, Fontignac, Descoware and DRU: who they were, where they worked, and how they connect.',
   guideCastIronCardImageAlt: 'Selection of vintage enamelled cast iron cookware from the Cook and Collect archive',
 
+  // visitor identification page (en/identify.html only: English, hidden launch, noindex).
+  // identifyConsent (notice acknowledgement, not GDPR consent) must match CONSENT_TEXT in identify-agent/src/identify/http.ts word for word.
+  identifyDocTitle: 'Identify your vintage Le Creuset — Cook & Collect',
+  identifyMetaDesc: 'Upload photos of your vintage Le Creuset piece and compare its markings with our archive of historical catalogues.',
+  identifyTitle: 'Identify your vintage Le Creuset',
+  identifyIntro: 'Add up to 6 photos of one piece. The agent reads its markings and compares them with our archive of historical Le Creuset catalogues and documents, then shows the documentary possibilities with their sources.',
+  identifyUnavailable: 'The identification agent is not available yet. Please come back soon.',
+  identifyPhotosLabel: 'Photos (1 to 6)',
+  identifyPhotosHint: 'Show the base with its markings, the lid (inside and out), the handles and, if you can, a tape measure across the top. Photos are resized automatically.',
+  identifyNotesLabel: 'Your notes (optional)',
+  identifyNotesPlaceholder: 'e.g. orange oval cocotte, 29 cm long without handles, "E" on the base',
+  identifyNotesHint: 'Add what is hard to see in the photos: measurements with their unit, colour, where the piece comes from.',
+  identifyConsent: "I have read the privacy notice. Cook & Collect stores the photos and notes I submit, with the agent's answer, privately for 5 years to improve this identification agent. The photos are read by Google Gemini. They are never published. I can object or ask for their deletion at any time by emailing vintagetreasurecontact@gmail.com with my case reference. I am 18 or older.",
+  identifySubmit: 'Identify my piece',
+  identifyPrivacy: 'Storing your case is a condition of use: each identification helps the agent improve (legitimate interest). Please photograph only the object. The answer is automatic and is not an authentication or valuation. <a href="privacy.html#identification-agent">Read the privacy notice</a>.',
+  identifyResultTitle: 'What our archive says',
+  identifyObservationsTitle: 'What the agent read in your photos',
+  identifyNew: 'Identify another piece',
+  identifyShopTitle: 'Looking for a vintage French piece?',
+  identifyShopText: 'Cook & Collect sells hand-picked vintage Le Creuset, Cousances, Staub and French copper, shipped from France.',
+  identifyShopCollection: 'Browse the collection',
+  identifyShopSelection: 'Our selection',
+  identifyShopGuide: 'Le Creuset dating guide',
+
   // listing studio page (studio.html)
   studioDocTitle: 'Listing studio — Cook & Collect',
   studioMetaDesc: 'Write a sale description for a vintage French cookware piece from your photos and notes.',
@@ -1447,7 +1472,28 @@ const en = {
   legalPhoneLabel: 'Phone',
   legalHostHeading: 'Site host',
   legalHostAddress: '88 Colin P. Kelly Jr. Street, San Francisco, CA 94107, USA',
-  legalHostPhoneLabel: 'Phone'
+  legalHostPhoneLabel: 'Phone',
+  // privacy notice (privacy.html)
+  privacyDocTitle: "Privacy notice — Cook & Collect",
+  privacyMetaDesc: "How Cook & Collect handles personal data on cookandcollect.eu and in the identification agent.",
+  privacyTitle: "Privacy notice",
+  privacyUpdated: "Last updated: November 2026",
+  privacyControllerHeading: "Who is responsible",
+  privacyControllerText: "The data controller is the publisher of this site:",
+  privacyBrowsingHeading: "Browsing the site",
+  privacyBrowsingText: "The site sets no cookies and uses no analytics or advertising trackers. It is hosted by GitHub (GitHub Pages), which receives your IP address and technical request data to deliver the pages and keep them secure. Fonts are served from this site; no third-party font service is used.",
+  privacyContactHeading: "Contacting us and buying",
+  privacyContactText: "When you write to us by email, WhatsApp or Messenger, we use your contact details and messages to answer you and, if you buy, to carry out the sale (performance of a contract). WhatsApp and Messenger are operated by Meta under their own privacy policies. Sales records are kept as long as French accounting law requires (10 years); other messages are deleted when they are no longer needed.",
+  privacyAgentHeading: "The identification agent",
+  privacyAgentData: "When you use the identification agent, we store the photos and notes you submit, the agent's answer, a case reference and a random browser identifier saved in your browser's local storage (to apply the daily limit). Your IP address is used only in hashed form for anti-abuse limits. Location and other metadata are removed from the photos before storage. Please photograph only the object, not people or personal documents.",
+  privacyAgentPurpose: "Purposes: to give you an answer and to improve the agent, by reviewing past cases, correcting how markings are read and enriching our reference archive. Cases are never published and never become documentary evidence on their own.",
+  privacyAgentBasis: "Legal basis: our legitimate interest in providing and improving the agent (GDPR art. 6(1)(f)). Storing the case is a condition of use; you can object and ask for deletion at any time, as explained below.",
+  privacyAgentRecipients: "Recipients: Cloudflare (hosting of the agent, database and private photo storage) and Google (Gemini, which reads the photos to extract their markings; under Google's data processing terms, it does not use them to train its models). Both are US companies; transfers rely on the EU–US Data Privacy Framework and standard contractual clauses.",
+  privacyAgentRetention: "Retention: cases (photos, notes and answers) are deleted automatically 5 years after submission, or earlier on request. Daily usage counters are deleted after 2 days. The browser identifier stays in your browser until you clear its site data.",
+  privacyAgentAge: "The identification agent is reserved for people aged 18 or over.",
+  privacyRightsHeading: "Your rights",
+  privacyRightsText: "You can ask for access to, correction or deletion of your data, restrict or object to its processing, and receive a copy of it. For the identification agent, email vintagetreasurecontact@gmail.com with your case reference: we delete that case and every case sent from the same browser. We answer within one month.",
+  privacyComplaintText: "You can also lodge a complaint with the CNIL (www.cnil.fr), the French data protection authority."
 };
 
 const fr = {
@@ -1459,6 +1505,7 @@ const fr = {
   navShipping: 'Livraison',
   navAbout: 'À propos',
   legal: 'Mentions légales',
+  privacy: 'Confidentialité',
   loading: 'Chargement…',
   ariaWhatsApp: 'Contactez-nous sur WhatsApp',
   ariaMessenger: 'Contactez-nous sur Messenger',
@@ -2872,7 +2919,28 @@ const fr = {
   legalPhoneLabel: 'Téléphone',
   legalHostHeading: 'Hébergeur du site',
   legalHostAddress: '88 Colin P. Kelly Jr. Street, San Francisco, CA 94107, États-Unis',
-  legalHostPhoneLabel: 'Téléphone'
+  legalHostPhoneLabel: 'Téléphone',
+  // privacy notice (privacy.html)
+  privacyDocTitle: "Politique de confidentialité — Cook & Collect",
+  privacyMetaDesc: "Comment Cook & Collect traite les données personnelles sur cookandcollect.eu et dans l'agent d'identification.",
+  privacyTitle: "Politique de confidentialité",
+  privacyUpdated: "Dernière mise à jour : novembre 2026",
+  privacyControllerHeading: "Responsable du traitement",
+  privacyControllerText: "Le responsable du traitement est l'éditeur de ce site :",
+  privacyBrowsingHeading: "Navigation sur le site",
+  privacyBrowsingText: "Le site ne dépose aucun cookie et n'utilise aucun outil de mesure d'audience ni traceur publicitaire. Il est hébergé par GitHub (GitHub Pages), qui reçoit votre adresse IP et des données techniques de requête pour afficher les pages et les sécuriser. Les polices sont servies par ce site ; aucun service de polices tiers n'est utilisé.",
+  privacyContactHeading: "Nous contacter et acheter",
+  privacyContactText: "Lorsque vous nous écrivez par e-mail, WhatsApp ou Messenger, nous utilisons vos coordonnées et vos messages pour vous répondre et, en cas d'achat, pour exécuter la vente (exécution d'un contrat). WhatsApp et Messenger sont exploités par Meta selon leurs propres politiques de confidentialité. Les pièces relatives aux ventes sont conservées pendant la durée exigée par le droit comptable français (10 ans) ; les autres messages sont supprimés lorsqu'ils ne sont plus utiles.",
+  privacyAgentHeading: "L'agent d'identification",
+  privacyAgentData: "Lorsque vous utilisez l'agent d'identification (disponible en anglais), nous conservons les photos et notes envoyées, la réponse de l'agent, une référence de dossier et un identifiant aléatoire enregistré dans le stockage local de votre navigateur (pour appliquer la limite quotidienne). Votre adresse IP n'est utilisée que sous forme hachée, pour les limites anti-abus. La localisation et les autres métadonnées sont supprimées des photos avant leur conservation. Merci de ne photographier que l'objet, sans personnes ni documents personnels.",
+  privacyAgentPurpose: "Finalités : vous répondre et améliorer l'agent, en revoyant les dossiers passés, en corrigeant la lecture des marquages et en enrichissant notre archive de référence. Les dossiers ne sont jamais publiés et ne deviennent jamais, à eux seuls, des preuves documentaires.",
+  privacyAgentBasis: "Base légale : notre intérêt légitime à fournir et améliorer l'agent (article 6(1)(f) du RGPD). La conservation du dossier est une condition d'utilisation ; vous pouvez vous y opposer et demander sa suppression à tout moment, comme indiqué ci-dessous.",
+  privacyAgentRecipients: "Destinataires : Cloudflare (hébergement de l'agent, de la base de données et du stockage privé des photos) et Google (Gemini, qui lit les photos pour en extraire les marquages ; selon les conditions de traitement de Google, il ne les utilise pas pour entraîner ses modèles). Ces deux sociétés sont américaines ; les transferts reposent sur le cadre de protection des données UE–États-Unis et les clauses contractuelles types.",
+  privacyAgentRetention: "Conservation : les dossiers (photos, notes et réponses) sont supprimés automatiquement 5 ans après leur envoi, ou plus tôt sur demande. Les compteurs d'utilisation quotidiens sont supprimés après 2 jours. L'identifiant de navigateur reste dans votre navigateur jusqu'à ce que vous effaciez les données du site.",
+  privacyAgentAge: "L'agent d'identification est réservé aux personnes âgées de 18 ans ou plus.",
+  privacyRightsHeading: "Vos droits",
+  privacyRightsText: "Vous pouvez demander l'accès à vos données, leur rectification ou leur suppression, limiter leur traitement ou vous y opposer, et en recevoir une copie. Pour l'agent d'identification, écrivez à vintagetreasurecontact@gmail.com en indiquant votre référence de dossier : nous supprimons ce dossier et tous ceux envoyés depuis le même navigateur. Nous répondons dans un délai d'un mois.",
+  privacyComplaintText: "Vous pouvez également introduire une réclamation auprès de la CNIL (www.cnil.fr), l'autorité française de protection des données."
 };
 
 module.exports = { en, fr };

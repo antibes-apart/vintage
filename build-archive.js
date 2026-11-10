@@ -234,7 +234,7 @@ function chrome(lang, strings, enHref, frHref) {
   </nav>`;
   const footer = `<footer>
     <p>&copy; 2026 Cook &amp; Collect</p>
-    <p><a href="../${lang.legalFile}">{{legal}}</a></p>
+    <p><a href="../${lang.legalFile}">{{legal}}</a> · <a href="../privacy.html">{{privacy}}</a></p>
   </footer>`;
   return {nav: fill(nav, strings), footer: fill(footer, strings), contact: fill(CONTACT_BUTTONS, strings)};
 }
@@ -258,7 +258,7 @@ function head({lang, title, description, canonical, enUrl, frUrl, image, data}) 
   <meta property="og:title" content="${esc(title)}">
   <meta property="og:description" content="${esc(description)}">
   <meta property="og:url" content="${canonical}">${image ? `\n  <meta property="og:image" content="${esc(image)}">` : ''}
-  <link rel="stylesheet" href="../../css/style.css?v=18">
+  <link rel="stylesheet" href="../../css/style.css?v=23">
   ${data.map(jsonLd).join('\n  ')}
 </head>`;
 }

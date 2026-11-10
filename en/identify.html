@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Upload photos of your vintage Le Creuset piece and compare its markings with our archive of historical catalogues.">
+  <!-- Hidden launch: not linked from the site, not in the sitemap, kept out of search results. -->
+  <meta name="robots" content="noindex, nofollow">
+  <title>Identify your vintage Le Creuset — Cook & Collect</title>
+  <link rel="icon" href="../favicon.svg" type="image/svg+xml">
+  <link rel="icon" href="../favicon.ico" sizes="any">
+  <link rel="apple-touch-icon" href="../apple-touch-icon.png">
+  <link rel="canonical" href="https://cookandcollect.eu/en/identify.html">
+  <link rel="stylesheet" href="../css/style.css?v=23">
+</head>
+<body data-page="identify" data-api="" data-turnstile-sitekey="">
+  <nav>
+    <div class="nav-inner">
+      <a href="index.html" class="logo">Cook &amp; Collect</a>
+      <ul class="nav-links">
+        <li><a href="index.html">Collection</a></li>
+        <li><a href="curatedselection" class="nav-highlight"><span class="nav-star" aria-hidden="true">★</span>Our Selection</a></li>
+        <li><a href="guides/">Guides</a></li>
+        <li><a href="about.html">About</a></li>
+        <li><a href="shipping.html">Shipping</a></li>
+        <li><a href="sold.html">Sold</a></li>
+        
+      </ul>
+    </div>
+  </nav>
+  <main class="studio identify">
+    <h1 class="page-title">Identify your vintage Le Creuset</h1>
+    <p class="studio-intro">Add up to 6 photos of one piece. The agent reads its markings and compares them with our archive of historical Le Creuset catalogues and documents, then shows the documentary possibilities with their sources.</p>
+
+    <p class="studio-unavailable" id="identify-unavailable" hidden>The identification agent is not available yet. Please come back soon.</p>
+
+    <form class="studio-form" id="identify-form" novalidate>
+      <div class="studio-field">
+        <label for="identify-photos">Photos (1 to 6)</label>
+        <input type="file" id="identify-photos" accept="image/*" multiple>
+        <p class="studio-hint">Show the base with its markings, the lid (inside and out), the handles and, if you can, a tape measure across the top. Photos are resized automatically.</p>
+        <ul class="studio-thumbs" id="identify-thumbs" aria-label="Photos (1 to 6)"></ul>
+      </div>
+      <div class="studio-field">
+        <label for="identify-notes">Your notes (optional)</label>
+        <textarea id="identify-notes" rows="3" maxlength="2000" placeholder="e.g. orange oval cocotte, 29 cm long without handles, "E" on the base"></textarea>
+        <p class="studio-hint">Add what is hard to see in the photos: measurements with their unit, colour, where the piece comes from.</p>
+      </div>
+      <div class="studio-field identify-consent">
+        <input type="checkbox" id="identify-consent">
+        <label for="identify-consent">I have read the privacy notice. Cook & Collect stores the photos and notes I submit, with the agent's answer, privately for 5 years to improve this identification agent. The photos are read by Google Gemini. They are never published. I can object or ask for their deletion at any time by emailing vintagetreasurecontact@gmail.com with my case reference. I am 18 or older.</label>
+      </div>
+      <div class="studio-turnstile" id="identify-turnstile"></div>
+      <button type="submit" class="studio-btn" id="identify-submit">Identify my piece</button>
+      <p class="studio-privacy">Storing your case is a condition of use: each identification helps the agent improve (legitimate interest). Please photograph only the object. The answer is automatic and is not an authentication or valuation. <a href="privacy.html#identification-agent">Read the privacy notice</a>.</p>
+    </form>
+
+    <p class="studio-status" id="identify-status" role="status" aria-live="polite"></p>
+
+    <section class="studio-result" id="identify-result" hidden aria-labelledby="identify-result-heading">
+      <h2 id="identify-result-heading">What our archive says</h2>
+      <p class="identify-notice" id="identify-notice"></p>
+      <p class="identify-message" id="identify-message"></p>
+      <p class="identify-question" id="identify-question" hidden></p>
+      <div id="identify-possibilities"></div>
+      <details class="studio-details">
+        <summary>What the agent read in your photos</summary>
+        <ul id="identify-observations"></ul>
+      </details>
+      <p class="studio-hint" id="identify-reference"></p>
+      <div class="studio-actions">
+        <button type="button" class="studio-btn studio-btn-secondary" id="identify-new">Identify another piece</button>
+      </div>
+    </section>
+
+    <section class="identify-shop" aria-labelledby="identify-shop-heading">
+      <h2 id="identify-shop-heading">Looking for a vintage French piece?</h2>
+      <p>Cook & Collect sells hand-picked vintage Le Creuset, Cousances, Staub and French copper, shipped from France.</p>
+      <p class="identify-shop-links">
+        <a class="studio-btn" href="index.html">Browse the collection</a>
+        <a class="studio-btn studio-btn-secondary" href="curatedselection">Our selection</a>
+        <a class="studio-btn studio-btn-secondary" href="guides/le-creuset-dating-guide.html">Le Creuset dating guide</a>
+      </p>
+    </section>
+  </main>
+  <!-- Floating Contact Buttons -->
+  <div class="contact-buttons">
+    <a href="https://wa.me/33627335434" target="_blank" rel="noopener noreferrer" class="contact-btn whatsapp" aria-label="Contact us on WhatsApp">
+      <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+    </a>
+    <a href="https://m.me/cookncollect" target="_blank" rel="noopener noreferrer" class="contact-btn messenger" aria-label="Contact us on Messenger">
+      <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 0C5.373 0 0 4.974 0 11.111c0 3.498 1.744 6.614 4.469 8.654V24l4.088-2.242c1.092.301 2.246.464 3.443.464 6.627 0 12-4.975 12-11.111C24 4.974 18.627 0 12 0zm1.191 14.963l-3.055-3.26-5.963 3.26L10.732 8.2l3.131 3.259L19.752 8.2l-6.561 6.763z"/></svg>
+    </a>
+  </div>
+  <footer>
+    <p>&copy; 2026 Cook &amp; Collect</p>
+    <p><a href="legal-notice.html">Legal notice</a> · <a href="privacy.html">Privacy</a></p>
+  </footer>
+  <script src="../js/identify.js?v=1"></script>
+</body>
+</html>

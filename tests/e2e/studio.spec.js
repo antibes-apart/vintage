@@ -11,7 +11,6 @@ const test = base.extend({
     page.on('response', response => {
       if (response.url().startsWith(baseURL) && response.status() >= 400) errors.push(`${response.status()} ${response.url()}`);
     });
-    await page.route('https://fonts.googleapis.com/**', route => route.fulfill({ contentType: 'text/css', body: '' }));
     await use(errors);
     expect(errors, 'Browser errors and missing local assets').toEqual([]);
   }, { auto: true }]

@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="{{identifyMetaDesc}}">
+  <!-- Hidden launch: not linked from the site, not in the sitemap, kept out of search results. -->
+  <meta name="robots" content="noindex, nofollow">
+  <title>{{identifyDocTitle}}</title>
+  <link rel="icon" href="{{BASE}}favicon.svg" type="image/svg+xml">
+  <link rel="icon" href="{{BASE}}favicon.ico" sizes="any">
+  <link rel="apple-touch-icon" href="{{BASE}}apple-touch-icon.png">
+  {{canonicalBlock}}
+  <link rel="stylesheet" href="{{BASE}}css/style.css?v=23">
+</head>
+<body data-page="identify" data-api="{{identifyApiBase}}" data-turnstile-sitekey="{{identifyTurnstileSiteKey}}">
+  {{nav}}
+  <main class="studio identify">
+    <h1 class="page-title">{{identifyTitle}}</h1>
+    <p class="studio-intro">{{identifyIntro}}</p>
+
+    <p class="studio-unavailable" id="identify-unavailable" hidden>{{identifyUnavailable}}</p>
+
+    <form class="studio-form" id="identify-form" novalidate>
+      <div class="studio-field">
+        <label for="identify-photos">{{identifyPhotosLabel}}</label>
+        <input type="file" id="identify-photos" accept="image/*" multiple>
+        <p class="studio-hint">{{identifyPhotosHint}}</p>
+        <ul class="studio-thumbs" id="identify-thumbs" aria-label="{{identifyPhotosLabel}}"></ul>
+      </div>
+      <div class="studio-field">
+        <label for="identify-notes">{{identifyNotesLabel}}</label>
+        <textarea id="identify-notes" rows="3" maxlength="2000" placeholder="{{identifyNotesPlaceholder}}"></textarea>
+        <p class="studio-hint">{{identifyNotesHint}}</p>
+      </div>
+      <div class="studio-field identify-consent">
+        <input type="checkbox" id="identify-consent">
+        <label for="identify-consent">{{identifyConsent}}</label>
+      </div>
+      <div class="studio-turnstile" id="identify-turnstile"></div>
+      <button type="submit" class="studio-btn" id="identify-submit">{{identifySubmit}}</button>
+      <p class="studio-privacy">{{identifyPrivacy}}</p>
+    </form>
+
+    <p class="studio-status" id="identify-status" role="status" aria-live="polite"></p>
+
+    <section class="studio-result" id="identify-result" hidden aria-labelledby="identify-result-heading">
+      <h2 id="identify-result-heading">{{identifyResultTitle}}</h2>
+      <p class="identify-notice" id="identify-notice"></p>
+      <p class="identify-message" id="identify-message"></p>
+      <p class="identify-question" id="identify-question" hidden></p>
+      <div id="identify-possibilities"></div>
+      <details class="studio-details">
+        <summary>{{identifyObservationsTitle}}</summary>
+        <ul id="identify-observations"></ul>
+      </details>
+      <p class="studio-hint" id="identify-reference"></p>
+      <div class="studio-actions">
+        <button type="button" class="studio-btn studio-btn-secondary" id="identify-new">{{identifyNew}}</button>
+      </div>
+    </section>
+
+    <section class="identify-shop" aria-labelledby="identify-shop-heading">
+      <h2 id="identify-shop-heading">{{identifyShopTitle}}</h2>
+      <p>{{identifyShopText}}</p>
+      <p class="identify-shop-links">
+        <a class="studio-btn" href="index.html">{{identifyShopCollection}}</a>
+        <a class="studio-btn studio-btn-secondary" href="curatedselection">{{identifyShopSelection}}</a>
+        <a class="studio-btn studio-btn-secondary" href="guides/le-creuset-dating-guide.html">{{identifyShopGuide}}</a>
+      </p>
+    </section>
+  </main>
+  {{contactButtons}}
+  {{footer}}
+  <script src="{{BASE}}js/identify.js?v=1"></script>
+</body>
+</html>

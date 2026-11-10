@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="{{LANG}}">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="{{privacyMetaDesc}}">
+  <title>{{privacyDocTitle}}</title>
+  <link rel="icon" href="{{BASE}}favicon.svg" type="image/svg+xml">
+  <link rel="icon" href="{{BASE}}favicon.ico" sizes="any">
+  <link rel="apple-touch-icon" href="{{BASE}}apple-touch-icon.png">
+  {{canonicalBlock}}
+  <link rel="stylesheet" href="{{BASE}}css/style.css?v=23">
+</head>
+<body data-page="privacy">
+  {{nav}}
+  <main class="privacy">
+    <h1 class="page-title">{{privacyTitle}}</h1>
+    <p class="page-subtitle">{{privacyUpdated}}</p>
+
+    <section>
+      <h2>{{privacyControllerHeading}}</h2>
+      <p>{{privacyControllerText}}</p>
+      <p>{{legalOwnerName}} — {{legalTradeName}}, {{legalAddress}}. {{legalEmailLabel}} : <a href="mailto:{{legalEmail}}">{{legalEmail}}</a></p>
+    </section>
+
+    <section>
+      <h2>{{privacyBrowsingHeading}}</h2>
+      <p>{{privacyBrowsingText}}</p>
+    </section>
+
+    <section>
+      <h2>{{privacyContactHeading}}</h2>
+      <p>{{privacyContactText}}</p>
+    </section>
+
+    <section id="identification-agent">
+      <h2>{{privacyAgentHeading}}</h2>
+      <p>{{privacyAgentData}}</p>
+      <p>{{privacyAgentPurpose}}</p>
+      <p>{{privacyAgentBasis}}</p>
+      <p>{{privacyAgentRecipients}}</p>
+      <p>{{privacyAgentRetention}}</p>
+      <p>{{privacyAgentAge}}</p>
+    </section>
+
+    <section>
+      <h2>{{privacyRightsHeading}}</h2>
+      <p>{{privacyRightsText}}</p>
+      <p>{{privacyComplaintText}}</p>
+    </section>
+  </main>
+  {{contactButtons}}
+  {{footer}}
+</body>
+</html>

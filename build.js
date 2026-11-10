@@ -746,7 +746,7 @@ function renderCollectionPage(item, strings, guideHrefs, base) {
   <meta property="og:description" content="${escapeHtml(metaDesc)}">
   <meta property="og:url" content="${canonicalUrl}">
   ${item.cover ? `<meta property="og:image" content="${SITE_URL}/${item.cover}">` : ''}
-  <link rel="stylesheet" href="../../css/style.css?v=16">
+  <link rel="stylesheet" href="../../css/style.css?v=23">
   ${renderItemStructuredData(item, canonicalUrl, breadcrumbs)}
 </head>
 <body data-page="collection-item">
@@ -779,7 +779,7 @@ function renderCollectionPage(item, strings, guideHrefs, base) {
 </body>
 </html>`;
 
-  return substitute(rawHtml, {...strings, legalHref: '../legal-notice.html'});
+  return substitute(rawHtml, {...strings, legalHref: '../legal-notice.html', privacyHref: '../privacy.html'});
 }
 
 /* ─── Canonical / hreflang for standard (non-catalogue-injected) pages ───
@@ -822,8 +822,11 @@ const PAGES = [
   {tpl: 'shipping.html', out: 'shipping.html', page: 'shipping'},
   {tpl: 'about.html', out: 'about.html', page: 'about'},
   {tpl: 'legal.html', out: null, page: 'legal'}, // out resolved per-locale (legal filename)
+  {tpl: 'privacy.html', out: 'privacy.html', page: 'privacy'}, // GDPR privacy notice (linked from every footer)
   {tpl: 'sold.html', out: 'sold.html', page: 'sold', inject: true}, // hidden / unlinked
-  {tpl: 'studio.html', out: 'studio.html', page: 'studio'} // listing studio: unlinked, noindex, not in sitemap
+  {tpl: 'studio.html', out: 'studio.html', page: 'studio'}, // listing studio: unlinked, noindex, not in sitemap
+  // Visitor identification agent: English only (en/ folder), hidden launch: unlinked, noindex, not in sitemap.
+  {tpl: 'identify.html', out: 'identify.html', page: 'identify', onlyDir: 'en'}
 ];
 
 // Listing studio (studio.html): the chat page calls the separate identify-agent Worker API.
@@ -831,6 +834,8 @@ const PAGES = [
 // STUDIO_TURNSTILE_SITE_KEY is Cloudflare Turnstile's *public* site key (the secret stays on the Worker).
 const STUDIO_API_BASE = process.env.STUDIO_API_BASE || '';
 const STUDIO_TURNSTILE_SITE_KEY = process.env.STUDIO_TURNSTILE_SITE_KEY || '';
+// The identification page uses the same Worker; its Turnstile public site key is optional until the page is linked.
+const IDENTIFY_TURNSTILE_SITE_KEY = process.env.IDENTIFY_TURNSTILE_SITE_KEY || '';
 const attr = value => String(value).replace(/&/g, '&amp;').replace(/"/g, '&quot;').replace(/</g, '&lt;');
 
 // Set to true to restore the detailed shipping cost tables on the Shipping page.
@@ -879,7 +884,7 @@ function renderNav(activePage, langSwitch, hrefPrefix, ourSelectionHref, guidesH
 
 const FOOTER = `<footer>
     <p>&copy; 2026 Cook &amp; Collect</p>
-    <p><a href="{{legalHref}}">{{legal}}</a></p>
+    <p><a href="{{legalHref}}">{{legal}}</a> · <a href="{{privacyHref}}">{{privacy}}</a></p>
   </footer>`;
 
 // Relative path from the current locale dir to `<targetDir>/<file>`.
@@ -911,6 +916,7 @@ LOCALES.forEach(locale => {
   // (root = "", subfolders = "../"). Works on file:// and when served.
   const base = locale.dir === '' ? '' : '../';
   PAGES.forEach(pageDef => {
+    if (pageDef.onlyDir !== undefined && pageDef.onlyDir !== locale.dir) return;
     const outFile = pageDef.page === 'legal' ? locale.legal : pageDef.out;
     // EN Curated Selection lives at the extension/hyphen-free /en/curatedselection
     // (see build report). FR keeps curated-selection.html unchanged.
@@ -918,7 +924,8 @@ LOCALES.forEach(locale => {
       : pageDef.page === 'curated' ? 'curatedselection'
       : pageDef.out;
     const frFile = pageDef.page === 'legal' ? 'mentions-legales.html' : pageDef.out;
-    const langSwitch = renderLangSwitch(locale.dir, locale.code, enFile, frFile);
+    // A single-language page has no translation to switch to.
+    const langSwitch = pageDef.onlyDir !== undefined ? '' : renderLangSwitch(locale.dir, locale.code, enFile, frFile);
     // Nav-only hrefs for the "Our Selection" / "Guides" entries (site-wide
     // nav — see build report). Mirrors the existing root->en/ crossover
     // pattern used for guideHref below.
@@ -942,6 +949,7 @@ LOCALES.forEach(locale => {
       LANG: locale.code,
       BASE: base,
       legalHref: locale.legal,
+      privacyHref: 'privacy.html',
       // Guides live in en/guides/ and fr/guides/ (see build-guides.js). From the
       // root English page they need the "en/" prefix; inside en/ or fr/ they are
       // a sibling folder. One helper per guide file keeps this scalable: adding
@@ -1025,7 +1033,13 @@ LOCALES.forEach(locale => {
         studioApiBase: attr(STUDIO_API_BASE),
         studioTurnstileSiteKey: attr(STUDIO_TURNSTILE_SITE_KEY)
       } : {}),
+      ...(pageDef.page === 'identify' ? {
+        canonicalBlock: `<link rel="canonical" href="${SITE_URL}/en/identify.html">`,
+        identifyApiBase: attr(STUDIO_API_BASE),
+        identifyTurnstileSiteKey: attr(IDENTIFY_TURNSTILE_SITE_KEY)
+      } : {}),
       ...(pageDef.page === 'shipping' ? {canonicalBlock: renderCanonicalBlock(locale.dir, 'shipping.html')} : {}),
+      ...(pageDef.page === 'privacy' ? {canonicalBlock: renderCanonicalBlock(locale.dir, 'privacy.html')} : {}),
       ...(pageDef.page === 'legal' ? {canonicalBlock: renderCanonicalBlock(locale.dir, 'legal-notice.html', 'mentions-legales.html')} : {})
     };
     // Pre-substitution copy, reused below to render the real
@@ -1126,6 +1140,7 @@ sitemapUrls.push(`${SITE_URL}/`);
   // for existing links). FR is unchanged.
   sitemapUrls.push(`${SITE_URL}/${dir}/${dir === 'en' ? 'curatedselection' : 'curated-selection.html'}`);
   sitemapUrls.push(`${SITE_URL}/${dir}/${dir === 'fr' ? 'mentions-legales.html' : 'legal-notice.html'}`);
+  sitemapUrls.push(`${SITE_URL}/${dir}/privacy.html`);
   // Guides landing page: canonical is the directory-index trailing-slash
   // form (matches renderGuideIndexHead's canonical in build-guides.js), not
   // guides/index.html, so the sitemap doesn't create a duplicate URL.

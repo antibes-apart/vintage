@@ -11,9 +11,6 @@ const test = base.extend({
         errors.push(`${response.status()} ${response.url()}`);
       }
     });
-    await page.route('https://fonts.googleapis.com/**', route => route.fulfill({
-      contentType: 'text/css', body: ''
-    }));
     await use(errors);
     expect(errors, 'Browser errors and missing local assets').toEqual([]);
   }, { auto: true }]
@@ -286,9 +283,6 @@ test('permanent item content and breadcrumb navigation work without JavaScript',
   });
   try {
     const staticPage = await context.newPage();
-    await staticPage.route('https://fonts.googleapis.com/**', route => route.fulfill({
-      contentType: 'text/css', body: ''
-    }));
     await staticPage.goto(`/en/collection/${item.id}.html`);
     await expect(staticPage.locator('h1')).toHaveText(item.title);
     await checkImageFrame(staticPage);

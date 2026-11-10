@@ -187,7 +187,7 @@ const CONTACT_BUTTONS = `<!-- Floating Contact Buttons -->
 
 const FOOTER = `<footer>
     <p>&copy; 2026 Cook &amp; Collect</p>
-    <p><a href="{{legalHref}}">{{legal}}</a></p>
+    <p><a href="{{legalHref}}">{{legal}}</a> · <a href="{{privacyHref}}">{{privacy}}</a></p>
   </footer>`;
 
 // Guides sit at <locale>/guides/, one level below the locale root, so links
@@ -567,6 +567,7 @@ function buildGuideIndex(locale) {
     LANG: locale.code,
     BASE: base,
     legalHref: `${rootPrefix}${locale.legalFile}`,
+    privacyHref: `${rootPrefix}privacy.html`,
     curatedHref,
     aboutHref: `${rootPrefix}about.html`
   };
@@ -608,6 +609,8 @@ GUIDES.forEach(guide => {
       LANG: locale.code,
       BASE: base,
       legalHref: `${rootPrefix}${locale.legalFile}`,
+      privacyHref: `${rootPrefix}privacy.html`,
+    privacyHref: `${rootPrefix}privacy.html`,
       curatedHref,
       aboutHref: `${rootPrefix}about.html`,
       // The Collector's Guides index is a sibling file in the same folder.
