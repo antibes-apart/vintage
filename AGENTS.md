@@ -150,6 +150,25 @@ still defaults to port 8080; `PORT` overrides it when needed.
   text, stores the photos in R2 and the record in D1. It needs the photo files, which only
   live in the page's memory: after a reload the button is disabled with a hint.
 
+## Visitor identification (`en/identify.html`)
+
+- Hidden, English-only chat (`templates/identify.html`, `js/identify.js`); no navigation
+  or sitemap entry. It uses the studio API base and a separate Turnstile site key.
+- Initial uploads require photos and the unchanged storage notice. Subsequent
+  messages send the same visitor and case reference, with optional photos: six
+  per upload, ten per case, and up to five follow-ups within 24 hours.
+- Every new payload gets a cryptographically random UUID. Network retries (one
+  automatic, then explicit) reuse the exact in-memory body and never duplicate
+  the visitor's message. Only the visitor token goes into local storage; reloading
+  does not resume a conversation. Editing a rejected follow-up is an explicit new
+  request. A failed initial case cannot be continued; starting another identification
+  requires the explicit new-case button.
+- Confidence summaries and AI answers are text-only; raw archive matches and
+  observations are not rendered. The collection sidebar is built from up to
+  three published, available items using the existing item data.
+- Tests in `tests/e2e/identify.spec.js` mock every API call; do not call a live
+  identification service when testing.
+
 ## Archive of documented pieces (`build-archive.js`)
 
 - SEO pages for pieces the owner documented (sold on Catawiki), **not for sale here**: one page per

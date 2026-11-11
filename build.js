@@ -746,7 +746,7 @@ function renderCollectionPage(item, strings, guideHrefs, base) {
   <meta property="og:description" content="${escapeHtml(metaDesc)}">
   <meta property="og:url" content="${canonicalUrl}">
   ${item.cover ? `<meta property="og:image" content="${SITE_URL}/${item.cover}">` : ''}
-  <link rel="stylesheet" href="../../css/style.css?v=24">
+  <link rel="stylesheet" href="../../css/style.css?v=25">
   ${renderItemStructuredData(item, canonicalUrl, breadcrumbs)}
 </head>
 <body data-page="collection-item">
@@ -1036,7 +1036,10 @@ LOCALES.forEach(locale => {
       ...(pageDef.page === 'identify' ? {
         canonicalBlock: `<link rel="canonical" href="${SITE_URL}/en/identify.html">`,
         identifyApiBase: attr(STUDIO_API_BASE),
-        identifyTurnstileSiteKey: attr(IDENTIFY_TURNSTILE_SITE_KEY)
+        identifyTurnstileSiteKey: attr(IDENTIFY_TURNSTILE_SITE_KEY),
+        identifyShopItems: items.filter(item => !item.sold && item.cover).slice(0, 3).map(item =>
+          `<a href="${itemHref(item, collectionBaseFor(locale.dir))}"><img src="${attr(selectionAssetUrl(item.cover, base))}" alt="${attr(item.title)}" loading="lazy"><span>${escapeHtml(item.title)}</span></a>`
+        ).join('')
       } : {}),
       ...(pageDef.page === 'shipping' ? {canonicalBlock: renderCanonicalBlock(locale.dir, 'shipping.html')} : {}),
       ...(pageDef.page === 'privacy' ? {canonicalBlock: renderCanonicalBlock(locale.dir, 'privacy.html')} : {}),

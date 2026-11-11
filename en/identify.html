@@ -11,7 +11,7 @@
   <link rel="icon" href="../favicon.ico" sizes="any">
   <link rel="apple-touch-icon" href="../apple-touch-icon.png">
   <link rel="canonical" href="https://cookandcollect.eu/en/identify.html">
-  <link rel="stylesheet" href="../css/style.css?v=24">
+  <link rel="stylesheet" href="../css/style.css?v=25">
 </head>
 <body data-page="identify" data-api="" data-turnstile-sitekey="">
   <nav>
@@ -30,60 +30,57 @@
   </nav>
   <main class="studio identify">
     <h1 class="page-title">Identify your vintage Le Creuset</h1>
-    <p class="studio-intro">Add up to 6 photos of one piece. The agent reads its markings and compares them with our archive of historical Le Creuset catalogues and documents, then shows the documentary possibilities with their sources.</p>
+    <p class="studio-intro">Show us your piece. Add up to 6 photos and a question or a few details to begin. Then, if you wish, continue with up to 5 follow-up messages and optional photos (10 photos per conversation).</p>
 
     <p class="studio-unavailable" id="identify-unavailable" hidden>The identification agent is not available yet. Please come back soon.</p>
 
+    <div class="identify-layout">
+    <section class="identify-chat" aria-label="Identification conversation">
+    <div id="identify-transcript" class="identify-transcript" role="log" aria-label="Messages" aria-live="polite"></div>
+    <p class="studio-hint" id="identify-reference" hidden></p>
+    <p class="studio-hint" id="identify-followups" hidden></p>
     <form class="studio-form" id="identify-form" novalidate>
       <div class="studio-field">
         <label for="identify-photos">Photos (1 to 6)</label>
-        <input type="file" id="identify-photos" accept="image/*" multiple>
-        <p class="studio-hint">Show the base with its markings, the lid (inside and out), the handles and, if you can, a tape measure across the top. Photos are resized automatically.</p>
+        <div class="identify-attachment">
+          <input type="file" id="identify-photos" accept="image/*" multiple aria-describedby="identify-photos-hint">
+          <span class="identify-attachment-button" aria-hidden="true">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></svg>
+            Add photos
+          </span>
+        </div>
+        <p class="studio-hint" id="identify-photos-hint">Show the base with its markings, the lid (inside and out), the handles and, if you can, a tape measure across the top. Photos are resized automatically.</p>
         <ul class="studio-thumbs" id="identify-thumbs" aria-label="Photos (1 to 6)"></ul>
       </div>
       <div class="studio-field">
-        <label for="identify-notes">Your notes (optional)</label>
+        <label for="identify-notes">Your message</label>
         <textarea id="identify-notes" rows="3" maxlength="2000" placeholder="e.g. orange oval cocotte, 29 cm long without handles, "E" on the base"></textarea>
-        <p class="studio-hint">Add what is hard to see in the photos: measurements with their unit, colour, where the piece comes from.</p>
+        <p class="studio-hint">Your first message is optional. For follow-ups, send a message, a photo, or both. No questionnaire to complete.</p>
       </div>
-      <div class="studio-field identify-consent">
+      <div class="studio-field identify-consent" id="identify-consent-field">
         <input type="checkbox" id="identify-consent">
         <label for="identify-consent">I have read the privacy notice. Cook & Collect stores the photos and notes I submit, with the agent's answer, privately for 5 years to improve this identification agent. The photos are read by Google Gemini. They are never published. I can object or ask for their deletion at any time by emailing vintagetreasurecontact@gmail.com with my case reference. I am 18 or older.</label>
       </div>
       <div class="studio-turnstile" id="identify-turnstile"></div>
       <button type="submit" class="studio-btn" id="identify-submit">Identify my piece</button>
+      <button type="button" class="studio-btn studio-btn-secondary" id="identify-edit" hidden>Edit message</button>
       <p class="studio-privacy">Storing your case is a condition of use: each identification helps the agent improve (legitimate interest). Please photograph only the object. The answer is automatic and is not an authentication or valuation. <a href="privacy.html#identification-agent">Read the privacy notice</a>.</p>
     </form>
 
     <p class="studio-status" id="identify-status" role="status" aria-live="polite"></p>
 
-    <section class="studio-result" id="identify-result" hidden aria-labelledby="identify-result-heading">
-      <h2 id="identify-result-heading">What our archive says</h2>
-      <p class="identify-notice" id="identify-notice"></p>
-      <p class="identify-message" id="identify-message"></p>
-      <section class="identify-estimate" id="identify-estimate" hidden aria-label="AI estimate"></section>
-      <p class="identify-period" id="identify-period" hidden></p>
-      <p class="identify-question" id="identify-question" hidden></p>
-      <div id="identify-possibilities"></div>
-      <details class="studio-details">
-        <summary>What the agent read in your photos</summary>
-        <ul id="identify-observations"></ul>
-      </details>
-      <p class="studio-hint" id="identify-reference"></p>
       <div class="studio-actions">
         <button type="button" class="studio-btn studio-btn-secondary" id="identify-new">Identify another piece</button>
       </div>
     </section>
 
-    <section class="identify-shop" aria-labelledby="identify-shop-heading">
+    <aside class="identify-shop" aria-labelledby="identify-shop-heading">
       <h2 id="identify-shop-heading">Looking for a vintage French piece?</h2>
       <p>Cook & Collect sells hand-picked vintage Le Creuset, Cousances, Staub and French copper, shipped from France.</p>
-      <p class="identify-shop-links">
-        <a class="studio-btn" href="index.html">Browse the collection</a>
-        <a class="studio-btn studio-btn-secondary" href="curatedselection">Our selection</a>
-        <a class="studio-btn studio-btn-secondary" href="guides/le-creuset-dating-guide.html">Le Creuset dating guide</a>
-      </p>
-    </section>
+      <div class="identify-shop-items"><a href="collection/vintage-le-creuset-cast-iron-cocotte-rare-floral-d.html"><img src="../items/vintage-le-creuset-cast-iron-cocotte-rare-floral-d/cover.jpg" alt="Vintage Le Creuset Cast Iron Cocotte – Rare Floral Daisy Design – Made in France" loading="lazy"><span>Vintage Le Creuset Cast Iron Cocotte – Rare Floral Daisy Design – Made in France</span></a><a href="collection/le-creuset-cousances-doufeu-cast-iron-cocotte.html"><img src="../items/le-creuset-cousances-doufeu-cast-iron-cocotte/cover.jpg" alt="Le Creuset / Cousances – Doufeu Cast Iron Cocotte" loading="lazy"><span>Le Creuset / Cousances – Doufeu Cast Iron Cocotte</span></a><a href="collection/le-creuset-cocotte-ovale-vintage-fonte-maille-oran.html"><img src="../items/le-creuset-cocotte-ovale-vintage-fonte-maille-oran/cover.jpg" alt="Le Creuset Cocotte Ovale Vintage – Fonte Émaillée – Orange Iconique" loading="lazy"><span>Le Creuset Cocotte Ovale Vintage – Fonte Émaillée – Orange Iconique</span></a></div>
+      <p><a href="index.html">Browse the collection</a></p>
+    </aside>
+    </div>
   </main>
   <!-- Floating Contact Buttons -->
   <div class="contact-buttons">
@@ -98,6 +95,6 @@
     <p>&copy; 2026 Cook &amp; Collect</p>
     <p><a href="legal-notice.html">Legal notice</a> · <a href="privacy.html">Privacy</a></p>
   </footer>
-  <script src="../js/identify.js?v=3"></script>
+  <script src="../js/identify.js?v=4"></script>
 </body>
 </html>

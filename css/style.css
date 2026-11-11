@@ -3217,17 +3217,6 @@ footer {
   margin-bottom: 0;
 }
 
-.identify-notice {
-  font-size: 0.9rem;
-  color: var(--text-light);
-  border-left: 3px solid var(--border);
-  padding-left: 0.75rem;
-}
-
-.identify-question {
-  font-weight: 600;
-}
-
 .identify-period {
   font-weight: 600;
   border-left: 3px solid var(--accent);
@@ -3235,15 +3224,7 @@ footer {
 }
 
 .identify-estimate {
-  background: var(--card-bg);
-  border: 1px dashed var(--accent);
-  border-radius: var(--radius);
-  padding: 1rem 1.25rem;
-  margin: 1rem 0;
-}
-
-.identify-estimate h3 {
-  margin-top: 0;
+  margin: 0;
 }
 
 .identify-estimate-name {
@@ -3251,27 +3232,149 @@ footer {
   font-size: 1.1rem;
 }
 
-.identify-matched {
-  margin-bottom: 0.25rem;
+.studio.identify {
+  max-width: 1160px;
 }
 
-.identify-possibility {
+.identify-layout {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 260px;
+  gap: 2rem;
+  align-items: start;
+}
+
+.identify-chat {
+  min-width: 0;
+}
+
+.identify-attachment {
+  position: relative;
+  display: inline-block;
+  max-width: 100%;
+}
+
+.studio .identify-attachment input[type="file"] {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+  cursor: pointer;
+  z-index: 1;
+}
+
+.identify-attachment-button {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  min-height: 44px;
+  padding: 0.6rem 1rem;
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  background: var(--card-bg);
+  color: var(--heading);
+  font-size: 0.9rem;
+  font-weight: 600;
+}
+
+.identify-attachment input:not(:disabled):hover + span {
+  border-color: var(--accent);
+  background: var(--bg);
+}
+
+.identify-attachment:focus-within .identify-attachment-button {
+  outline: 2px solid var(--accent);
+  outline-offset: 3px;
+}
+
+.studio .identify-attachment input:disabled {
+  cursor: not-allowed;
+}
+
+.identify-attachment input:disabled + span {
+  opacity: 0.5;
+}
+
+.identify-transcript {
+  display: grid;
+  gap: 1.25rem;
+}
+
+.identify-turn {
+  padding: 1.25rem;
   border: 1px solid var(--border);
   border-radius: var(--radius);
-  padding: 1rem 1.25rem;
-  margin: 1rem 0;
+  overflow-wrap: anywhere;
 }
 
-.identify-possibility h3 {
-  font-size: 1.05rem;
+.identify-turn h2 {
+  font-size: 0.85rem;
+  margin: 0 0 0.75rem;
+  color: var(--text-light);
+  font-family: inherit;
+}
+
+.identify-turn p {
+  white-space: pre-wrap;
+}
+
+.identify-turn-visitor {
+  background: var(--card-bg);
+  margin-left: 2rem;
+}
+
+.identify-turn-agent {
+  margin-right: 1rem;
+}
+
+.identify-turn-photos {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.identify-turn-photos:empty {
+  display: none;
+}
+
+.identify-turn-photos img {
+  width: 100px;
+  height: 100px;
+  object-fit: cover;
+  border-radius: 4px;
+}
+
+.identify-confidence {
+  border-top: 1px solid var(--border);
+  margin-top: 1rem;
+  padding-top: 0.5rem;
+}
+
+.identify .studio-form {
+  margin-top: 1.5rem;
+}
+
+.identify-shop-items {
+  display: grid;
+  gap: 1rem;
+  margin: 1.25rem 0;
+}
+
+.identify-shop-items a {
+  display: grid;
+  grid-template-columns: 72px minmax(0, 1fr);
+  align-items: center;
+  gap: 0.75rem;
+  font-size: 0.85rem;
   color: var(--heading);
-  margin-bottom: 0.3rem;
+  text-decoration: none;
 }
 
-.identify-possibility ul,
-#identify-observations {
-  padding-left: 1.2rem;
-  line-height: 1.6;
+.identify-shop-items img {
+  width: 72px;
+  height: 72px;
+  object-fit: cover;
+  border-radius: 4px;
 }
 
 .identify-shop {
@@ -3279,7 +3382,7 @@ footer {
   border: 1px solid var(--border);
   border-radius: var(--radius);
   padding: 1.5rem;
-  margin-top: 2rem;
+  margin-top: 0;
 }
 
 .identify-shop h2 {
@@ -3289,15 +3392,16 @@ footer {
   margin-bottom: 0.5rem;
 }
 
-.identify-shop-links {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.75rem;
-  margin-top: 1rem;
-}
-
-.identify-shop-links .studio-btn {
-  text-decoration: none;
+@media (max-width: 760px) {
+  .identify-layout {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .identify-turn-visitor {
+    margin-left: 0.75rem;
+  }
+  .identify-turn-agent {
+    margin-right: 0;
+  }
 }
 
 /* Privacy notice (privacy.html) */

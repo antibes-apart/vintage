@@ -258,7 +258,7 @@ function head({lang, title, description, canonical, enUrl, frUrl, image, data}) 
   <meta property="og:title" content="${esc(title)}">
   <meta property="og:description" content="${esc(description)}">
   <meta property="og:url" content="${canonical}">${image ? `\n  <meta property="og:image" content="${esc(image)}">` : ''}
-  <link rel="stylesheet" href="../../css/style.css?v=24">
+  <link rel="stylesheet" href="../../css/style.css?v=25">
   ${data.map(jsonLd).join('\n  ')}
 </head>`;
 }

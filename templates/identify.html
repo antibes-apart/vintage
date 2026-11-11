@@ -11,7 +11,7 @@
   <link rel="icon" href="{{BASE}}favicon.ico" sizes="any">
   <link rel="apple-touch-icon" href="{{BASE}}apple-touch-icon.png">
   {{canonicalBlock}}
-  <link rel="stylesheet" href="{{BASE}}css/style.css?v=24">
+  <link rel="stylesheet" href="{{BASE}}css/style.css?v=25">
 </head>
 <body data-page="identify" data-api="{{identifyApiBase}}" data-turnstile-sitekey="{{identifyTurnstileSiteKey}}">
   {{nav}}
@@ -21,11 +21,22 @@
 
     <p class="studio-unavailable" id="identify-unavailable" hidden>{{identifyUnavailable}}</p>
 
+    <div class="identify-layout">
+    <section class="identify-chat" aria-label="Identification conversation">
+    <div id="identify-transcript" class="identify-transcript" role="log" aria-label="Messages" aria-live="polite"></div>
+    <p class="studio-hint" id="identify-reference" hidden></p>
+    <p class="studio-hint" id="identify-followups" hidden></p>
     <form class="studio-form" id="identify-form" novalidate>
       <div class="studio-field">
         <label for="identify-photos">{{identifyPhotosLabel}}</label>
-        <input type="file" id="identify-photos" accept="image/*" multiple>
-        <p class="studio-hint">{{identifyPhotosHint}}</p>
+        <div class="identify-attachment">
+          <input type="file" id="identify-photos" accept="image/*" multiple aria-describedby="identify-photos-hint">
+          <span class="identify-attachment-button" aria-hidden="true">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></svg>
+            Add photos
+          </span>
+        </div>
+        <p class="studio-hint" id="identify-photos-hint">{{identifyPhotosHint}}</p>
         <ul class="studio-thumbs" id="identify-thumbs" aria-label="{{identifyPhotosLabel}}"></ul>
       </div>
       <div class="studio-field">
@@ -33,47 +44,33 @@
         <textarea id="identify-notes" rows="3" maxlength="2000" placeholder="{{identifyNotesPlaceholder}}"></textarea>
         <p class="studio-hint">{{identifyNotesHint}}</p>
       </div>
-      <div class="studio-field identify-consent">
+      <div class="studio-field identify-consent" id="identify-consent-field">
         <input type="checkbox" id="identify-consent">
         <label for="identify-consent">{{identifyConsent}}</label>
       </div>
       <div class="studio-turnstile" id="identify-turnstile"></div>
       <button type="submit" class="studio-btn" id="identify-submit">{{identifySubmit}}</button>
+      <button type="button" class="studio-btn studio-btn-secondary" id="identify-edit" hidden>Edit message</button>
       <p class="studio-privacy">{{identifyPrivacy}}</p>
     </form>
 
     <p class="studio-status" id="identify-status" role="status" aria-live="polite"></p>
 
-    <section class="studio-result" id="identify-result" hidden aria-labelledby="identify-result-heading">
-      <h2 id="identify-result-heading">{{identifyResultTitle}}</h2>
-      <p class="identify-notice" id="identify-notice"></p>
-      <p class="identify-message" id="identify-message"></p>
-      <section class="identify-estimate" id="identify-estimate" hidden aria-label="AI estimate"></section>
-      <p class="identify-period" id="identify-period" hidden></p>
-      <p class="identify-question" id="identify-question" hidden></p>
-      <div id="identify-possibilities"></div>
-      <details class="studio-details">
-        <summary>{{identifyObservationsTitle}}</summary>
-        <ul id="identify-observations"></ul>
-      </details>
-      <p class="studio-hint" id="identify-reference"></p>
       <div class="studio-actions">
         <button type="button" class="studio-btn studio-btn-secondary" id="identify-new">{{identifyNew}}</button>
       </div>
     </section>
 
-    <section class="identify-shop" aria-labelledby="identify-shop-heading">
+    <aside class="identify-shop" aria-labelledby="identify-shop-heading">
       <h2 id="identify-shop-heading">{{identifyShopTitle}}</h2>
       <p>{{identifyShopText}}</p>
-      <p class="identify-shop-links">
-        <a class="studio-btn" href="index.html">{{identifyShopCollection}}</a>
-        <a class="studio-btn studio-btn-secondary" href="curatedselection">{{identifyShopSelection}}</a>
-        <a class="studio-btn studio-btn-secondary" href="guides/le-creuset-dating-guide.html">{{identifyShopGuide}}</a>
-      </p>
-    </section>
+      <div class="identify-shop-items">{{identifyShopItems}}</div>
+      <p><a href="index.html">{{identifyShopCollection}}</a></p>
+    </aside>
+    </div>
   </main>
   {{contactButtons}}
   {{footer}}
-  <script src="{{BASE}}js/identify.js?v=3"></script>
+  <script src="{{BASE}}js/identify.js?v=4"></script>
 </body>
 </html>
