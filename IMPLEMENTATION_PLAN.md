@@ -8,6 +8,11 @@ Status keys: ✅ done (tested locally) · 🟡 done in code, waiting for externa
 
 Last updated: 2026-11-16
 
+**Live acceptance:** owner confirmed on 2026-11-16 that both "Enquire to Purchase"
+and "Make an Offer" work and their emails arrive. Website commit `5b345f1`,
+backend commit `25f6fa5`. This enquiry rollout did not change identification
+logic or prompts.
+
 ## Ground rules
 
 - Catalog only: no cart, checkout, payment or customer accounts.
@@ -22,16 +27,16 @@ Last updated: 2026-11-16
 |---|---|---|
 | ✅ | Permanent product pages in English **and French** (`/{en,fr}/collection/<id>.html`), self-canonical, reciprocal hreflang + x-default | `build.js` (`renderCollectionPage`) |
 | ✅ | Legacy `item.html?id=` (root, `en/`, `fr/`) → same-language permanent page in JS, UTM and hash kept, unknown ids still "not found" | `js/app.js` |
-| 🟡 | Server 301 for legacy URLs from `legacy-redirects.json` | identify-agent `src/site/legacy-redirects.ts`; needs Worker deploy + zone route |
+| ✅ | Server 301 for legacy URLs from `legacy-redirects.json` | Worker deployed and route active; live EN product redirect verified 2026-11-16 |
 | ✅ | Mapping report of every Search Console product URL (60 URLs, all mapped, none removed) | `docs/seo/search-console-url-mapping.md` |
 | ✅ | Home canonical `/`; `/en/index.html` canonicalised to `/` | `build.js` |
 | ✅ | Sitemap: canonical indexable pages only, FR pages and shop pages added (204 URLs) | `build.js` |
 | ✅ | JSON-LD: Product/Offer (real price, sku, seller, `SoldOut` when sold, no reviews), BreadcrumbList, Organization, WebSite | `build.js` |
 | ✅ | `directSale` flag separates premium inventory from Catawiki pieces | `build.js`, `info.json` |
 | ✅ | "Enquire to Purchase" / "Make an Offer" on available direct-sale pieces only; WhatsApp fallback | `build.js`, `js/enquiry.js`, `css/style.css` |
-| 🟡 | Enquiry / offer form (EN/FR, validation, honeypot, Turnstile, idempotent retry, clear errors) posting to `POST /enquiry` | `js/enquiry.js`; Worker `src/enquiry/` — needs setup below |
-| 🟡 | Owner email notification via Cloudflare Email Routing | Worker `src/enquiry/email.ts` — not tested live |
-| 🟡 | Cookieless first-party events (`view_item`, `select_item`, begin/submit enquiry and offer) with source attribution (google, guide, category, pinterest, UTM…) | `js/track.js`; Worker `src/events/` — needs `ANALYTICS_API_BASE` |
+| ✅ | Enquiry / offer form (EN/FR, validation, honeypot, Turnstile, idempotent retry, clear errors) posting to `POST /enquiry` | Both flows confirmed live by owner 2026-11-16; EN/FR behaviour covered locally, live test languages not recorded |
+| ✅ | Owner email notification via Cloudflare Email Routing | Owner received both purchase enquiry and offer emails 2026-11-16 |
+| 🟡 | Cookieless first-party events (`view_item`, `select_item`, begin/submit enquiry and offer) with source attribution (google, guide, category, pinterest, UTM…) | Live `track.js` has `ANALYTICS_API_BASE`; persistence of real events not yet verified |
 | ✅ | Privacy page: statistics and enquiry data handling | `i18n.js`, `templates/privacy.html` |
 
 ## P1 — Categories, guides → products, homepage, product metadata
@@ -57,16 +62,22 @@ Last updated: 2026-11-16
 | ⬜ | Google Merchant `shippingDetails` / return policy | Only once real terms are decided; never invent |
 | ⬜ | Delete stale `collection/` pages of removed or hidden items | Build never deletes them; check Search Console traffic first |
 
-## External setup still required (owner)
+## Rollout and remaining acceptance
 
-1. Cloudflare Email Routing with vintagetreasurecontact@gmail.com verified.
-2. Turnstile widget; `wrangler secret put ENQUIRY_TURNSTILE_SECRET_KEY` (optional `ENQUIRY_HASH_SECRET`).
-3. Back up D1, then `wrangler d1 migrations apply identify-agent-db --remote` (migration `0012_enquiries.sql`).
-4. Deploy the Worker (`npm run deploy` in identify-agent) and add zone routes for `item.html`, `en/item.html`, `fr/item.html`.
-5. GitHub repository variables: `ENQUIRY_API_BASE`, `ENQUIRY_TURNSTILE_SITE_KEY`, `ANALYTICS_API_BASE`.
-6. Send one real EN and one FR enquiry and one offer; confirm the emails arrive, then mark the 🟡 rows ✅.
+- ✅ Cloudflare Email Routing delivers to vintagetreasurecontact@gmail.com.
+- ✅ D1 backup taken at `~/perso/backups/identify-agent-db-2026-11-16.sql`,
+  then migration `0012_enquiries.sql` applied and Worker deployed.
+- ✅ Website pushed/deployed. Live product pages load the enquiry and tracking
+  scripts with `https://api.cookandcollect.eu`; the enquiry widget has a
+  configured Turnstile site key. Legacy HTTP 301 is active.
+- ✅ Owner tested both purchase enquiry and offer; emails received.
+- ⬜ Confirm real conversion events are stored in `site_event_counts`.
+- ⬜ Record language-specific EN and FR live acceptance if both languages were
+  not included in the owner's test.
 
-Nothing from this work is committed or deployed yet (site repo and identify-agent repo).
+The identification chat is also published, but its real-Gemini quality
+acceptance remains separate. It is not required for enquiries and this rollout
+did not modify its logic or prompts.
 
 ## Tests
 
