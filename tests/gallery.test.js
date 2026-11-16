@@ -108,11 +108,12 @@ test('photo-free galleries do not open or navigate an empty lightbox', () => {
 });
 
 test('generated permanent pages wire every photo, including the cover', () => {
-  const directory = path.join(root, 'en/collection');
-  for (const file of fs.readdirSync(directory).filter(file => file.endsWith('.html'))) {
-    const html = fs.readFileSync(path.join(directory, file), 'utf8');
+  const files = ['en/collection', 'fr/collection'].flatMap(dir =>
+    fs.readdirSync(path.join(root, dir)).filter(file => file.endsWith('.html')).map(file => `${dir}/${file}`));
+  for (const file of files) {
+    const html = fs.readFileSync(path.join(root, file), 'utf8');
     assert.match(html, /id="lightbox"/, file);
-    assert.match(html, /src="\.\.\/\.\.\/js\/app\.js\?v=2"/, file);
+    assert.match(html, /src="\.\.\/\.\.\/js\/app\.js\?v=4"/, file);
     assert.doesNotMatch(html, /\{\{\w+\}\}/, file);
     const main = html.match(/<img src="([^"]+)"[^>]*id="mainImage"[^>]*>/);
     if (!main) continue;

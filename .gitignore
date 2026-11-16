@@ -1,4 +1,6 @@
 manifest.json
+# Legacy item.html?id= → permanent page map, read by the identify-agent redirect route.
+legacy-redirects.json
 sitemap.xml
 robots.txt
 # Archive pages (build-archive.js): built at deploy time from archive/<slug>/info.json.

@@ -144,12 +144,21 @@ test('catalog opens a working, correctly sized permanent item gallery without fe
 });
 
 for (const locale of ['', 'en/', 'fr/']) {
-  test(`legacy ${locale || 'root/'}item gallery stays functional`, async ({ page }) => {
+  test(`legacy ${locale || 'root/'}item URL moves to the same-language permanent page`, async ({ page }) => {
     const item = await catalogItem(page);
-    await page.goto(`/${locale}item.html?id=${encodeURIComponent(item.id)}`);
+    const lang = locale === 'fr/' ? 'fr' : 'en';
+    await page.goto(`/${locale}item.html?id=${encodeURIComponent(item.id)}&utm_source=newsletter#photos`);
+    await expect(page).toHaveURL(new RegExp(`/${lang}/collection/${item.id}\\.html\\?utm_source=newsletter#photos$`));
+    await expect(page.locator('html')).toHaveAttribute('lang', lang);
     await checkItemGallery(page, item);
   });
 }
+
+test('legacy item URL with an unknown id still renders the not-found state', async ({ page }) => {
+  await page.goto('/item.html?id=no-such-piece');
+  await expect(page).toHaveURL(/\/item\.html\?id=no-such-piece$/);
+  await expect(page.locator('.empty-state')).toBeVisible();
+});
 
 for (const sold of [false, true]) {
   test(`${sold ? 'sold' : 'available'} item breadcrumbs are styled, scroll away, and link to the correct catalog`, async ({ page }) => {
@@ -158,12 +167,15 @@ for (const sold of [false, true]) {
     await checkImageFrame(page);
     const breadcrumbs = page.locator('.breadcrumbs');
     await expect(breadcrumbs.locator('li')).toHaveCount(3);
-    await expect(breadcrumbs.locator('a').nth(1)).toHaveAttribute('href', `../${sold ? 'sold' : 'index'}.html`);
+    // Available pieces sit under their shop collection page when they have one.
+    const listHref = await breadcrumbs.locator('a').nth(1).getAttribute('href');
+    if (sold) expect(listHref).toBe('../sold.html');
+    else expect(listHref).toMatch(/^\.\.\/(index|shop\/[a-z-]+)\.html$/);
     const after = await checkNavigationScroll(page);
     expect(after.nested[0]).toBeLessThan(0);
     await page.evaluate(() => scrollTo(0, 0));
     await breadcrumbs.locator('a').nth(1).click();
-    await expect(page).toHaveURL(new RegExp(`/en/${sold ? 'sold' : 'index'}\\.html$`));
+    await expect(page).toHaveURL(new RegExp(`/en/${listHref.slice(3).replace('.', '\\.')}$`));
   });
 }
 

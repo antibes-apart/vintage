@@ -167,6 +167,115 @@ const GUIDES = [
   }
 ];
 
+/* ─── Available pieces inside guides ─── */
+// Guides are the site's main organic entry point; this section leads readers
+// from the research to matching pieces that are actually for sale. Only
+// published, unsold, direct-sale shop items (manifest.json from build.js) are
+// shown, and only when they match the guide's subject: unrelated pieces are
+// never used as filler. Without a match the section becomes a short link to
+// the curated selection / collection instead of an empty block.
+const ANALYTICS_API_BASE = (process.env.ANALYTICS_API_BASE || '').replace(/\/+$/, '');
+const GUIDE_SHOP_MAX = 4;
+const itemText = item => `${item.id} ${item.title}`.toLowerCase();
+const isLeCreusetItem = item => /le creuset/.test(itemText(item));
+const isCousancesItem = item => /cousances/.test(itemText(item));
+const isFrenchCastIronItem = item => isCousancesItem(item) ||
+  (/cast iron|fonte/.test(itemText(item)) && /staub|nomar|invicta|fontignac|godin|chasseur|descoware|sitram|japy/.test(itemText(item)));
+const isCopperItem = item => item.category === 'Copper' || /copper|cuivre/.test(itemText(item));
+
+// strKey → which pieces to show, the heading key, and the shop category page
+// (built by build.js) to link to when it exists.
+const GUIDE_SHOP = {
+  guideLeCreuset: {match: isLeCreusetItem, heading: 'guideShopHeadingLeCreuset', shop: 'vintage-le-creuset'},
+  guideLeCreusetDating: {match: isLeCreusetItem, heading: 'guideShopHeadingLeCreuset', shop: 'vintage-le-creuset'},
+  // Cousances first: it is the maker this guide's readers search for most.
+  guideCastIron: {match: isFrenchCastIronItem, rank: item => (isCousancesItem(item) ? 0 : 1), heading: 'guideShopHeadingCastIron', shop: 'vintage-cousances'},
+  guideCopper: {match: isCopperItem, heading: 'guideShopHeadingCopper'},
+  guideDehillerin: {match: isCopperItem, heading: 'guideShopHeadingCopper'},
+  guideMauviel: {match: isCopperItem, heading: 'guideShopHeadingCopper'},
+  guideLecellier: {match: isCopperItem, heading: 'guideShopHeadingCopper'},
+  guideChampagne: {match: item => item.category === 'Ice Buckets' || /champagne|ice bucket|seau/.test(itemText(item)), heading: 'guideShopHeadingFallback'},
+  guideDecorative: {match: () => false, heading: 'guideShopHeadingFallback'}
+};
+
+let manifestItems = [];
+try {
+  manifestItems = JSON.parse(fs.readFileSync(path.join(__dirname, 'manifest.json'), 'utf8')).items || [];
+} catch (e) {
+  console.warn('build-guides: manifest.json not found (run build.js first); guides get no product section.');
+}
+const availableItems = manifestItems.filter(item => !item.sold && item.directSale !== false);
+
+function guideShopItems(strKey) {
+  const config = GUIDE_SHOP[strKey];
+  if (!config) return [];
+  const rank = config.rank || (() => 0);
+  return availableItems
+    .map((item, index) => ({item, index}))
+    .filter(({item}) => config.match(item))
+    .sort((a, b) => rank(a.item) - rank(b.item) || a.index - b.index)
+    .slice(0, GUIDE_SHOP_MAX)
+    .map(({item}) => item);
+}
+
+function renderGuideShop(guide, code, strings, rootPrefix, base, curatedHref) {
+  const config = GUIDE_SHOP[guide.strKey];
+  if (!config) return '';
+  const items = guideShopItems(guide.strKey);
+  const slug = guide.file.replace(/\.html$/, '');
+  const shopFile = config.shop && fs.existsSync(path.join(__dirname, code, 'shop', `${config.shop}.html`))
+    ? `${rootPrefix}shop/${config.shop}.html` : null;
+  const homeHref = `${rootPrefix}index.html`;
+  if (!items.length) {
+    return `
+      <section class="guide-section guide-shop guide-shop-empty" aria-labelledby="guide-shop-heading">
+        <h2 id="guide-shop-heading">${escapeAttr(strings.guideShopHeadingFallback)}</h2>
+        <p>${escapeAttr(strings.guideShopFallbackText)}</p>
+        <p class="guide-shop-links"><a href="${curatedHref}">${escapeAttr(strings.guideShopFallbackCurated)}</a> · <a href="${homeHref}">${escapeAttr(strings.guideShopFallbackCollection)}</a></p>
+      </section>
+`;
+  }
+  const cards = items.map(item => {
+    const title = (code === 'fr' && item.fr && item.fr.title) || item.title;
+    const img = item.cover
+      ? `<img src="${base}${encodeURI(item.cover)}" alt="${escapeAttr(title)}" loading="lazy" decoding="async">`
+      : '';
+    return `          <a href="${rootPrefix}collection/${encodeURIComponent(item.id)}.html" class="item-card" data-item-id="${escapeAttr(item.id)}">
+            <div class="image-wrapper">${img}</div>
+            <div class="card-body">
+              <h3 class="card-title">${escapeAttr(title)}</h3>
+              ${item.price ? `<p class="card-price">${escapeAttr(item.price)}</p>` : ''}
+              <p class="card-availability">${escapeAttr(strings.guideShopAvailable)}</p>
+            </div>
+          </a>`;
+  }).join('\n');
+  const seeAll = shopFile
+    ? `<a href="${shopFile}">${escapeAttr(strings[`shop${config.shop === 'vintage-le-creuset' ? 'LeCreuset' : 'Cousances'}LinkLabel`] || strings.guideShopSeeAll)} →</a>`
+    : `<a href="${homeHref}">${escapeAttr(strings.guideShopSeeAll)} →</a>`;
+  return `
+      <section class="guide-section guide-shop" aria-labelledby="guide-shop-heading">
+        <h2 id="guide-shop-heading">${escapeAttr(strings[config.heading])}</h2>
+        <p class="guide-shop-intro">${escapeAttr(strings.guideShopIntro)}</p>
+        <div class="items-grid guide-shop-grid" data-list="guide:${slug}">
+${cards}
+        </div>
+        <p class="guide-shop-links">${seeAll}</p>
+      </section>
+`;
+}
+
+// First-party conversion events (see js/track.js); inert while no API base is set.
+function trackScriptTag(base) {
+  return `<script src="${base}js/track.js?v=1" data-api="${escapeAttr(ANALYTICS_API_BASE)}" defer></script>`;
+}
+
+function insertGuideShop(html, section) {
+  const marker = /\n    <\/article>\n  <\/main>/;
+  if (!section) return html;
+  if (!marker.test(html)) throw new Error('build-guides: guide template has no closing </article></main> to insert the shop section');
+  return html.replace(marker, `\n${section}    </article>\n  </main>`);
+}
+
 /* ─── Locales ─── */
 // English is the canonical language for guides and lives at /en/guides/.
 const LOCALES = [
@@ -560,7 +669,8 @@ function buildGuideIndex(locale) {
     .replace('{{contactButtons}}', CONTACT_BUTTONS)
     .replace('{{footer}}', FOOTER)
     .replace('{{guideIndexHead}}', renderGuideIndexHead(locale.code, strings))
-    .replace('{{guideIndexCards}}', renderGuideIndexCards(locale.code, base));
+    .replace('{{guideIndexCards}}', renderGuideIndexCards(locale.code, base))
+    .replace('</body>', `  ${trackScriptTag(base)}\n</body>`);
 
   const ctx = {
     ...strings,
@@ -603,6 +713,8 @@ GUIDES.forEach(guide => {
 
     // Shared figure component — see renderFigure() above.
     html = renderFigures(html, base);
+    html = insertGuideShop(html, renderGuideShop(guide, locale.code, strings, rootPrefix, base, curatedHref));
+    html = html.replace('</body>', `  ${trackScriptTag(base)}\n</body>`);
 
     const ctx = {
       ...strings,
@@ -610,7 +722,6 @@ GUIDES.forEach(guide => {
       BASE: base,
       legalHref: `${rootPrefix}${locale.legalFile}`,
       privacyHref: `${rootPrefix}privacy.html`,
-    privacyHref: `${rootPrefix}privacy.html`,
       curatedHref,
       aboutHref: `${rootPrefix}about.html`,
       // The Collector's Guides index is a sibling file in the same folder.

@@ -2,6 +2,9 @@
 
 Guidance for AI agents (and humans) working in this repository.
 
+> Current work status and open tasks: **`IMPLEMENTATION_PLAN.md`** — check it
+> first and keep it updated (see "Conventions and gotchas" below).
+
 ## What this project is
 
 A static, bilingual (English / French) showcase website for a small vintage
@@ -36,15 +39,35 @@ The site is generated from **templates + item data** by `build.js`.
   runtime strings (grid, item detail, lightbox). **Template strings live in
   `i18n.js`; runtime/dynamic strings live in `js/app.js`.** Keep them in sync.
 - `items/<slug>/` — one folder per item, each containing:
-  - `info.json` — `{ title, price, description, sold?, hidden?, category?, issueNumber?, sortPriority? }`
+  - `info.json` — `{ title, price, description, sold?, hidden?, category?, issueNumber?, sortPriority?, directSale?, fr? }`
     (`hidden: true` unpublishes the item entirely — not in the grid, sold page or
-    manifest — while keeping its folder, e.g. when a piece moves to the curated selection)
+    manifest — while keeping its folder, e.g. when a piece moves to the curated selection.
+    `directSale: false` keeps a piece published but without "Enquire to Purchase" /
+    "Make an Offer" (e.g. a piece listed on Catawiki); the Worker also refuses enquiries for it.
+    `fr: { title, description }` is an optional verified French translation; without it the
+    French page shows the English text marked `lang="en"`. Never machine-invent item facts.)
   - `cover.jpg` — the grid thumbnail (any image ext; filename stem must be `cover`)
   - `2.jpg`, `3.jpg`, … — gallery images (sorted by filename)
 - `css/style.css` — all styling.
-- `en/collection/<slug>.html` — generated permanent item pages. Their gallery
-  is rendered by `build.js` and enhanced by the same `js/app.js` controls as
-  the legacy item pages, without fetching the manifest.
+- `en/collection/<slug>.html` and `fr/collection/<slug>.html` — generated permanent
+  item pages (self-canonical, reciprocal hreflang, Product/Offer + BreadcrumbList
+  JSON-LD; sold pieces say so and use `SoldOut`). Their gallery is rendered by
+  `build.js` and enhanced by the same `js/app.js` controls as the legacy item
+  pages, without fetching the manifest. Available direct-sale pieces get the purchase
+  buttons (`renderPurchaseActions`): pre-filled WhatsApp links, upgraded by
+  `js/enquiry.js` to the enquiry / offer form when `ENQUIRY_API_BASE` is set.
+- `en/shop/<slug>.html`, `fr/shop/<slug>.html` — shop collection pages
+  (`SHOP_CATEGORIES` in `build.js`: Le Creuset, Cousances, designer cookware), built only
+  while at least `MIN_SHOP_ITEMS` available pieces match; texts `shop*` in `i18n.js`.
+  Copper and champagne pieces have no shop page yet (too few): their guides cover them.
+- Legacy `item.html?id=` (root, `en/`, `fr/`) redirects in JS to the same-language
+  permanent page, keeping UTM parameters; `build.js` writes `legacy-redirects.json`
+  (gitignored) for the Worker's HTTP 301 route. See `docs/seo/search-console-url-mapping.md`.
+- `js/track.js` — cookieless first-party events (`view_item`, `select_item`,
+  `begin_/submit_purchase_enquiry`, `begin_/submit_make_offer`) with the visit source;
+  sent to `ANALYTICS_API_BASE/events` only when set, never with personal data. Product
+  cards carry `data-item-id` and their list container a `data-list` (`home`, `related`,
+  `category:<slug>`, `guide:<slug>`) for attribution.
 - `templates/lightbox.html` — shared lightbox partial for permanent and
   legacy item pages.
 
@@ -65,6 +88,15 @@ The site is generated from **templates + item data** by `build.js`.
 
 Generated HTML (`index.html`, `en/*.html`, `fr/*.html`, etc.) **is committed**;
 only `manifest.json` and `node_modules/` are ignored.
+
+### Build-time environment variables (set in `deploy.yml` / `manage-items.yml`)
+- `STUDIO_API_BASE`, `STUDIO_TURNSTILE_SITE_KEY` — listing studio (below).
+- `ENQUIRY_API_BASE`, `ENQUIRY_TURNSTILE_SITE_KEY` — purchase enquiry / offer form
+  (identify-agent Worker `POST /enquiry`). Empty → buttons stay WhatsApp links.
+  Locally, `?enquiry_api=<url>` on localhost overrides it (used by the e2e tests).
+- `ANALYTICS_API_BASE` — `js/track.js` events endpoint. Empty → events only go to
+  `window.dataLayer`.
+These come from GitHub repository variables (`vars.*`) and are public values.
 
 ### Notable build flags (top of `build.js`)
 - `VISIBLE_ONLY` — a temporary allowlist. When non-empty, only those item ids are
@@ -113,7 +145,10 @@ after changing templates, `i18n.js`, or item data.
 Browser tests live in `tests/e2e/` and use `playwright.config.js`. They cover
 item/curated galleries, image bounds, thumbnail and lightbox navigation, zoom,
 modal scroll locking, breadcrumb styling and scrolling, guide navigation,
-category filters, and the no-JavaScript item fallback. They choose representative
+category filters, the no-JavaScript item fallback, legacy redirects, and the
+enquiry/offer forms and attribution (`tests/e2e/shop.spec.js`, API mocked).
+`tests/seo.test.js` checks the built sitemap, canonicals, hreflang reciprocity,
+Product JSON-LD, purchase-action eligibility and the legacy redirect map. They choose representative
 items from the built catalog rather than depending on a particular item's slug.
 Port 8081 must be free: tests start their own freshly built server and stop it
 afterward. External font CSS is stubbed so tests do not require Google Fonts.
@@ -121,6 +156,13 @@ Failure screenshots and traces are saved in `test-results/`; the HTML report is
 in `playwright-report/` (`npx playwright show-report`). CI uploads both for seven
 days. These generated test artifacts are gitignored. The normal dev server
 still defaults to port 8080; `PORT` overrides it when needed.
+
+## Guides → shop
+
+`build-guides.js` reads `manifest.json` (so it must run after `build.js`) and adds an
+"available from our collection" section to each guide (`GUIDE_SHOP` registry): up to four
+matching available pieces, or a curated-selection/collection link when none match. Never
+fill it with unrelated pieces.
 
 ## Listing studio (`studio.html`)
 
@@ -191,6 +233,11 @@ still defaults to port 8080; `PORT` overrides it when needed.
   `npm run build` afterwards to remove the sample pages. Tests: `tests/archive.test.js`.
 
 ## Conventions and gotchas for agents
+
+- **Always read `IMPLEMENTATION_PLAN.md` before starting work, and update it
+  when you finish:** change the status of items you completed (✅ only when tested,
+  🟡 when it still needs external setup), add newly found work as ⬜ rows, and bump
+  "Last updated". Keep it a short status list, not a changelog.
 
 - **Do not hand-edit generated pages** (`index.html`, `en/*.html`, `fr/*.html`,
   root `item.html`/`about.html`/`shipping.html`/`sold.html`/`legal-notice.html`/`studio.html`).

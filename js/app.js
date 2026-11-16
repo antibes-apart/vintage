@@ -80,10 +80,14 @@ function assetUrl(p) {
   return p.startsWith('/') || /^https?:/.test(p) ? p : BASE + p;
 }
 
-// Permanent item URL (see build.js renderCollectionPage). Only EN currently has
-// permanent /collection/<id>.html pages; FR falls back to the legacy
-// item.html?id= route until FR item descriptions exist (see build report).
+// Permanent item URL (see build.js renderCollectionPage): en/collection/<id>.html
+// and fr/collection/<id>.html. The legacy item.html?id= route redirects there.
 const COLLECTION_BASE = window.__COLLECTION_BASE__ || null;
+
+// Item text in the page language (French only when info.json provides it).
+function localTitle(item) {
+  return (LANG === 'fr' && item.fr && item.fr.title) || item.title;
+}
 function itemHref(item) {
   return COLLECTION_BASE
     ? `${COLLECTION_BASE}${encodeURIComponent(item.id)}.html`
@@ -214,7 +218,7 @@ function applyFilters() {
   }
   if (query) {
     filtered = filtered.filter(item => {
-      const searchableText = `${item.title} ${item.description} ${item.price}`.toLowerCase();
+      const searchableText = `${item.title} ${localTitle(item)} ${item.description} ${item.price}`.toLowerCase();
       return searchableText.includes(query);
     });
   }
@@ -259,15 +263,15 @@ function renderGrid(items, showSoldBadge) {
   }
 
   grid.innerHTML = items.map(item => `
-    <a href="${itemHref(item)}" class="item-card">
+    <a href="${itemHref(item)}" class="item-card" data-item-id="${escapeHtml(item.id)}">
       <div class="image-wrapper">
         ${item.cover
-          ? `<img src="${assetUrl(item.cover)}" alt="${escapeHtml(item.title)}" loading="lazy">`
+          ? `<img src="${assetUrl(item.cover)}" alt="${escapeHtml(localTitle(item))}" loading="lazy" decoding="async">`
           : '<div class="no-cover">No photo</div>'}
         ${showSoldBadge ? `<span class="sold-badge">${T.sold}</span>` : ''}
       </div>
       <div class="card-body">
-        <h3 class="card-title">${escapeHtml(item.title)}</h3>
+        <h3 class="card-title">${escapeHtml(localTitle(item))}</h3>
         <p class="card-price">${escapeHtml(item.price)}</p>
       </div>
     </a>
@@ -286,6 +290,19 @@ function renderItemDetail(allItems) {
 
   if (!item) {
     container.innerHTML = `<div class="empty-state">${T.notFound}</div>`;
+    return;
+  }
+
+  // Legacy URL: send the visitor (and JS-rendering crawlers) to the
+  // same-language permanent page, keeping UTM and other parameters. The
+  // identify-agent Worker answers the same URLs with an HTTP 301 once its
+  // route is deployed; this is the fallback until then.
+  if (COLLECTION_BASE) {
+    const target = new URL(itemHref(item), window.location.href);
+    params.delete('id');
+    target.search = params.toString();
+    target.hash = window.location.hash;
+    window.location.replace(target.href);
     return;
   }
 

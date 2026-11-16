@@ -49,6 +49,11 @@ jobs:
         env:
           # Listing studio API (identify-agent Worker); same value as in deploy.yml.
           STUDIO_API_BASE: https://api.cookandcollect.eu
+          # Purchase enquiries/offers and first-party events (identify-agent Worker). Empty until the
+          # owner sets these repository variables: the buttons then stay WhatsApp links and no events are sent.
+          ENQUIRY_API_BASE: ${{ vars.ENQUIRY_API_BASE }}
+          ENQUIRY_TURNSTILE_SITE_KEY: ${{ vars.ENQUIRY_TURNSTILE_SITE_KEY }}
+          ANALYTICS_API_BASE: ${{ vars.ANALYTICS_API_BASE }}
         run: |
           node build.js
           node build-guides.js
@@ -117,6 +122,11 @@ jobs:
         env:
           # Listing studio API (identify-agent Worker); same value as in deploy.yml.
           STUDIO_API_BASE: https://api.cookandcollect.eu
+          # Purchase enquiries/offers and first-party events (identify-agent Worker). Empty until the
+          # owner sets these repository variables: the buttons then stay WhatsApp links and no events are sent.
+          ENQUIRY_API_BASE: ${{ vars.ENQUIRY_API_BASE }}
+          ENQUIRY_TURNSTILE_SITE_KEY: ${{ vars.ENQUIRY_TURNSTILE_SITE_KEY }}
+          ANALYTICS_API_BASE: ${{ vars.ANALYTICS_API_BASE }}
         run: |
           node build.js
           node build-guides.js
@@ -185,6 +195,11 @@ jobs:
         env:
           # Listing studio API (identify-agent Worker); same value as in deploy.yml.
           STUDIO_API_BASE: https://api.cookandcollect.eu
+          # Purchase enquiries/offers and first-party events (identify-agent Worker). Empty until the
+          # owner sets these repository variables: the buttons then stay WhatsApp links and no events are sent.
+          ENQUIRY_API_BASE: ${{ vars.ENQUIRY_API_BASE }}
+          ENQUIRY_TURNSTILE_SITE_KEY: ${{ vars.ENQUIRY_TURNSTILE_SITE_KEY }}
+          ANALYTICS_API_BASE: ${{ vars.ANALYTICS_API_BASE }}
         run: |
           node build.js
           node build-guides.js

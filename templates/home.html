@@ -10,13 +10,15 @@
   <link rel="apple-touch-icon" href="{{BASE}}apple-touch-icon.png">
   {{canonicalBlock}}
   {{structuredData}}
-  <link rel="stylesheet" href="{{BASE}}css/style.css?v=25">
+  <link rel="stylesheet" href="{{BASE}}css/style.css?v=26">
 </head>
 <body data-page="home">
   {{nav}}
   <main>
     <h1 class="page-title">{{homeTitle}}</h1>
     <p class="page-subtitle">{{homeSubtitle}}</p>
+    {{collectionLinks}}
+    <h2 class="home-available-heading">{{homeAvailableHeading}}</h2>
     <div class="search-container">
       <input type="text" id="search-input" class="search-input" placeholder="{{searchPlaceholder}}">
       <svg class="search-icon" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg>
@@ -27,7 +29,7 @@
       <span class="shipping-icon">&#9992;</span>
       <p><strong>{{shipBannerStrong}}</strong> {{shipBannerText}} <a href="shipping.html">{{shipBannerLink}}</a> {{shipBannerAfter}}</p>
     </div>
-    <div id="grid" class="items-grid">
+    <div id="grid" class="items-grid" data-list="home">
       {{gridHTML}}
     </div>
     <div class="cta-section">
@@ -41,6 +43,6 @@
   </main>
   {{contactButtons}}
   {{footer}}
-  <script src="{{BASE}}js/app.js"></script>
+  <script src="{{BASE}}js/app.js?v=4"></script>
 </body>
 </html>

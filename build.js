@@ -157,8 +157,20 @@ function scanItems() {
       ? info.category
       : null;
 
+    // Optional French text: { "fr": { "title": "…", "description": "…" } }.
+    // Until it is provided, French pages show the English title/description.
+    const fr = {};
+    if (info.fr && typeof info.fr === 'object') {
+      if (typeof info.fr.title === 'string' && info.fr.title.trim()) fr.title = info.fr.title.trim();
+      if (typeof info.fr.description === 'string' && info.fr.description.trim()) fr.description = info.fr.description.trim();
+    }
+
     return {
       ...baseItem,
+      ...(Object.keys(fr).length ? {fr} : {}),
+      // Every shop item is sold directly by Cook & Collect unless info.json opts out
+      // with "directSale": false. The enquiry Worker applies the same rule.
+      directSale: info.directSale !== false,
       category: manualCategory || detectCategory(baseItem),
       sortPriority: parseSortPriority(info.sortPriority),
       sortBucket: getBucket({id: folder.name, title: info.title || folder.name}),
@@ -317,6 +329,14 @@ fs.writeFileSync(OUTPUT, JSON.stringify(manifest, null, 2));
    it no longer generates the content itself. */
 
 const SITE_URL = 'https://cookandcollect.eu';
+
+// Purchase enquiries / offers and first-party analytics both go to the
+// identify-agent Worker (POST /enquiry, POST /events). Empty = not configured:
+// the purchase buttons stay WhatsApp links and no analytics event leaves the
+// browser. ENQUIRY_TURNSTILE_SITE_KEY is Turnstile's *public* site key.
+const ENQUIRY_API_BASE = (process.env.ENQUIRY_API_BASE || '').replace(/\/+$/, '');
+const ENQUIRY_TURNSTILE_SITE_KEY = process.env.ENQUIRY_TURNSTILE_SITE_KEY || '';
+const ANALYTICS_API_BASE = (process.env.ANALYTICS_API_BASE || '').replace(/\/+$/, '');
 
 function escapeHtml(str) {
   return String(str == null ? '' : str)
@@ -549,13 +569,11 @@ function renderSelectionStructuredData(selectionList, langCode, strings, canonic
    category filter); it must not be required to discover the inventory. */
 
 // Where a shop item's permanent URL lives, relative to the current page's
-// locale dir. Only EN has permanent collection pages today (see report:
-// FR item descriptions are not yet translated, so FR pages are not
-// generated rather than duplicating English text under a French URL).
+// locale dir. EN and FR both have permanent pages (en/collection/, fr/collection/);
+// the root English duplicate links into en/collection/.
 function collectionBaseFor(localeDir) {
   if (localeDir === '') return 'en/collection/';
-  if (localeDir === 'en') return 'collection/';
-  return null; // fr: no permanent page yet, fall back to item.html?id=
+  return 'collection/';
 }
 
 function itemHref(item, collectionBase) {
@@ -564,20 +582,32 @@ function itemHref(item, collectionBase) {
     : `item.html?id=${encodeURIComponent(item.id)}`;
 }
 
+// Items stay in English unless info.json provides an "fr" translation.
+const langOf = strings => (strings === i18n.fr ? 'fr' : 'en');
+const itemTitle = (item, code) => (code === 'fr' && item.fr && item.fr.title) || item.title;
+const itemDescription = (item, code) => (code === 'fr' && item.fr && item.fr.description) || item.description;
+const hasTranslation = (item, code, field) => code !== 'fr' || Boolean(item.fr && item.fr[field]);
+
+// Shop items only (never the curated selection). Sold pieces and pieces
+// marked "directSale": false never show purchase actions.
+const isPurchasable = item => !item.sold && item.directSale !== false;
+
 function renderItemCard(item, strings, base, collectionBase, showSoldBadge) {
+  const code = langOf(strings);
+  const title = itemTitle(item, code);
   const cover = item.cover ? selectionAssetUrl(item.cover, base) : null;
   const dims = item.cover ? imageDimensions(item.cover) : null;
   const dimAttrs = dims ? ` width="${dims.width}" height="${dims.height}"` : '';
   return `
-    <a href="${itemHref(item, collectionBase)}" class="item-card">
+    <a href="${itemHref(item, collectionBase)}" class="item-card" data-item-id="${escapeHtml(item.id)}">
       <div class="image-wrapper">
         ${cover
-          ? `<img src="${cover}" alt="${escapeHtml(item.title)}"${dimAttrs} loading="lazy">`
+          ? `<img src="${cover}" alt="${escapeHtml(title)}"${dimAttrs} loading="lazy" decoding="async">`
           : `<div class="no-cover">${escapeHtml(strings.selNoPhotos)}</div>`}
         ${showSoldBadge ? `<span class="sold-badge">${escapeHtml(strings.sold)}</span>` : ''}
       </div>
       <div class="card-body">
-        <h3 class="card-title">${escapeHtml(item.title)}</h3>
+        <h3 class="card-title">${escapeHtml(title)}</h3>
         <p class="card-price">${escapeHtml(item.price)}</p>
       </div>
     </a>`;
@@ -590,6 +620,77 @@ function renderItemGrid(itemList, strings, base, collectionBase, showSoldBadge, 
   return itemList.map(item => renderItemCard(item, strings, base, collectionBase, showSoldBadge)).join('');
 }
 
+/* ─── Brand / designer detection (title and id only; never invented) ─── */
+function itemHaystack(item) {
+  return `${item.id} ${item.title}`.toLowerCase();
+}
+const isCousances = item => /cousances/.test(itemHaystack(item));
+const isDesignerPiece = item => /enzo[\s-]*mari|la[\s-]*mama|loewy|coquelle/.test(itemHaystack(item));
+function brandKey(item) {
+  const h = itemHaystack(item);
+  if (/cousances/.test(h)) return 'cousances';
+  if (isLeCreuset(item)) return 'le-creuset';
+  if (/staub/.test(h)) return 'staub';
+  if (/nomar/.test(h)) return 'nomar';
+  if (/copper|cuivre/.test(h)) return 'copper';
+  return '';
+}
+
+/* ─── Shop collection landing pages: /en/shop/<slug>.html, /fr/shop/<slug>.html ───
+   One page per collection that has enough available pieces to be useful.
+   Below MIN_SHOP_ITEMS the page is not generated (no thin pages) and nothing
+   links to it; copper and champagne buckets are covered by their guides. */
+const MIN_SHOP_ITEMS = 3;
+const SHOP_CATEGORIES = [
+  {
+    slug: 'vintage-le-creuset',
+    key: 'shopLeCreuset',
+    match: isLeCreuset,
+    guides: [
+      {file: 'vintage-le-creuset.html', labelKey: 'guideLinkLeCreuset'},
+      {file: 'le-creuset-dating-guide.html', labelKey: 'guideLinkDating'}
+    ]
+  },
+  {
+    slug: 'vintage-cousances',
+    key: 'shopCousances',
+    match: isCousances,
+    guides: [
+      {file: 'european-enamelled-cast-iron-makers.html', labelKey: 'guideLinkCastIron'},
+      {file: 'vintage-le-creuset.html', labelKey: 'guideLinkLeCreuset'}
+    ]
+  },
+  {
+    slug: 'designer-cookware',
+    key: 'shopDesigner',
+    match: isDesignerPiece,
+    guides: [
+      {file: 'vintage-le-creuset.html', labelKey: 'guideLinkDesigners'},
+      {file: 'le-creuset-dating-guide.html', labelKey: 'guideLinkDating'}
+    ]
+  }
+];
+const shopCategoryItems = cat => items.filter(item => isPurchasable(item) && cat.match(item));
+const ACTIVE_SHOP_CATEGORIES = SHOP_CATEGORIES.filter(cat => shopCategoryItems(cat).length >= MIN_SHOP_ITEMS);
+
+// The most specific shop collection an item belongs to (designer > Cousances > Le Creuset).
+function shopCategoryFor(item) {
+  const order = ['designer-cookware', 'vintage-cousances', 'vintage-le-creuset'];
+  return order
+    .map(slug => ACTIVE_SHOP_CATEGORIES.find(cat => cat.slug === slug))
+    .find(cat => cat && cat.match(item)) || null;
+}
+
+// Crawlable "shop by collection" links (home page and guides). `shopBase` is
+// the path from the current page to the locale's shop/ folder.
+function renderShopLinks(strings, shopBase) {
+  if (!ACTIVE_SHOP_CATEGORIES.length) return '';
+  return `<nav class="collection-links" aria-label="${escapeHtml(strings.shopNavLabel)}">
+      <span class="collection-links-label">${escapeHtml(strings.shopNavLabel)}</span>
+      ${ACTIVE_SHOP_CATEGORIES.map(cat => `<a href="${shopBase}${cat.slug}.html">${escapeHtml(strings[`${cat.key}LinkLabel`])}</a>`).join('\n      ')}
+    </nav>`;
+}
+
 // Category → specialist guide, for the 1-2 contextual links shown on a
 // permanent item page. Deliberately narrow: only maps categories/entities the
 // guides actually cover, so unrelated items (e.g. Terrines, Baking Dishes)
@@ -599,8 +700,11 @@ function itemGuideLinks(item, guideHrefs, strings) {
   if (item.category === 'Copper') {
     links.push({href: guideHrefs.guideCopperHref, label: strings.guideLinkCopper});
   }
+  if (isCousances(item)) {
+    links.push({href: guideHrefs.guideCastIronHref, label: strings.guideLinkCastIron});
+  }
   if (isLeCreuset(item)) {
-    links.push({href: guideHrefs.guideLeCreusetHref, label: strings.guideLinkLeCreuset});
+    links.push({href: guideHrefs.guideLeCreusetHref, label: isDesignerPiece(item) ? strings.guideLinkDesigners : strings.guideLinkLeCreuset});
     if (isCocotte(item)) {
       links.push({href: guideHrefs.guideDatingHref, label: strings.guideLinkDating});
     }
@@ -611,19 +715,48 @@ function itemGuideLinks(item, guideHrefs, strings) {
   return links.slice(0, 2);
 }
 
-// Minimal, non-invented Product + BreadcrumbList JSON-LD for a permanent item
-// page. Offer/availability only reflects real sold/available status; no
-// GTIN/MPN/brand/reviews are added since none of that data exists.
-function renderItemStructuredData(item, canonicalUrl, breadcrumbs) {
+// Up to `limit` available shop pieces related to `item`: same designer, same
+// category and same maker score higher. Unrelated pieces are never used as filler.
+function relatedAvailableItems(item, limit = 4) {
+  const brand = brandKey(item);
+  const designer = isDesignerPiece(item);
+  const score = other =>
+    (designer && isDesignerPiece(other) ? 4 : 0)
+    + (other.category === item.category ? 2 : 0)
+    + (brand && brandKey(other) === brand ? 1 : 0);
+  return items
+    .filter(other => other.id !== item.id && isPurchasable(other))
+    .map((other, index) => ({other, index, s: score(other)}))
+    .filter(entry => entry.s >= 2 || (entry.s === 1 && brand === 'cousances'))
+    .sort((a, b) => b.s - a.s || a.index - b.index)
+    .slice(0, limit)
+    .map(entry => entry.other);
+}
+
+const SELLER = {'@type': 'Organization', name: 'Cook & Collect', url: `${SITE_URL}/`};
+
+// Parses "120€" / "1.200,50 €" into "120" / "1200.50"; null when there is no euro price.
+function priceAmount(price) {
+  const match = typeof price === 'string' ? price.match(/([\d.,]+)\s*€/) : null;
+  return match ? match[1].replace(/\./g, '').replace(',', '.') : null;
+}
+
+// Product + Offer + BreadcrumbList JSON-LD for a permanent item page. Only real
+// data: the published price, real availability (SoldOut once sold), used
+// condition and the seller. No GTIN, brand, reviews, ratings or shipping terms
+// are added because none of that is recorded. EN and FR pages describe the same
+// offer (same price, availability, sku), only the text language differs.
+function renderItemStructuredData(item, code, canonicalUrl, breadcrumbs) {
   const images = (item.images || []).map(src => `${SITE_URL}/${src}`);
-  const priceMatch = typeof item.price === 'string' ? item.price.match(/([\d.,]+)\s*€/) : null;
-  const priceValue = priceMatch ? priceMatch[1].replace(/\./g, '').replace(',', '.') : null;
+  const priceValue = priceAmount(item.price);
+  const description = itemDescription(item, code);
 
   const product = {
     '@context': 'https://schema.org',
     '@type': 'Product',
-    name: item.title,
-    ...(item.description ? {description: item.description} : {}),
+    name: itemTitle(item, code),
+    sku: item.id,
+    ...(description ? {description} : {}),
     ...(images.length ? {image: images} : {}),
     ...(item.category ? {category: item.category} : {}),
     url: canonicalUrl,
@@ -634,11 +767,16 @@ function renderItemStructuredData(item, canonicalUrl, breadcrumbs) {
         price: priceValue,
         availability: item.sold ? 'https://schema.org/SoldOut' : 'https://schema.org/InStock',
         itemCondition: 'https://schema.org/UsedCondition',
-        url: canonicalUrl
+        url: canonicalUrl,
+        seller: SELLER
       }
     } : {})
   };
 
+  return `<script type="application/ld+json">${JSON.stringify(product)}</script>\n  ${renderBreadcrumbStructuredData(breadcrumbs)}`;
+}
+
+function renderBreadcrumbStructuredData(breadcrumbs) {
   const breadcrumbList = {
     '@context': 'https://schema.org',
     '@type': 'BreadcrumbList',
@@ -646,11 +784,10 @@ function renderItemStructuredData(item, canonicalUrl, breadcrumbs) {
       '@type': 'ListItem',
       position: i + 1,
       name: crumb.name,
-      item: crumb.url
+      ...(crumb.url ? {item: crumb.url} : {})
     }))
   };
-
-  return `<script type="application/ld+json">${JSON.stringify(product)}</script>\n  <script type="application/ld+json">${JSON.stringify(breadcrumbList)}</script>`;
+  return `<script type="application/ld+json">${JSON.stringify(breadcrumbList)}</script>`;
 }
 
 // CollectionPage + ItemList JSON-LD for the home (available) and sold
@@ -680,7 +817,42 @@ function renderCatalogListStructuredData(itemsList, canonicalUrl, name, descript
   return `<script type="application/ld+json">${JSON.stringify(json)}</script>`;
 }
 
-function renderItemGallery(item, base) {
+// Organization + WebSite, published once per home page. Contact details are
+// the public ones from the legal notice.
+function renderSiteStructuredData() {
+  const json = {
+    '@context': 'https://schema.org',
+    '@graph': [
+      {
+        '@type': 'Organization',
+        '@id': `${SITE_URL}/#organization`,
+        name: 'Cook & Collect',
+        legalName: i18n.en.legalTradeName,
+        url: `${SITE_URL}/`,
+        logo: `${SITE_URL}/apple-touch-icon.png`,
+        email: i18n.en.legalEmail,
+        contactPoint: {
+          '@type': 'ContactPoint',
+          contactType: 'sales',
+          telephone: i18n.en.legalPhone.replace(/\s+/g, ''),
+          email: i18n.en.legalEmail,
+          availableLanguage: ['English', 'French']
+        }
+      },
+      {
+        '@type': 'WebSite',
+        '@id': `${SITE_URL}/#website`,
+        name: 'Cook & Collect',
+        url: `${SITE_URL}/`,
+        inLanguage: ['en', 'fr'],
+        publisher: {'@id': `${SITE_URL}/#organization`}
+      }
+    ]
+  };
+  return `<script type="application/ld+json">${JSON.stringify(json)}</script>`;
+}
+
+function renderItemGallery(item, base, title) {
   const imgs = item.images || [];
   if (!imgs.length) return '';
   const main = imgs[0];
@@ -690,48 +862,124 @@ function renderItemGallery(item, base) {
     const url = selectionAssetUrl(src, base);
     const d = imageDimensions(src);
     const attrs = d ? ` width="${d.width}" height="${d.height}"` : '';
-    return `<img src="${url}" alt="${escapeHtml(item.title)} — photo ${i + 1}"${attrs} class="${i === 0 ? 'active' : ''}" onclick="switchImage(${i})" loading="lazy">`;
+    return `<img src="${url}" alt="${escapeHtml(title)} — photo ${i + 1}"${attrs} class="${i === 0 ? 'active' : ''}" onclick="switchImage(${i})" loading="lazy" decoding="async">`;
   }).join('') : '';
+  // The main photograph is the LCP element: never lazy, fetched first.
   return `
       <div class="gallery">
-        <img src="${selectionAssetUrl(main, base)}" alt="${escapeHtml(item.title)}" class="main-image" id="mainImage"${mainAttrs} onclick="openLightbox(window._currentImageIndex || 0)">
+        <img src="${selectionAssetUrl(main, base)}" alt="${escapeHtml(title)}" class="main-image" id="mainImage"${mainAttrs} fetchpriority="high" onclick="openLightbox(window._currentImageIndex || 0)">
         ${thumbs ? `<div class="thumbnails">${thumbs}</div>` : ''}
       </div>`;
 }
 
-// Renders one permanent /en/collection/<id>.html page. `strings` = i18n.en.
-function renderCollectionPage(item, strings, guideHrefs, base) {
-  const canonicalUrl = `${SITE_URL}/en/collection/${item.id}.html`;
-  const listHref = item.sold ? '../sold.html' : '../index.html';
-  const listLabel = item.sold ? strings.collectionBreadcrumbSold : strings.collectionBreadcrumbAvailable;
+// Script tags shared by generated pages. The analytics endpoint and the
+// enquiry API are build-time settings (see ENQUIRY_API_BASE below); while they
+// are empty the scripts stay inert / fall back to WhatsApp.
+function trackScriptTag(base) {
+  return `<script src="${base}js/track.js?v=1" data-api="${escapeHtml(ANALYTICS_API_BASE)}" defer></script>`;
+}
+function enquiryScriptTag(base) {
+  return `<script src="${base}js/enquiry.js?v=1" data-api="${escapeHtml(ENQUIRY_API_BASE)}" data-sitekey="${escapeHtml(ENQUIRY_TURNSTILE_SITE_KEY)}" defer></script>`;
+}
+
+// Pre-filled WhatsApp message: works with no backend and no JavaScript, and is
+// replaced by the enquiry / offer form when js/enquiry.js is configured.
+function whatsappEnquiryHref(item, code, kind, pageUrl) {
+  const s = i18n[code];
+  const intro = kind === 'offer' ? s.purchaseWhatsappOffer : s.purchaseWhatsappBuy;
+  const text = `${intro} ${itemTitle(item, code)} (${s.purchaseRefLabel} ${item.id}) — ${item.price}\n${pageUrl}`;
+  return `https://wa.me/33627335434?text=${encodeURIComponent(text)}`;
+}
+
+function renderPurchaseActions(item, code, pageUrl) {
+  if (!isPurchasable(item)) return '';
+  const s = i18n[code];
+  return `<div class="purchase-actions" data-purchase-actions>
+          <a class="purchase-btn purchase-btn-primary" data-enquiry="purchase" href="${escapeHtml(whatsappEnquiryHref(item, code, 'purchase', pageUrl))}" target="_blank" rel="noopener noreferrer">${escapeHtml(s.purchaseEnquire)}</a>
+          <a class="purchase-btn purchase-btn-secondary" data-enquiry="offer" href="${escapeHtml(whatsappEnquiryHref(item, code, 'offer', pageUrl))}" target="_blank" rel="noopener noreferrer">${escapeHtml(s.purchaseOffer)}</a>
+          <p class="purchase-note">${escapeHtml(s.purchaseNote)}</p>
+        </div>`;
+}
+
+function renderRelatedSection(item, code, strings) {
+  const related = relatedAvailableItems(item);
+  const heading = item.sold ? strings.relatedSoldHeading : strings.relatedHeading;
+  if (!related.length) {
+    if (!item.sold) return '';
+    return `
+    <section class="related-items" aria-labelledby="related-heading">
+      <h2 id="related-heading">${escapeHtml(heading)}</h2>
+      <p><a href="../index.html">${escapeHtml(strings.relatedBrowseAll)}</a></p>
+    </section>`;
+  }
+  return `
+    <section class="related-items" aria-labelledby="related-heading">
+      <h2 id="related-heading">${escapeHtml(heading)}</h2>
+      <div class="items-grid related-grid" data-list="related">
+        ${renderItemGrid(related, strings, '../../', './', false, '')}
+      </div>
+    </section>`;
+}
+
+// One permanent item page: /en/collection/<id>.html or /fr/collection/<id>.html.
+function renderCollectionPage(item, code, guideHrefs) {
+  const strings = i18n[code];
+  const enUrl = `${SITE_URL}/en/collection/${item.id}.html`;
+  const frUrl = `${SITE_URL}/fr/collection/${item.id}.html`;
+  const canonicalUrl = code === 'fr' ? frUrl : enUrl;
+  const homeUrl = code === 'fr' ? `${SITE_URL}/fr/index.html` : `${SITE_URL}/`;
+  const title = itemTitle(item, code);
+  const description = itemDescription(item, code);
+  // Untranslated text on a French page is marked as English for screen readers.
+  const titleLang = hasTranslation(item, code, 'title') ? '' : ' lang="en"';
+  const descLang = hasTranslation(item, code, 'description') ? '' : ' lang="en"';
+  // Available pieces sit under their shop collection page when they have one;
+  // otherwise under the available collection (the home page) or sold page.
+  const shopCat = item.sold ? null : shopCategoryFor(item);
+  const listHref = item.sold ? '../sold.html' : shopCat ? `../shop/${shopCat.slug}.html` : '../index.html';
+  const listLabel = item.sold ? strings.collectionBreadcrumbSold
+    : shopCat ? strings[`${shopCat.key}LinkLabel`] : strings.collectionBreadcrumbAvailable;
+  const backHref = item.sold ? '../sold.html' : '../index.html';
   const backLabel = item.sold ? strings.backSold : strings.backCollection;
   const statusLabel = item.sold ? strings.collectionStatusSold : strings.collectionStatusAvailable;
 
+  // Structured breadcrumbs only use canonical URLs: the available collection
+  // *is* the home page, so it is not repeated as a second level.
+  const listUrl = item.sold ? `${SITE_URL}/${code}/sold.html`
+    : shopCat ? `${SITE_URL}/${code}/shop/${shopCat.slug}.html` : null;
   const breadcrumbs = [
-    {name: strings.collectionBreadcrumbHome, url: `${SITE_URL}/en/index.html`},
-    {name: listLabel, url: `${SITE_URL}/en/${item.sold ? 'sold.html' : 'index.html'}`},
-    {name: item.title, url: canonicalUrl}
+    {name: strings.collectionBreadcrumbHome, url: homeUrl},
+    ...(listUrl ? [{name: listLabel, url: listUrl}] : []),
+    {name: title, url: canonicalUrl}
   ];
 
-  const guideLinks = itemGuideLinks(item, guideHrefs, strings);
-  const guideLinksHTML = guideLinks.length ? `
-      <p class="collection-related-links">
-        ${guideLinks.map(l => `<a href="../${l.href}">${escapeHtml(l.label)}</a>`).join(' &middot; ')}
-      </p>` : '';
+  const contextLinks = [
+    ...(shopCat ? [{href: `../shop/${shopCat.slug}.html`, label: strings[`${shopCat.key}LinkLabel`]}] : []),
+    ...itemGuideLinks(item, guideHrefs, strings).map(l => ({href: `../${l.href}`, label: l.label}))
+  ];
+  const contextLinksHTML = contextLinks.length ? `
+        <p class="collection-related-links">
+          ${contextLinks.map(l => `<a href="${l.href}">${escapeHtml(l.label)}</a>`).join(' &middot; ')}
+        </p>` : '';
 
-  const metaDescRaw = item.description ? item.description.replace(/\s+/g, ' ').trim() : item.title;
-  const metaDesc = metaDescRaw.length > 158 ? `${metaDescRaw.slice(0, 155).trim()}…` : metaDescRaw;
-  const docTitle = `${item.title} | Cook & Collect`;
+  const metaDescRaw = description ? description.replace(/\s+/g, ' ').trim() : title;
+  const metaDescBody = metaDescRaw.length > 150 ? `${metaDescRaw.slice(0, 147).trim()}…` : metaDescRaw;
+  const metaDesc = item.sold ? `${strings.collectionStatusSold}. ${metaDescBody}` : metaDescBody;
+  const docTitle = `${title} | Cook & Collect`;
+  const curatedHref = code === 'fr' ? '../curated-selection.html' : '../curatedselection';
+  const legalHref = code === 'fr' ? '../mentions-legales.html' : '../legal-notice.html';
 
   const langSwitchHTML = `<li class="lang-switch">
           <select onchange="location.href=this.value" aria-label="{{ariaLanguage}}">
-            <option value="${item.id}.html" selected>EN</option>
-            <option value="../../fr/item.html?id=${encodeURIComponent(item.id)}">FR</option>
+            <option value="../../en/collection/${item.id}.html"${code === 'en' ? ' selected' : ''}>EN</option>
+            <option value="../../fr/collection/${item.id}.html"${code === 'fr' ? ' selected' : ''}>FR</option>
           </select>
         </li>`;
 
+  const soldNote = item.sold ? `<p class="sold-note">${escapeHtml(strings.collectionSoldNote)}</p>` : '';
+
   const rawHtml = `<!DOCTYPE html>
-<html lang="en">
+<html lang="${code}">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -741,45 +989,165 @@ function renderCollectionPage(item, strings, guideHrefs, base) {
   <link rel="icon" href="../../favicon.ico" sizes="any">
   <link rel="apple-touch-icon" href="../../apple-touch-icon.png">
   <link rel="canonical" href="${canonicalUrl}">
+  <link rel="alternate" hreflang="en" href="${enUrl}">
+  <link rel="alternate" hreflang="fr" href="${frUrl}">
+  <link rel="alternate" hreflang="x-default" href="${enUrl}">
   <meta property="og:type" content="product">
+  <meta property="og:site_name" content="Cook &amp; Collect">
+  <meta property="og:locale" content="${code === 'fr' ? 'fr_FR' : 'en_GB'}">
   <meta property="og:title" content="${escapeHtml(docTitle)}">
   <meta property="og:description" content="${escapeHtml(metaDesc)}">
   <meta property="og:url" content="${canonicalUrl}">
   ${item.cover ? `<meta property="og:image" content="${SITE_URL}/${item.cover}">` : ''}
-  <link rel="stylesheet" href="../../css/style.css?v=25">
-  ${renderItemStructuredData(item, canonicalUrl, breadcrumbs)}
+  <link rel="stylesheet" href="../../css/style.css?v=26">
+  ${renderItemStructuredData(item, code, canonicalUrl, breadcrumbs)}
 </head>
-<body data-page="collection-item">
-  ${renderNav('home', langSwitchHTML, '../', '../curatedselection', '../guides/')}
+<body data-page="collection-item" data-item-id="${escapeHtml(item.id)}" data-item-title="${escapeHtml(title)}" data-item-price="${escapeHtml(item.price)}" data-item-status="${item.sold ? 'sold' : 'available'}" data-purchasable="${isPurchasable(item)}">
+  ${renderNav('home', langSwitchHTML, '../', curatedHref, '../guides/')}
   <main>
     <nav class="breadcrumbs" aria-label="Breadcrumb">
       <ol>
         <li><a href="../index.html">${escapeHtml(strings.collectionBreadcrumbHome)}</a></li>
         <li><a href="${listHref}">${escapeHtml(listLabel)}</a></li>
-        <li aria-current="page">${escapeHtml(item.title)}</li>
+        <li aria-current="page"${titleLang}>${escapeHtml(title)}</li>
       </ol>
     </nav>
-    <a href="${listHref}" class="back-link">${escapeHtml(backLabel)}</a>
+    <a href="${backHref}" class="back-link">${escapeHtml(backLabel)}</a>
     <div class="item-layout">
-      ${renderItemGallery(item, '../../')}
+      ${renderItemGallery(item, '../../', title)}
       <div class="item-info">
         <span class="${item.sold ? 'sold-badge' : 'available-badge'}">${escapeHtml(statusLabel)}</span>
-        <h1 class="item-title">${escapeHtml(item.title)}</h1>
+        <h1 class="item-title"${titleLang}>${escapeHtml(title)}</h1>
         <p class="item-price">${escapeHtml(item.price)}</p>
-        ${item.description ? `<p class="item-description">${escapeHtml(item.description)}</p>` : ''}
+        ${soldNote}
+        ${renderPurchaseActions(item, code, canonicalUrl)}
+        ${description ? `<p class="item-description"${descLang}>${escapeHtml(description)}</p>` : ''}
         ${!item.sold ? `<div class="shipping-note"><span class="shipping-icon">&#9992;</span> ${strings.shippingNote} <a href="../shipping.html">${escapeHtml(strings.collectionViewShipping)}</a></div>` : ''}
-        ${guideLinksHTML}
+        ${contextLinksHTML}
       </div>
     </div>
+    ${renderRelatedSection(item, code, strings)}
   </main>
   ${tpl('lightbox.html')}
   ${CONTACT_BUTTONS}
   ${FOOTER}
-  <script src="../../js/app.js?v=2"></script>
+  <script src="../../js/app.js?v=4"></script>
+  ${trackScriptTag('../../')}
+  ${isPurchasable(item) ? enquiryScriptTag('../../') : ''}
 </body>
 </html>`;
 
-  return substitute(rawHtml, {...strings, legalHref: '../legal-notice.html', privacyHref: '../privacy.html'});
+  return substitute(rawHtml, {...strings, legalHref, privacyHref: '../privacy.html'});
+}
+
+// One shop collection landing page: /<code>/shop/<slug>.html.
+function renderShopPage(cat, code) {
+  const strings = i18n[code];
+  const get = suffix => strings[`${cat.key}${suffix}`] || '';
+  const enUrl = `${SITE_URL}/en/shop/${cat.slug}.html`;
+  const frUrl = `${SITE_URL}/fr/shop/${cat.slug}.html`;
+  const canonicalUrl = code === 'fr' ? frUrl : enUrl;
+  const homeUrl = code === 'fr' ? `${SITE_URL}/fr/index.html` : `${SITE_URL}/`;
+  const list = shopCategoryItems(cat);
+  const curatedHref = code === 'fr' ? '../curated-selection.html' : '../curatedselection';
+  const legalHref = code === 'fr' ? '../mentions-legales.html' : '../legal-notice.html';
+  const docTitle = get('DocTitle');
+  const metaDesc = get('MetaDesc');
+  const firstCover = list.find(item => item.cover);
+
+  const breadcrumbs = [
+    {name: strings.collectionBreadcrumbHome, url: homeUrl},
+    {name: get('H1'), url: canonicalUrl}
+  ];
+  const itemList = {
+    '@context': 'https://schema.org',
+    '@type': 'CollectionPage',
+    name: get('H1'),
+    description: metaDesc,
+    url: canonicalUrl,
+    inLanguage: code,
+    mainEntity: {
+      '@type': 'ItemList',
+      numberOfItems: list.length,
+      itemListElement: list.map((item, i) => ({
+        '@type': 'ListItem',
+        position: i + 1,
+        url: `${SITE_URL}/${code}/collection/${item.id}.html`,
+        name: itemTitle(item, code)
+      }))
+    }
+  };
+
+  const otherCats = ACTIVE_SHOP_CATEGORIES.filter(other => other.slug !== cat.slug);
+  const paragraphs = ['Intro1', 'Intro2', 'Intro3'].map(get).filter(Boolean)
+    .map(p => `<p>${p}</p>`).join('\n      ');
+
+  const langSwitchHTML = `<li class="lang-switch">
+          <select onchange="location.href=this.value" aria-label="{{ariaLanguage}}">
+            <option value="../../en/shop/${cat.slug}.html"${code === 'en' ? ' selected' : ''}>EN</option>
+            <option value="../../fr/shop/${cat.slug}.html"${code === 'fr' ? ' selected' : ''}>FR</option>
+          </select>
+        </li>`;
+
+  const rawHtml = `<!DOCTYPE html>
+<html lang="${code}">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="${escapeHtml(metaDesc)}">
+  <title>${escapeHtml(docTitle)}</title>
+  <link rel="icon" href="../../favicon.svg" type="image/svg+xml">
+  <link rel="icon" href="../../favicon.ico" sizes="any">
+  <link rel="apple-touch-icon" href="../../apple-touch-icon.png">
+  <link rel="canonical" href="${canonicalUrl}">
+  <link rel="alternate" hreflang="en" href="${enUrl}">
+  <link rel="alternate" hreflang="fr" href="${frUrl}">
+  <link rel="alternate" hreflang="x-default" href="${enUrl}">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="Cook &amp; Collect">
+  <meta property="og:locale" content="${code === 'fr' ? 'fr_FR' : 'en_GB'}">
+  <meta property="og:title" content="${escapeHtml(docTitle)}">
+  <meta property="og:description" content="${escapeHtml(metaDesc)}">
+  <meta property="og:url" content="${canonicalUrl}">
+  ${firstCover ? `<meta property="og:image" content="${SITE_URL}/${firstCover.cover}">` : ''}
+  <link rel="stylesheet" href="../../css/style.css?v=26">
+  <script type="application/ld+json">${JSON.stringify(itemList)}</script>
+  ${renderBreadcrumbStructuredData(breadcrumbs)}
+</head>
+<body data-page="shop" data-shop-category="${cat.slug}">
+  ${renderNav('home', langSwitchHTML, '../', curatedHref, '../guides/')}
+  <main class="shop-page">
+    <nav class="breadcrumbs" aria-label="Breadcrumb">
+      <ol>
+        <li><a href="../index.html">${escapeHtml(strings.collectionBreadcrumbHome)}</a></li>
+        <li aria-current="page">${escapeHtml(get('H1'))}</li>
+      </ol>
+    </nav>
+    <h1 class="page-title">${escapeHtml(get('H1'))}</h1>
+    <div class="shop-intro">
+      ${paragraphs}
+    </div>
+    <p class="collection-related-links">
+      ${cat.guides.map(g => `<a href="../guides/${g.file}">${escapeHtml(strings[g.labelKey])}</a>`).join(' &middot; ')}
+    </p>
+    <h2 class="shop-available-heading">${escapeHtml(strings.shopAvailableHeading)} <span class="shop-count">(${list.length})</span></h2>
+    <div class="items-grid" data-list="category:${cat.slug}">
+      ${renderItemGrid(list, strings, '../../', '../collection/', false, strings.noAvailable)}
+    </div>
+    <section class="shop-more">
+      <h2>${escapeHtml(strings.shopMoreHeading)}</h2>
+      <p>
+        ${otherCats.map(other => `<a href="${other.slug}.html">${escapeHtml(strings[`${other.key}LinkLabel`])}</a>`).join(' &middot; ')}${otherCats.length ? ' &middot; ' : ''}<a href="../index.html">${escapeHtml(strings.shopAllAvailable)}</a> &middot; <a href="../sold.html">${escapeHtml(strings.shopSoldArchive)}</a>
+      </p>
+    </section>
+  </main>
+  ${CONTACT_BUTTONS}
+  ${FOOTER}
+  ${trackScriptTag('../../')}
+</body>
+</html>`;
+
+  return substitute(rawHtml, {...strings, legalHref, privacyHref: '../privacy.html'});
 }
 
 /* ─── Canonical / hreflang for standard (non-catalogue-injected) pages ───
@@ -1006,15 +1374,28 @@ LOCALES.forEach(locale => {
       ...(pageDef.page === 'home' ? (() => {
         const available = items.filter(i => !i.sold);
         const collectionBase = collectionBaseFor(locale.dir);
-        // The domain homepage ("/") is deliberately left self-canonical for
-        // now — see build report re: long-term homepage/language routing.
-        const canonicalUrl = locale.dir === '' ? `${SITE_URL}/` : `${SITE_URL}/${locale.dir}/index.html`;
+        // English home: the domain root "/" is the canonical URL (it holds the
+        // Search Console history); en/index.html is a duplicate pointing to it.
+        // "/" and fr/index.html are the reciprocal hreflang pair.
+        const rootUrl = `${SITE_URL}/`;
+        const frHomeUrl = `${SITE_URL}/fr/index.html`;
+        const canonicalUrl = locale.dir === 'fr' ? frHomeUrl : rootUrl;
+        const hreflang = [
+          `<link rel="alternate" hreflang="en" href="${rootUrl}">`,
+          `<link rel="alternate" hreflang="fr" href="${frHomeUrl}">`,
+          `<link rel="alternate" hreflang="x-default" href="${rootUrl}">`
+        ];
+        const shopBase = locale.dir === '' ? 'en/shop/' : 'shop/';
         return {
           gridHTML: renderItemGrid(available, strings, base, collectionBase, false, strings.noAvailable),
-          canonicalBlock: locale.dir === ''
-            ? `<link rel="canonical" href="${canonicalUrl}">`
-            : renderCanonicalBlock(locale.dir, 'index.html'),
-          structuredData: renderCatalogListStructuredData(available, canonicalUrl, strings.homeTitle, strings.homeMetaDesc, collectionBase)
+          canonicalBlock: locale.dir === 'en'
+            ? `<link rel="canonical" href="${rootUrl}">`
+            : [`<link rel="canonical" href="${canonicalUrl}">`, ...hreflang].join('\n  '),
+          structuredData: [
+            renderSiteStructuredData(),
+            renderCatalogListStructuredData(available, locale.dir === '' ? rootUrl : `${SITE_URL}/${locale.dir}/index.html`, strings.homeTitle, strings.homeMetaDesc, collectionBase)
+          ].join('\n  '),
+          collectionLinks: renderShopLinks(strings, shopBase)
         };
       })() : {}),
       ...(pageDef.page === 'sold' ? (() => {
@@ -1051,6 +1432,12 @@ LOCALES.forEach(locale => {
     const preCtxHtml = html;
     html = substitute(html, ctx);
 
+    // First-party, cookieless conversion events (js/track.js). The owner-only
+    // studio and the hidden identification page are not measured.
+    if (pageDef.page !== 'studio' && pageDef.page !== 'identify') {
+      html = html.replace('</body>', `  ${trackScriptTag(base)}\n</body>`);
+    }
+
     if (pageDef.inject) {
       const collectionBase = collectionBaseFor(locale.dir);
       const head = `<script>window.__BASE__=${JSON.stringify(base)};window.__COLLECTION_BASE__=${JSON.stringify(collectionBase)};</script>${manifestScript}`;
@@ -1085,7 +1472,8 @@ LOCALES.forEach(locale => {
         curatedOgImage: ogImage,
         curatedStructuredData: renderSelectionStructuredData(selection, locale.code, strings, curatedSelectionUrl)
       };
-      let canonicalHtml = substitute(preCtxHtml, canonicalCtx);
+      let canonicalHtml = substitute(preCtxHtml, canonicalCtx)
+        .replace('</body>', `  ${trackScriptTag(base)}\n</body>`);
       if (pageDef.inject) {
         const collectionBase = collectionBaseFor(locale.dir);
         const head = `<script>window.__BASE__=${JSON.stringify(base)};window.__COLLECTION_BASE__=${JSON.stringify(collectionBase)};</script>${manifestScript}`;
@@ -1097,27 +1485,60 @@ LOCALES.forEach(locale => {
   });
 });
 
-/* ─── Permanent per-item pages: /en/collection/<id>.html ───
-   EN only for now (see collectionBaseFor). Every available AND sold item
-   gets one, and the URL never changes when an item sells — only its
-   status/badge/JSON-LD availability do (see PHASE 6 / Sold Archive). */
+/* ─── Permanent per-item pages: /en/collection/<id>.html + /fr/collection/<id>.html ───
+   Every available AND sold item gets one per language, and the URL never
+   changes when an item sells — only its status/badge/JSON-LD availability do.
+   French pages use the item's "fr" text when info.json provides it. */
 const collectionGuideHrefs = {
   guideCopperHref: 'guides/vintage-french-copper-cookware.html',
   guideLeCreusetHref: 'guides/vintage-le-creuset.html',
   guideDatingHref: 'guides/le-creuset-dating-guide.html',
-  guideChampagneHref: 'guides/vintage-french-champagne-buckets.html'
+  guideChampagneHref: 'guides/vintage-french-champagne-buckets.html',
+  guideCastIronHref: 'guides/european-enamelled-cast-iron-makers.html'
 };
-const collectionDir = path.join(__dirname, 'en', 'collection');
-fs.mkdirSync(collectionDir, {recursive: true});
-items.forEach(item => {
-  const html = renderCollectionPage(item, i18n.en, collectionGuideHrefs, '../../');
-  fs.writeFileSync(path.join(collectionDir, `${item.id}.html`), html);
+['en', 'fr'].forEach(code => {
+  const dir = path.join(__dirname, code, 'collection');
+  fs.mkdirSync(dir, {recursive: true});
+  items.forEach(item => {
+    fs.writeFileSync(path.join(dir, `${item.id}.html`), renderCollectionPage(item, code, collectionGuideHrefs));
+  });
 });
-console.log(`Generated ${items.length} permanent collection page(s) in en/collection/.`);
+console.log(`Generated ${items.length * 2} permanent collection page(s) in en/collection/ and fr/collection/.`);
+
+/* ─── Shop collection landing pages: /en/shop/<slug>.html + /fr/shop/<slug>.html ─── */
+['en', 'fr'].forEach(code => {
+  const dir = path.join(__dirname, code, 'shop');
+  fs.mkdirSync(dir, {recursive: true});
+  // Pages of collections that fell below MIN_SHOP_ITEMS are removed, so no
+  // thin page lingers; nothing links to them once inactive.
+  const active = new Set(ACTIVE_SHOP_CATEGORIES.map(cat => `${cat.slug}.html`));
+  fs.readdirSync(dir).filter(f => f.endsWith('.html') && !active.has(f))
+    .forEach(f => fs.unlinkSync(path.join(dir, f)));
+  ACTIVE_SHOP_CATEGORIES.forEach(cat => {
+    fs.writeFileSync(path.join(dir, `${cat.slug}.html`), renderShopPage(cat, code));
+  });
+});
+console.log(`Generated ${ACTIVE_SHOP_CATEGORIES.length * 2} shop collection page(s): ${ACTIVE_SHOP_CATEGORIES.map(c => c.slug).join(', ') || 'none'}.`);
+
+/* ─── legacy-redirects.json ───
+   Read by the identify-agent Worker (route cookandcollect.eu/item.html*,
+   /en/item.html*, /fr/item.html*) to answer old item.html?id=<id> URLs with a
+   301 to the same-language permanent page. Unknown ids are not listed, so the
+   Worker passes them through to the legacy page instead of guessing. Generated
+   at build time and deployed with the site (gitignored, like manifest.json). */
+const legacyRedirects = {
+  version: 1,
+  items: Object.fromEntries(items.map(item => [item.id, {
+    en: `/en/collection/${item.id}.html`,
+    fr: `/fr/collection/${item.id}.html`
+  }]))
+};
+fs.writeFileSync(path.join(__dirname, 'legacy-redirects.json'), JSON.stringify(legacyRedirects));
 
 /* ─── sitemap.xml + robots.txt ───
-   Canonical, indexable URLs only: no root duplicates, no legacy
-   item.html?id= query URLs, no non-canonical FR item pages (none exist). */
+   Canonical, indexable URLs only: no root duplicates (except "/", the
+   canonical English home), no en/index.html (canonicalised to "/"), no legacy
+   item.html?id= query URLs. */
 const GUIDE_FILES = [
   'e-dehillerin-copper-cookware.html',
   'european-enamelled-cast-iron-makers.html',
@@ -1131,10 +1552,11 @@ const GUIDE_FILES = [
 ];
 
 const sitemapUrls = [];
-// Domain homepage: left as its own entry (see canonical note above).
+// English home is "/"; French home is fr/index.html.
 sitemapUrls.push(`${SITE_URL}/`);
+sitemapUrls.push(`${SITE_URL}/fr/index.html`);
 ['en', 'fr'].forEach(dir => {
-  ['index.html', 'sold.html', 'about.html', 'shipping.html'].forEach(file => {
+  ['sold.html', 'about.html', 'shipping.html'].forEach(file => {
     sitemapUrls.push(`${SITE_URL}/${dir}/${file}`);
   });
   // Curated Selection: EN canonical is the hyphen/extension-free
@@ -1150,7 +1572,10 @@ sitemapUrls.push(`${SITE_URL}/`);
   sitemapUrls.push(`${SITE_URL}/${dir}/guides/`);
   GUIDE_FILES.forEach(file => sitemapUrls.push(`${SITE_URL}/${dir}/guides/${file}`));
 });
-items.forEach(item => sitemapUrls.push(`${SITE_URL}/en/collection/${item.id}.html`));
+['en', 'fr'].forEach(code => {
+  items.forEach(item => sitemapUrls.push(`${SITE_URL}/${code}/collection/${item.id}.html`));
+  ACTIVE_SHOP_CATEGORIES.forEach(cat => sitemapUrls.push(`${SITE_URL}/${code}/shop/${cat.slug}.html`));
+});
 
 const sitemapXml = `<?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
