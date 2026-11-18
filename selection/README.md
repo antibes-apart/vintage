@@ -1,14 +1,19 @@
 # Selected Collection data
 
-This folder holds the **Selected Collection** — the curated professional
-portfolio shown on `selected-collection.html`. It is **completely separate**
-from the direct-sales shop in `items/`.
+This folder holds the **Curated Selection** shown on `curated-selection.html`
+(`/en/curatedselection`). The folders are separate from the shop in `items/`.
 
-Key rules for this folder (enforced by the page/JS, not just convention):
+How the build uses these records:
 
-- **No prices.** There is no `price` field and none is ever displayed.
-- **No cart / no purchase buttons.** Enquiries only.
-- Items here are **never** merged into the shop grid, categories or search.
+- Entries with status `Available` or `Sold` get a permanent product page at
+  `/{en,fr}/collection/<slug>.html`, and they're added to `manifest.items` with
+  `curated: true`. That's the list the enquiry Worker accepts.
+- Available entries show their `price`, written as "€475" and displayed as
+  "475€". They get "Enquire to Purchase" / "Make an Offer"; there is no cart
+  or payment.
+- Curated pieces appear in shop category pages, guide recommendations and
+  related pieces. They don't appear on the home grid.
+- A slug must not also exist in `items/`, or the build stops.
 
 ## One folder per object
 

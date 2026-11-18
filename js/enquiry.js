@@ -356,6 +356,13 @@
     });
   });
 
+  // Deep links from the Curated Selection: #enquire / #offer open the form once.
+  if (window.location.hash === '#enquire' || window.location.hash === '#offer') {
+    var deepLink = window.location.hash === '#offer' ? 'offer' : 'purchase';
+    try { history.replaceState(null, '', window.location.pathname + window.location.search); } catch (e) { /* ignore */ }
+    openDialog(deepLink);
+  }
+
   function validate() {
     clearErrors();
     var errors = {};

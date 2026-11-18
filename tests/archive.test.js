@@ -107,7 +107,7 @@ test('photos come from the image host, with the small size in the thumbnails and
   assert.match(en, new RegExp(`<img src="${host}/2-800\\.jpg" data-full="${host}/2-1600\\.jpg" alt="Sample: COUSANCES marking cast into the base" width="200" height="150" class="" onclick="switchImage\\(1\\)" loading="lazy">`));
   assert.match(en, /id="lightbox"/);
   assert.match(en, /<body data-page="collection-item">/);
-  assert.match(en, /src="\.\.\/\.\.\/js\/app\.js\?v=4"/);
+  assert.match(en, /src="\.\.\/\.\.\/js\/app\.js\?v=5"/);
   // A photo without a small size uses the large one in its thumbnail.
   const lc = read(`en/archive/${LE_CREUSET}.html`);
   assert.match(lc, new RegExp(`<img src="https://images\\.cookandcollect\\.eu/archive/${LE_CREUSET}/2-1600\\.jpg" data-full="https://images\\.cookandcollect\\.eu/archive/${LE_CREUSET}/2-1600\\.jpg"`));

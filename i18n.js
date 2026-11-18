@@ -47,18 +47,25 @@ const en = {
   noSold: 'No sold items yet.',
   backCollection: '\u2190 Back to collection',
   backSold: '\u2190 Back to sold items',
+  backCurated: '\u2190 Back to the curated selection',
+  curatedBreadcrumb: 'Curated Selection',
   shippingNote: 'International shipping available \u2014 costs at buyer\u2019s expense.',
   collectionBreadcrumbHome: 'Home',
   collectionBreadcrumbAvailable: 'Available Items',
   collectionBreadcrumbSold: 'Sold Items',
   collectionStatusAvailable: 'Available',
   collectionStatusSold: 'Sold',
+  collectionStatusNotForSale: 'Not for sale here',
+  collectionNotForSaleNote: 'This piece is not offered for direct sale by Cook & Collect. Its page stays online as a reference.',
   collectionViewShipping: 'See shipping & delivery information',
   guideLinkCopper: 'our guide to vintage French copper cookware',
   guideLinkLeCreuset: 'our guide to vintage Le Creuset',
   guideLinkDating: 'how to date vintage Le Creuset',
   guideLinkChampagne: 'our guide to vintage French champagne buckets',
   guideLinkCastIron: 'Cousances and the other French cast iron makers',
+  guideLinkDehillerin: 'our guide to E. Dehillerin copper cookware',
+  guideLinkLecellier: 'our guide to L. Lecellier and Cuivralec copper',
+  guideLinkDecorative: 'our guide to French design and decorative objects',
   guideLinkDesigners: 'Raymond Loewy and Enzo Mari for Le Creuset',
   guideShopHeadingLeCreuset: 'Explore Vintage Le Creuset from Our Collection',
   guideShopHeadingCastIron: 'Explore Cousances and French Cast Iron from Our Collection',
@@ -74,6 +81,7 @@ const en = {
   relatedHeading: 'You may also like',
   relatedSoldHeading: 'Similar pieces available now',
   relatedBrowseAll: 'Browse all available pieces',
+  relatedBrowseCurated: 'Browse the curated selection',
   // purchase enquiry / offer actions (form behaviour and messages: js/enquiry.js)
   purchaseEnquire: 'Enquire to Purchase',
   purchaseOffer: 'Make an Offer',
@@ -90,7 +98,7 @@ const en = {
   shopLeCreusetLinkLabel: 'Vintage Le Creuset',
   shopLeCreusetDocTitle: 'Vintage Le Creuset Cast Iron for Sale | Cook & Collect',
   shopLeCreusetMetaDesc: 'Vintage Le Creuset enamelled cast iron for sale: cocottes, skillets, terrines, fondue sets and designer pieces, each photographed in detail and shipped internationally.',
-  shopLeCreusetH1: 'Vintage Le Creuset',
+  shopLeCreusetH1: 'Vintage Le Creuset Cast Iron for Sale',
   shopLeCreusetIntro1: 'Vintage Le Creuset enamelled cast iron from our collection: cocottes, skillets, terrines, baking dishes and fondue sets, several of them carrying the Cousances name of the Le Creuset group.',
   shopLeCreusetIntro2: 'Every piece is photographed from several angles, with its markings and condition shown rather than summarised. To place a piece in Le Creuset’s history, from the early cocottes of Fresnoy-le-Grand to the designer collaborations, see our guides below.',
   shopCousancesLinkLabel: 'Vintage Cousances',
@@ -176,7 +184,7 @@ const en = {
 
   guideChampagneS2Heading: 'Champagne Houses and Their Branded Buckets',
   guideChampagneS2P1: 'The best-known vintage buckets are those associated with French Champagne houses. Branded coolers were used in hospitality settings and have become recognisable objects in their own right, carrying house names, emblems and colours. It is worth being precise about what such branding tells us: a house name identifies the brand the object was made for or used by, not necessarily the workshop that produced it.',
-  guideChampagneS2P2: 'The <strong>Veuve Clicquot</strong> Ponsardin example in the Cook & Collect collection illustrates how colour and material can serve a brand. Its translucent orange body creates an immediate visual connection with the distinctive yellow-orange palette associated with Veuve Clicquot, set off by large black lettering and the repeated anchor emblem. It is a strongly sculptural object, and a useful reminder that branded barware was not limited to metal.',
+  guideChampagneS2P2: '<a href="../collection/veuve-clicquot-ponsardin-champagne-bucket-orange-fr.html">The <strong>Veuve Clicquot</strong> Ponsardin example</a> in the Cook & Collect collection illustrates how colour and material can serve a brand. Its translucent orange body creates an immediate visual connection with the distinctive yellow-orange palette associated with Veuve Clicquot, set off by large black lettering and the repeated anchor emblem. It is a strongly sculptural object, and a useful reminder that branded barware was not limited to metal.',
   // V.C.P. + anchor subsection (Veuve Clicquot).
   guideChampagneVcpHeading: 'Reading the mark: V.C.P. and the anchor',
   guideChampagneVcpText: 'The initials V.C.P. stand for Veuve Clicquot Ponsardin. Together with the anchor emblem, they belong to the historic visual identity of the Champagne house and can be traced back to the era of Madame Clicquot. For collectors, however, an important distinction must be made. On a Champagne serving object, the <strong>Veuve Clicquot</strong> name and V.C.P. anchor identify the Maison for which the object was produced, but they do not necessarily identify the manufacturer of the bucket itself. Establishing the maker requires a separate manufacturer\u2019s mark, catalogue reference or other documentary evidence.',
@@ -184,7 +192,7 @@ const en = {
 
   guideChampagneS3Heading: 'French Makers and Tableware Design',
   guideChampagneS3P1: 'French champagne service was never limited to promotional buckets produced for Champagne houses. Tableware manufacturers and orf\u00e8vrerie-inspired makers also produced sophisticated wine and champagne coolers intended for the table rather than for a brand. These pieces are identified by a maker\u2019s mark rather than a house emblem, and they reward attention to proportion, finish and detailing.',
-  guideChampagneS3P2: 'The <strong>Jean Couzon</strong> cooler in the collection is a documented example of this tradition. The underside is marked \u201cJean Couzon Orf\u00e8vre\u201d and \u201cINOX \u2013 18/10\u201d, indicating polished 18/10 stainless steel. Its flared upper rim, pedestal base with beaded and ribbed detailing, and two articulated ring handles reflect a considered French table-service design rather than a promotional object. We have not assigned it a specific model or an exact decade, as neither is documented.',
+  guideChampagneS3P2: '<a href="../collection/jean-couzon-orfevre-champagne-cooler-stainless-18-10.html">The <strong>Jean Couzon</strong> cooler</a> in the collection is a documented example of this tradition. The underside is marked \u201cJean Couzon Orf\u00e8vre\u201d and \u201cINOX \u2013 18/10\u201d, indicating polished 18/10 stainless steel. Its flared upper rim, pedestal base with beaded and ribbed detailing, and two articulated ring handles reflect a considered French table-service design rather than a promotional object. We have not assigned it a specific model or an exact decade, as neither is documented.',
 
   guideChampagneS4Heading: 'Materials and Construction',
   guideChampagneS4P1: 'Material is one of the first things a collector reads. Vintage French champagne buckets appear in aluminium, stainless steel, acrylic and other synthetic materials, and \u2014 where historically appropriate \u2014 silver plate and other metals. Each behaves differently over time, which affects both appearance and how a piece should be assessed.',
@@ -434,7 +442,7 @@ const en = {
 
   // ── L. Lecellier and Cuivralec ──
   guideLecellierS9Heading: 'L. Lecellier and Cuivralec',
-  guideLecellierS9P1: 'The second principal group in this guide is a graduated set of five French saucepans \u2014 12, 14, 16, 18 and 20 cm \u2014 with an approximate copper thickness of 1.5 mm. The largest saucepan carries an <strong>L. Lecellier / Cuivralec / Villedieu</strong> maker\u2019s mark; the other pieces carry size markings. Several retain their original paper labels.',
+  guideLecellierS9P1: 'The second principal group in this guide is <a href="../collection/l-lecellier-cuivralec-graduated-copper-saucepans.html">a graduated set of five French saucepans</a> \u2014 12, 14, 16, 18 and 20 cm \u2014 with an approximate copper thickness of 1.5 mm. The largest saucepan carries an <strong>L. Lecellier / Cuivralec / Villedieu</strong> maker\u2019s mark; the other pieces carry size markings. Several retain their original paper labels.',
   guideLecellierS9P2: 'The mark ties the set to Villedieu-les-Po\u00eales, the Norman copper town discussed above, and \u201cCuivralec\u201d is presented on the label as a registered trademark (\u201cmarque d\u00e9pos\u00e9e\u201d). Beyond that, we are deliberately brief: we have not yet consulted a documentary source for the firm\u2019s history or production period, and so we do not offer one.',
   guideLecellierObj4SetCaption: 'Graduated 12\u201320 cm L. Lecellier Cuivralec saucepan set.',
   guideLecellierObj4MarkCaption: 'L. Lecellier / Cuivralec / Villedieu maker\u2019s mark on the largest saucepan of the set.',
@@ -545,7 +553,7 @@ const en = {
 
   // Object section headings for the saut\u00e9 pan case study.
   guideDehillerinObjectHeading: 'Case study: a 29 cm tinned copper saut\u00e9 pan',
-  guideDehillerinObjectP1: 'This pan is the heaviest single piece of copper we have handled, and it is a useful teacher precisely because everything about it is measurable. The figures below were taken by us; nothing in them is inferred.',
+  guideDehillerinObjectP1: 'This <a href="../collection/e-dehillerin-copper-saute-pan-29-cm-paris-france.html">29 cm E. Dehillerin sauté pan</a> is the heaviest single piece of copper we have handled, and it is a useful teacher precisely because everything about it is measurable. The figures below were taken by us; nothing in them is inferred.',
   guideDehillerinConditionHeading: 'Condition, lining and restoration on professional copper',
   guideDehillerinConditionP1: 'Pieces of this class were bought to work, and their surfaces record that work: utensil scratches across the base, heat colour on the walls, light oxidation on the iron handle, and tin that has thinned or worn through where contact was heaviest. Tin was always a consumable \u2014 the company\u2019s own history records tinning workshops operating within the firm until the 1960s \u2014 so periodic retinning belongs to the normal life of such a pan rather than to its restoration.',
   guideDehillerinConditionP2: 'We describe what is present and resist improving it. Aggressive polishing rounds the edges of a stamped mark and can erase shallow rivet stamps altogether, which on a piece like this would remove the most informative evidence it carries. Where a lining has clearly been renewed, we say so rather than presenting a bright interior as an original surface.',
@@ -711,7 +719,7 @@ const en = {
 
   // Case study 1: the oval box.
   guideDecorativeBoxHeading: 'Limoges Castel \u2014 oval covered box',
-  guideDecorativeBoxP1: 'A small oval covered box with a very dark cobalt-blue ground, gilt scrollwork running round the sides and the lid, and a white reserve on the lid carrying a printed polychrome figural scene in a gilt cartouche. The interior is glazed in the same dark ground; the lid sits into a white, gilt-edged rim. It is a dresser or trinket box rather than a tableware piece.',
+  guideDecorativeBoxP1: '<a href="../collection/limoges-castel-cobalt-blue-gilt-porcelain-oval-box-o.html">A small oval covered box</a> with a very dark cobalt-blue ground, gilt scrollwork running round the sides and the lid, and a white reserve on the lid carrying a printed polychrome figural scene in a gilt cartouche. The interior is glazed in the same dark ground; the lid sits into a white, gilt-edged rim. It is a dresser or trinket box rather than a tableware piece.',
   guideDecorativeBoxP2: 'It arrived in its original box: a blue printed presentation carton reading \u201cPORCELAINE LIMOGES CASTEL FRANCE\u201d around the same shield device that appears in gold on the porcelain itself. That correspondence between the mark on the object and the printing on the packaging is the sort of thing worth recording, because it fixes the form of the brand name the house was using when the piece was sold.',
   guideDecorativeBoxAlt: 'Limoges Castel cobalt blue and gilt porcelain oval box with original presentation box',
   guideDecorativeBoxCaption: 'The oval box with the original blue Limoges Castel presentation carton it arrived in.',
@@ -723,7 +731,7 @@ const en = {
 
   // Case study 2: the plate, its box and its certificate.
   guideDecorativePlateHeading: 'Limoges Castel \u2014 decorative plate with its original documentation',
-  guideDecorativePlateP1: 'The second piece is a presentation plate, photographed at the top of this page with the two things that came with it. The border is a deep red ground with gilt floral swags and a gilt rim line; the white centre carries a printed polychrome garden scene of two figures, one with a guitar. The plate is a wall or display piece, shown here on its hanging fitting.',
+  guideDecorativePlateP1: 'The second piece is <a href="../collection/limoges-castel-red-gilt-porcelain-plate-galant-scene.html">a presentation plate</a>, photographed at the top of this page with the two things that came with it. The border is a deep red ground with gilt floral swags and a gilt rim line; the white centre carries a printed polychrome garden scene of two figures, one with a guitar. The plate is a wall or display piece, shown here on its hanging fitting.',
   guideDecorativePlateP2: 'The printed transfer itself carries a name within the scene, alongside a second small printed inscription reading \u201cLimoges\u201d. That records the source the composition was sold as being after, in the decorator\u2019s own printing. It is not a signature, it does not make the plate a work by that painter, and it does not date it \u2014 we have not matched the composition to a specific original painting, and until we do we describe it as a printed scene.',
   guideDecorativePlateAlt: 'Limoges Castel porcelain decorative plate with gilt border and romantic scene',
   guideDecorativePlateCaption: 'The plate itself: deep red ground, gilt floral border and a printed polychrome scene in the white centre.',
@@ -735,7 +743,7 @@ const en = {
   // ── Longwy ──
   guideDecorativeLongwyHeading: 'Longwy \u2014 Hand-Painted French Decorative Ceramics',
   guideDecorativeLongwyP1: 'Longwy, in Lorraine, is the second identifiable French name in this part of the collection, and it works quite differently from the Limoges Castel pieces. Where those are porcelain with printed decoration and printed marks, these two are earthenware with a glossy black ground and painted decoration, and their marks are painted by hand on the underside.',
-  guideDecorativeLongwyP2: 'The pair share a form \u2014 an irregular rounded, almost triangular dish \u2014 a black ground and the same decorative method: polychrome enamels with fine gilt and white line work drawing the detail. The subjects are deliberately unalike. One shows a skier coming down a slope through conifers; the other a watermill with a red waterwheel beside falling water. Seeing them together is the point: two different scenes executed in one house style is what makes them read as related production rather than as a coincidence.',
+  guideDecorativeLongwyP2: '<a href="../collection/longwy-pair-hand-painted-faience-dishes-skier-waterm.html">The pair</a> share a form \u2014 an irregular rounded, almost triangular dish \u2014 a black ground and the same decorative method: polychrome enamels with fine gilt and white line work drawing the detail. The subjects are deliberately unalike. One shows a skier coming down a slope through conifers; the other a watermill with a red waterwheel beside falling water. Seeing them together is the point: two different scenes executed in one house style is what makes them read as related production rather than as a coincidence.',
   guideDecorativeLongwyAlt: 'Pair of hand-painted Longwy French decorative ceramic pieces with black ground',
   guideDecorativeLongwyCaption: 'The two black-ground Longwy pieces together: a winter skiing scene and a watermill landscape, in the same form and palette.',
   guideDecorativeLongwyMarkAlt: 'Peint main Made in France Longwy mark on decorative ceramic',
@@ -747,7 +755,7 @@ const en = {
 
   // ── Christian Dior ──
   guideDecorativeDiorHeading: 'Christian Dior \u2014 French Design, Marked Made in Italy',
-  guideDecorativeDiorP1: 'The last object is here to make a point the first three cannot. \u201cFrench design\u201d and \u201cmade in France\u201d are not the same claim, and a French house\u2019s decorative objects were not necessarily produced in France. This is a Christian Dior covered ceramic vessel, and the mark painted under its foot says \u201cMade in Italy\u201d.',
+  guideDecorativeDiorP1: 'The last object is here to make a point the first three cannot. \u201cFrench design\u201d and \u201cmade in France\u201d are not the same claim, and a French house\u2019s decorative objects were not necessarily produced in France. This is <a href="../collection/christian-dior-covered-maiolica-vessel-garofano-made.html">a Christian Dior covered ceramic vessel</a>, and the mark painted under its foot says \u201cMade in Italy\u201d.',
   guideDecorativeDiorP2: 'The piece is a white-ground covered vessel with two scrolled handles and a loop finial on the fitted lid, painted with polychrome floral ornament in blue, green and a rust orange, with hatched and scalloped bands framing the lid. The foot ring is left unglazed. We describe it as a covered decorative vessel rather than naming a function for it: the form would suit several uses, and none of them is documented for this object.',
   guideDecorativeDiorAlt: 'Christian Dior decorative covered ceramic vessel marked Made in Italy',
   guideDecorativeDiorCaption: 'The Christian Dior covered ceramic vessel: two scrolled handles, a fitted lid with a loop finial, and painted polychrome floral ornament.',
@@ -1581,18 +1589,25 @@ const fr = {
   noSold: 'Aucun article vendu pour l\u2019instant.',
   backCollection: '\u2190 Retour à la collection',
   backSold: '\u2190 Retour aux articles vendus',
+  backCurated: '\u2190 Retour à la sélection',
+  curatedBreadcrumb: 'Notre sélection',
   shippingNote: 'Livraison internationale disponible \u2014 frais à la charge de l\u2019acheteur.',
   collectionBreadcrumbHome: 'Accueil',
   collectionBreadcrumbAvailable: 'Articles disponibles',
   collectionBreadcrumbSold: 'Articles vendus',
   collectionStatusAvailable: 'Disponible',
   collectionStatusSold: 'Vendu',
+  collectionStatusNotForSale: 'Non proposé à la vente ici',
+  collectionNotForSaleNote: 'Cette pièce n’est pas proposée à la vente directe par Cook & Collect. Sa page reste en ligne comme référence.',
   collectionViewShipping: 'Voir les informations de livraison',
   guideLinkCopper: 'notre guide du cuivre français vintage',
   guideLinkLeCreuset: 'notre guide du Le Creuset vintage',
   guideLinkDating: 'comment dater un Le Creuset vintage',
   guideLinkChampagne: 'notre guide des seaux à champagne français vintage',
   guideLinkCastIron: 'Cousances et les autres fabricants français de fonte',
+  guideLinkDehillerin: 'notre guide des cuivres E. Dehillerin',
+  guideLinkLecellier: 'notre guide des cuivres L. Lecellier et Cuivralec',
+  guideLinkDecorative: 'notre guide du design et des objets décoratifs français',
   guideLinkDesigners: 'Raymond Loewy et Enzo Mari pour Le Creuset',
   guideShopHeadingLeCreuset: 'Le Creuset vintage de notre collection',
   guideShopHeadingCastIron: 'Cousances et fonte française de notre collection',
@@ -1608,6 +1623,7 @@ const fr = {
   relatedHeading: 'Vous aimerez aussi',
   relatedSoldHeading: 'Pièces similaires disponibles',
   relatedBrowseAll: 'Voir toutes les pièces disponibles',
+  relatedBrowseCurated: 'Voir la sélection',
   // demande d'achat / offre (comportement et messages du formulaire : js/enquiry.js)
   purchaseEnquire: 'Demande d’achat',
   purchaseOffer: 'Faire une offre',
@@ -1624,7 +1640,7 @@ const fr = {
   shopLeCreusetLinkLabel: 'Le Creuset vintage',
   shopLeCreusetDocTitle: 'Le Creuset vintage en fonte à vendre | Cook & Collect',
   shopLeCreusetMetaDesc: 'Fonte émaillée Le Creuset vintage à vendre : cocottes, poêles, terrines, services à fondue et pièces de designer, chacune photographiée en détail et expédiée à l’international.',
-  shopLeCreusetH1: 'Le Creuset vintage',
+  shopLeCreusetH1: 'Fonte Le Creuset vintage à vendre',
   shopLeCreusetIntro1: 'De la fonte émaillée Le Creuset vintage issue de notre collection : cocottes, poêles, terrines, plats à four et services à fondue, dont plusieurs portent le nom Cousances, marque du groupe Le Creuset.',
   shopLeCreusetIntro2: 'Chaque pièce est photographiée sous plusieurs angles, marquages et état montrés plutôt que résumés. Pour situer une pièce dans l’histoire de Le Creuset, des premières cocottes de Fresnoy-le-Grand aux collaborations avec des designers, consultez nos guides ci-dessous.',
   shopCousancesLinkLabel: 'Cousances vintage',
@@ -1641,9 +1657,9 @@ const fr = {
   shopDesignerIntro1: 'Le Creuset a travaillé avec des designers industriels dont les pièces sont aujourd’hui collectionnées pour elles-mêmes. La Coquelle de Raymond Loewy, un récipient oblong aux extrémités biseautées, figure dans la collection design du Centre Pompidou ; le Musée des Arts Décoratifs de Paris conserve la cocotte La Mama d’Enzo Mari.',
   shopDesignerIntro2: 'Voici les pièces de designer actuellement disponibles dans notre collection. Notre guide Le Creuset explique ce qui distingue chaque modèle et comment les musées les datent.',
   // curated selection page
-  curatedDocTitle: 'Sélection organisée | Design vintage français & cuivre | Cook & Collect',
+  curatedDocTitle: 'Notre sélection | Design vintage français & cuivre | Cook & Collect',
   curatedMetaDesc: 'Une sélection d’objets vintage français : cuivres, objets de champagne de collection, design du XXᵉ siècle et pièces décoratives d’exception, par Cook & Collect / Vintage French.',
-  curatedTitle: 'Sélection organisée',
+  curatedTitle: 'Notre sélection',
   curatedHeroSubtitle: 'Design français, cuivres & objets de collection',
   curatedHeroIntro: 'Une sélection évolutive d’objets français distinctifs, choisis pour leur savoir-faire, leur design et leur histoire. Des cuivres français traditionnels et des grandes maisons culinaires aux objets de champagne de collection et aux pièces marquantes du design du XXᵉ siècle.',
   curatedCatHeading: 'Domaines de prédilection',
@@ -1671,7 +1687,7 @@ const fr = {
   curatedTrackStat3Value: '',
   curatedTrackStat3Label: 'Pays livrés',
   curatedEnquiryHeading: 'Demandes de renseignements',
-  curatedEnquiryText: 'Pour toute information sur une pièce de la Sélection organisée, ou pour toute demande concernant un objet vintage français en particulier, contactez-nous.',
+  curatedEnquiryText: 'Pour toute information sur une pièce de notre sélection, ou pour toute demande concernant un objet vintage français en particulier, contactez-nous.',
   curatedEnquiryEmailLabel: 'E-mail',
   // curated selection object detail labels
   selMaker: 'Fabricant',
@@ -1709,7 +1725,7 @@ const fr = {
 
   guideChampagneS2Heading: 'Les maisons de champagne et leurs seaux marqués',
   guideChampagneS2P1: 'Les seaux vintage les plus connus sont ceux associés aux maisons de champagne françaises. Ces rafraîchissoirs marqués étaient utilisés dans le cadre de la restauration et sont devenus des objets identifiables à part entière, portant noms de maisons, emblèmes et couleurs. Il convient d’être précis sur ce que ce marquage nous apprend : un nom de maison identifie la marque pour laquelle ou par laquelle l’objet a été utilisé, et non nécessairement l’atelier qui l’a fabriqué.',
-  guideChampagneS2P2: 'L’exemplaire <strong>Veuve Clicquot</strong> Ponsardin de la collection Cook & Collect illustre la façon dont la couleur et le matériau peuvent servir une marque. Son corps orange translucide crée un lien visuel immédiat avec la palette jaune-orangé caractéristique associée à Veuve Clicquot, rehaussé par un large lettrage noir et la répétition de l’emblème de l’ancre. C’est un objet très sculptural, et un rappel utile que les objets de bar marqués ne se limitaient pas au métal.',
+  guideChampagneS2P2: 'L’<a href="../collection/veuve-clicquot-ponsardin-champagne-bucket-orange-fr.html">exemplaire <strong>Veuve Clicquot</strong> Ponsardin</a> de la collection Cook & Collect illustre la façon dont la couleur et le matériau peuvent servir une marque. Son corps orange translucide crée un lien visuel immédiat avec la palette jaune-orangé caractéristique associée à Veuve Clicquot, rehaussé par un large lettrage noir et la répétition de l’emblème de l’ancre. C’est un objet très sculptural, et un rappel utile que les objets de bar marqués ne se limitaient pas au métal.',
   // Sous-section V.C.P. + ancre (Veuve Clicquot).
   guideChampagneVcpHeading: 'Lire la marque : V.C.P. et l’ancre',
   guideChampagneVcpText: 'Les initiales V.C.P. signifient Veuve Clicquot Ponsardin. Associées à l’emblème de l’ancre, elles appartiennent à l’identité visuelle historique de la maison de champagne et remontent à l’époque de Madame Clicquot. Pour le collectionneur, une distinction importante s’impose toutefois. Sur un objet de service du champagne, le nom <strong>Veuve Clicquot</strong> et l’ancre V.C.P. identifient la Maison pour laquelle l’objet a été produit, mais ils n’identifient pas nécessairement le fabricant du seau lui-même. Établir le fabricant exige une marque de fabricant distincte, une référence de catalogue ou une autre preuve documentaire.',
@@ -1717,7 +1733,7 @@ const fr = {
 
   guideChampagneS3Heading: 'Fabricants français et arts de la table',
   guideChampagneS3P1: 'Le service du champagne en France ne s’est jamais limité aux seaux promotionnels produits pour les maisons de champagne. Des fabricants d’arts de la table et des maisons d’inspiration orfèvrerie ont également produit des rafraîchissoirs à vin et à champagne sophistiqués, destinés à la table plutôt qu’à une marque. Ces pièces s’identifient par une marque de fabricant plutôt que par un emblème de maison, et récompensent l’attention portée aux proportions, à la finition et aux détails.',
-  guideChampagneS3P2: 'Le rafraîchissoir <strong>Jean Couzon</strong> de la collection est un exemple documenté de cette tradition. Le dessous porte les mentions « Jean Couzon Orfèvre » et « INOX – 18/10 », indiquant un acier inoxydable 18/10 poli. Son bord supérieur évasé, sa base sur piédouche à décor de perles et de cannelures, ainsi que ses deux anses annulaires articulées relèvent d’un véritable design de service de table français plutôt que d’un objet promotionnel. Nous ne lui attribuons ni modèle précis ni décennie exacte, faute de documentation.',
+  guideChampagneS3P2: 'Le <a href="../collection/jean-couzon-orfevre-champagne-cooler-stainless-18-10.html">rafraîchissoir <strong>Jean Couzon</strong></a> de la collection est un exemple documenté de cette tradition. Le dessous porte les mentions « Jean Couzon Orfèvre » et « INOX – 18/10 », indiquant un acier inoxydable 18/10 poli. Son bord supérieur évasé, sa base sur piédouche à décor de perles et de cannelures, ainsi que ses deux anses annulaires articulées relèvent d’un véritable design de service de table français plutôt que d’un objet promotionnel. Nous ne lui attribuons ni modèle précis ni décennie exacte, faute de documentation.',
 
   guideChampagneS4Heading: 'Matériaux et construction',
   guideChampagneS4P1: 'Le matériau est l’un des premiers éléments que lit un collectionneur. Les seaux à champagne vintage français se rencontrent en aluminium, en acier inoxydable, en acrylique et autres matériaux synthétiques, et — lorsque cela est historiquement pertinent — en métal argenté et autres métaux. Chacun évolue différemment dans le temps, ce qui influe à la fois sur l’apparence et sur la manière d’évaluer une pièce.',
@@ -1965,7 +1981,7 @@ const fr = {
 
   // ── L. Lecellier et Cuivralec ──
   guideLecellierS9Heading: 'L. Lecellier et Cuivralec',
-  guideLecellierS9P1: 'Le second ensemble principal de ce guide est une série graduée de cinq casseroles françaises — 12, 14, 16, 18 et 20 cm — d’une épaisseur de cuivre d’environ 1,5 mm. La plus grande casserole porte une marque <strong>L. Lecellier / Cuivralec / Villedieu</strong> ; les autres pièces portent des indications de taille. Plusieurs conservent leurs étiquettes de papier d’origine.',
+  guideLecellierS9P1: 'Le second ensemble principal de ce guide est <a href="../collection/l-lecellier-cuivralec-graduated-copper-saucepans.html">une série graduée de cinq casseroles françaises</a> — 12, 14, 16, 18 et 20 cm — d’une épaisseur de cuivre d’environ 1,5 mm. La plus grande casserole porte une marque <strong>L. Lecellier / Cuivralec / Villedieu</strong> ; les autres pièces portent des indications de taille. Plusieurs conservent leurs étiquettes de papier d’origine.',
   guideLecellierS9P2: 'La marque rattache l’ensemble à Villedieu-les-Poêles, la cité normande du cuivre évoquée plus haut, et « Cuivralec » est présenté sur l’étiquette comme une marque déposée. Au-delà de cela, nous restons volontairement brefs : nous n’avons pas encore consulté de source documentaire sur l’histoire de la maison ni sur sa période de production, et nous n’en proposons donc aucune.',
   guideLecellierObj4SetCaption: 'Série graduée de casseroles L. Lecellier Cuivralec de 12 à 20 cm.',
   guideLecellierObj4MarkCaption: 'Marque L. Lecellier / Cuivralec / Villedieu sur la plus grande casserole de la série.',
@@ -2074,7 +2090,7 @@ const fr = {
   guideDehillerinRetailerNote: 'Nous décrivons les pièces portant cette marque comme « vendues par E. Dehillerin » tant que la documentation n’étaye pas une attribution de fabrication. Lorsqu’une pièce a manifestement été réalisée dans les ateliers de la maison, nous le disons et citons la preuve.',
 
   guideDehillerinObjectHeading: 'Étude de cas : une sauteuse en cuivre étamé de 29 cm',
-  guideDehillerinObjectP1: 'Cette sauteuse est la pièce de cuivre la plus lourde que nous ayons manipulée, et elle instruit précisément parce que tout y est mesurable. Les chiffres ci-dessous ont été relevés par nous ; rien n’y est déduit.',
+  guideDehillerinObjectP1: 'Cette <a href="../collection/e-dehillerin-copper-saute-pan-29-cm-paris-france.html">sauteuse E. Dehillerin de 29 cm</a> est la pièce de cuivre la plus lourde que nous ayons manipulée, et elle instruit précisément parce que tout y est mesurable. Les chiffres ci-dessous ont été relevés par nous ; rien n’y est déduit.',
   guideDehillerinConditionHeading: 'État, revêtement et restauration du cuivre professionnel',
   guideDehillerinConditionP1: 'Les pièces de cette catégorie ont été achetées pour travailler, et leurs surfaces en portent le relevé : rayures d’ustensiles sur le fond, coloration de chauffe sur les parois, légère oxydation de la queue en fer, et un étain aminci ou usé là où le contact était le plus fort. L’étain a toujours été un consommable — l’histoire de la maison mentionne des ateliers d’étamage en activité en interne jusque dans les années 1960 — de sorte que le réétamage périodique relève de la vie normale d’une telle pièce et non de sa restauration.',
   guideDehillerinConditionP2: 'Nous décrivons ce qui est présent et renonçons à l’améliorer. Un polissage agressif arrondit les contours d’une marque frappée et peut effacer complètement des frappes de rivets peu profondes, ce qui, sur une pièce comme celle-ci, supprimerait l’indice le plus instructif qu’elle porte. Lorsqu’un revêtement a manifestement été refait, nous le disons plutôt que de présenter un intérieur brillant comme une surface d’origine.',
@@ -2233,7 +2249,7 @@ const fr = {
 
   // Cas d’étude 1 : la boîte ovale.
   guideDecorativeBoxHeading: 'Limoges Castel — boîte ovale couverte',
-  guideDecorativeBoxP1: 'Une petite boîte ovale couverte à fond bleu de cobalt très sombre, rehaussée de rinceaux dorés sur la panse et sur le couvercle, avec une réserve blanche sur le couvercle portant une scène figurée polychrome imprimée dans un cartouche doré. L’intérieur est émaillé du même fond sombre ; le couvercle s’emboîte dans un bord blanc souligné d’or. C’est une boîte de coiffeuse ou à bijoux, non une pièce de service.',
+  guideDecorativeBoxP1: '<a href="../collection/limoges-castel-cobalt-blue-gilt-porcelain-oval-box-o.html">Une petite boîte ovale couverte</a> à fond bleu de cobalt très sombre, rehaussée de rinceaux dorés sur la panse et sur le couvercle, avec une réserve blanche sur le couvercle portant une scène figurée polychrome imprimée dans un cartouche doré. L’intérieur est émaillé du même fond sombre ; le couvercle s’emboîte dans un bord blanc souligné d’or. C’est une boîte de coiffeuse ou à bijoux, non une pièce de service.',
   guideDecorativeBoxP2: 'Elle est arrivée dans sa boîte d’origine : un carton de présentation bleu imprimé « PORCELAINE LIMOGES CASTEL FRANCE » autour du même écu que celui porté en or sur la porcelaine. Cette correspondance entre la marque de l’objet et l’impression de l’emballage mérite d’être consignée : elle fixe la forme du nom commercial employé par la maison au moment de la vente.',
   guideDecorativeBoxAlt: 'Boîte ovale en porcelaine Limoges Castel bleu de cobalt et or avec sa boîte de présentation d’origine',
   guideDecorativeBoxCaption: 'La boîte ovale avec le carton de présentation bleu Limoges Castel d’origine qui l’accompagnait.',
@@ -2245,7 +2261,7 @@ const fr = {
 
   // Cas d’étude 2 : l’assiette, sa boîte et son certificat.
   guideDecorativePlateHeading: 'Limoges Castel — assiette décorative et sa documentation d’origine',
-  guideDecorativePlateP1: 'La seconde pièce est une assiette de présentation, photographiée en tête de cette page avec les deux éléments qui l’accompagnaient. La bordure présente un fond rouge profond à guirlandes florales dorées et un filet d’or au bord ; le centre blanc porte une scène de jardin polychrome imprimée, deux personnages dont l’un tient une guitare. C’est une pièce murale ou de vitrine, montrée ici sur son accroche.',
+  guideDecorativePlateP1: 'La seconde pièce est <a href="../collection/limoges-castel-red-gilt-porcelain-plate-galant-scene.html">une assiette de présentation</a>, photographiée en tête de cette page avec les deux éléments qui l’accompagnaient. La bordure présente un fond rouge profond à guirlandes florales dorées et un filet d’or au bord ; le centre blanc porte une scène de jardin polychrome imprimée, deux personnages dont l’un tient une guitare. C’est une pièce murale ou de vitrine, montrée ici sur son accroche.',
   guideDecorativePlateP2: 'Le transfert imprimé porte lui-même un nom dans la scène, à côté d’une seconde petite inscription imprimée lisant « Limoges ». Cela consigne la source dont la composition était donnée comme issue, dans l’impression du décorateur. Ce n’est pas une signature, cela ne fait pas de l’assiette une œuvre de ce peintre, et cela ne la date pas — nous n’avons pas rattaché la composition à un tableau précis, et tant que ce n’est pas fait nous la décrivons comme une scène imprimée.',
   guideDecorativePlateAlt: 'Assiette décorative en porcelaine Limoges Castel à bordure dorée et scène galante',
   guideDecorativePlateCaption: 'L’assiette elle-même : fond rouge profond, bordure florale dorée et scène polychrome imprimée dans le centre blanc.',
@@ -2257,7 +2273,7 @@ const fr = {
   // ── Longwy ──
   guideDecorativeLongwyHeading: 'Longwy — céramiques décoratives françaises peintes à la main',
   guideDecorativeLongwyP1: 'Longwy, en Lorraine, est le second nom français identifiable de cette partie de la collection, et il fonctionne tout autrement que les pièces Limoges Castel. Là où celles-ci sont en porcelaine à décor imprimé et marques imprimées, ces deux-ci sont en faïence à fond noir brillant et décor peint, et leurs marques sont peintes à la main au revers.',
-  guideDecorativeLongwyP2: 'La paire partage une forme — un plat arrondi irrégulier, presque triangulaire —, un fond noir et la même technique : émaux polychromes avec de fins tracés d’or et de blanc pour le détail. Les sujets sont volontairement dissemblables. L’un montre un skieur descendant une pente entre les conifères ; l’autre un moulin à eau à roue rouge au bord d’une chute d’eau. Les voir ensemble est précisément l’intérêt : deux scènes différentes exécutées dans un même style de maison, c’est ce qui les fait lire comme une production apparentée et non comme une coïncidence.',
+  guideDecorativeLongwyP2: '<a href="../collection/longwy-pair-hand-painted-faience-dishes-skier-waterm.html">La paire</a> partage une forme — un plat arrondi irrégulier, presque triangulaire —, un fond noir et la même technique : émaux polychromes avec de fins tracés d’or et de blanc pour le détail. Les sujets sont volontairement dissemblables. L’un montre un skieur descendant une pente entre les conifères ; l’autre un moulin à eau à roue rouge au bord d’une chute d’eau. Les voir ensemble est précisément l’intérêt : deux scènes différentes exécutées dans un même style de maison, c’est ce qui les fait lire comme une production apparentée et non comme une coïncidence.',
   guideDecorativeLongwyAlt: 'Paire de céramiques décoratives françaises Longwy peintes à la main, à fond noir',
   guideDecorativeLongwyCaption: 'Les deux pièces Longwy à fond noir réunies : une scène de ski hivernale et un paysage de moulin à eau, dans la même forme et la même palette.',
   guideDecorativeLongwyMarkAlt: 'Marque Peint main Made in France Longwy sur une céramique décorative',
@@ -2269,7 +2285,7 @@ const fr = {
 
   // ── Christian Dior ──
   guideDecorativeDiorHeading: 'Christian Dior — design français, marqué Made in Italy',
-  guideDecorativeDiorP1: 'Le dernier objet est ici pour établir un point que les trois premiers ne peuvent pas faire. « Design français » et « fabriqué en France » ne sont pas la même affirmation, et les objets décoratifs d’une maison française n’étaient pas nécessairement produits en France. Il s’agit d’un vase couvert en céramique Christian Dior, et la marque peinte sous son pied indique « Made in Italy ».',
+  guideDecorativeDiorP1: 'Le dernier objet est ici pour établir un point que les trois premiers ne peuvent pas faire. « Design français » et « fabriqué en France » ne sont pas la même affirmation, et les objets décoratifs d’une maison française n’étaient pas nécessairement produits en France. Il s’agit d’<a href="../collection/christian-dior-covered-maiolica-vessel-garofano-made.html">un vase couvert en céramique Christian Dior</a>, et la marque peinte sous son pied indique « Made in Italy ».',
   guideDecorativeDiorP2: 'La pièce est un vase couvert à fond blanc, à deux anses en volute et bouton d’anneau sur le couvercle emboîtant, peint d’un décor floral polychrome en bleu, vert et orange rouille, avec des bandes hachurées et festonnées encadrant le couvercle. L’anneau de pied est laissé non émaillé. Nous la décrivons comme un vase décoratif couvert plutôt que de lui attribuer une fonction : la forme conviendrait à plusieurs usages, et aucun n’est documenté pour cet objet.',
   guideDecorativeDiorAlt: 'Vase décoratif couvert en céramique Christian Dior portant la mention Made in Italy',
   guideDecorativeDiorCaption: 'Le vase couvert en céramique Christian Dior : deux anses en volute, un couvercle emboîtant à bouton d’anneau et un décor floral polychrome peint.',
@@ -2458,7 +2474,7 @@ const fr = {
   guideLeCreusetCopperLinkText: 'guide du cuivre culinaire français vintage',
   guideLeCreusetRelatedP2: 'Pour une autre catégorie d’objets spécialisés, consultez le',
   guideLeCreusetChampagneLinkText: 'guide des seaux à champagne vintage français',
-  guideLeCreusetCuratedCta: 'Découvrir la Sélection organisée Cook & Collect.',
+  guideLeCreusetCuratedCta: 'Découvrir notre sélection Cook & Collect.',
   curatedCat4GuideLink: 'Lire notre guide spécialisé consacré à Le Creuset vintage',
 
   guideLeCreusetRefHeading: 'Recherches & références',
@@ -2772,7 +2788,7 @@ const fr = {
   guideLeCreusetDatingBackP1: 'Pour la chronologie du design, les collaborations et la vue d’ensemble des recherches prévues, revenez à',
   guideLeCreusetDatingBackCta: 'Le Creuset vintage — le guide principal',
   guideLeCreusetDatingBackP2: 'De futurs guides spécialisés étudieront Couleurs & émaux Le Creuset vintage, Raymond Loewy et Coquelle, Enzo Mari et La Mama, les poêles, Rayure, ainsi que les premières cocottes et formes. Ils restent sans lien jusqu’à ce que chaque page soit recherchée et publiée.',
-  guideLeCreusetDatingCuratedCta: 'Découvrir la Sélection organisée Cook & Collect.',
+  guideLeCreusetDatingCuratedCta: 'Découvrir notre sélection Cook & Collect.',
 
   // Carte sur l’index des guides du collectionneur.
   guideLeCreusetDatingCardEyebrow: 'Le Creuset · Identification & datation',

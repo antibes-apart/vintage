@@ -113,7 +113,7 @@ test('generated permanent pages wire every photo, including the cover', () => {
   for (const file of files) {
     const html = fs.readFileSync(path.join(root, file), 'utf8');
     assert.match(html, /id="lightbox"/, file);
-    assert.match(html, /src="\.\.\/\.\.\/js\/app\.js\?v=4"/, file);
+    assert.match(html, /src="\.\.\/\.\.\/js\/app\.js\?v=5"/, file);
     assert.doesNotMatch(html, /\{\{\w+\}\}/, file);
     const main = html.match(/<img src="([^"]+)"[^>]*id="mainImage"[^>]*>/);
     if (!main) continue;

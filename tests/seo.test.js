@@ -77,6 +77,12 @@ test('product structured data matches the item and its sale status', () => {
       assert.ok(product.name && product.sku === item.id, file);
       assert.ok(Array.isArray(product.image) ? product.image.length : product.image, `${file} image`);
       const offer = product.offers;
+      // A piece Cook & Collect does not sell directly (and that is not sold) has no Offer.
+      if (!item.sold && item.directSale === false) {
+        assert.equal(offer, undefined, `${file} has no Offer`);
+        continue;
+      }
+      assert.ok(offer, `${file} has an Offer`);
       assert.equal(offer.availability, item.sold ? 'https://schema.org/SoldOut' : 'https://schema.org/InStock', file);
       assert.equal(offer.url, `${SITE}/${file}`, file);
       if (offer.price !== undefined) {
@@ -156,7 +162,7 @@ test('guide product sections show only matching available pieces, or a fallback 
       if (!ids.length) assert.match(section[0], /guide-shop-empty/, file);
       if (/le-creuset/.test(file)) ids.forEach(id => assert.match(available.get(id).title.toLowerCase(), /le creuset/, file));
       if (/copper|dehillerin|mauviel|lecellier/.test(file)) ids.forEach(id => assert.equal(available.get(id).category, 'Copper', file));
-      assert.match(html, /js\/track\.js\?v=1/, file);
+      assert.match(html, /js\/track\.js\?v=2/, file);
     }
   }
 });
@@ -168,4 +174,116 @@ test('no generated page leaves a template token unresolved', () => {
       assert.doesNotMatch(read(`${dir}/${file}`), /\{\{\w+\}\}/, `${dir}/${file}`);
     }
   }
+});
+
+const curated = items.filter(i => i.curated);
+const curatedPage = {en: 'en/curatedselection.html', fr: 'fr/curated-selection.html'};
+
+test('the home grid lists only available direct-sale shop pieces', () => {
+  const expected = items.filter(i => !i.curated && !i.sold && i.directSale !== false).map(i => i.id);
+  for (const file of ['index.html', 'en/index.html', 'fr/index.html']) {
+    const grid = read(file).split('id="grid"')[1].split('</main>')[0];
+    const ids = [...new Set([...grid.matchAll(/data-item-id="([^"]+)"/g)].map(m => m[1]))];
+    assert.deepEqual(ids.sort(), [...expected].sort(), file);
+  }
+});
+
+test('every available or sold curated piece has a product page with its documented details', () => {
+  const selected = manifest.selection.filter(e => e.status === 'Available' || e.status === 'Sold');
+  assert.equal(curated.length, selected.length, 'one product page per available or sold curated object');
+  const shopIds = new Set(items.filter(i => !i.curated).map(i => i.id));
+  for (const item of curated) {
+    assert.ok(!shopIds.has(item.id), `${item.id} is not also a shop item`);
+    const entry = manifest.selection.find(e => e.id === item.id);
+    assert.equal(entry.productPage, true, item.id);
+    assert.equal(item.sold, entry.status === 'Sold', item.id);
+    assert.equal(item.directSale, true, item.id);
+    for (const code of ['en', 'fr']) {
+      const file = `${code}/collection/${item.id}.html`;
+      const html = read(file);
+      const title = code === 'fr' && entry.fr && entry.fr.title ? entry.fr.title : entry.title;
+      assert.ok(html.includes(`<h1 class="item-title">${title.replace(/&/g, '&amp;').replace(/"/g, '&quot;').replace(/'/g, '&#39;')}</h1>`), `${file} h1`);
+      if (entry.maker) assert.match(html, /class="sel-detail-fields item-details"/, `${file} details`);
+      const crumbs = jsonLdOf(html).find(d => d['@type'] === 'BreadcrumbList').itemListElement;
+      assert.equal(crumbs[1].item, code === 'en' ? `${SITE}/en/curatedselection` : `${SITE}/fr/curated-selection.html`, `${file} breadcrumb`);
+      // Every image of the curated record is shown on the product page.
+      for (const src of entry.images) assert.ok(html.includes(`../../${src}`), `${file} shows ${src}`);
+    }
+  }
+});
+
+test('the curated selection links each piece to its product page, with purchase links only when available', () => {
+  for (const [code, file] of Object.entries(curatedPage)) {
+    const html = read(file);
+    for (const item of curated) {
+      const href = `collection/${item.id}.html`;
+      assert.ok(html.includes(`href="${href}"`), `${file} → ${href}`);
+      assert.equal(html.includes(`href="${href}#enquire"`), !item.sold, `${file} enquire link for ${item.id}`);
+      assert.equal(html.includes(`href="${href}#offer"`), !item.sold, `${file} offer link for ${item.id}`);
+    }
+    const list = jsonLdOf(html).find(d => d['@type'] === 'ItemList');
+    for (const item of curated) {
+      assert.ok(list.itemListElement.some(e => e.item.url === `${SITE}/${code}/collection/${item.id}.html`), `${file} JSON-LD url ${item.id}`);
+    }
+  }
+});
+
+test('the archive "available now" block only offers pieces sold directly', () => {
+  const sellable = new Set(items.filter(i => !i.sold && i.directSale !== false).map(i => i.id));
+  for (const code of ['en', 'fr']) {
+    const dir = path.join(root, code, 'archive');
+    if (!fs.existsSync(dir)) continue;
+    for (const file of fs.readdirSync(dir).filter(f => f.endsWith('.html'))) {
+      const html = read(`${code}/archive/${file}`);
+      for (const [, id] of html.matchAll(/collection\/([a-z0-9-]+)\.html/g)) {
+        assert.ok(sellable.has(id), `${code}/archive/${file} → ${id} is for sale`);
+      }
+    }
+  }
+});
+
+test('guide links to collection pages resolve, and each documented curated piece is linked in EN and FR', () => {
+  const linked = { en: new Set(), fr: new Set() };
+  for (const lang of ['en', 'fr']) {
+    for (const file of fs.readdirSync(path.join(root, lang, 'guides')).filter(f => f.endsWith('.html'))) {
+      const html = read(`${lang}/guides/${file}`);
+      for (const [, id] of html.matchAll(/href="\.\.\/collection\/([^"#?]+)\.html/g)) {
+        assert.ok(fs.existsSync(path.join(root, lang, 'collection', `${id}.html`)), `${lang}/guides/${file} → ${id}`);
+        linked[lang].add(id);
+      }
+    }
+  }
+  // Objects the guides study and the curated selection sells: the guide text must lead to the piece.
+  for (const id of [
+    'veuve-clicquot-ponsardin-champagne-bucket-orange-fr',
+    'jean-couzon-orfevre-champagne-cooler-stainless-18-10',
+    'e-dehillerin-copper-saute-pan-29-cm-paris-france',
+    'l-lecellier-cuivralec-graduated-copper-saucepans',
+    'limoges-castel-cobalt-blue-gilt-porcelain-oval-box-o',
+    'limoges-castel-red-gilt-porcelain-plate-galant-scene',
+    'longwy-pair-hand-painted-faience-dishes-skier-waterm',
+    'christian-dior-covered-maiolica-vessel-garofano-made',
+  ]) {
+    if (!items.some(i => i.id === id)) continue; // piece unpublished: no page to link
+    assert.ok(linked.en.has(id) && linked.fr.has(id), `${id} linked from an EN and a FR guide`);
+  }
+});
+
+test('item title and description carry a lang attribute only when not in the page language', () => {
+  const langOf = (html, cls) => {
+    const tag = (html.match(new RegExp(`<(?:h1|p) class="${cls}"[^>]*>`)) || [])[0];
+    assert.ok(tag, cls);
+    return (tag.match(/ lang="([a-z]+)"/) || [])[1] || null;
+  };
+  for (const item of items.filter(i => !i.curated)) {
+    for (const code of ['en', 'fr']) {
+      const html = read(`${code}/collection/${item.id}.html`);
+      for (const [cls, field] of [['item-title', 'title'], ['item-description', 'description']]) {
+        if (field === 'description' && !item.description && !(item.fr && item.fr.description)) continue;
+        const shown = code === 'fr' && item.fr && item.fr[field] ? 'fr' : (item.language || 'en');
+        assert.equal(langOf(html, cls), shown === code ? null : shown, `${code}/${item.id} ${field}`);
+      }
+    }
+  }
+  assert.ok(items.some(i => i.language === 'fr'), 'at least one French-written item is declared');
 });

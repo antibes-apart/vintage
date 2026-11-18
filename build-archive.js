@@ -258,7 +258,7 @@ function head({lang, title, description, canonical, enUrl, frUrl, image, data}) 
   <meta property="og:title" content="${esc(title)}">
   <meta property="og:description" content="${esc(description)}">
   <meta property="og:url" content="${canonical}">${image ? `\n  <meta property="og:image" content="${esc(image)}">` : ''}
-  <link rel="stylesheet" href="../../css/style.css?v=26">
+  <link rel="stylesheet" href="../../css/style.css?v=27">
   ${data.map(jsonLd).join('\n  ')}
 </head>`;
 }
@@ -433,7 +433,7 @@ ${head({lang, title: `${t.title} | Cook & Collect`, description: t.meta_descript
   ${ctx.lightbox}
   ${parts.contact}
   ${parts.footer}
-  <script src="../../js/app.js?v=4"></script>
+  <script src="../../js/app.js?v=5"></script>
 </body>
 </html>
 `;
@@ -557,7 +557,8 @@ function buildArchive({sourceDir, outRoot, manifest, imageBase = DEFAULT_IMAGE_B
     return {pages: 0, objects: 0, linked: 0};
   }
 
-  const forSale = (manifest.items || []).filter(item => !item.sold && !item.hidden);
+  // Only pieces Cook & Collect sells directly ("directSale": false pieces are not for sale here).
+  const forSale = (manifest.items || []).filter(item => !item.sold && !item.hidden && item.directSale !== false);
   const similarFor = object => {
     const others = withPage.filter(o => o.slug !== object.slug);
     const sameBrand = others.filter(o => o.brand === object.brand);

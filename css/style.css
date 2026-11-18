@@ -3421,7 +3421,8 @@ footer {
 }
 
 /* ─── Shop: purchase actions, enquiry form, collection pages ─── */
-.available-badge {
+.available-badge,
+.unavailable-badge {
   display: inline-block;
   background: #e7f1e4;
   color: #2f5d2a;
@@ -3431,6 +3432,63 @@ footer {
   font-weight: 700;
   text-transform: uppercase;
   letter-spacing: 1px;
+}
+
+.unavailable-badge {
+  background: #efe9e2;
+  color: var(--text-light);
+}
+
+/* Documented details of a curated piece on its product page */
+.item-info .item-details {
+  margin: 1.5rem 0;
+}
+
+/* Curated Selection cards: links to the piece's product page */
+.curated-item {
+  align-self: start;
+  min-width: 0;
+}
+
+.curated-card-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem 1rem;
+  padding: 0.6rem 0.25rem 0;
+}
+
+.curated-action {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  font-size: 0.88rem;
+  font-weight: 600;
+  color: var(--heading);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.curated-action:hover,
+.curated-action:focus-visible {
+  color: var(--accent);
+}
+
+.curated-action-primary {
+  flex-basis: 100%;
+  justify-content: center;
+  padding: 0 1rem;
+  border: 1px solid var(--heading);
+  border-radius: var(--radius);
+  text-decoration: none;
+}
+
+.curated-action-primary:hover,
+.curated-action-primary:focus-visible {
+  border-color: var(--accent);
+}
+
+.sel-detail-actions {
+  padding: 1.25rem 0 0;
 }
 
 .purchase-actions {

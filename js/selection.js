@@ -1,6 +1,7 @@
 /* Curated Selection — premium dealer portfolio.
-   Fully separate from the shop (js/app.js): its own data source
-   (manifest.selection), no prices, no cart, no purchase actions. */
+   Its own data source (manifest.selection). Pieces with a product page
+   (Available or Sold) link to it; that page carries the enquiry and offer
+   forms (js/enquiry.js). No cart and no online payment. */
 
 const SEL_LANG = document.documentElement.lang === 'fr' ? 'fr' : 'en';
 
@@ -18,6 +19,9 @@ const SEL_STRINGS = {
     noPhotos: 'No photos available',
     prev: 'Previous image',
     next: 'Next image',
+    viewDetails: 'View details',
+    enquire: 'Enquire to Purchase',
+    offer: 'Make an Offer',
     upcomingEyebrow: 'In preparation',
     upcomingLink: 'Looking for a specific piece? Send us a sourcing request',
     upcoming: {
@@ -41,6 +45,9 @@ const SEL_STRINGS = {
     noPhotos: 'Aucune photo disponible',
     prev: 'Image précédente',
     next: 'Image suivante',
+    viewDetails: 'Voir la fiche',
+    enquire: 'Demande d’achat',
+    offer: 'Faire une offre',
     upcomingEyebrow: 'En préparation',
     upcomingLink: 'Vous recherchez une pièce précise ? Confiez-nous une recherche',
     upcoming: {
@@ -69,6 +76,7 @@ const SEL_STATUS_LABELS = {
   en: {},
   fr: {
     'Available': 'Disponible',
+    'Sold': 'Vendu',
     'Collection Archive': 'Archives de la collection'
   }
 };
@@ -200,6 +208,20 @@ function selField(label, value) {
     </div>`;
 }
 
+// Links from the modal to the piece's product page, where the enquiry and
+// offer forms live (#enquire / #offer open the matching form).
+function selActions(item) {
+  if (!item.productPage) return '';
+  const href = (window.__COLLECTION_BASE__ || '') + encodeURIComponent(item.id) + '.html';
+  const link = (suffix, label, cls) =>
+    `<a class="curated-action${cls}" href="${href}${suffix}" data-select-item data-item-id="${selEscape(item.id)}">${selEscape(label)}</a>`;
+  return `
+        <div class="curated-card-actions sel-detail-actions" data-list="curated">
+          ${link('', ST.viewDetails, ' curated-action-primary')}
+          ${item.forSale ? link('#enquire', ST.enquire, '') + link('#offer', ST.offer, '') : ''}
+        </div>`;
+}
+
 function openSelModal(index) {
   const item = (window._selection || [])[index];
   const modal = document.getElementById('sel-modal');
@@ -250,6 +272,7 @@ function openSelModal(index) {
         <h2 class="sel-detail-title">${selEscape(item.title)}</h2>
         ${item.description ? `<p class="sel-detail-description">${selEscape(item.description)}</p>` : ''}
         ${details ? `<dl class="sel-detail-fields">${details}</dl>` : ''}
+        ${selActions(item)}
       </div>
     </div>
   `;

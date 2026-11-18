@@ -211,3 +211,53 @@ test('UTM campaign tags are kept as the visit attribution', async ({ page }) => 
   const view = (await dataLayer(page)).find(e => e.event === 'view_item');
   expect(view).toMatchObject({ item_id: item.id, source: 'pinterest', utm_source: 'pinterest', utm_medium: 'social', utm_campaign: 'autumn' });
 });
+
+async function curatedPiece(page) {
+  await page.goto('/en/curatedselection.html');
+  const item = await page.evaluate(() => window.__MANIFEST__.items.find(item => item.curated && !item.sold));
+  expect(item).toBeTruthy();
+  return item;
+}
+
+test('a curated piece links from the Curated Selection to its product page, attributed to the selection', async ({ page }) => {
+  const item = await curatedPiece(page);
+  await page.evaluate(() => sessionStorage.clear());
+  const actions = page.locator(`.curated-card-actions [data-item-id="${item.id}"]`);
+  await expect(actions).toHaveCount(3);
+  const enquire = page.locator(`.curated-card-actions a[href$="${item.id}.html#enquire"]`).first();
+  await enquire.scrollIntoViewIfNeeded();
+  await enquire.click();
+  await expect(page).toHaveURL(new RegExp(`/en/collection/${item.id}\\.html#enquire$`));
+  await expect(page.locator('h1')).toHaveText(item.title);
+  await expect(page.locator('#enquire')).toBeVisible();
+  await expect(page.locator('#offer')).toBeVisible();
+  const events = await dataLayer(page);
+  expect(events.find(e => e.event === 'view_item')).toMatchObject({ item_id: item.id, list: 'curated', source: 'internal' });
+});
+
+test('the curated modal also leads to the product page', async ({ page }) => {
+  const item = await curatedPiece(page);
+  const index = await page.evaluate(id => window._selection.findIndex(entry => entry.id === id), item.id);
+  await page.locator(`.curated-card[data-index="${index}"] summary`).click();
+  const modal = page.locator('#sel-modal');
+  await expect(modal.locator('.curated-action-primary')).toHaveAttribute('href', `collection/${item.id}.html`);
+  await expect(modal.locator(`a[href="collection/${item.id}.html#offer"]`)).toBeVisible();
+});
+
+for (const [lang, title] of [['en', 'Make an Offer'], ['fr', 'Faire une offre']]) {
+  test(`${lang} curated product page shows its documented details and #offer opens the offer form`, async ({ page }) => {
+    const item = await curatedPiece(page);
+    await mockEnquiry(page, [{ status: 200, body: { ok: true, reference: 'CC-CURATED1' } }]);
+    await page.goto(`/${lang}/collection/${item.id}.html?enquiry_api=${encodeURIComponent(API)}#offer`);
+    await expect(page.locator('.item-details')).toBeVisible();
+    await expect(page.locator('.breadcrumbs li').nth(1).locator('a')).toHaveAttribute('href',
+      lang === 'en' ? '../curatedselection' : '../curated-selection.html');
+    const dialog = page.locator('dialog.enquiry-dialog');
+    await expect(dialog).toBeVisible();
+    await expect(dialog.locator('.enquiry-title')).toHaveText(title);
+    await expect(dialog.locator('.enquiry-item-meta')).toContainText(item.id);
+    expect(new URL(page.url()).hash).toBe('');
+    const events = (await dataLayer(page)).map(e => e.event);
+    expect(events).toContain('begin_make_offer');
+  });
+}

@@ -39,11 +39,13 @@ The site is generated from **templates + item data** by `build.js`.
   runtime strings (grid, item detail, lightbox). **Template strings live in
   `i18n.js`; runtime/dynamic strings live in `js/app.js`.** Keep them in sync.
 - `items/<slug>/` — one folder per item, each containing:
-  - `info.json` — `{ title, price, description, sold?, hidden?, category?, issueNumber?, sortPriority?, directSale?, fr? }`
+  - `info.json` — `{ title, price, description, sold?, hidden?, category?, issueNumber?, sortPriority?, directSale?, language?, fr? }`
     (`hidden: true` unpublishes the item entirely — not in the grid, sold page or
     manifest — while keeping its folder, e.g. when a piece moves to the curated selection.
     `directSale: false` keeps a piece published but without "Enquire to Purchase" /
     "Make an Offer" (e.g. a piece listed on Catawiki); the Worker also refuses enquiries for it.
+    `language: "fr"` declares that the item's own title/description are written in French
+    (default `"en"`); pages then put the right `lang` attribute on that text.
     `fr: { title, description }` is an optional verified French translation; without it the
     French page shows the English text marked `lang="en"`. Never machine-invent item facts.)
   - `cover.jpg` — the grid thumbnail (any image ext; filename stem must be `cover`)
@@ -156,6 +158,28 @@ Failure screenshots and traces are saved in `test-results/`; the HTML report is
 in `playwright-report/` (`npx playwright show-report`). CI uploads both for seven
 days. These generated test artifacts are gitignored. The normal dev server
 still defaults to port 8080; `PORT` overrides it when needed.
+
+## Curated selection (`selection/`)
+
+- `selection/<slug>/info.json` feeds `curated-selection.html`. Entries marked
+  Available or Sold are mapped by `curatedItemFrom` in `build.js` into
+  `manifest.items` with `curated: true`, so they get permanent
+  `/{en,fr}/collection/<slug>.html` pages. They also get purchase actions, and
+  the enquiry Worker accepts them without changes.
+- Curated pieces are kept off the home grid and the identify sidebar
+  (`isHomeGridItem`). A curated slug that also exists in `items/` stops the
+  build. See `selection/README.md`.
+- Guide prose links to a curated page only when the guide studies that exact
+  object (`tests/seo.test.js` checks that every guide → collection link
+  resolves).
+- If a `collection/` page no longer matches a published item, the build warns
+  about it but never deletes it.
+
+## Owner events report
+
+`npm run report:events [-- --days 30 --json]` summarises the `js/track.js`
+events through the owner-only `GET /events/summary` route. It needs
+`EVENTS_ADMIN_KEY` in the environment.
 
 ## Guides → shop
 

@@ -266,7 +266,7 @@ ${cards}
 
 // First-party conversion events (see js/track.js); inert while no API base is set.
 function trackScriptTag(base) {
-  return `<script src="${base}js/track.js?v=1" data-api="${escapeAttr(ANALYTICS_API_BASE)}" defer></script>`;
+  return `<script src="${base}js/track.js?v=2" data-api="${escapeAttr(ANALYTICS_API_BASE)}" defer></script>`;
 }
 
 function insertGuideShop(html, section) {

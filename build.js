@@ -68,6 +68,17 @@ function parseSortPriority(value) {
   return NO_FEATURED_INDEX;
 }
 
+// Language the item's own title/description are written in: "en" (default) or
+// "fr". Stored only for French, so the manifest stays unchanged for the rest.
+const ITEM_LANGUAGES = ['en', 'fr'];
+function parseItemLanguage(value, id) {
+  if (value === undefined) return null;
+  if (!ITEM_LANGUAGES.includes(value)) {
+    throw new Error(`items/${id}/info.json: "language" must be one of ${ITEM_LANGUAGES.join(', ')}`);
+  }
+  return value === 'en' ? null : value;
+}
+
 function compareNumbers(a, b) {
   if (a < b) return -1;
   if (a > b) return 1;
@@ -164,10 +175,12 @@ function scanItems() {
       if (typeof info.fr.title === 'string' && info.fr.title.trim()) fr.title = info.fr.title.trim();
       if (typeof info.fr.description === 'string' && info.fr.description.trim()) fr.description = info.fr.description.trim();
     }
+    const language = parseItemLanguage(info.language, folder.name);
 
     return {
       ...baseItem,
       ...(Object.keys(fr).length ? {fr} : {}),
+      ...(language ? {language} : {}),
       // Every shop item is sold directly by Cook & Collect unless info.json opts out
       // with "directSale": false. The enquiry Worker applies the same rule.
       directSale: info.directSale !== false,
@@ -198,8 +211,9 @@ function scanItems() {
 }
 
 /* ─── Curated Selection (premium dealer portfolio) ───
-   Read from selection/<slug>/ and kept in a SEPARATE manifest array.
-   These objects never carry a price and never mix with the shop `items`. */
+   Read from selection/<slug>/ and kept in a SEPARATE manifest array that
+   drives the Curated Selection page. Pieces marked "Available" or "Sold"
+   also become product pages (see curatedItemFrom below). */
 
 // Order here is the display order of the category groups on the page.
 const SELECTION_CATEGORIES = [
@@ -312,11 +326,78 @@ function scanSelection() {
   .map(({_sortPriority, ...entry}) => entry);
 }
 
-const allItems = scanItems();
-const items = VISIBLE_ONLY_SET.size > 0
-  ? allItems.filter(item => VISIBLE_ONLY_SET.has(item.id))
-  : allItems;
+const shopItemsAll = scanItems();
+const shopItems = VISIBLE_ONLY_SET.size > 0
+  ? shopItemsAll.filter(item => VISIBLE_ONLY_SET.has(item.id))
+  : shopItemsAll;
 const selection = scanSelection();
+
+/* ─── Curated Selection pieces as permanent product pages ───
+   Every curated object marked "Available" (for sale) or "Sold" also gets a
+   permanent product page (en|fr/collection/<slug>.html) with the same
+   enquiry / offer workflow as the shop. It is listed in manifest.items with
+   `curated: true` because the enquiry Worker only accepts ids found there.
+   Curated pieces stay out of the home grid (the shop collection); they are
+   presented on the Curated Selection page, which links to their pages. Only
+   data written in selection/<slug>/info.json is used. */
+const SELECTION_ITEM_CATEGORY = {
+  'French Copperware': 'Copper',
+  'Champagne & Wine Objects': 'Ice Buckets',
+  'French Design & Decorative Objects': 'Other'
+};
+const CURATED_DETAIL_FIELDS = ['maker', 'designer', 'origin', 'period', 'materials', 'dimensions', 'marks', 'condition'];
+const CURATED_PAGE_STATUSES = new Set(['Available', 'Sold']);
+
+// "€475" → "475€", the price format used across the shop; other values unchanged.
+function shopPriceFormat(price) {
+  const match = typeof price === 'string' ? price.trim().match(/^€\s*([\d.,]+)$/) : null;
+  return match ? `${match[1]}€` : (price || '');
+}
+
+function curatedItemFrom(entry) {
+  if (!CURATED_PAGE_STATUSES.has(entry.status)) return null;
+  const fr = {};
+  if (entry.fr) {
+    ['title', 'description', ...CURATED_DETAIL_FIELDS].forEach(field => {
+      if (entry.fr[field]) fr[field] = entry.fr[field];
+    });
+    if (entry.fr.imageAlts) fr.imageAlts = entry.fr.imageAlts;
+  }
+  const details = {};
+  CURATED_DETAIL_FIELDS.forEach(field => { if (entry[field]) details[field] = entry[field]; });
+  return {
+    id: entry.id,
+    title: entry.title,
+    price: shopPriceFormat(entry.price),
+    description: entry.description || '',
+    sold: entry.status === 'Sold',
+    ...(Object.keys(fr).length ? {fr} : {}),
+    directSale: true,
+    curated: true,
+    selectionCategory: entry.category || '',
+    category: SELECTION_ITEM_CATEGORY[entry.category] || detectCategory({id: entry.id, title: entry.title}),
+    ...details,
+    ...(entry.imageAlts ? {imageAlts: entry.imageAlts} : {}),
+    cover: entry.cover,
+    images: entry.images
+  };
+}
+
+const curatedItems = selection.map(curatedItemFrom).filter(Boolean);
+const shopIds = new Set(shopItemsAll.map(item => item.id));
+curatedItems.forEach(item => {
+  if (shopIds.has(item.id)) {
+    throw new Error(`selection/${item.id} has the same id as items/${item.id}: rename one folder so each piece has a single page.`);
+  }
+});
+const curatedIds = new Set(curatedItems.map(item => item.id));
+selection.forEach(entry => {
+  if (!curatedIds.has(entry.id)) return;
+  entry.productPage = true;
+  entry.forSale = entry.status === 'Available';
+});
+
+const items = [...shopItems, ...curatedItems];
 const manifest = {items, categories: CATEGORIES, selection};
 fs.writeFileSync(OUTPUT, JSON.stringify(manifest, null, 2));
 
@@ -404,6 +485,7 @@ function localizeSelectionEntry(entry, langCode, strings) {
   const localized = hasFr ? {...entry, ...entry.fr} : {...entry};
   if (!(hasFr && entry.fr.status)) {
     if (localized.status === 'Available') localized.status = strings.selStatusAvailable;
+    else if (localized.status === 'Sold') localized.status = strings.collectionStatusSold;
     else if (localized.status === 'Collection Archive') localized.status = strings.selStatusArchive;
   }
   return localized;
@@ -432,12 +514,27 @@ function selectionImageAlt(item, relPath, fallback) {
   return fallback;
 }
 
-function renderSelectionCard(item, index, strings, base) {
+// View details / Enquire / Make an Offer links under a curated card, pointing
+// to the piece's product page (#enquire and #offer open the matching form).
+function renderSelectionCardActions(item, strings, collectionBase) {
+  if (!item.productPage) return '';
+  const href = `${collectionBase}${encodeURIComponent(item.id)}.html`;
+  const link = (suffix, label, cls) =>
+    `<a class="curated-action${cls}" href="${href}${suffix}" data-select-item data-item-id="${escapeHtml(item.id)}">${escapeHtml(label)}</a>`;
+  return `
+        <div class="curated-card-actions" data-list="curated">
+          ${link('', strings.selViewDetails, ' curated-action-primary')}
+          ${item.forSale ? link('#enquire', strings.purchaseEnquire, '') + link('#offer', strings.purchaseOffer, '') : ''}
+        </div>`;
+}
+
+function renderSelectionCard(item, index, strings, base, collectionBase) {
   const cover = item.cover ? selectionAssetUrl(item.cover, base) : null;
   const dims = item.cover ? imageDimensions(item.cover) : null;
   const dimAttrs = dims ? ` width="${dims.width}" height="${dims.height}"` : '';
   const meta = item.period || '';
   const title = item.title || '';
+  const price = shopPriceFormat(item.price);
   const statusBadge = item.status ? `<span class="curated-status">${escapeHtml(item.status)}</span>` : '';
 
   const extraImages = (item.images || []).slice(1);
@@ -466,6 +563,7 @@ function renderSelectionCard(item, index, strings, base) {
   const categoryLabel = item.category ? selectionCategoryLabel(item.category, strings) : '';
 
   return `
+      <article class="curated-item">
       <details class="curated-card" data-index="${index}">
         <summary class="curated-card-summary" aria-label="${escapeHtml(title)}">
           <span class="curated-card-image">
@@ -476,7 +574,7 @@ function renderSelectionCard(item, index, strings, base) {
           </span>
           <span class="curated-card-body">
             <h4 class="curated-card-title">${escapeHtml(title)}</h4>
-            ${item.price ? `<span class="curated-card-price">${escapeHtml(item.price)}</span>` : ''}
+            ${price ? `<span class="curated-card-price">${escapeHtml(price)}</span>` : ''}
             ${meta ? `<span class="curated-card-meta">${escapeHtml(meta)}</span>` : ''}
           </span>
         </summary>
@@ -486,12 +584,13 @@ function renderSelectionCard(item, index, strings, base) {
           ${fields ? `<dl class="sel-detail-fields">${fields}</dl>` : ''}
           ${gallery}
         </div>
-      </details>`;
+      </details>${renderSelectionCardActions(item, strings, collectionBase)}
+      </article>`;
 }
 
 // Renders the full static gallery for one locale: grouped by category (same
 // order as manifest.selection), every object's complete data present in HTML.
-function renderSelectionGallery(selectionList, langCode, strings, base) {
+function renderSelectionGallery(selectionList, langCode, strings, base, collectionBase) {
   if (!selectionList.length) {
     return `<div class="empty-state"><p>${escapeHtml(strings.curatedEmpty)}</p></div>`;
   }
@@ -509,7 +608,7 @@ function renderSelectionGallery(selectionList, langCode, strings, base) {
   return groups.map(group => `
     <div class="curated-group" data-category="${escapeHtml(group.key)}">
       <h3 class="curated-group-heading">${escapeHtml(group.key ? selectionCategoryLabel(group.key, strings) : strings.selOtherPieces)}</h3>
-      <div class="curated-grid">${group.entries.map(([item, i]) => renderSelectionCard(item, i, strings, base)).join('')}</div>
+      <div class="curated-grid">${group.entries.map(([item, i]) => renderSelectionCard(item, i, strings, base, collectionBase)).join('')}</div>
     </div>`).join('');
 }
 
@@ -539,6 +638,7 @@ function renderSelectionStructuredData(selectionList, langCode, strings, canonic
     const product = {
       '@type': 'Product',
       name: item.title,
+      ...(item.productPage ? {url: `${SITE_URL}/${langCode}/collection/${item.id}.html`} : {}),
       ...(item.description ? {description: item.description} : {}),
       ...(image ? {image} : {}),
       ...(item.category ? {category: selectionCategoryLabel(item.category, strings)} : {}),
@@ -586,11 +686,22 @@ function itemHref(item, collectionBase) {
 const langOf = strings => (strings === i18n.fr ? 'fr' : 'en');
 const itemTitle = (item, code) => (code === 'fr' && item.fr && item.fr.title) || item.title;
 const itemDescription = (item, code) => (code === 'fr' && item.fr && item.fr.description) || item.description;
-const hasTranslation = (item, code, field) => code !== 'fr' || Boolean(item.fr && item.fr[field]);
+// Language of the text actually shown for a field: the French overlay on French
+// pages, otherwise the item's own language (info.json "language", default "en").
+const shownTextLanguage = (item, code, field) =>
+  (code === 'fr' && item.fr && item.fr[field]) ? 'fr' : (item.language || 'en');
+// lang attribute for text whose language differs from the page's (screen readers, search engines).
+const textLangAttr = (item, code, field) => {
+  const lang = shownTextLanguage(item, code, field);
+  return lang === code ? '' : ` lang="${lang}"`;
+};
 
-// Shop items only (never the curated selection). Sold pieces and pieces
-// marked "directSale": false never show purchase actions.
+// Shop items and curated pieces. Sold pieces and pieces marked
+// "directSale": false never show purchase actions.
 const isPurchasable = item => !item.sold && item.directSale !== false;
+// Pieces shown as the available shop collection (home grid, identify page).
+const isHomeGridItem = item => !item.curated && isPurchasable(item);
+const homeGridItems = items.filter(isHomeGridItem);
 
 function renderItemCard(item, strings, base, collectionBase, showSoldBadge) {
   const code = langOf(strings);
@@ -673,8 +784,9 @@ const SHOP_CATEGORIES = [
 const shopCategoryItems = cat => items.filter(item => isPurchasable(item) && cat.match(item));
 const ACTIVE_SHOP_CATEGORIES = SHOP_CATEGORIES.filter(cat => shopCategoryItems(cat).length >= MIN_SHOP_ITEMS);
 
-// The most specific shop collection an item belongs to (designer > Cousances > Le Creuset).
+// The most specific shop collection an available item belongs to (designer > Cousances > Le Creuset).
 function shopCategoryFor(item) {
+  if (!isPurchasable(item)) return null;
   const order = ['designer-cookware', 'vintage-cousances', 'vintage-le-creuset'];
   return order
     .map(slug => ACTIVE_SHOP_CATEGORIES.find(cat => cat.slug === slug))
@@ -697,6 +809,13 @@ function renderShopLinks(strings, shopBase) {
 // get no forced link rather than an irrelevant one.
 function itemGuideLinks(item, guideHrefs, strings) {
   const links = [];
+  const text = itemHaystack(item);
+  if (/dehillerin/.test(text)) {
+    links.push({href: guideHrefs.guideDehillerinHref, label: strings.guideLinkDehillerin});
+  }
+  if (/lecellier|cuivralec/.test(text)) {
+    links.push({href: guideHrefs.guideLecellierHref, label: strings.guideLinkLecellier});
+  }
   if (item.category === 'Copper') {
     links.push({href: guideHrefs.guideCopperHref, label: strings.guideLinkCopper});
   }
@@ -712,17 +831,22 @@ function itemGuideLinks(item, guideHrefs, strings) {
   if (item.category === 'Ice Buckets') {
     links.push({href: guideHrefs.guideChampagneHref, label: strings.guideLinkChampagne});
   }
+  if (item.selectionCategory === 'French Design & Decorative Objects') {
+    links.push({href: guideHrefs.guideDecorativeHref, label: strings.guideLinkDecorative});
+  }
   return links.slice(0, 2);
 }
 
-// Up to `limit` available shop pieces related to `item`: same designer, same
-// category and same maker score higher. Unrelated pieces are never used as filler.
+// Up to `limit` available pieces related to `item`: same designer, same
+// category and same maker score higher; a curated piece first suggests other
+// curated pieces. Unrelated pieces are never used as filler.
 function relatedAvailableItems(item, limit = 4) {
   const brand = brandKey(item);
   const designer = isDesignerPiece(item);
   const score = other =>
     (designer && isDesignerPiece(other) ? 4 : 0)
     + (other.category === item.category ? 2 : 0)
+    + (item.curated && other.curated && other.selectionCategory === item.selectionCategory ? 2 : 0)
     + (brand && brandKey(other) === brand ? 1 : 0);
   return items
     .filter(other => other.id !== item.id && isPurchasable(other))
@@ -735,9 +859,40 @@ function relatedAvailableItems(item, limit = 4) {
 
 const SELLER = {'@type': 'Organization', name: 'Cook & Collect', url: `${SITE_URL}/`};
 
-// Parses "120€" / "1.200,50 €" into "120" / "1200.50"; null when there is no euro price.
+// Documented details of a curated piece (selection/<slug>/info.json), in the
+// page language with an English fallback.
+const curatedField = (item, code, field) => (code === 'fr' && item.fr && item.fr[field]) || item[field] || '';
+const CURATED_FIELD_LABELS = {
+  maker: 'selMaker', designer: 'selDesigner', origin: 'selOrigin', period: 'selPeriod',
+  materials: 'selMaterials', dimensions: 'selDimensions', marks: 'selMarks', condition: 'selCondition'
+};
+
+function curatedProductProperties(item, code) {
+  const strings = i18n[code];
+  const additionalProperty = CURATED_DETAIL_FIELDS
+    .filter(field => field !== 'maker' && curatedField(item, code, field))
+    .map(field => ({'@type': 'PropertyValue', name: strings[CURATED_FIELD_LABELS[field]], value: curatedField(item, code, field)}));
+  return {
+    ...(item.maker ? {brand: {'@type': 'Brand', name: item.maker}} : {}),
+    ...(additionalProperty.length ? {additionalProperty} : {})
+  };
+}
+
+function renderCuratedDetails(item, code) {
+  const strings = i18n[code];
+  const rows = CURATED_DETAIL_FIELDS.map(field => {
+    const value = curatedField(item, code, field);
+    if (!value) return '';
+    const lang = textLangAttr(item, code, field);
+    return `<div class="sel-field"><dt>${escapeHtml(strings[CURATED_FIELD_LABELS[field]])}</dt><dd${lang}>${escapeHtml(value)}</dd></div>`;
+  }).join('');
+  return rows ? `<dl class="sel-detail-fields item-details">${rows}</dl>` : '';
+}
+
+// Parses "120€" / "€120" / "1.200,50 €" into "120" / "120" / "1200.50"; null when there is no euro price.
 function priceAmount(price) {
-  const match = typeof price === 'string' ? price.match(/([\d.,]+)\s*€/) : null;
+  if (typeof price !== 'string') return null;
+  const match = price.match(/([\d.,]+)\s*€/) || price.match(/€\s*([\d.,]+)/);
   return match ? match[1].replace(/\./g, '').replace(',', '.') : null;
 }
 
@@ -746,10 +901,13 @@ function priceAmount(price) {
 // condition and the seller. No GTIN, brand, reviews, ratings or shipping terms
 // are added because none of that is recorded. EN and FR pages describe the same
 // offer (same price, availability, sku), only the text language differs.
+// A piece that is not for sale here ("directSale": false, e.g. listed on
+// Catawiki) gets no Offer: Cook & Collect does not offer it at that price.
 function renderItemStructuredData(item, code, canonicalUrl, breadcrumbs) {
   const images = (item.images || []).map(src => `${SITE_URL}/${src}`);
   const priceValue = priceAmount(item.price);
   const description = itemDescription(item, code);
+  const hasOffer = priceValue && (item.sold || isPurchasable(item));
 
   const product = {
     '@context': 'https://schema.org',
@@ -759,8 +917,9 @@ function renderItemStructuredData(item, code, canonicalUrl, breadcrumbs) {
     ...(description ? {description} : {}),
     ...(images.length ? {image: images} : {}),
     ...(item.category ? {category: item.category} : {}),
+    ...(item.curated ? curatedProductProperties(item, code) : {}),
     url: canonicalUrl,
-    ...(priceValue ? {
+    ...(hasOffer ? {
       offers: {
         '@type': 'Offer',
         priceCurrency: 'EUR',
@@ -852,7 +1011,9 @@ function renderSiteStructuredData() {
   return `<script type="application/ld+json">${JSON.stringify(json)}</script>`;
 }
 
-function renderItemGallery(item, base, title) {
+// `altFor(src, index)` may return a documented per-photo alt text (curated
+// pieces' imageAlts); otherwise the alt is the title and photo number.
+function renderItemGallery(item, base, title, altFor = () => null) {
   const imgs = item.images || [];
   if (!imgs.length) return '';
   const main = imgs[0];
@@ -862,12 +1023,12 @@ function renderItemGallery(item, base, title) {
     const url = selectionAssetUrl(src, base);
     const d = imageDimensions(src);
     const attrs = d ? ` width="${d.width}" height="${d.height}"` : '';
-    return `<img src="${url}" alt="${escapeHtml(title)} — photo ${i + 1}"${attrs} class="${i === 0 ? 'active' : ''}" onclick="switchImage(${i})" loading="lazy" decoding="async">`;
+    return `<img src="${url}" alt="${escapeHtml(altFor(src, i) || `${title} — photo ${i + 1}`)}"${attrs} class="${i === 0 ? 'active' : ''}" onclick="switchImage(${i})" loading="lazy" decoding="async">`;
   }).join('') : '';
   // The main photograph is the LCP element: never lazy, fetched first.
   return `
       <div class="gallery">
-        <img src="${selectionAssetUrl(main, base)}" alt="${escapeHtml(title)}" class="main-image" id="mainImage"${mainAttrs} fetchpriority="high" onclick="openLightbox(window._currentImageIndex || 0)">
+        <img src="${selectionAssetUrl(main, base)}" alt="${escapeHtml(altFor(main, 0) || title)}" class="main-image" id="mainImage"${mainAttrs} fetchpriority="high" onclick="openLightbox(window._currentImageIndex || 0)">
         ${thumbs ? `<div class="thumbnails">${thumbs}</div>` : ''}
       </div>`;
 }
@@ -876,10 +1037,10 @@ function renderItemGallery(item, base, title) {
 // enquiry API are build-time settings (see ENQUIRY_API_BASE below); while they
 // are empty the scripts stay inert / fall back to WhatsApp.
 function trackScriptTag(base) {
-  return `<script src="${base}js/track.js?v=1" data-api="${escapeHtml(ANALYTICS_API_BASE)}" defer></script>`;
+  return `<script src="${base}js/track.js?v=2" data-api="${escapeHtml(ANALYTICS_API_BASE)}" defer></script>`;
 }
 function enquiryScriptTag(base) {
-  return `<script src="${base}js/enquiry.js?v=1" data-api="${escapeHtml(ENQUIRY_API_BASE)}" data-sitekey="${escapeHtml(ENQUIRY_TURNSTILE_SITE_KEY)}" defer></script>`;
+  return `<script src="${base}js/enquiry.js?v=2" data-api="${escapeHtml(ENQUIRY_API_BASE)}" data-sitekey="${escapeHtml(ENQUIRY_TURNSTILE_SITE_KEY)}" defer></script>`;
 }
 
 // Pre-filled WhatsApp message: works with no backend and no JavaScript, and is
@@ -895,8 +1056,8 @@ function renderPurchaseActions(item, code, pageUrl) {
   if (!isPurchasable(item)) return '';
   const s = i18n[code];
   return `<div class="purchase-actions" data-purchase-actions>
-          <a class="purchase-btn purchase-btn-primary" data-enquiry="purchase" href="${escapeHtml(whatsappEnquiryHref(item, code, 'purchase', pageUrl))}" target="_blank" rel="noopener noreferrer">${escapeHtml(s.purchaseEnquire)}</a>
-          <a class="purchase-btn purchase-btn-secondary" data-enquiry="offer" href="${escapeHtml(whatsappEnquiryHref(item, code, 'offer', pageUrl))}" target="_blank" rel="noopener noreferrer">${escapeHtml(s.purchaseOffer)}</a>
+          <a class="purchase-btn purchase-btn-primary" id="enquire" data-enquiry="purchase" href="${escapeHtml(whatsappEnquiryHref(item, code, 'purchase', pageUrl))}" target="_blank" rel="noopener noreferrer">${escapeHtml(s.purchaseEnquire)}</a>
+          <a class="purchase-btn purchase-btn-secondary" id="offer" data-enquiry="offer" href="${escapeHtml(whatsappEnquiryHref(item, code, 'offer', pageUrl))}" target="_blank" rel="noopener noreferrer">${escapeHtml(s.purchaseOffer)}</a>
           <p class="purchase-note">${escapeHtml(s.purchaseNote)}</p>
         </div>`;
 }
@@ -906,10 +1067,12 @@ function renderRelatedSection(item, code, strings) {
   const heading = item.sold ? strings.relatedSoldHeading : strings.relatedHeading;
   if (!related.length) {
     if (!item.sold) return '';
+    const browseHref = item.curated ? (code === 'fr' ? '../curated-selection.html' : '../curatedselection') : '../index.html';
+    const browseLabel = item.curated ? strings.relatedBrowseCurated : strings.relatedBrowseAll;
     return `
     <section class="related-items" aria-labelledby="related-heading">
       <h2 id="related-heading">${escapeHtml(heading)}</h2>
-      <p><a href="../index.html">${escapeHtml(strings.relatedBrowseAll)}</a></p>
+      <p><a href="${browseHref}">${escapeHtml(browseLabel)}</a></p>
     </section>`;
   }
   return `
@@ -930,22 +1093,33 @@ function renderCollectionPage(item, code, guideHrefs) {
   const homeUrl = code === 'fr' ? `${SITE_URL}/fr/index.html` : `${SITE_URL}/`;
   const title = itemTitle(item, code);
   const description = itemDescription(item, code);
-  // Untranslated text on a French page is marked as English for screen readers.
-  const titleLang = hasTranslation(item, code, 'title') ? '' : ' lang="en"';
-  const descLang = hasTranslation(item, code, 'description') ? '' : ' lang="en"';
-  // Available pieces sit under their shop collection page when they have one;
-  // otherwise under the available collection (the home page) or sold page.
-  const shopCat = item.sold ? null : shopCategoryFor(item);
-  const listHref = item.sold ? '../sold.html' : shopCat ? `../shop/${shopCat.slug}.html` : '../index.html';
-  const listLabel = item.sold ? strings.collectionBreadcrumbSold
+  // Text not in the page's language carries its own lang attribute.
+  const titleLang = textLangAttr(item, code, 'title');
+  const descLang = textLangAttr(item, code, 'description');
+  const curatedHref = code === 'fr' ? '../curated-selection.html' : '../curatedselection';
+  const curatedUrl = code === 'fr' ? `${SITE_URL}/fr/curated-selection.html` : `${SITE_URL}/en/curatedselection`;
+  // Not for sale here ("directSale": false) and not sold: the page stays as a
+  // reference, without any "available" wording or purchase path.
+  const notForSale = !item.sold && !isPurchasable(item);
+  // Curated pieces sit under the Curated Selection. Available shop pieces sit
+  // under their shop collection page when they have one, otherwise under the
+  // available collection (the home page); sold ones under the sold page.
+  const shopCat = item.curated ? null : shopCategoryFor(item);
+  const listHref = item.curated ? curatedHref
+    : item.sold ? '../sold.html' : shopCat ? `../shop/${shopCat.slug}.html` : notForSale ? null : '../index.html';
+  const listLabel = item.curated ? strings.curatedBreadcrumb
+    : item.sold ? strings.collectionBreadcrumbSold
     : shopCat ? strings[`${shopCat.key}LinkLabel`] : strings.collectionBreadcrumbAvailable;
-  const backHref = item.sold ? '../sold.html' : '../index.html';
-  const backLabel = item.sold ? strings.backSold : strings.backCollection;
-  const statusLabel = item.sold ? strings.collectionStatusSold : strings.collectionStatusAvailable;
+  const backHref = item.curated ? curatedHref : item.sold ? '../sold.html' : '../index.html';
+  const backLabel = item.curated ? strings.backCurated : item.sold ? strings.backSold : strings.backCollection;
+  const statusLabel = item.sold ? strings.collectionStatusSold
+    : notForSale ? strings.collectionStatusNotForSale : strings.collectionStatusAvailable;
+  const statusClass = item.sold ? 'sold-badge' : notForSale ? 'unavailable-badge' : 'available-badge';
 
   // Structured breadcrumbs only use canonical URLs: the available collection
   // *is* the home page, so it is not repeated as a second level.
-  const listUrl = item.sold ? `${SITE_URL}/${code}/sold.html`
+  const listUrl = item.curated ? curatedUrl
+    : item.sold ? `${SITE_URL}/${code}/sold.html`
     : shopCat ? `${SITE_URL}/${code}/shop/${shopCat.slug}.html` : null;
   const breadcrumbs = [
     {name: strings.collectionBreadcrumbHome, url: homeUrl},
@@ -953,8 +1127,9 @@ function renderCollectionPage(item, code, guideHrefs) {
     {name: title, url: canonicalUrl}
   ];
 
+  const contextShopCat = shopCategoryFor(item);
   const contextLinks = [
-    ...(shopCat ? [{href: `../shop/${shopCat.slug}.html`, label: strings[`${shopCat.key}LinkLabel`]}] : []),
+    ...(contextShopCat ? [{href: `../shop/${contextShopCat.slug}.html`, label: strings[`${contextShopCat.key}LinkLabel`]}] : []),
     ...itemGuideLinks(item, guideHrefs, strings).map(l => ({href: `../${l.href}`, label: l.label}))
   ];
   const contextLinksHTML = contextLinks.length ? `
@@ -966,7 +1141,6 @@ function renderCollectionPage(item, code, guideHrefs) {
   const metaDescBody = metaDescRaw.length > 150 ? `${metaDescRaw.slice(0, 147).trim()}…` : metaDescRaw;
   const metaDesc = item.sold ? `${strings.collectionStatusSold}. ${metaDescBody}` : metaDescBody;
   const docTitle = `${title} | Cook & Collect`;
-  const curatedHref = code === 'fr' ? '../curated-selection.html' : '../curatedselection';
   const legalHref = code === 'fr' ? '../mentions-legales.html' : '../legal-notice.html';
 
   const langSwitchHTML = `<li class="lang-switch">
@@ -977,6 +1151,10 @@ function renderCollectionPage(item, code, guideHrefs) {
         </li>`;
 
   const soldNote = item.sold ? `<p class="sold-note">${escapeHtml(strings.collectionSoldNote)}</p>` : '';
+  const notForSaleNote = notForSale ? `<p class="sold-note">${escapeHtml(strings.collectionNotForSaleNote)}</p>` : '';
+  // Documented per-photo alt texts (curated pieces), in the page language only.
+  const imageAlts = (code === 'fr' ? item.fr && item.fr.imageAlts : item.imageAlts) || {};
+  const altFor = src => imageAlts[path.basename(src)] || null;
 
   const rawHtml = `<!DOCTYPE html>
 <html lang="${code}">
@@ -999,30 +1177,32 @@ function renderCollectionPage(item, code, guideHrefs) {
   <meta property="og:description" content="${escapeHtml(metaDesc)}">
   <meta property="og:url" content="${canonicalUrl}">
   ${item.cover ? `<meta property="og:image" content="${SITE_URL}/${item.cover}">` : ''}
-  <link rel="stylesheet" href="../../css/style.css?v=26">
+  <link rel="stylesheet" href="../../css/style.css?v=27">
   ${renderItemStructuredData(item, code, canonicalUrl, breadcrumbs)}
 </head>
 <body data-page="collection-item" data-item-id="${escapeHtml(item.id)}" data-item-title="${escapeHtml(title)}" data-item-price="${escapeHtml(item.price)}" data-item-status="${item.sold ? 'sold' : 'available'}" data-purchasable="${isPurchasable(item)}">
-  ${renderNav('home', langSwitchHTML, '../', curatedHref, '../guides/')}
+  ${renderNav(item.curated ? 'curated' : 'home', langSwitchHTML, '../', curatedHref, '../guides/')}
   <main>
     <nav class="breadcrumbs" aria-label="Breadcrumb">
       <ol>
         <li><a href="../index.html">${escapeHtml(strings.collectionBreadcrumbHome)}</a></li>
-        <li><a href="${listHref}">${escapeHtml(listLabel)}</a></li>
+        ${listHref ? `<li><a href="${listHref}">${escapeHtml(listLabel)}</a></li>` : ''}
         <li aria-current="page"${titleLang}>${escapeHtml(title)}</li>
       </ol>
     </nav>
     <a href="${backHref}" class="back-link">${escapeHtml(backLabel)}</a>
     <div class="item-layout">
-      ${renderItemGallery(item, '../../', title)}
+      ${renderItemGallery(item, '../../', title, altFor)}
       <div class="item-info">
-        <span class="${item.sold ? 'sold-badge' : 'available-badge'}">${escapeHtml(statusLabel)}</span>
+        <span class="${statusClass}">${escapeHtml(statusLabel)}</span>
         <h1 class="item-title"${titleLang}>${escapeHtml(title)}</h1>
-        <p class="item-price">${escapeHtml(item.price)}</p>
+        ${notForSale ? '' : `<p class="item-price">${escapeHtml(item.price)}</p>`}
         ${soldNote}
+        ${notForSaleNote}
         ${renderPurchaseActions(item, code, canonicalUrl)}
         ${description ? `<p class="item-description"${descLang}>${escapeHtml(description)}</p>` : ''}
-        ${!item.sold ? `<div class="shipping-note"><span class="shipping-icon">&#9992;</span> ${strings.shippingNote} <a href="../shipping.html">${escapeHtml(strings.collectionViewShipping)}</a></div>` : ''}
+        ${item.curated ? renderCuratedDetails(item, code) : ''}
+        ${isPurchasable(item) ? `<div class="shipping-note"><span class="shipping-icon">&#9992;</span> ${strings.shippingNote} <a href="../shipping.html">${escapeHtml(strings.collectionViewShipping)}</a></div>` : ''}
         ${contextLinksHTML}
       </div>
     </div>
@@ -1031,7 +1211,7 @@ function renderCollectionPage(item, code, guideHrefs) {
   ${tpl('lightbox.html')}
   ${CONTACT_BUTTONS}
   ${FOOTER}
-  <script src="../../js/app.js?v=4"></script>
+  <script src="../../js/app.js?v=5"></script>
   ${trackScriptTag('../../')}
   ${isPurchasable(item) ? enquiryScriptTag('../../') : ''}
 </body>
@@ -1110,7 +1290,7 @@ function renderShopPage(cat, code) {
   <meta property="og:description" content="${escapeHtml(metaDesc)}">
   <meta property="og:url" content="${canonicalUrl}">
   ${firstCover ? `<meta property="og:image" content="${SITE_URL}/${firstCover.cover}">` : ''}
-  <link rel="stylesheet" href="../../css/style.css?v=26">
+  <link rel="stylesheet" href="../../css/style.css?v=27">
   <script type="application/ld+json">${JSON.stringify(itemList)}</script>
   ${renderBreadcrumbStructuredData(breadcrumbs)}
 </head>
@@ -1365,14 +1545,16 @@ LOCALES.forEach(locale => {
   <link rel="alternate" hreflang="x-default" href="${curatedSelectionUrl}">`
             : '',
           curatedOgImage: ogImage,
-          curatedGalleryHTML: renderSelectionGallery(selection, locale.code, strings, base),
+          curatedGalleryHTML: renderSelectionGallery(selection, locale.code, strings, base, collectionBaseFor(locale.dir)),
           curatedStructuredData: renderSelectionStructuredData(selection, locale.code, strings, selfCanonical)
         };
       })() : {}),
       // Home/sold: server-rendered item grid (crawlable without JS) +
       // generic canonical/hreflang block for every other standard page type.
       ...(pageDef.page === 'home' ? (() => {
-        const available = items.filter(i => !i.sold);
+        // The home grid is the shop collection: available direct-sale shop
+        // pieces only (curated pieces are presented on the Curated Selection).
+        const available = homeGridItems;
         const collectionBase = collectionBaseFor(locale.dir);
         // English home: the domain root "/" is the canonical URL (it holds the
         // Search Console history); en/index.html is a duplicate pointing to it.
@@ -1418,7 +1600,7 @@ LOCALES.forEach(locale => {
         canonicalBlock: `<link rel="canonical" href="${SITE_URL}/en/identify.html">`,
         identifyApiBase: attr(STUDIO_API_BASE),
         identifyTurnstileSiteKey: attr(IDENTIFY_TURNSTILE_SITE_KEY),
-        identifyShopItems: items.filter(item => !item.sold && item.cover).slice(0, 3).map(item =>
+        identifyShopItems: homeGridItems.filter(item => item.cover).slice(0, 3).map(item =>
           `<a href="${itemHref(item, collectionBaseFor(locale.dir))}"><img src="${attr(selectionAssetUrl(item.cover, base))}" alt="${attr(item.title)}" loading="lazy"><span>${escapeHtml(item.title)}</span></a>`
         ).join('')
       } : {}),
@@ -1491,19 +1673,38 @@ LOCALES.forEach(locale => {
    French pages use the item's "fr" text when info.json provides it. */
 const collectionGuideHrefs = {
   guideCopperHref: 'guides/vintage-french-copper-cookware.html',
+  guideDehillerinHref: 'guides/e-dehillerin-copper-cookware.html',
+  guideLecellierHref: 'guides/lecellier-cuivralec.html',
   guideLeCreusetHref: 'guides/vintage-le-creuset.html',
   guideDatingHref: 'guides/le-creuset-dating-guide.html',
   guideChampagneHref: 'guides/vintage-french-champagne-buckets.html',
-  guideCastIronHref: 'guides/european-enamelled-cast-iron-makers.html'
+  guideCastIronHref: 'guides/european-enamelled-cast-iron-makers.html',
+  guideDecorativeHref: 'guides/french-design-decorative-objects.html'
 };
+// Optional template blocks leave whitespace-only lines; drop the trailing spaces.
+const stripTrailingSpaces = html => html.replace(/[ \t]+$/gm, '');
+
 ['en', 'fr'].forEach(code => {
   const dir = path.join(__dirname, code, 'collection');
   fs.mkdirSync(dir, {recursive: true});
   items.forEach(item => {
-    fs.writeFileSync(path.join(dir, `${item.id}.html`), renderCollectionPage(item, code, collectionGuideHrefs));
+    fs.writeFileSync(path.join(dir, `${item.id}.html`), stripTrailingSpaces(renderCollectionPage(item, code, collectionGuideHrefs)));
   });
 });
 console.log(`Generated ${items.length * 2} permanent collection page(s) in en/collection/ and fr/collection/.`);
+
+// Stale permanent pages: files left by items that were removed or hidden. They
+// are reported, never deleted — a removed piece's URL may still be indexed or
+// linked, and the owner decides whether it gets a redirect or is removed.
+const publishedPageIds = new Set(items.map(item => item.id));
+const stalePages = ['en', 'fr'].flatMap(code =>
+  fs.readdirSync(path.join(__dirname, code, 'collection'))
+    .filter(f => f.endsWith('.html') && !publishedPageIds.has(f.slice(0, -5)))
+    .map(f => `${code}/collection/${f}`));
+if (stalePages.length) {
+  console.warn(`⚠ ${stalePages.length} collection page(s) no longer match a published item (not deleted, review them):`);
+  stalePages.forEach(f => console.warn(`  - ${f}`));
+}
 
 /* ─── Shop collection landing pages: /en/shop/<slug>.html + /fr/shop/<slug>.html ─── */
 ['en', 'fr'].forEach(code => {
@@ -1515,7 +1716,7 @@ console.log(`Generated ${items.length * 2} permanent collection page(s) in en/co
   fs.readdirSync(dir).filter(f => f.endsWith('.html') && !active.has(f))
     .forEach(f => fs.unlinkSync(path.join(dir, f)));
   ACTIVE_SHOP_CATEGORIES.forEach(cat => {
-    fs.writeFileSync(path.join(dir, `${cat.slug}.html`), renderShopPage(cat, code));
+    fs.writeFileSync(path.join(dir, `${cat.slug}.html`), stripTrailingSpaces(renderShopPage(cat, code)));
   });
 });
 console.log(`Generated ${ACTIVE_SHOP_CATEGORIES.length * 2} shop collection page(s): ${ACTIVE_SHOP_CATEGORIES.map(c => c.slug).join(', ') || 'none'}.`);

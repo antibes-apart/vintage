@@ -121,7 +121,9 @@ function itemHref(item) {
     window._categories = data.categories || [];
 
     if (page === 'home') {
-      const available = data.items.filter(item => !item.sold);
+      // Same list as the server-rendered home grid: available direct-sale
+      // shop pieces (curated pieces are shown on the Curated Selection).
+      const available = data.items.filter(item => !item.sold && !item.curated && item.directSale !== false);
       initListing(available, false, T.nounAvailable);
     } else if (page === 'sold') {
       const sold = data.items.filter(item => item.sold);

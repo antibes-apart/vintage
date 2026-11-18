@@ -83,6 +83,7 @@
     m = pathname.match(/\/shop\/([a-z0-9-]+)\.html$/);
     if (m) return 'category:' + m[1];
     if (/\/sold\.html$/.test(pathname)) return 'sold';
+    if (/\/(curatedselection|curated-selection)(\.html)?$/.test(pathname)) return 'curated';
     if (/\/collection\//.test(pathname)) return 'related';
     if (/^\/((en|fr)\/)?(index\.html)?$/.test(pathname)) return 'home';
     return 'internal';
@@ -134,7 +135,8 @@
 
   // select_item: a click on any product card inside a named list.
   document.addEventListener('click', function (event) {
-    var card = event.target && event.target.closest ? event.target.closest('a.item-card[data-item-id]') : null;
+    var card = event.target && event.target.closest
+      ? event.target.closest('a.item-card[data-item-id], a[data-select-item][data-item-id]') : null;
     if (!card) return;
     var container = card.closest('[data-list]');
     var list = container ? container.getAttribute('data-list') : listFromPath(window.location.pathname);

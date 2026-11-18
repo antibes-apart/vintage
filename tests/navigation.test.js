@@ -15,10 +15,15 @@ test('permanent item breadcrumbs use the shared ordered-list structure', () => {
     assert.ok(breadcrumbs, file);
     assert.match(breadcrumbs[1], /<ol>[\s\S]*<\/ol>/, file);
     assert.equal((breadcrumbs[1].match(/<li\b/g) || []).length, 3, file);
-    assert.match(breadcrumbs[1], /<li aria-current="page">[^<]+<\/li>/, file);
+    assert.match(breadcrumbs[1], /<li aria-current="page"(?: lang="[a-z]+")?>[^<]+<\/li>/, file);
     const links = [...breadcrumbs[1].matchAll(/href="([^"]+)"/g)].map(match => match[1]);
     const list = html.includes('class="sold-badge"') ? '../sold.html' : '../index.html';
     assert.equal(links[0], '../index.html', file);
+    // Curated pieces sit under the Curated Selection.
+    if (html.includes('class="sel-detail-fields item-details"') || links[1] === '../curatedselection') {
+      assert.equal(links[1], '../curatedselection', file);
+      continue;
+    }
     // Available pieces with a shop collection page sit under it.
     if (list === '../index.html' && /^\.\.\/shop\/[a-z-]+\.html$/.test(links[1])) {
       assert.ok(fs.existsSync(path.join(__dirname, '..', 'en', links[1].slice(3))), file);
