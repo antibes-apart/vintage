@@ -285,5 +285,4 @@ test('item title and description carry a lang attribute only when not in the pag
       }
     }
   }
-  assert.ok(items.some(i => i.language === 'fr'), 'at least one French-written item is declared');
 });

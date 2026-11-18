@@ -265,24 +265,26 @@ function head({lang, title, description, canonical, enUrl, frUrl, image, data}) 
 
 /* ─── Shop items ─── */
 
-function shopHref(item, langCode) {
-  return langCode === 'en'
-    ? `../collection/${encodeURIComponent(item.id)}.html`
-    : `../item.html?id=${encodeURIComponent(item.id)}`;
+// Every published item has a permanent page in both languages.
+function shopHref(item) {
+  return `../collection/${encodeURIComponent(item.id)}.html`;
 }
 
+const shopTitle = (item, langCode) => (langCode === 'fr' && item.fr && item.fr.title) || item.title;
+
 function shopCard(item, langCode) {
+  const title = shopTitle(item, langCode);
   const dims = item.cover ? jpegSize(path.join(__dirname, item.cover)) : null;
   const dimAttrs = dims ? ` width="${dims.width}" height="${dims.height}"` : '';
   return `
-        <a href="${shopHref(item, langCode)}" class="item-card">
+        <a href="${shopHref(item)}" class="item-card">
           <div class="image-wrapper">
             ${item.cover
-              ? `<img src="../../${esc(item.cover)}" alt="${esc(item.title)}"${dimAttrs} loading="lazy">`
-              : `<div class="no-cover">${esc(item.title)}</div>`}
+              ? `<img src="../../${esc(item.cover)}" alt="${esc(title)}"${dimAttrs} loading="lazy">`
+              : `<div class="no-cover">${esc(title)}</div>`}
           </div>
           <div class="card-body">
-            <h3 class="card-title">${esc(item.title)}</h3>
+            <h3 class="card-title">${esc(title)}</h3>
           </div>
         </a>`;
 }
@@ -446,7 +448,7 @@ function hubPage(lang, ctx) {
   const canonical = lang.code === 'en' ? enUrl : frUrl;
   const parts = chrome(lang, s, '../../en/archive/index.html', '../../fr/archive/index.html');
   const hrefFor = object => (ctx.linked.has(object.slug)
-    ? shopHref(ctx.linked.get(object.slug), lang.code)
+    ? shopHref(ctx.linked.get(object.slug))
     : `${object.slug}.html`);
   const groups = BRANDS.map(brand => ({brand, objects: ctx.objects.filter(o => o.brand === brand)}))
     .filter(group => group.objects.length);

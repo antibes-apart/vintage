@@ -47,7 +47,8 @@ The site is generated from **templates + item data** by `build.js`.
     `language: "fr"` declares that the item's own title/description are written in French
     (default `"en"`); pages then put the right `lang` attribute on that text.
     `fr: { title, description }` is an optional verified French translation; without it the
-    French page shows the English text marked `lang="en"`. Never machine-invent item facts.)
+    French page shows the English text marked `lang="en"`; `build.js` warns about items without it. All current
+    shop items have one. Never machine-invent item facts.)
   - `cover.jpg` — the grid thumbnail (any image ext; filename stem must be `cover`)
   - `2.jpg`, `3.jpg`, … — gallery images (sorted by filename)
 - `css/style.css` — all styling.

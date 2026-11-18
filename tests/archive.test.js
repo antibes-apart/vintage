@@ -65,7 +65,7 @@ test('an object that is also a shop item gets no archive page; the hub links to 
   assert.equal(exists('en/archive/staub-cocotte-black.html'), false);
   assert.equal(exists('fr/archive/staub-cocotte-black.html'), false);
   assert.match(read('en/archive/index.html'), /href="\.\.\/collection\/fixture-staub-cocotte-for-sale\.html"/);
-  assert.match(read('fr/archive/index.html'), /href="\.\.\/item\.html\?id=fixture-staub-cocotte-for-sale"/);
+  assert.match(read('fr/archive/index.html'), /href="\.\.\/collection\/fixture-staub-cocotte-for-sale\.html"/);
 });
 
 test('an object page has its own canonical URL and an English/French pair', () => {
@@ -161,7 +161,7 @@ test('"Available now" shows up to four shop items for sale: same brand first, th
   assert.doesNotMatch(block, /card-price/, 'no prices on archive pages');
   assert.match(block, /href="\.\.\/index\.html"/, 'link to the whole collection');
   const fr = read(`fr/archive/${COUSANCES}.html`).match(/<section class="archive-available"[\s\S]*?<\/section>/)[0];
-  assert.match(fr, /href="\.\.\/item\.html\?id=fixture-cousances-skillet"/);
+  assert.match(fr, /href="\.\.\/collection\/fixture-cousances-skillet\.html"/);
 });
 
 test('"Available now" falls back to the latest shop items when nothing matches', () => {

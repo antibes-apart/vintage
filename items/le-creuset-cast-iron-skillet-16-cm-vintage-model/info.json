@@ -3,5 +3,9 @@
   "price": "45€",
   "issueNumber": 60,
   "sold": true,
-  "description": "Vintage 16 cm cast iron skillet with pouring spouts (“becs verseurs”). Ideal for small portions, such as a single fried egg.\nFeatures a classic vintage shape and solid construction.\nShows signs of use consistent with age, adding to its authentic charm. Please refer to the photos for the exact condition, as they are part of the description."
+  "description": "Vintage 16 cm cast iron skillet with pouring spouts (“becs verseurs”). Ideal for small portions, such as a single fried egg.\nFeatures a classic vintage shape and solid construction.\nShows signs of use consistent with age, adding to its authentic charm. Please refer to the photos for the exact condition, as they are part of the description.",
+  "fr": {
+    "title": "Le Creuset – Poêle en fonte 16 cm – Modèle vintage",
+    "description": "Poêle vintage en fonte de 16 cm avec becs verseurs. Idéale pour les petites portions, comme un seul œuf au plat.\nForme vintage classique et construction robuste.\nPrésente des traces d’usage dues à l’âge, qui ajoutent à son charme authentique. Merci de vous référer aux photos pour l’état exact, car elles font partie de la description."
+  }
 }

@@ -1705,6 +1705,12 @@ if (stalePages.length) {
   console.warn(`⚠ ${stalePages.length} collection page(s) no longer match a published item (not deleted, review them):`);
   stalePages.forEach(f => console.warn(`  - ${f}`));
 }
+// New items (e.g. from the add-item issue form) arrive in one language only.
+const untranslated = items.filter(item => !item.curated && !(item.fr && item.fr.title));
+if (untranslated.length) {
+  console.warn(`⚠ ${untranslated.length} item(s) without a French translation (info.json "fr"):`);
+  untranslated.forEach(item => console.warn(`  - ${item.id}`));
+}
 
 /* ─── Shop collection landing pages: /en/shop/<slug>.html + /fr/shop/<slug>.html ─── */
 ['en', 'fr'].forEach(code => {

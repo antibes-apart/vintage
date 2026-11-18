@@ -55,10 +55,12 @@ logic or prompts.
 | ✅ | Curated pieces stay off the home grid (owner decision 2026-11-18); FR curated breadcrumb reads "Notre sélection" | `build.js` `isHomeGridItem`, `i18n.js` `curatedBreadcrumb` |
 | ✅ | Homepage title, meta description, H1 | `i18n.js`, `templates/home.html` |
 | ✅ | Product breadcrumbs point to the shop category; related available pieces; sold note | `build.js` |
-| ✅ | Item text language declared: `info.json` `"language": "fr"` (default `en`) sets the `lang` attribute of title/description on both locales; Fontignac cocotte is the only French-written item | `build.js`, `tests/seo.test.js` |
-| ⬜ | Shop item text is single-language: 0 of 82 have a translation (81 written in English, 1 in French). Needs owner-verified translations | `items/<id>/info.json` |
+| ✅ | Item text language declared: `info.json` `"language": "fr"` (default `en`) sets the `lang` attribute of untranslated title/description on both locales (no item needs it now) | `build.js`, `tests/seo.test.js` |
+| ✅ | French title + description for all 82 shop items (`info.json` `fr`), faithful to the English text (numbers, marks, line structure checked automatically). Fontignac cocotte: owner's French kept as `fr`, English translation is now the main text | `items/<id>/info.json` |
+| ⬜ | Owner proofreading of the 82 French item translations | `items/<id>/info.json` |
+| ✅ | Build lists items without a French translation (warning only); archive "available now" cards use French titles and link to `fr/collection/` directly | `build.js`, `build-archive.js` |
 | ✅ | `le-creuset-cocotte-ovale-vintage-fonte-maille-oran`: French title over an English description renamed to English ("Vintage Le Creuset Oval Cocotte – Enameled Cast Iron – Iconic Orange"); URL unchanged | `items/<id>/info.json` |
-| ⬜ | Add a language choice to the add-item issue form so new French-written items are declared | `.github/ISSUE_TEMPLATE/add-item.yml`, `.github/scripts/add-item.js` |
+| ⬜ | Add French title/description (or a language choice) to the add-item issue form, so new items arrive translated | `.github/ISSUE_TEMPLATE/add-item.yml`, `.github/scripts/add-item.js` |
 | ⬜ | More descriptive image alt text per photo for shop items (curated pieces done via `imageAlts`; shop items need owner-provided descriptions) | `build.js`, `info.json` |
 
 ## P2 — Content and performance

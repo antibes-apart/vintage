@@ -3,5 +3,9 @@
   "price": "60€",
   "issueNumber": 48,
   "sold": true,
-  "description": "Authentic French-made Le Creuset skillet in classic orange enamel, crafted from durable cast iron for exceptional heat retention and even cooking. This vintage piece features a beautifully seasoned interior, perfect for searing, frying, or oven use.\nMade in France 🇫🇷\nSize: 23 cm\nEnamel exterior, cast iron core\nSuitable for all stovetops, including induction\nTimeless design with vintage character\nShows signs of use consistent with age, adding to its charm and authenticity. A solid, collectible piece built to last for generations."
+  "description": "Authentic French-made Le Creuset skillet in classic orange enamel, crafted from durable cast iron for exceptional heat retention and even cooking. This vintage piece features a beautifully seasoned interior, perfect for searing, frying, or oven use.\nMade in France 🇫🇷\nSize: 23 cm\nEnamel exterior, cast iron core\nSuitable for all stovetops, including induction\nTimeless design with vintage character\nShows signs of use consistent with age, adding to its charm and authenticity. A solid, collectible piece built to last for generations.",
+  "fr": {
+    "title": "Poêle Le Creuset vintage en fonte (23 cm)",
+    "description": "Authentique poêle Le Creuset fabriquée en France, en émail orange classique, en fonte résistante pour une rétention de la chaleur exceptionnelle et une cuisson homogène. Cette pièce vintage présente un intérieur joliment culotté, parfait pour saisir, frire ou passer au four.\nFabriquée en France 🇫🇷\nTaille : 23 cm\nExtérieur émaillé, cœur en fonte\nCompatible avec toutes les plaques de cuisson, y compris induction\nDesign intemporel au caractère vintage\nPrésente des traces d’usage en rapport avec l’âge, qui ajoutent à son charme et à son authenticité. Une pièce solide et de collection, conçue pour durer des générations."
+  }
 }
